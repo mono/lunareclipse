@@ -1,0 +1,16 @@
+<Combine name="DesignerMoon" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="DesignerMoon" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="DesignerMoon" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="DesignerMoon" single="True">
+    <Execute type="None" entry="DesignerMoon" />
+  </StartMode>
+  <Entries>
+    <Entry filename="./DesignerMoon.mdp" />
+  </Entries>
+</Combine>
