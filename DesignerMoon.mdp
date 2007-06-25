@@ -1,9 +1,6 @@
 <Project name="DesignerMoon" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <CustomCommands>
-        <Command type="Custom" command="export MONO_GAC_PREFIX=/usr/local" />
-      </CustomCommands>
       <Output directory="./bin/Debug" assembly="DesignerMoon" />
       <Build debugmode="True" target="Exe" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
@@ -38,6 +35,8 @@
     <File name="./Model/Draw/EllipseDraw.cs" subtype="Code" buildaction="Compile" />
     <File name="./Model/Draw/CircleDraw.cs" subtype="Code" buildaction="Compile" />
     <File name="./Model/Draw/PenDraw.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Serialization" subtype="Directory" buildaction="Compile" />
+    <File name="./Serialization/Serializer.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

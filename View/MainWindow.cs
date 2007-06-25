@@ -28,6 +28,32 @@ namespace DesignerMoon.View
             Canvas c = new Canvas();
             c.Width = 640;
             c.Height = 480;
+            Rectangle r = new Rectangle();
+            r.Width = 100;
+            r.Height = 50;
+            r.SetValue<double>(Canvas.TopProperty, 100);
+            r.SetValue<double>(Canvas.TopProperty, 200);
+            
+            Ellipse e = new Ellipse();
+            e.Fill = new SolidColorBrush(Colors.Red);
+            LinearGradientBrush brush = new LinearGradientBrush();
+            brush.StartPoint = new Point(55,66);
+            brush.ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation;
+            e.Stroke = brush;
+            e.StrokeThickness = 5;
+            c.Children.Add(e);
+                
+            c.Background = new ImageBrush();
+            c.SetValue<string>(Canvas.NameProperty, "Canvas Name");
+            c.Background.Opacity = 5;
+            
+            c.RenderTransformOrigin = new Point(55, 55);
+            
+            c.Children.Add(r);
+            Serializer s = new Serializer();
+            Console.WriteLine(s.Serialize(c));
+            return;
+
     		GtkSilver moonlight = new GtkSilver(640, 480);
             moonlight.Attach(c);
 
