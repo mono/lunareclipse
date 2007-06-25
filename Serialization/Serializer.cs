@@ -16,7 +16,7 @@ using System.Collections;
 
 namespace DesignerMoon
 {
-    public class Serializer
+    public sealed class Serializer
     {
         private static Type dependencyProperty = Canvas.BackgroundProperty.GetType();
         
@@ -24,7 +24,7 @@ namespace DesignerMoon
         {
         }
 
-        private static string CleanName(string fieldName)
+        private string CleanName(string fieldName)
         {
             return fieldName.Substring(0, fieldName.Length - 8);
         }
@@ -119,7 +119,7 @@ namespace DesignerMoon
         }
         
         //FIXME: check default value properly
-        private static bool IsDefaultValue(object value)
+        private bool IsDefaultValue(object value)
         {
             if(value == null)
                 return true;
