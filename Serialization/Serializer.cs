@@ -27,65 +27,45 @@ namespace DesignerMoon
             return fieldName.Substring(0, fieldName.Length - 8);
         }
         
-        private static bool IsCollection(object value)
-        {
-            if(value == null)
-                return false;
-
-            // FIXME: Should i just be checking for IEnumerable? That may be easier.
-            return value.GetType().BaseType.FullName.StartsWith("MS.Internal.Collection");
-        }
-        
         
         private void SerialiseCollection(FieldInfo field, object value, XmlWriter writer)
         {
-            //FIXME: Reflection hack
+            ICollection collection = (ICollection)value;
             
-            int count = 0;
-            Console.WriteLine("Serializing Collection: " + field.Name);
+            if(collection.Count == 0)
+                return;
             
-            
-            Type t = value.GetType();
-            MethodInfo info = t.GetMethod("GetEnumerator");
-            IEnumerator enumerator = (IEnumerator)info.Invoke(value, null);
-            
-            enumerator.Reset();
-            while(enumerator.MoveNext())
-            {
-                if((count++) == 0)
-                    writer.WriteStartElement(CleanName(field.Name));
-                Console.WriteLine("Moving Next: " + (count++));
-                Console.WriteLine("Serializing child: " + enumerator.Current.GetType().Name);
-                Serialize((DependencyObject)enumerator.Current, writer);
-            }
-            
-            if(count > 0)
-                writer.WriteEndElement();
+            writer.WriteStartElement(CleanName(field.Name));
+            foreach(DependencyObject o in collection)
+                Serialize(o, writer);
+            writer.WriteEndElement();
         }
         
         public string Serialize(Canvas canvas)
         {
             StringBuilder sb = new StringBuilder();
-            XmlWriter writer = XmlWriter.Create(sb);
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Encoding = new UTF8Encoding();   
+            settings.OmitXmlDeclaration=true;
+            XmlWriter writer = XmlWriter.Create(sb, settings);
+            
             
             try
             {
-            Serialize(canvas, writer);
+                Serialize(canvas, writer);
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
             writer.Flush();
-
-            sb.Insert(6, " xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"");
+            
+            sb.Replace("<Canvas", "<Canvas xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"");
             return sb.ToString();
         }
         
         private void Serialize(DependencyObject item, XmlWriter writer)
         {
-            Console.WriteLine("Serializing object: " + item.GetType().Name);
-            //Console.ReadLine();
             Type currentType = item.GetType();
             Type dependencyProperty = Canvas.BackgroundProperty.GetType();
 
@@ -111,7 +91,7 @@ namespace DesignerMoon
                         object value = item.GetValue((DependencyProperty)dependencyValue);
                         
 
-                        if(!IsCollection(value) && !IsDefaultValue(value))
+                        if(!(value is DependencyObject) && !IsDefaultValue(value))
                         {
                             writer.WriteAttributeString(CleanName(field.Name), value.ToString());
                             Console.WriteLine(string.Format("{0} is of value {1}", field.Name, value));
@@ -141,11 +121,17 @@ namespace DesignerMoon
                     else
                     {
                         object value = item.GetValue((DependencyProperty)dependencyValue);
-                        
-                        if(IsCollection(value))
+
+                        if(value is ICollection)
                         {
                             SerialiseCollection(field, value, writer);
                             Console.WriteLine(string.Format("{0} is of value {1}", field.Name, value));
+                        }
+                        else if(value is DependencyObject)
+                        {
+                            writer.WriteStartElement(field.ReflectedType.Name + "." + CleanName(field.Name));
+                            Serialize((DependencyObject)value, writer);
+                            writer.WriteEndElement();
                         }
                     }
                 }
@@ -156,47 +142,6 @@ namespace DesignerMoon
             writer.WriteEndElement();
         }
         
- /*       private void Serialize(DependencyObject item, XmlWriter writer)
-        {
-            Type currentType = item.GetType();
-            Type dependencyProperty = Canvas.BackgroundProperty.GetType();
-
-            writer.WriteStartElement(currentType.Name);
-
-            while(currentType != null)
-            {
-                FieldInfo[] fields = currentType.GetFields();
-                
-                foreach(FieldInfo field in fields)
-                {
-                    if(!field.FieldType.Equals(dependencyProperty))
-                        continue;
-                    
-                    object dependencyValue = field.GetValue(item);
-                    
-                    if(dependencyValue == null)
-                    {
-                        Console.WriteLine(string.Format("{0} from {1} contained a null property", field.Name, field.ReflectedType.ToString()));
-                    }
-                    else
-                    {
-                        object value = item.GetValue((DependencyProperty)dependencyValue);
-                        Console.WriteLine(string.Format("{0} is of value {1}", field.Name, value));
-                        
-                        if(IsCollection(value))
-                            SerialiseCollection(field, value, writer);
-
-                        else if(!IsDefaultValue(value))
-                            writer.WriteAttributeString(CleanName(field.Name), value.ToString());
-                    }
-                }
-                
-                currentType = currentType.BaseType;
-            }
-            
-            writer.WriteEndElement();
-        }
-*/
         private static bool IsDefaultValue(object value)
         {
             if(value == null)
