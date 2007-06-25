@@ -18,6 +18,8 @@ namespace DesignerMoon
 {
     public class Serializer
     {
+        private static Type dependencyProperty = Canvas.BackgroundProperty.GetType();
+        
         public Serializer()
         {
         }
@@ -26,7 +28,6 @@ namespace DesignerMoon
         {
             return fieldName.Substring(0, fieldName.Length - 8);
         }
-        
         
         private void SerialiseCollection(FieldInfo field, object value, XmlWriter writer)
         {
@@ -44,11 +45,9 @@ namespace DesignerMoon
         public string Serialize(Canvas canvas)
         {
             StringBuilder sb = new StringBuilder();
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Encoding = new UTF8Encoding();   
+            XmlWriterSettings settings = new XmlWriterSettings(); 
             settings.OmitXmlDeclaration=true;
             XmlWriter writer = XmlWriter.Create(sb, settings);
-            
             
             try
             {
@@ -58,8 +57,8 @@ namespace DesignerMoon
             {
                 Console.WriteLine(ex.ToString());
             }
-            writer.Flush();
             
+            writer.Flush();
             sb.Replace("<Canvas", "<Canvas xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"");
             return sb.ToString();
         }
@@ -67,10 +66,8 @@ namespace DesignerMoon
         private void Serialize(DependencyObject item, XmlWriter writer)
         {
             Type currentType = item.GetType();
-            Type dependencyProperty = Canvas.BackgroundProperty.GetType();
 
             writer.WriteStartElement(currentType.Name);
-
             while(currentType != null)
             {
                 FieldInfo[] fields = currentType.GetFields();
@@ -81,22 +78,10 @@ namespace DesignerMoon
                         continue;
                     
                     object dependencyValue = field.GetValue(item);
+                    object value = item.GetValue((DependencyProperty)dependencyValue);
                     
-                    if(dependencyValue == null)
-                    {
-                        Console.WriteLine(string.Format("{0} from {1} contained a null property", field.Name, field.ReflectedType.ToString()));
-                    }
-                    else
-                    {
-                        object value = item.GetValue((DependencyProperty)dependencyValue);
-                        
-
-                        if(!(value is DependencyObject) && !IsDefaultValue(value))
-                        {
-                            writer.WriteAttributeString(CleanName(field.Name), value.ToString());
-                            Console.WriteLine(string.Format("{0} is of value {1}", field.Name, value));
-                        }
-                    }
+                    if(!(value is DependencyObject) && !IsDefaultValue(value))
+                        writer.WriteAttributeString(CleanName(field.Name), value.ToString());
                 }
                 
                 currentType = currentType.BaseType;
@@ -113,49 +98,34 @@ namespace DesignerMoon
                         continue;
                     
                     object dependencyValue = field.GetValue(item);
-                    
-                    if(dependencyValue == null)
-                    {
-                        Console.WriteLine(string.Format("{0} from {1} contained a null property", field.Name, field.ReflectedType.ToString()));
-                    }
-                    else
-                    {
-                        object value = item.GetValue((DependencyProperty)dependencyValue);
+                    object value = item.GetValue((DependencyProperty)dependencyValue);
 
-                        if(value is ICollection)
-                        {
-                            SerialiseCollection(field, value, writer);
-                            Console.WriteLine(string.Format("{0} is of value {1}", field.Name, value));
-                        }
-                        else if(value is DependencyObject)
-                        {
-                            writer.WriteStartElement(field.ReflectedType.Name + "." + CleanName(field.Name));
-                            Serialize((DependencyObject)value, writer);
-                            writer.WriteEndElement();
-                        }
+                    if(value is ICollection)
+                    {
+                        SerialiseCollection(field, value, writer);
+                    }
+                    else if(value is DependencyObject)
+                    {
+                        writer.WriteStartElement(field.ReflectedType.Name + "." + CleanName(field.Name));
+                        Serialize((DependencyObject)value, writer);
+                        writer.WriteEndElement();
                     }
                 }
-                
+           
                 currentType = currentType.BaseType;
             }
             
             writer.WriteEndElement();
         }
         
+        //FIXME: check default value properly
         private static bool IsDefaultValue(object value)
         {
             if(value == null)
                 return true;
             
-
-            try
-            {
-                return Convert.ToDouble(value) == 0;
-            }
-            catch
-            {
-               return false;
-            }
+            try { return Convert.ToDouble(value) == 0;  }
+            catch  { return false; }
         }
     }
 }
