@@ -34,19 +34,8 @@ namespace DesignerMoon
         {
             ICollection collection = (ICollection)value;
             
-            if(collection.Count == 0)
-                return;
-            
-            string cleanedName = CleanName(field.Name);
-            // FIXME: Is this the only "Children" property? Is this safe?
-            if(!cleanedName.Equals("Children"))
-                writer.WriteStartElement(cleanedName);
-            
             foreach(DependencyObject o in collection)
                 Serialize(o, writer);
-            
-            if(!cleanedName.Equals("Children"))
-                writer.WriteEndElement();
         }
         
         public string Serialize(Canvas canvas)
@@ -54,7 +43,9 @@ namespace DesignerMoon
             StringBuilder sb = new StringBuilder();
             XmlWriterSettings settings = new XmlWriterSettings(); 
             settings.OmitXmlDeclaration=true;
-            
+            settings.Indent = true;
+            settings.IndentChars = "    ";
+            settings.NewLineOnAttributes = false;
             using(XmlWriter writer = XmlWriter.Create(sb, settings))
                 Serialize(canvas, writer);
             

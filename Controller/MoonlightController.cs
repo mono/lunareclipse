@@ -19,6 +19,7 @@ namespace DesignerMoon.Controller
 {
     public class MoonlightController
     {
+        private UndoEngine undo;
         private GtkSilver moonlight;
     	private DrawBase current;
     	private XmlDocument xaml;
@@ -28,6 +29,11 @@ namespace DesignerMoon.Controller
             get { return this.current; }
             set { this.current = value; } 
         }
+        
+        public UndoEngine UndoEngine
+        {
+            get { return undo; }
+        }
     	
         public MoonlightController(GtkSilver moonlight)
         {
@@ -35,12 +41,13 @@ namespace DesignerMoon.Controller
             moonlight.Canvas.MouseLeftButtonDown += new MouseEventHandler(MouseLeftDown);
             moonlight.Canvas.MouseMove += new MouseEventHandler(MouseMove);
             moonlight.Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseLeftUp);
+            undo = new UndoEngine();
         }
         
         public void Clear()
         {
             moonlight.Canvas.Children.Clear();
-            
+            undo.Clear();
             // Horrible hack to make the screen redraw
             moonlight.Canvas.Opacity = moonlight.Canvas.Opacity;
         }
@@ -50,11 +57,12 @@ namespace DesignerMoon.Controller
         {
             active = true;
             Console.WriteLine("MouseDown");
-                
+            current = current.Clone();
             Point position = e.GetPosition(moonlight.Canvas);
-            
             moonlight.Canvas.Children.Add(current.Element);
-
+            
+            undo.PushUndo(new UndoAddObject(moonlight.Canvas.Children, current.Element));
+            
             if(current is LineDraw)
             {
                 Line l = (Line)current.Element;
@@ -78,6 +86,7 @@ namespace DesignerMoon.Controller
                 
             Console.WriteLine("MouseMove");
             current.Resize(e.GetPosition(moonlight.Canvas));
+
         }
         
         private void MouseLeftUp(object sender, MouseEventArgs e)
@@ -88,6 +97,13 @@ namespace DesignerMoon.Controller
             Console.WriteLine("MouseUp");
             current.Resize(e.GetPosition(moonlight.Canvas));
             active = false;
+        }
+        
+
+        public string SerializeCanvas()
+        {
+            Serializer s = new Serializer();
+            return s.Serialize(this.moonlight.Canvas);
         }
     }
 }

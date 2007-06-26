@@ -48,5 +48,10 @@ namespace DesignerMoon.Model
             uiElement.Width = end.X - Start.X;
             uiElement.Height = end.Y - Start.Y;
         }
+        
+        public virtual DrawBase Clone()
+        {
+            return (DrawBase)Activator.CreateInstance(this.GetType(), new object[] { this.startPoint});
+        }
     }
 }

@@ -27,6 +27,9 @@ namespace DesignerMoon.View
     {
         Box mainContainer;
         MoonlightController controller;
+        TextBuffer buffer = new Gtk.TextBuffer(new TextTagTable());
+        Button undo;
+        Button redo;
         
         public MainWindow (): base (Gtk.WindowType.Toplevel)
     	{
@@ -35,43 +38,48 @@ namespace DesignerMoon.View
             Canvas c = new Canvas();
             c.Width = 640;
             c.Height = 480;
-            Rectangle r = new Rectangle();
-            r.Width = 100;
-            r.Height = 50;
-            r.SetValue<double>(Canvas.TopProperty, 100);
-            r.SetValue<double>(Canvas.TopProperty, 200);
             
-            Ellipse e = new Ellipse();
-			e.Width = 50;
-			e.Height = 500;
-            e.Fill = new SolidColorBrush(Colors.Red);
-            e.Stroke = new SolidColorBrush(Colors.Orange);
-            e.StrokeThickness = 5;
-            c.Children.Add(e);
-                
-            c.Background = new SolidColorBrush(Colors.Gray);
-            c.SetValue<string>(Canvas.NameProperty, "Canvas Name");
-            c.Background.Opacity = 5;
-            
-            c.RenderTransformOrigin = new Point(55, 55);
-            
-            c.Children.Add(r);
-            Serializer s = new Serializer();
-            Console.WriteLine(s.Serialize(c));
-            return;
-
     		GtkSilver moonlight = new GtkSilver(640, 480);
             moonlight.Attach(c);
 
     		mainContainer = new HBox();
     		mainContainer.Add(moonlight);
     		mainContainer.Add(InitialiseWidgets());
-    		Add(mainContainer);
-    		
+            
+            TextView view = new Gtk.TextView(buffer);
+            Gtk.ScrolledWindow scrolled = new ScrolledWindow();
+            scrolled.Add(view);
+            Notebook book = new Notebook();
+    		Add(book);
+            book.AppendPage(mainContainer, new Label("Canvas"));
+            book.AppendPage(scrolled, new Label("Xaml"));
+         
             controller = new MoonlightController(moonlight);
-    		ShowAll();
+            
+            book.SwitchPage += new SwitchPageHandler(PageSwitched);
+            controller.UndoEngine.UndoAdded += delegate { this.undo.Sensitive = true; };
+            controller.UndoEngine.RedoAdded += delegate { this.redo.Sensitive = true; };
+    		
+            controller.UndoEngine.RedoRemoved += 
+                delegate (object sender, EventArgs e) {
+                this.redo.Sensitive = ((UndoEngine)sender).RedoCount != 0; 
+            };
+            
+            controller.UndoEngine.UndoRemoved += 
+                delegate (object sender, EventArgs e) {
+                this.undo.Sensitive = ((UndoEngine)sender).UndoCount != 0; 
+            };
+            ShowAll();
     	}
 
+
+        private void PageSwitched(object sender, Gtk.SwitchPageArgs args)
+        {
+            if(args.PageNum == 1)
+            {
+                buffer.Text = this.controller.SerializeCanvas();
+            }
+        }
         
     	private VBox InitialiseWidgets()
     	{
@@ -118,6 +126,16 @@ namespace DesignerMoon.View
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };
     	    widgets.Add(b);
+            
+            undo = new Button("Undo");
+            undo.Sensitive = false;
+            undo.Clicked += delegate { controller.UndoEngine.Undo(); };
+            widgets.Add(undo);
+            
+            redo = new Button("Redo");
+            redo.Sensitive = false;
+            redo.Clicked += delegate { controller.UndoEngine.Redo(); };
+            widgets.Add(redo);
     	    
     	    b = new Button("Clear");
     	    b.Clicked += delegate {
