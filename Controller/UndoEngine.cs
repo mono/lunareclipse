@@ -20,6 +20,7 @@ namespace DesignerMoon
         private Stack<UndoActionBase> undo;
         private Stack<UndoActionBase> redo;
         
+        
         public int RedoCount
         {
             get { return this.redo.Count;}
@@ -92,6 +93,8 @@ namespace DesignerMoon
         {
             this.undo.Clear();
             this.redo.Clear();
+            RaiseUndoRemoved();
+            RaiseRedoRemoved();
         }
         
         
