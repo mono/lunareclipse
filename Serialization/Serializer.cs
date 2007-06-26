@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 using System.Xml;
 using System.Text;
 using System.Collections;
-
+using System.Collections.Generic;
 
 namespace DesignerMoon
 {
@@ -36,10 +36,16 @@ namespace DesignerMoon
             if(collection.Count == 0)
                 return;
             
-            writer.WriteStartElement(CleanName(field.Name));
+            string cleanedName = CleanName(field.Name);
+            // FIXME: Is this the only "Children" property? Is this safe?
+            if(!cleanedName.Equals("Children"))
+                writer.WriteStartElement(cleanedName);
+            
             foreach(DependencyObject o in collection)
                 Serialize(o, writer);
-            writer.WriteEndElement();
+            
+            if(!cleanedName.Equals("Children"))
+                writer.WriteEndElement();
         }
         
         public string Serialize(Canvas canvas)
@@ -47,72 +53,61 @@ namespace DesignerMoon
             StringBuilder sb = new StringBuilder();
             XmlWriterSettings settings = new XmlWriterSettings(); 
             settings.OmitXmlDeclaration=true;
-            XmlWriter writer = XmlWriter.Create(sb, settings);
             
-            try
-            {
+            using(XmlWriter writer = XmlWriter.Create(sb, settings))
                 Serialize(canvas, writer);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
             
-            writer.Flush();
             sb.Replace("<Canvas", "<Canvas xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"");
             return sb.ToString();
         }
         
         private void Serialize(DependencyObject item, XmlWriter writer)
         {
+            // We get the type of the current DependencyObject
+            // and then walk up the inheritance tree and pick
+            // out all the DependencyProperties it has and
+            // then serialise the values of those properties to XAML
             Type currentType = item.GetType();
-
+            List<FieldInfo> fields = new List<FieldInfo>();
+            
             writer.WriteStartElement(currentType.Name);
             while(currentType != null)
             {
-                FieldInfo[] fields = currentType.GetFields();
-                
-                foreach(FieldInfo field in fields)
-                {
-                    if(!field.FieldType.Equals(dependencyProperty))
-                        continue;
-                    
-                    object dependencyValue = field.GetValue(item);
-                    object value = item.GetValue((DependencyProperty)dependencyValue);
-                    
-                    if(!(value is DependencyObject) && !IsDefaultValue(value))
-                        writer.WriteAttributeString(CleanName(field.Name), value.ToString());
-                }
+                FieldInfo[] currentFields = currentType.GetFields();
+                foreach(FieldInfo field in currentFields)
+                    if(field.FieldType.Equals(dependencyProperty))
+                        fields.Add(field);
                 
                 currentType = currentType.BaseType;
             }
 
-            currentType = item.GetType();
-            while(currentType != null)
+            // We first have to go through all the fields and write out
+            // all the attributes first.
+            foreach(FieldInfo field in fields)
             {
-                FieldInfo[] fields = currentType.GetFields();
-                
-                foreach(FieldInfo field in fields)
-                {
-                    if(!field.FieldType.Equals(dependencyProperty))
-                        continue;
+                object dependencyValue = field.GetValue(item);
+                object value = item.GetValue((DependencyProperty)dependencyValue);
                     
-                    object dependencyValue = field.GetValue(item);
-                    object value = item.GetValue((DependencyProperty)dependencyValue);
+                if(!(value is DependencyObject) && !IsDefaultValue(value))
+                    writer.WriteAttributeString(CleanName(field.Name), value.ToString());
+            }
+            
+            // After we write out all the attributes we can then write out
+            // the child elements.
+            foreach(FieldInfo field in fields)
+            {
+                object dependencyValue = field.GetValue(item);
+                object value = item.GetValue((DependencyProperty)dependencyValue);
 
-                    if(value is ICollection)
-                    {
-                        SerialiseCollection(field, value, writer);
-                    }
-                    else if(value is DependencyObject)
-                    {
-                        writer.WriteStartElement(field.ReflectedType.Name + "." + CleanName(field.Name));
-                        Serialize((DependencyObject)value, writer);
-                        writer.WriteEndElement();
-                    }
+                if(value is ICollection)
+                    SerialiseCollection(field, value, writer);
+                
+                else if(value is DependencyObject)
+                {
+                    writer.WriteStartElement(field.ReflectedType.Name + "." + CleanName(field.Name));
+                    Serialize((DependencyObject)value, writer);
+                    writer.WriteEndElement();
                 }
-           
-                currentType = currentType.BaseType;
             }
             
             writer.WriteEndElement();

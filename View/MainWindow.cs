@@ -14,6 +14,13 @@ using System.Windows.Input;
 using DesignerMoon.Controller;
 using DesignerMoon.Model;
 
+
+
+using System.Xml;
+using System.Text;
+using System.IO;
+
+
 namespace DesignerMoon.View
 {
     public partial class MainWindow: Gtk.Window
@@ -35,15 +42,14 @@ namespace DesignerMoon.View
             r.SetValue<double>(Canvas.TopProperty, 200);
             
             Ellipse e = new Ellipse();
+			e.Width = 50;
+			e.Height = 500;
             e.Fill = new SolidColorBrush(Colors.Red);
-            LinearGradientBrush brush = new LinearGradientBrush();
-            brush.StartPoint = new Point(55,66);
-            brush.ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation;
-            e.Stroke = brush;
+            e.Stroke = new SolidColorBrush(Colors.Orange);
             e.StrokeThickness = 5;
             c.Children.Add(e);
                 
-            c.Background = new ImageBrush();
+            c.Background = new SolidColorBrush(Colors.Gray);
             c.SetValue<string>(Canvas.NameProperty, "Canvas Name");
             c.Background.Opacity = 5;
             
