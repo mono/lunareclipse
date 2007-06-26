@@ -67,7 +67,8 @@ namespace DesignerMoon
             // and then walk up the inheritance tree and pick
             // out all the DependencyProperties it has and
             // then serialise the values of those properties to XAML
-            Type currentType = item.GetType();
+            Type baseType = item.GetType();
+            Type currentType = baseType;
             List<FieldInfo> fields = new List<FieldInfo>();
             
             writer.WriteStartElement(currentType.Name);
@@ -104,7 +105,7 @@ namespace DesignerMoon
                 
                 else if(value is DependencyObject)
                 {
-                    writer.WriteStartElement(field.ReflectedType.Name + "." + CleanName(field.Name));
+                    writer.WriteStartElement(baseType.Name + "." + CleanName(field.Name));
                     Serialize((DependencyObject)value, writer);
                     writer.WriteEndElement();
                 }
