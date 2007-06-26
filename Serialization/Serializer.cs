@@ -13,6 +13,7 @@ using System.Xml;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace DesignerMoon
 {
@@ -57,8 +58,8 @@ namespace DesignerMoon
             using(XmlWriter writer = XmlWriter.Create(sb, settings))
                 Serialize(canvas, writer);
             
-            sb.Replace("<Canvas", "<Canvas xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"");
-            return sb.ToString();
+            Regex r = new Regex("<Canvas");
+            return r.Replace(sb.ToString(), "<Canvas xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"", 1);
         }
         
         private void Serialize(DependencyObject item, XmlWriter writer)
