@@ -1,5 +1,9 @@
 2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	Added extra check to make sure a null value is never serialized
+
+2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	Cosmetic - Moved hooking into events into it's own method.
 
 2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 

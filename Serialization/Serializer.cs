@@ -83,7 +83,7 @@ namespace DesignerMoon
                 DependencyProperty dependencyProperty = (DependencyProperty)field.GetValue(item);
                 object value = item.GetValue((DependencyProperty)dependencyProperty);
                     
-                if(!(value is DependencyObject) && !IsDefaultValue(item, dependencyProperty, value))
+                if(!(value is DependencyObject) && value != null && !IsDefaultValue(item, dependencyProperty, value))
                     writer.WriteAttributeString(CleanName(field.Name), value.ToString());
             }
             
