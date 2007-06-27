@@ -1,4 +1,4 @@
-// /home/alan/Projects/DesignerMoon/DesignerMoon/Model/Draw/SquareDraw.cs created with MonoDevelop
+// /home/alan/Projects/LunarEclipse/LunarEclipse/Model/Draw/SquareDraw.cs created with MonoDevelop
 // User: alan at 3:36 PM 6/19/2007
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -7,13 +7,10 @@
 using System;
 using System.Windows;
 
-namespace DesignerMoon.Model
+namespace LunarEclipse.Model
 {
-    
-    
     public class SquareDraw : DrawBase
     {
-        
         public SquareDraw(Point startLocation)
             : base(startLocation, new System.Windows.Shapes.Rectangle())
         {
@@ -30,6 +27,5 @@ namespace DesignerMoon.Model
             Element.Width = size;
             Element.Height = size;
         }
-
     }
 }

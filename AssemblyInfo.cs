@@ -1,4 +1,4 @@
-// /home/alan/Projects/DesignerMoon/DesignerMoon/AssemblyInfo.cs created with MonoDevelop
+// /home/alan/Projects/LunarEclipse/LunarEclipse/AssemblyInfo.cs created with MonoDevelop
 // User: alan at 4:48 PM 6/15/2007
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers

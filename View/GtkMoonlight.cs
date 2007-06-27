@@ -10,7 +10,7 @@ using System.Net;
 using System.Collections;
 using System.Threading;
 
-namespace DesignerMoon.View
+namespace LunarEclipse.View
 {
     public class GtkSilver : DrawingArea {
     	[DllImport ("moon")]

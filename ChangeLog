@@ -1,3 +1,7 @@
+2007-06-27  Jeffrey Stedfast  <fejj@novell.com>
+
+	* Properties/*.cs: New source files implementing some property layout widgets.
+
 2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 
 
 	Added extra check to make sure a null value is never serialized

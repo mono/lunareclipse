@@ -1,0 +1,10 @@
+<objects>
+  <object type="LunarEclipse.PropertyGroup" palette-category="widget" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LunarEclipse.Properties" palette-category="widget" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+</objects>

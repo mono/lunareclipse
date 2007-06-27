@@ -6,7 +6,7 @@
 
 using System;
 
-namespace DesignerMoon
+namespace LunarEclipse
 {
     public abstract class UndoActionBase
     {

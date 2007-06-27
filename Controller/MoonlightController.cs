@@ -1,4 +1,4 @@
-// /home/alan/Projects/DesignerMoon/DesignerMoon/Controller/MoonlightController.cs created with MonoDevelop
+// /home/alan/Projects/LunarEclipse/LunarEclipse/Controller/MoonlightController.cs created with MonoDevelop
 // User: alan at 10:56 AM 6/18/2007
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -11,11 +11,11 @@ using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Input;
-using DesignerMoon.View;
-using DesignerMoon.Model;
+using LunarEclipse.View;
+using LunarEclipse.Model;
 using System.Xml;
 
-namespace DesignerMoon.Controller
+namespace LunarEclipse.Controller
 {
     public class MoonlightController
     {

@@ -8,7 +8,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace DesignerMoon
+namespace LunarEclipse
 {
     public class UndoPropertyChange : UndoActionBase
     {

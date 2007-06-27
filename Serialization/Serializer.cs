@@ -15,7 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace DesignerMoon
+namespace LunarEclipse
 {
     public sealed class Serializer
     {

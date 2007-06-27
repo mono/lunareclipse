@@ -1,4 +1,4 @@
-// /home/alan/Projects/DesignerMoon/DesignerMoon/IDraw.cs created with MonoDevelop
+// /home/alan/Projects/LunarEclipse/LunarEclipse/IDraw.cs created with MonoDevelop
 // User: alan at 6:02 PM 6/15/2007
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -10,14 +10,13 @@ using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Media;
 
-namespace DesignerMoon.Model
+namespace LunarEclipse.Model
 {
     public abstract class DrawBase
     {
         private Shape uiElement;
         private Point endPoint;
         private Point startPoint;
-
         
         public Point Start
         {

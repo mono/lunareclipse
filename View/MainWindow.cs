@@ -1,27 +1,20 @@
-// /home/alan/Projects/DesignerMoon/DesignerMoon/MainWindow.cs created with MonoDevelop
+// /home/alan/Projects/LunarEclipse/LunarEclipse/MainWindow.cs created with MonoDevelop
 // User: alan at 4:48 PM 6/15/2007
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
 //
+
 using System;
-using Gtk;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Shapes;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Input;
-using DesignerMoon.Controller;
-using DesignerMoon.Model;
-
-
-
 using System.Xml;
 using System.Text;
 using System.IO;
 
+using Gtk;
 
-namespace DesignerMoon.View
+using LunarEclipse.Controller;
+using LunarEclipse.Model;
+
+namespace LunarEclipse.View
 {
     public partial class MainWindow: Gtk.Window
     {

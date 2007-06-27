@@ -1,4 +1,4 @@
-// /home/alan/Projects/DesignerMoon/DesignerMoon/Main.cs created with MonoDevelop
+// /home/alan/Projects/LunarEclipse/LunarEclipse/Main.cs created with MonoDevelop
 // User: alan at 4:48 PM 6/15/2007
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -11,10 +11,10 @@ using Gtk;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Shapes;
-using DesignerMoon.View;
+using LunarEclipse.View;
 using System.Diagnostics;
 
-namespace DesignerMoon
+namespace LunarEclipse
 {
 	class MainClass
 	{	

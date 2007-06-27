@@ -7,7 +7,7 @@
 using System;
 using System.Collections;
 using System.Windows;
-namespace DesignerMoon
+namespace LunarEclipse
 {
     public class UndoAddObject : UndoActionBase
     {

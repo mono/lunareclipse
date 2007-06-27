@@ -1,4 +1,4 @@
-// /home/alan/Projects/DesignerMoon/DesignerMoon/Model/Draw/PenDraw.cs created with MonoDevelop
+// /home/alan/Projects/LunarEclipse/LunarEclipse/Model/Draw/PenDraw.cs created with MonoDevelop
 // User: alan at 4:11 PM 6/20/2007
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -7,11 +7,11 @@
 using System;
 using System.Windows;
 using System.Windows.Shapes;
-using DesignerMoon.Model;
+using LunarEclipse.Model;
 using System.Windows.Media;
-namespace DesignerMoon
+
+namespace LunarEclipse
 {
-   
     public class PenDraw : DrawBase
     {
         PathGeometry geometry;
