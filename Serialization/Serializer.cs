@@ -20,9 +20,11 @@ namespace DesignerMoon
     public sealed class Serializer
     {
         private static Type dependencyProperty = Canvas.BackgroundProperty.GetType();
+        private static Dictionary<Type, DependencyObject> defaultValues = new Dictionary<Type, DependencyObject>();
         
         public Serializer()
         {
+            
         }
 
         private string CleanName(string fieldName)
@@ -78,10 +80,10 @@ namespace DesignerMoon
             // all the attributes first.
             foreach(FieldInfo field in fields)
             {
-                object dependencyValue = field.GetValue(item);
-                object value = item.GetValue((DependencyProperty)dependencyValue);
+                DependencyProperty dependencyProperty = (DependencyProperty)field.GetValue(item);
+                object value = item.GetValue((DependencyProperty)dependencyProperty);
                     
-                if(!(value is DependencyObject) && !IsDefaultValue(value))
+                if(!(value is DependencyObject) && !IsDefaultValue(item, dependencyProperty, value))
                     writer.WriteAttributeString(CleanName(field.Name), value.ToString());
             }
             
@@ -106,14 +108,24 @@ namespace DesignerMoon
             writer.WriteEndElement();
         }
         
-        //FIXME: check default value properly
-        private bool IsDefaultValue(object value)
+        private bool IsDefaultValue(DependencyObject item, DependencyProperty property, object value)
         {
-            if(value == null)
+            Type itemType = item.GetType();
+            DependencyObject defaultItem;
+            if(!defaultValues.TryGetValue(itemType, out defaultItem))
+            {
+                defaultItem = (DependencyObject)Activator.CreateInstance(itemType);
+                defaultValues.Add(itemType, defaultItem);
+            }
+            
+            object defaultValue = defaultItem.GetValue(property);
+            if(value == null && defaultValue == null)
                 return true;
             
-            try { return Convert.ToDouble(value) == 0;  }
-            catch  { return false; }
+            if(value == null || defaultValue == null)
+                return false;
+            
+            return value.Equals(defaultValue);
         }
     }
 }

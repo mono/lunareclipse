@@ -1,4 +1,8 @@
 2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	Correctly detecting default values and not serializing properties which have a default value
+
+2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	Added changelog properly
 
