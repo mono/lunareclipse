@@ -34,9 +34,12 @@ namespace LunarEclipse
         
         private void SerialiseCollection(FieldInfo field, object value, XmlWriter writer)
         {
-            ICollection collection = (ICollection)value;
+            IEnumerable collection = (IEnumerable)value;
             
-            if(collection.Count == 0)
+            //FIXME: Nasty hack as the collections don't have a common interface
+            IEnumerator enumerator = collection.GetEnumerator();
+            enumerator.Reset();
+            if(!enumerator.MoveNext())
                 return;
             
             foreach(DependencyObject o in collection)
@@ -64,51 +67,70 @@ namespace LunarEclipse
             // and then walk up the inheritance tree and pick
             // out all the DependencyProperties it has and
             // then serialise the values of those properties to XAML
+            Type[] checkableTypes;
             Type baseType = item.GetType();
-            Type currentType = baseType;
-            List<FieldInfo> fields = new List<FieldInfo>();
+            if(item is Canvas)
+                checkableTypes = new Type[] { baseType };
+            else
+                checkableTypes = new Type[] { baseType, typeof(Canvas) };
             
-            writer.WriteStartElement(currentType.Name);
-            while(currentType != null)
-            {
-                FieldInfo[] currentFields = currentType.GetFields();
-                foreach(FieldInfo field in currentFields)
-                    if(field.FieldType.Equals(dependencyProperty))
-                        fields.Add(field);
-                
-                currentType = currentType.BaseType;
-            }
+            List<KeyValuePair<Type, FieldInfo>> fields = new List<KeyValuePair<Type, FieldInfo>>();
+            
+            writer.WriteStartElement(baseType.Name);
+            foreach(Type t in checkableTypes)
+                for(Type current = t; current != null; current = current.BaseType)
+                {
+                    FieldInfo[] currentFields = current.GetFields();
+                    foreach(FieldInfo field in currentFields)
+                        if(field.FieldType.Equals(dependencyProperty) &&
+                           !ContainsField(fields, field))
+                            fields.Add(new KeyValuePair<Type, FieldInfo>(t, field));
+                }
 
             // We first have to go through all the fields and write out
             // all the attributes first.
-            foreach(FieldInfo field in fields)
+            foreach(KeyValuePair<Type, FieldInfo> keypair in fields)
             {
-                DependencyProperty dependencyProperty = (DependencyProperty)field.GetValue(item);
+                DependencyProperty dependencyProperty = (DependencyProperty)keypair.Value.GetValue(item);
                 object value = item.GetValue((DependencyProperty)dependencyProperty);
                     
-                if(!(value is DependencyObject) && value != null && !IsDefaultValue(item, dependencyProperty, value))
-                    writer.WriteAttributeString(CleanName(field.Name), value.ToString());
+                if(!(value is DependencyObject) && (value != null) && !IsDefaultValue(item, dependencyProperty, value))
+                {
+                    string name = CleanName(keypair.Value.Name);
+                    if(!keypair.Key.Equals(baseType))
+                        name = keypair.Key.Name + "." + name;
+                    writer.WriteAttributeString(name, value.ToString());
+                }
             }
             
             // After we write out all the attributes we can then write out
             // the child elements.
-            foreach(FieldInfo field in fields)
+            foreach(KeyValuePair<Type, FieldInfo> keypair in fields)
             {
-                object dependencyValue = field.GetValue(item);
+                object dependencyValue = keypair.Value.GetValue(item);
                 object value = item.GetValue((DependencyProperty)dependencyValue);
 
-                if(value is ICollection)
-                    SerialiseCollection(field, value, writer);
+                if(value is IEnumerable)
+                    SerialiseCollection(keypair.Value, value, writer);
                 
                 else if(value is DependencyObject)
                 {
-                    writer.WriteStartElement(baseType.Name + "." + CleanName(field.Name));
+                    writer.WriteStartElement(baseType.Name + "." + CleanName(keypair.Value.Name));
                     Serialize((DependencyObject)value, writer);
                     writer.WriteEndElement();
                 }
             }
             
             writer.WriteEndElement();
+        }
+        
+        private bool ContainsField(List<KeyValuePair<Type, FieldInfo>> fields, FieldInfo field)
+        {
+            foreach(KeyValuePair<Type, FieldInfo> keypair in fields)
+                if(keypair.Value.Equals(field))
+                    return true;
+            
+            return false;
         }
         
         private bool IsDefaultValue(DependencyObject item, DependencyProperty property, object value)

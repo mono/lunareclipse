@@ -1,5 +1,11 @@
 2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Serialization/Serializer.cs: Updated the serializer to use less
+	  reflection and to be able to handle attached properties (note:
+	  attached properties may not be 100%)
+
+2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* View/MainWindow.cs, Properties/PropertyGroup.cs: Compiles now
 	* Serialization/Serializer.cs: Don't serialize empty collections
 
