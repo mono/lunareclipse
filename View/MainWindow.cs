@@ -30,7 +30,7 @@ namespace DesignerMoon.View
         TextBuffer buffer = new Gtk.TextBuffer(new TextTagTable());
         Button undo;
         Button redo;
-        
+        Notebook book;
         public MainWindow (): base (Gtk.WindowType.Toplevel)
     	{
     		Build ();
@@ -49,35 +49,48 @@ namespace DesignerMoon.View
             TextView view = new Gtk.TextView(buffer);
             Gtk.ScrolledWindow scrolled = new ScrolledWindow();
             scrolled.Add(view);
-            Notebook book = new Notebook();
+            book = new Notebook();
     		Add(book);
             book.AppendPage(mainContainer, new Label("Canvas"));
             book.AppendPage(scrolled, new Label("Xaml"));
          
             controller = new MoonlightController(moonlight);
-            
-            book.SwitchPage += new SwitchPageHandler(PageSwitched);
-            controller.UndoEngine.UndoAdded += delegate { this.undo.Sensitive = true; };
-            controller.UndoEngine.RedoAdded += delegate { this.redo.Sensitive = true; };
-    		
-            controller.UndoEngine.RedoRemoved += 
-                delegate (object sender, EventArgs e) {
-                this.redo.Sensitive = ((UndoEngine)sender).RedoCount != 0; 
-            };
-            
-            controller.UndoEngine.UndoRemoved += 
-                delegate (object sender, EventArgs e) {
-                this.undo.Sensitive = ((UndoEngine)sender).UndoCount != 0; 
-            };
+            moonlight.Load("~/Desktop/moonlight/moon/test/tester.xaml");
+            HookEvents(true);
             ShowAll();
     	}
 
 
-        private void PageSwitched(object sender, Gtk.SwitchPageArgs args)
+        private void HookEvents(bool hook)
         {
-            if(args.PageNum == 1)
+            if(hook)
             {
-                buffer.Text = this.controller.SerializeCanvas();
+                book.SwitchPage += 
+                    delegate (object sender, Gtk.SwitchPageArgs args) {
+                    if(args.PageNum == 1)
+                        buffer.Text = this.controller.SerializeCanvas();
+                };
+                
+                controller.UndoEngine.UndoAdded += 
+                    delegate { this.undo.Sensitive = true; };
+                
+                controller.UndoEngine.RedoAdded += 
+                    delegate { this.redo.Sensitive = true; };
+                
+                controller.UndoEngine.RedoRemoved += 
+                    delegate (object sender, EventArgs e) {
+                    this.redo.Sensitive = ((UndoEngine)sender).RedoCount != 0; 
+                };
+                
+                controller.UndoEngine.UndoRemoved += 
+                    delegate (object sender, EventArgs e) {
+                    this.undo.Sensitive = ((UndoEngine)sender).UndoCount != 0;
+                };
+
+            }
+            else
+            {
+                //FIXME Unhook events ;)
             }
         }
         
