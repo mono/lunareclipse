@@ -1,5 +1,9 @@
 2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	fixed crash for when no draw has been chosen
+
+2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* Model/Draw/SelectionDraw.cs, Model/SelectionRectangle.cs: Added a
 	  Selection click
 

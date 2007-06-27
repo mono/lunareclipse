@@ -55,6 +55,9 @@ namespace LunarEclipse.Controller
         bool active = false;
         private void MouseLeftDown(object sender, MouseEventArgs e)
         {
+            if(current == null)
+                return;
+            
             active = true;
             Console.WriteLine("MouseDown");
             current = current.Clone();
