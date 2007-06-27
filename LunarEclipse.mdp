@@ -22,9 +22,6 @@
     <File name="./Model/Draw/DrawBase.cs" subtype="Code" buildaction="Compile" />
     <File name="./Model/Draw/LineDraw.cs" subtype="Code" buildaction="Compile" />
     <File name="./Model/Draw/RectangleDraw.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Model/MouseClick/CanvasClick.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Model/MouseClick/ClickBase.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Model/MouseClick/ItemClick.cs" subtype="Code" buildaction="Compile" />
     <File name="./View/GtkMoonlight.cs" subtype="Code" buildaction="Compile" />
     <File name="./View/Main.cs" subtype="Code" buildaction="Compile" />
     <File name="./View/MainWindow.cs" subtype="Code" buildaction="Compile" />
@@ -48,6 +45,8 @@
     <File name="./gtk-gui/LunarEclipse.PropertyGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="./gtk-gui/LunarEclipse.Properties.cs" subtype="Code" buildaction="Compile" />
     <File name="./gtk-gui/LunarEclipse.View.MainWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/Draw/SelectionDraw.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/SelectionRectangle.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

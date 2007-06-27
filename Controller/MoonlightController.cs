@@ -59,6 +59,7 @@ namespace LunarEclipse.Controller
             Console.WriteLine("MouseDown");
             current = current.Clone();
             Point position = e.GetPosition(moonlight.Canvas);
+            Console.WriteLine("Mouse at: " + position.ToString());
             moonlight.Canvas.Children.Add(current.Element);
             
             undo.PushUndo(new UndoAddObject(moonlight.Canvas.Children, current.Element));
@@ -81,6 +82,7 @@ namespace LunarEclipse.Controller
         
         private void MouseMove(object sender, MouseEventArgs e)
         {
+            Console.WriteLine("Mouse at: " + e.GetPosition(moonlight.Canvas).ToString());
             if(!active)
                 return;
                 
@@ -91,6 +93,7 @@ namespace LunarEclipse.Controller
         
         private void MouseLeftUp(object sender, MouseEventArgs e)
         {
+            Console.WriteLine("Mouse at: " + e.GetPosition(moonlight.Canvas).ToString());
             if(!active)
                 return;
                 

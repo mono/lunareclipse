@@ -91,8 +91,30 @@ namespace LunarEclipse.View
     	private VBox InitialiseWidgets()
     	{
     	    VBox widgets = new VBox();
-    	    
-    	    Button b = new Button("Line");
+    	    Button b;
+            
+            b = new Button("Selection");
+            b.Clicked += delegate {
+                controller.Current = new SelectionDraw(new Point());
+                Console.WriteLine("Draw is" + controller.Current.GetType().Name.ToString());
+            };
+            widgets.Add(b);
+            
+            b = new Button("Circle");
+    	    b.Clicked += delegate {
+    	        controller.Current = new CircleDraw(new Point());
+    	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
+    	    };
+    	    widgets.Add(b);
+            
+            b = new Button("Ellipse");
+    	    b.Clicked += delegate {
+    	        controller.Current = new EllipseDraw(new Point());
+    	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
+    	    };
+    	    widgets.Add(b);
+            
+    	    b = new Button("Line");
     	    b.Clicked += delegate {
     	        controller.Current = new LineDraw(new Point());
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
@@ -118,20 +140,6 @@ namespace LunarEclipse.View
     	        controller.Current = new SquareDraw(new Point());
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };    	    
-    	    widgets.Add(b);
-    	    
-    	    b = new Button("Circle");
-    	    b.Clicked += delegate {
-    	        controller.Current = new CircleDraw(new Point());
-    	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
-    	    };
-    	    widgets.Add(b);
-    	    
-    	    b = new Button("Ellipse");
-    	    b.Clicked += delegate {
-    	        controller.Current = new EllipseDraw(new Point());
-    	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
-    	    };
     	    widgets.Add(b);
             
             undo = new Button("Undo");
