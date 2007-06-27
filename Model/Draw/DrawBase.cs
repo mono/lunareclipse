@@ -14,43 +14,48 @@ namespace LunarEclipse.Model
 {
     public abstract class DrawBase
     {
-        private Shape uiElement;
-        private Point endPoint;
-        private Point startPoint;
-        
-        public Point Start
-        {
-            get { return startPoint; }
-            set { startPoint = value; }
-        }
-        
-        public Point End
-        {
-            get { return endPoint; }
-        }
+        private Shape element;
+        protected Panel panel;
+        protected Point position;
         
         public Shape Element
         {
-            get { return uiElement; }
+            get { return element; }
         }
         
-        internal DrawBase(Point startPoint, Shape element)
+        internal DrawBase(Shape element)
         {
-            this.startPoint = startPoint;
-            uiElement = element;
+            this.element = element;
+            element.Stroke = new SolidColorBrush(Colors.Red);
+        }
+        
+        internal virtual void DrawStart(Panel panel, Point point)
+        {
+            this.panel = panel;
+            panel.Children.Add(Element);
+            position = point;
+            Element.SetValue<double>(Canvas.LeftProperty, point.X);
+            Element.SetValue<double>(Canvas.TopProperty, point.Y);
+        }
+        
+        internal virtual void Resize(Point end)
+        {
+            double x = end.X - position.X;
+            double y = end.Y - position.Y;
             
-            uiElement.Stroke = new SolidColorBrush(Colors.Red);
+            position = end;
+            Element.Width += x;
+            Element.Height += y;
         }
         
-        public virtual void Resize(Point end)
+        internal virtual void DrawEnd(Point point)
         {
-            uiElement.Width = end.X - Start.X;
-            uiElement.Height = end.Y - Start.Y;
+            
         }
         
-        public virtual DrawBase Clone()
+        internal virtual DrawBase Clone()
         {
-            return (DrawBase)Activator.CreateInstance(this.GetType(), new object[] { this.startPoint});
+            return (DrawBase)Activator.CreateInstance(this.GetType(), null);
         }
     }
 }

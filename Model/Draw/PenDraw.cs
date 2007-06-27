@@ -17,8 +17,8 @@ namespace LunarEclipse
         PathGeometry geometry;
         PathFigure figure;
         
-        public PenDraw(Point startPoint)
-            :base(startPoint, new System.Windows.Shapes.Path())
+        public PenDraw()
+            :base(new System.Windows.Shapes.Path())
         {
             Path path = (Path)Element;
             path.Stroke = new SolidColorBrush(Colors.Black);
@@ -33,10 +33,9 @@ namespace LunarEclipse
             geometry.Figures.Add(figure);
             
             figure.Segments = new PathSegmentCollection();
-            figure.StartPoint = startPoint;
         }
-        
-        public override void Resize (Point end)
+
+        internal override void Resize (Point end)
         {
             Console.WriteLine("Adding pen segment");
             LineSegment seg = new LineSegment();

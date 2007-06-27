@@ -15,10 +15,15 @@ namespace LunarEclipse.Model
 {
     public class SelectionDraw : DrawBase
     {
-        public SelectionDraw(Point point)
-            :base(point, new SelectionRectangle())
+        public SelectionDraw()
+            :base(new SelectionRectangle())
         {
                 
+        }
+        
+        internal override void DrawEnd (Point point)
+        {
+            panel.Children.Remove(Element);
         }
     }
 }

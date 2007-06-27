@@ -1,5 +1,15 @@
 2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Model/Draw/EllipseDraw.cs, Model/Draw/SquareDraw.cs,
+	  Model/Draw/CircleDraw.cs, Model/Draw/PenDraw.cs,
+	  Model/Draw/RectangleDraw.cs, Model/Draw/SelectionDraw.cs,
+	  Model/Draw/LineDraw.cs, Model/Draw/DrawBase.cs,
+	  Model/SelectionRectangle.cs, Controller/MoonlightController.cs,
+	  View/MainWindow.cs: Rewrote the drawing stuff to allow more
+	  flexibility. Now ready to do selection, probably...
+
+2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	fixed crash for when no draw has been chosen
 
 2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 

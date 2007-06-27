@@ -17,10 +17,11 @@ namespace LunarEclipse
         public SelectionRectangle()
             :base()
         {
-            this.Opacity = 0.5;
+            this.Opacity = 0.33;
             this.Fill = new SolidColorBrush(Colors.Blue);
             this.Stroke = new SolidColorBrush(Colors.Green);
-            this.StrokeDashArray = new double[] {1, 2 };
+            //this.StrokeDashArray = new double[] {1,2,3,5,8,13 };
+            this.StrokeThickness = 2;
         }
     }
 }

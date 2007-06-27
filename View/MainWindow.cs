@@ -95,49 +95,49 @@ namespace LunarEclipse.View
             
             b = new Button("Selection");
             b.Clicked += delegate {
-                controller.Current = new SelectionDraw(new Point());
+                controller.Current = new SelectionDraw();
                 Console.WriteLine("Draw is" + controller.Current.GetType().Name.ToString());
             };
             widgets.Add(b);
             
             b = new Button("Circle");
     	    b.Clicked += delegate {
-    	        controller.Current = new CircleDraw(new Point());
+    	        controller.Current = new CircleDraw();
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };
     	    widgets.Add(b);
             
             b = new Button("Ellipse");
     	    b.Clicked += delegate {
-    	        controller.Current = new EllipseDraw(new Point());
+    	        controller.Current = new EllipseDraw();
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };
     	    widgets.Add(b);
             
     	    b = new Button("Line");
     	    b.Clicked += delegate {
-    	        controller.Current = new LineDraw(new Point());
+    	        controller.Current = new LineDraw();
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };
     	    widgets.Add(b);
     	    
     	    b = new Button("Pen");
     	    b.Clicked += delegate {
-    	        controller.Current = new PenDraw(new Point());
+    	        controller.Current = new PenDraw();
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };
     	    widgets.Add(b);
     	    
     	    b = new Button("Rectangle");
     	    b.Clicked += delegate {
-    	        controller.Current = new RectangleDraw(new Point());
+    	        controller.Current = new RectangleDraw();
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };
     	    widgets.Add(b);
     	    
     	    b = new Button("Square");
     	    b.Clicked += delegate {
-    	        controller.Current = new SquareDraw(new Point());
+    	        controller.Current = new SquareDraw();
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };    	    
     	    widgets.Add(b);

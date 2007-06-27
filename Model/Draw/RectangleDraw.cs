@@ -11,8 +11,8 @@ namespace LunarEclipse.Model
 {
     public class RectangleDraw : DrawBase
     {
-        public RectangleDraw(Point startLocation)
-            : base(startLocation, new System.Windows.Shapes.Rectangle())
+        public RectangleDraw()
+            : base(new System.Windows.Shapes.Rectangle())
         {
         }
     }

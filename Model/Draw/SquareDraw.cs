@@ -6,26 +6,30 @@
 
 using System;
 using System.Windows;
+using System.Windows.Controls;
+
 
 namespace LunarEclipse.Model
 {
     public class SquareDraw : DrawBase
     {
-        public SquareDraw(Point startLocation)
-            : base(startLocation, new System.Windows.Shapes.Rectangle())
+        public SquareDraw()
+            : base(new System.Windows.Shapes.Rectangle())
         {
         }
-        
-        public override void Resize (Point end)
+
+        internal override void Resize (Point end)
         {
-                        double size = 0;
-            if(Math.Abs(end.X - Start.X) > Math.Abs(end.Y - Start.Y))
-                size = end.X - Start.X;
+            double width = (double)Element.GetValue(Canvas.LeftProperty) - end.X;
+            double height = (double)Element.GetValue(Canvas.TopProperty) - end.Y;
+            
+            double mouseDelta;
+            if(Math.Abs(width) > Math.Abs(height))
+                mouseDelta = end.X - position.X;
             else
-                size = end.Y - Start.Y;
+                mouseDelta = end.Y - position.Y;
                 
-            Element.Width = size;
-            Element.Height = size;
+            base.Resize(new Point(position.X + mouseDelta, position.Y + mouseDelta));
         }
     }
 }

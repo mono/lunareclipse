@@ -14,8 +14,8 @@ namespace LunarEclipse.Model
 {
     public class EllipseDraw : DrawBase
     {
-        public EllipseDraw(Point startLocation)
-            : base(startLocation, new Ellipse())
+        public EllipseDraw()
+            : base(new Ellipse())
         {
         }
     }

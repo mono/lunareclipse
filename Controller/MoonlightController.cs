@@ -59,28 +59,13 @@ namespace LunarEclipse.Controller
                 return;
             
             active = true;
-            Console.WriteLine("MouseDown");
             current = current.Clone();
             Point position = e.GetPosition(moonlight.Canvas);
             Console.WriteLine("Mouse at: " + position.ToString());
-            moonlight.Canvas.Children.Add(current.Element);
             
             undo.PushUndo(new UndoAddObject(moonlight.Canvas.Children, current.Element));
             
-            if(current is LineDraw)
-            {
-                Line l = (Line)current.Element;
-                l.X1 = position.X;
-                l.Y1 = position.Y;
-            }
-            else
-            {
-                current.Element.SetValue<double>(Canvas.TopProperty, position.Y);
-                current.Element.SetValue<double>(Canvas.LeftProperty, position.X);
-                current.Start = position;
-                current.Resize(position);
-            }
-
+            current.DrawStart(this.moonlight.Canvas, position);
         }
         
         private void MouseMove(object sender, MouseEventArgs e)
@@ -101,7 +86,7 @@ namespace LunarEclipse.Controller
                 return;
                 
             Console.WriteLine("MouseUp");
-            current.Resize(e.GetPosition(moonlight.Canvas));
+            current.DrawEnd(e.GetPosition(moonlight.Canvas));
             active = false;
         }
         

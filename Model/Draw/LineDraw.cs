@@ -8,22 +8,35 @@ using System;
 using System.Windows;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace LunarEclipse.Model
 {
     public class LineDraw : DrawBase
     {
-        public LineDraw(Point startLocation)
-            : base(startLocation, new System.Windows.Shapes.Line())
+        public LineDraw()
+            : base(new System.Windows.Shapes.Line())
         {
-            base.Element.Fill = new SolidColorBrush(Colors.Red);
+            Element.Fill = new SolidColorBrush(Colors.Red);
         }
- 
-        public override void Resize (Point end)
+        
+        internal override void DrawStart (Panel panel, Point point)
         {
-            Line l = (Line)Element;
+            base.DrawStart(panel, point);
+            Line l = Element as Line;
+            l.X1 = (l.X2 = point.X);
+            l.Y1 = (l.Y2 = point.Y);
+            l.SetValue<double>(Canvas.TopProperty, 0);
+            l.SetValue<double>(Canvas.LeftProperty, 0);
+        }
+        
+        internal override void Resize (Point end)
+        {
+            Line l = Element as Line;
             l.X2 = end.X;
             l.Y2 = end.Y;
         }
+
+
     }
 }
