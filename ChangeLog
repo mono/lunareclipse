@@ -1,3 +1,8 @@
+2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 
+
+	* View/MainWindow.cs, Properties/PropertyGroup.cs: Compiles now
+	* Serialization/Serializer.cs: Don't serialize empty collections
+
 2007-06-27  Jeffrey Stedfast  <fejj@novell.com>
 
 	* Properties/*.cs: New source files implementing some property layout widgets.

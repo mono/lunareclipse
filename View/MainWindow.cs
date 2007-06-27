@@ -8,7 +8,8 @@ using System;
 using System.Xml;
 using System.Text;
 using System.IO;
-
+using System.Windows.Controls;
+using System.Windows;
 using Gtk;
 
 using LunarEclipse.Controller;

@@ -27,7 +27,7 @@ namespace LunarEclipse {
 			PropertyGroupTitle.ButtonReleaseEvent += new ButtonReleaseEventHandler (OnPropertyGroupTitleClicked);
 		}
 		
-		bool OnPropertyGroupTitleClicked (object sender, ButtonReleaseEventArgs e)
+		void OnPropertyGroupTitleClicked (object sender, ButtonReleaseEventArgs e)
 		{
 			if (expanded) {
 				PropertyGroupExpander.ArrowType = ArrowType.Right;
@@ -39,7 +39,7 @@ namespace LunarEclipse {
 				expanded = true;
 			}
 			
-			return true;
+			return;
 		}
 	}
 }

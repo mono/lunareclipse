@@ -36,6 +36,9 @@ namespace LunarEclipse
         {
             ICollection collection = (ICollection)value;
             
+            if(collection.Count == 0)
+                return;
+            
             foreach(DependencyObject o in collection)
                 Serialize(o, writer);
         }
