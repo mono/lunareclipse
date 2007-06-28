@@ -9,23 +9,33 @@ using System.Windows;
 using System.Windows.Shapes;
 using LunarEclipse.Model;
 using System.Windows.Media;
+using System.Windows.Controls;
+using System.Collections.Generic;
+using System.Windows.Input;
+
+
 
 namespace LunarEclipse
 {
     public class PenDraw : DrawBase
     {
-        PathGeometry geometry;
         PathFigure figure;
         
         public PenDraw()
             :base(new System.Windows.Shapes.Path())
         {
+
+        }
+        
+        internal override void DrawStart (Panel panel, MouseEventArgs point)
+        {
+            base.DrawStart(panel, point);
+           
             Path path = (Path)Element;
             path.Stroke = new SolidColorBrush(Colors.Black);
             path.StrokeThickness = 1;
-            path.Fill = new SolidColorBrush(Colors.Black);
-                                        
-            geometry = new PathGeometry();
+            
+            PathGeometry geometry = new PathGeometry();
             figure = new PathFigure();
             
             path.Data = geometry;
@@ -33,14 +43,76 @@ namespace LunarEclipse
             geometry.Figures.Add(figure);
             
             figure.Segments = new PathSegmentCollection();
+            Console.WriteLine("Path set");
+            Console.WriteLine("Path started");
         }
 
-        internal override void Resize (Point end)
+
+        internal override void Resize (MouseEventArgs e)
         {
-            Console.WriteLine("Adding pen segment");
+            Console.WriteLine("Path resizing");
+            Point end = e.GetPosition(Panel);
+            double top = (double)Element.GetValue(Canvas.TopProperty);
+            double left = (double)Element.GetValue(Canvas.LeftProperty);
+            end.Offset(-left, -top);
             LineSegment seg = new LineSegment();
             seg.Point = end;
             figure.Segments.Add(seg);
+            Console.WriteLine("Path resized");
         }
+        
+        internal override void DrawEnd (MouseEventArgs point)
+        {
+            Console.WriteLine("Path ending");
+            BezierSegment bezier;
+            PathSegmentCollection beziers = new PathSegmentCollection();
+            
+            List<LineSegment> current = new List<LineSegment>();
+            foreach(LineSegment line in figure.Segments)
+            {
+                if(current.Count == 3)
+                {
+                    bezier = new BezierSegment();
+                    bezier.Point1 = current[0].Point;
+                    bezier.Point2 = current[1].Point;
+                    bezier.Point3 = current[2].Point;
+                    beziers.Add(bezier);
+                    current.Clear();
+                }
+                
+                current.Add(line);
+            }
+                    
+            this.figure.Segments = beziers;
+            if(current.Count == 0)
+                return;
+            
+            bezier = new BezierSegment();
+            bezier.Point1 = current[0].Point;
+            current.RemoveAt(0);
+
+            if(current.Count > 0)
+            {
+                bezier.Point2 = current[0].Point;
+                current.RemoveAt(0);
+            }
+            else
+            {
+                bezier.Point2 = bezier.Point1;
+            }
+            if(current.Count > 0)
+            {
+                bezier.Point3 = current[0].Point;
+                current.RemoveAt(0);
+            }
+            else
+            {
+                bezier.Point3 = bezier.Point2;
+            }
+            
+            beziers.Add(bezier);
+            Console.WriteLine("Path ended");
+        }
+
     }
 }

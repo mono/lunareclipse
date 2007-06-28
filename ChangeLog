@@ -1,3 +1,7 @@
+2007-06-28  Alan McGovern <alan.mcgovern@gmail.com> 
+
+	* Controller/MoonlightController.cs: Added drawing and selection
+
 2007-06-27  Alan McGovern <alan.mcgovern@gmail.com> 
 
 	* Model/Draw/EllipseDraw.cs, Model/Draw/SquareDraw.cs,

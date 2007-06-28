@@ -27,7 +27,12 @@ namespace LunarEclipse.Controller
     	public DrawBase Current
         {
             get { return this.current; }
-            set { this.current = value; } 
+            set 
+            { 
+                if(current != null) 
+                    current.Cleanup();
+                this.current = value;
+            }
         }
         
         public UndoEngine UndoEngine
@@ -48,45 +53,38 @@ namespace LunarEclipse.Controller
         {
             moonlight.Canvas.Children.Clear();
             undo.Clear();
-            // Horrible hack to make the screen redraw
-            moonlight.Canvas.Opacity = moonlight.Canvas.Opacity;
+            Rectangle r = new Rectangle();
+            moonlight.Canvas.Children.Add(r);
+            moonlight.Canvas.Children.Remove(r);
         }
         
         bool active = false;
         private void MouseLeftDown(object sender, MouseEventArgs e)
         {
-            if(current == null)
+            if(current == null || active)
                 return;
             
             active = true;
-            current = current.Clone();
-            Point position = e.GetPosition(moonlight.Canvas);
-            Console.WriteLine("Mouse at: " + position.ToString());
+            current.DrawStart(this.moonlight.Canvas, e);
             
-            undo.PushUndo(new UndoAddObject(moonlight.Canvas.Children, current.Element));
-            
-            current.DrawStart(this.moonlight.Canvas, position);
+            if(current.CanUndo)
+                undo.PushUndo(new UndoAddObject(moonlight.Canvas.Children, current.Element));
         }
         
         private void MouseMove(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("Mouse at: " + e.GetPosition(moonlight.Canvas).ToString());
             if(!active)
                 return;
-                
-            Console.WriteLine("MouseMove");
-            current.Resize(e.GetPosition(moonlight.Canvas));
 
+            current.Resize(e);
         }
         
         private void MouseLeftUp(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("Mouse at: " + e.GetPosition(moonlight.Canvas).ToString());
             if(!active)
                 return;
-                
-            Console.WriteLine("MouseUp");
-            current.DrawEnd(e.GetPosition(moonlight.Canvas));
+
+            current.DrawEnd(e);
             active = false;
         }
         

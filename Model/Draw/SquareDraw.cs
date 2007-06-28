@@ -7,6 +7,8 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+
 
 
 namespace LunarEclipse.Model
@@ -18,18 +20,15 @@ namespace LunarEclipse.Model
         {
         }
 
-        internal override void Resize (Point end)
+        internal override void Resize (MouseEventArgs e)
         {
-            double width = (double)Element.GetValue(Canvas.LeftProperty) - end.X;
-            double height = (double)Element.GetValue(Canvas.TopProperty) - end.Y;
+            Point end = e.GetPosition(Panel);
+            double width =  end.X - (double)Element.GetValue(Canvas.LeftProperty);
+            double height = end.Y - (double)Element.GetValue(Canvas.TopProperty);
             
-            double mouseDelta;
-            if(Math.Abs(width) > Math.Abs(height))
-                mouseDelta = end.X - position.X;
-            else
-                mouseDelta = end.Y - position.Y;
-                
-            base.Resize(new Point(position.X + mouseDelta, position.Y + mouseDelta));
+            width = Math.Max(width, height);
+            Element.Width = width;
+            Element.Height = width;
         }
     }
 }

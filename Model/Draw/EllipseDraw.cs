@@ -8,6 +8,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
+using System.Windows.Input;
 
 
 namespace LunarEclipse.Model

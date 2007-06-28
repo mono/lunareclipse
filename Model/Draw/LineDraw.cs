@@ -9,6 +9,8 @@ using System.Windows;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Windows.Input;
+
 
 namespace LunarEclipse.Model
 {
@@ -20,21 +22,23 @@ namespace LunarEclipse.Model
             Element.Fill = new SolidColorBrush(Colors.Red);
         }
         
-        internal override void DrawStart (Panel panel, Point point)
+        internal override void DrawStart (Panel panel, MouseEventArgs e)
         {
-            base.DrawStart(panel, point);
+            base.DrawStart(panel, e);
+            
             Line l = Element as Line;
-            l.X1 = (l.X2 = point.X);
-            l.Y1 = (l.Y2 = point.Y);
+            l.X1 = (l.X2 = Position.X);
+            l.Y1 = (l.Y2 = Position.Y);
             l.SetValue<double>(Canvas.TopProperty, 0);
             l.SetValue<double>(Canvas.LeftProperty, 0);
         }
         
-        internal override void Resize (Point end)
+        internal override void Resize (MouseEventArgs end)
         {
             Line l = Element as Line;
-            l.X2 = end.X;
-            l.Y2 = end.Y;
+            Point p = end.GetPosition(Panel);
+            l.X2 = p.X;
+            l.Y2 = p.Y;
         }
 
 
