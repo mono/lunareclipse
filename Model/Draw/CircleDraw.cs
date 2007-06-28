@@ -25,9 +25,16 @@ namespace LunarEclipse.Model
             double width = end.X - (double)Element.GetValue(Canvas.LeftProperty);
             double height = end.Y - (double)Element.GetValue(Canvas.TopProperty);
             
-            width = Math.Max(width, height);
-            Element.Width = width;
-            Element.Height = width;
+            if(Math.Abs(width) > Math.Abs(height))
+            {
+                Element.Width = width;
+                Element.Height = width;
+            }
+            else
+            {
+                Element.Width = height;
+                Element.Height = height;
+            }
         }
     }
 }
