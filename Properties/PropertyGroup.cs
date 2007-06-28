@@ -1,45 +1,47 @@
-// /cvs/lunareclipse/Properties/Property.cs created with MonoDevelop
+// /cvs/lunareclipse/Properties/PropertyGroup.cs created with MonoDevelop
 // User: fejj at 2:27 PM 6/27/2007
 //
 
 using System;
+
+using System.Windows;
+
 using Gtk;
 
 namespace LunarEclipse {
-	public partial class PropertyGroup : Gtk.Bin {
-		Gtk.Widget properties;
-		bool expanded;
+	public abstract partial class PropertyGroup : Bin, IPropertyGroup {
+		Widget properties = null;
 		
-		public PropertyGroup (string name, bool expanded, Gtk.Widget properties)
+		public PropertyGroup (string name)
 		{
 			this.Build ();
 			
-			PropertyGroupName.Text = "<b>" + name + "</b>";
-			
-			this.expanded = expanded;
-			PropertyGroupExpander.ArrowType = expanded ? ArrowType.Down : ArrowType.Right;
-			if (!expanded)
-				properties.Hide ();
-			
-			this.properties = properties;
-			Add (properties);
-			
-			PropertyGroupTitle.ButtonReleaseEvent += new ButtonReleaseEventHandler (OnPropertyGroupTitleClicked);
+			PropertyGroupLabel.Text = "<b>" + name + "</b>";
+			PropertyGroupLabel.UseMarkup = true;
+			expander.Expanded = false;
 		}
 		
-		void OnPropertyGroupTitleClicked (object sender, ButtonReleaseEventArgs e)
-		{
-			if (expanded) {
-				PropertyGroupExpander.ArrowType = ArrowType.Right;
-				properties.Hide ();
-				expanded = false;
-			} else {
-				PropertyGroupExpander.ArrowType = ArrowType.Down;
-				properties.Show ();
-				expanded = true;
+		protected Widget Properties {
+			get { return properties; }
+			set {
+				if (properties != null)
+					properties.Destroy ();
+				properties = value;
+				Add (value);
 			}
-			
-			return;
+		}
+		
+		protected bool Expanded {
+			get { return expander.Expanded; }
+			set { expander.Expanded = value; }
+		}
+		
+		public virtual bool HasProperties {
+			get { return false; }
+		}
+		
+		public virtual DependencyObject DependencyObject {
+			set { properties.Destroy (); properties = null; }
 		}
 	}
 }

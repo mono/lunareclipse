@@ -67,7 +67,7 @@
               </packing>
             </child>
             <child>
-              <widget class="Gtk.Entry" id="txtName">
+              <widget class="Gtk.Entry" id="ObjectName">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Text" translatable="yes">&lt;No Name&gt;</property>
@@ -88,7 +88,7 @@
               </packing>
             </child>
             <child>
-              <widget class="Gtk.Entry" id="txtType">
+              <widget class="Gtk.Entry" id="ObjectType">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Text" translatable="yes">Canvas</property>
@@ -130,48 +130,21 @@
   <widget class="Gtk.Bin" id="LunarEclipse.PropertyGroup" design-size="300 300">
     <property name="MemberName" />
     <child>
-      <widget class="Gtk.VBox" id="vboxPropertyGroup">
+      <widget class="Gtk.Expander" id="expander">
         <property name="MemberName" />
-        <property name="Spacing">6</property>
-        <child>
-          <widget class="Gtk.HBox" id="PropertyGroupTitle">
-            <property name="MemberName" />
-            <property name="Spacing">6</property>
-            <child>
-              <widget class="Gtk.Arrow" id="PropertyGroupExpander">
-                <property name="MemberName" />
-                <property name="ArrowType">Down</property>
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="PropertyGroupName">
-                <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">&lt;b&gt;Property Group&lt;/b&gt;</property>
-                <property name="UseMarkup">True</property>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">0</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
+        <property name="CanFocus">True</property>
         <child>
           <placeholder />
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="PropertyGroupLabel">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">&lt;b&gt;PropertyGroupLabel&lt;/b&gt;</property>
+            <property name="UseMarkup">True</property>
+          </widget>
+          <packing>
+            <property name="type">label_item</property>
+          </packing>
         </child>
       </widget>
     </child>

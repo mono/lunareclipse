@@ -21,9 +21,9 @@ namespace LunarEclipse {
         
         private Gtk.Label lblType;
         
-        private Gtk.Entry txtName;
+        private Gtk.Entry ObjectName;
         
-        private Gtk.Entry txtType;
+        private Gtk.Entry ObjectType;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize();
@@ -60,26 +60,26 @@ namespace LunarEclipse {
             w2.XOptions = ((Gtk.AttachOptions)(4));
             w2.YOptions = ((Gtk.AttachOptions)(4));
             // Container child tableNameType.Gtk.Table+TableChild
-            this.txtName = new Gtk.Entry();
-            this.txtName.CanFocus = true;
-            this.txtName.Name = "txtName";
-            this.txtName.Text = Mono.Unix.Catalog.GetString("<No Name>");
-            this.txtName.IsEditable = true;
-            this.txtName.InvisibleChar = '●';
-            this.tableNameType.Add(this.txtName);
-            Gtk.Table.TableChild w3 = ((Gtk.Table.TableChild)(this.tableNameType[this.txtName]));
+            this.ObjectName = new Gtk.Entry();
+            this.ObjectName.CanFocus = true;
+            this.ObjectName.Name = "ObjectName";
+            this.ObjectName.Text = Mono.Unix.Catalog.GetString("<No Name>");
+            this.ObjectName.IsEditable = true;
+            this.ObjectName.InvisibleChar = '●';
+            this.tableNameType.Add(this.ObjectName);
+            Gtk.Table.TableChild w3 = ((Gtk.Table.TableChild)(this.tableNameType[this.ObjectName]));
             w3.LeftAttach = ((uint)(1));
             w3.RightAttach = ((uint)(2));
             w3.YOptions = ((Gtk.AttachOptions)(4));
             // Container child tableNameType.Gtk.Table+TableChild
-            this.txtType = new Gtk.Entry();
-            this.txtType.CanFocus = true;
-            this.txtType.Name = "txtType";
-            this.txtType.Text = Mono.Unix.Catalog.GetString("Canvas");
-            this.txtType.IsEditable = false;
-            this.txtType.InvisibleChar = '●';
-            this.tableNameType.Add(this.txtType);
-            Gtk.Table.TableChild w4 = ((Gtk.Table.TableChild)(this.tableNameType[this.txtType]));
+            this.ObjectType = new Gtk.Entry();
+            this.ObjectType.CanFocus = true;
+            this.ObjectType.Name = "ObjectType";
+            this.ObjectType.Text = Mono.Unix.Catalog.GetString("Canvas");
+            this.ObjectType.IsEditable = false;
+            this.ObjectType.InvisibleChar = '●';
+            this.tableNameType.Add(this.ObjectType);
+            Gtk.Table.TableChild w4 = ((Gtk.Table.TableChild)(this.tableNameType[this.ObjectType]));
             w4.TopAttach = ((uint)(1));
             w4.BottomAttach = ((uint)(2));
             w4.LeftAttach = ((uint)(1));

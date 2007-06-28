@@ -13,13 +13,9 @@ namespace LunarEclipse {
     
     public partial class PropertyGroup {
         
-        private Gtk.VBox vboxPropertyGroup;
+        private Gtk.Expander expander;
         
-        private Gtk.HBox PropertyGroupTitle;
-        
-        private Gtk.Arrow PropertyGroupExpander;
-        
-        private Gtk.Label PropertyGroupName;
+        private Gtk.Label PropertyGroupLabel;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize();
@@ -27,37 +23,15 @@ namespace LunarEclipse {
             Stetic.BinContainer.Attach(this);
             this.Name = "LunarEclipse.PropertyGroup";
             // Container child LunarEclipse.PropertyGroup.Gtk.Container+ContainerChild
-            this.vboxPropertyGroup = new Gtk.VBox();
-            this.vboxPropertyGroup.Name = "vboxPropertyGroup";
-            this.vboxPropertyGroup.Spacing = 6;
-            // Container child vboxPropertyGroup.Gtk.Box+BoxChild
-            this.PropertyGroupTitle = new Gtk.HBox();
-            this.PropertyGroupTitle.Name = "PropertyGroupTitle";
-            this.PropertyGroupTitle.Spacing = 6;
-            // Container child PropertyGroupTitle.Gtk.Box+BoxChild
-            this.PropertyGroupExpander = new Gtk.Arrow(((Gtk.ArrowType)(1)), ((Gtk.ShadowType)(2)));
-            this.PropertyGroupExpander.Name = "PropertyGroupExpander";
-            this.PropertyGroupTitle.Add(this.PropertyGroupExpander);
-            Gtk.Box.BoxChild w1 = ((Gtk.Box.BoxChild)(this.PropertyGroupTitle[this.PropertyGroupExpander]));
-            w1.Position = 0;
-            w1.Expand = false;
-            w1.Fill = false;
-            // Container child PropertyGroupTitle.Gtk.Box+BoxChild
-            this.PropertyGroupName = new Gtk.Label();
-            this.PropertyGroupName.Name = "PropertyGroupName";
-            this.PropertyGroupName.LabelProp = Mono.Unix.Catalog.GetString("<b>Property Group</b>");
-            this.PropertyGroupName.UseMarkup = true;
-            this.PropertyGroupTitle.Add(this.PropertyGroupName);
-            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.PropertyGroupTitle[this.PropertyGroupName]));
-            w2.Position = 1;
-            w2.Expand = false;
-            w2.Fill = false;
-            this.vboxPropertyGroup.Add(this.PropertyGroupTitle);
-            Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.vboxPropertyGroup[this.PropertyGroupTitle]));
-            w3.Position = 0;
-            w3.Expand = false;
-            w3.Fill = false;
-            this.Add(this.vboxPropertyGroup);
+            this.expander = new Gtk.Expander(null);
+            this.expander.CanFocus = true;
+            this.expander.Name = "expander";
+            this.PropertyGroupLabel = new Gtk.Label();
+            this.PropertyGroupLabel.Name = "PropertyGroupLabel";
+            this.PropertyGroupLabel.LabelProp = Mono.Unix.Catalog.GetString("<b>PropertyGroupLabel</b>");
+            this.PropertyGroupLabel.UseMarkup = true;
+            this.expander.LabelWidget = this.PropertyGroupLabel;
+            this.Add(this.expander);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }

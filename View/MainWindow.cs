@@ -37,8 +37,9 @@ namespace LunarEclipse.View
             moonlight.Attach(c);
 
     		mainContainer = new HBox();
+			mainContainer.Add(InitialiseWidgets());
     		mainContainer.Add(moonlight);
-    		mainContainer.Add(InitialiseWidgets());
+    		mainContainer.Add(new Properties ());
             
             TextView view = new Gtk.TextView(buffer);
             Gtk.ScrolledWindow scrolled = new ScrolledWindow();
