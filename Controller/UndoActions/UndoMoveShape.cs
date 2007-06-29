@@ -11,33 +11,37 @@ using System.Windows.Shapes;
 
 namespace LunarEclipse
 {
-    
-    
     public class UndoMoveShape : UndoActionBase
     {
         private Point offset;
-        private Shape shape;
+        private Shape[] shapes;
         
-        
-        public UndoMoveShape(Shape shape, Point offset)
+        internal UndoMoveShape(Shape[] shapes, Point offset)
         {
-            this.shape = shape;
+            this.shapes = shapes;
             this.offset = offset;
         }
         
+        
         public override void Redo ()
         {
-            Point location = new Point((double)shape.GetValue(Canvas.LeftProperty), (double)shape.GetValue(Canvas.TopProperty));
-            shape.SetValue<double>(Canvas.LeftProperty, location.X - offset.X);
-            shape.SetValue<double>(Canvas.TopProperty, location.Y - offset.Y);
+            foreach(Shape shape in shapes)
+            {
+                Point location = new Point((double)shape.GetValue(Canvas.LeftProperty), (double)shape.GetValue(Canvas.TopProperty));
+                shape.SetValue<double>(Canvas.LeftProperty, location.X - offset.X);
+                shape.SetValue<double>(Canvas.TopProperty, location.Y - offset.Y);
+            }
         }
 
-        
+
         public override void Undo ()
         {
-            Point location = new Point((double)shape.GetValue(Canvas.LeftProperty), (double)shape.GetValue(Canvas.TopProperty));
-            shape.SetValue<double>(Canvas.LeftProperty, location.X + offset.X);
-            shape.SetValue<double>(Canvas.TopProperty, location.Y + offset.Y);
+            foreach(Shape shape in shapes)
+            {
+                Point location = new Point((double)shape.GetValue(Canvas.LeftProperty), (double)shape.GetValue(Canvas.TopProperty));
+                shape.SetValue<double>(Canvas.LeftProperty, location.X + offset.X);
+                shape.SetValue<double>(Canvas.TopProperty, location.Y + offset.Y);
+            }
         }
     }
 }
