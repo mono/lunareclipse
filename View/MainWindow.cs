@@ -35,24 +35,41 @@ namespace LunarEclipse.View
             
     		GtkSilver moonlight = new GtkSilver(640, 480);
             moonlight.Attach(c);
-
-    		mainContainer = new HBox();
-			mainContainer.Add(InitialiseWidgets());
-    		mainContainer.Add(moonlight);
-    		mainContainer.Add(new Properties ());
+			moonlight.Show ();
+			
+    		mainContainer = new HBox ();
+			Widget toolbox = InitialiseWidgets ();
+			toolbox.ShowAll ();
+			mainContainer.Add (toolbox);
+			
+    		mainContainer.Add (moonlight);
+			
+			Widget properties = new Properties ();
+			properties.Show ();
+    		mainContainer.Add (properties);
             
             TextView view = new Gtk.TextView(buffer);
+			view.Show ();
+			
             Gtk.ScrolledWindow scrolled = new ScrolledWindow();
             scrolled.Add(view);
-            book = new Notebook();
-    		Add(book);
-            book.AppendPage(mainContainer, new Label("Canvas"));
-            book.AppendPage(scrolled, new Label("Xaml"));
-         
+            
+			book = new Notebook();
+			Widget label = new Label("Canvas");
+			mainContainer.Show ();
+			label.Show ();
+            book.AppendPage (mainContainer, label);
+			label = new Label ("Xaml");
+			scrolled.Show ();
+			label.Show ();
+            book.AppendPage (scrolled, label);
+			book.Show ();
+			Add (book);
+			
             controller = new MoonlightController(moonlight);
             moonlight.Load("~/Desktop/moonlight/moon/test/tester.xaml");
             HookEvents(true);
-            ShowAll();
+            Show ();
     	}
 
 

@@ -9,7 +9,9 @@ using System.Windows;
 using Gtk;
 
 namespace LunarEclipse {
-	public partial class Properties : Gtk.Bin {
+	public partial class Properties : Gtk.Bin, IPropertyGroup {
+		DependencyObject item;
+		
 		PropertyGroup brush;
 		PropertyGroup appearance;
 		PropertyGroup layout;
@@ -22,6 +24,8 @@ namespace LunarEclipse {
 			this.Build ();
 			
 			ObjectName.Text = "<No Name>";
+			ObjectName.Sensitive = false;
+			ObjectName.Changed += new EventHandler (OnNameChanged);
 			ObjectType.Text = "";
 			
 			// build the property groups
@@ -30,10 +34,13 @@ namespace LunarEclipse {
 			
 			// Appearance
 			appearance = new PropertyGroupAppearance ();
+			vboxProperties.PackStart (appearance, false, false, 0);
 			appearance.Hide ();
-			vboxProperties.PackStart (appearance);
 			
 			// Layout
+			layout = new PropertyGroupLayout ();
+			vboxProperties.PackStart (layout, false, false, 0);
+			layout.Hide ();
 			
 			// Common Properties
 			
@@ -42,23 +49,41 @@ namespace LunarEclipse {
 			// Misc.
 		}
 		
+		public bool HasProperties {
+			get { return item != null; }
+		}
+		
 		public DependencyObject DependencyObject {
 			set {
-				ObjectName.Text = value.Name;
-				ObjectType.Text = value.GetType ().Name;
+				item = value;
+				
+				if (item != null) {
+					ObjectName.Text = item.Name;
+					ObjectName.Sensitive = true;
+					ObjectType.Text = item.GetType ().Name;
+				} else {
+					ObjectName.Text = "<No Name>";
+					ObjectName.Sensitive = false;
+					ObjectType.Text = "";
+				}
 				
 				// build the property groups
 				
 				// Brush
 				
 				// Appearance
-				appearance.DependencyObject = value;
+				appearance.DependencyObject = item;
 				if (((PropertyGroup) appearance).HasProperties)
 					appearance.Show ();
 				else
 					appearance.Hide ();
 				
 				// Layout
+				layout.DependencyObject = item;
+				if (((PropertyGroup) layout).HasProperties)
+					layout.Show ();
+				else
+					layout.Hide ();
 				
 				// Common Properties
 				
@@ -66,6 +91,11 @@ namespace LunarEclipse {
 				
 				// Misc.
 			}
+		}
+		
+		void OnNameChanged (object sender, EventArgs e)
+		{
+			
 		}
 	}
 }

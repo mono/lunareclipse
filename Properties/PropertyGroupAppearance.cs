@@ -15,6 +15,7 @@ namespace LunarEclipse {
 	public class PropertyGroupAppearance : PropertyGroup {
 		enum PropType {
 			Cap,
+			Data,
 			Double,
 			Integer,
 			Percent,
@@ -42,9 +43,10 @@ namespace LunarEclipse {
 			}
 		}
 		
-		static PropInfo [] info = new PropInfo [13] {
+		static PropInfo [] info = new PropInfo [14] {
 			new PropInfo ("OpacityProperty",            PropType.Percent,    false),
 			new PropInfo ("VisibilityProperty",         PropType.Visibility, false),
+			new PropInfo ("DataProperty",               PropType.Data,       false),
 			new PropInfo ("RadiusXProperty",            PropType.Double,     false),
 			new PropInfo ("RadiusYProperty",            PropType.Double,     false),
 			new PropInfo ("StrokeThicknessProperty",    PropType.Integer,    false),
@@ -74,6 +76,11 @@ namespace LunarEclipse {
 			
 			this.item = item;
 			
+			if (item == null) {
+				Properties = null;
+				return;
+			}
+			
 			List<FieldInfo> props = new List<FieldInfo> ();
 			for (Type current = item.GetType (); current != null; current = current.BaseType) {
 				FieldInfo[] currentFields = current.GetFields ();
@@ -95,8 +102,10 @@ namespace LunarEclipse {
 				}
 			}
 			
-			if (!hasProps)
+			if (!hasProps) {
+				Properties = null;
 				return;
+			}
 			
 			if (rows == 0)
 				Console.WriteLine ("rows == 0; this should not happen?");
@@ -120,6 +129,10 @@ namespace LunarEclipse {
 						case PropType.Cap:
 							value = new ComboBox (capEntries);
 							((ComboBox) value).Changed += new EventHandler (OnComboChanged);
+							break;
+						case PropType.Data:
+							value = new Entry ();
+							((Entry) value).Changed += new EventHandler (OnDataChanged);
 							break;
 						case PropType.Double:
 							value = new SpinButton (null, 1.0, 2);
@@ -218,7 +231,7 @@ namespace LunarEclipse {
 			SpinButton spin = (SpinButton) o;
 			double v = spin.Value;
 			
-			item.SetValue (prop, v);
+			item.SetValue<double> (prop, v);
 		}
 		
 		void OnIntegerChanged (object o, EventArgs e)
@@ -227,7 +240,16 @@ namespace LunarEclipse {
 			SpinButton spin = (SpinButton) o;
 			int v = (int) spin.Value;
 			
-			item.SetValue (prop, v);
+			item.SetValue<int> (prop, v);
+		}
+		
+		void OnDataChanged (object o, EventArgs e)
+		{
+			DependencyProperty prop = (DependencyProperty) propTable[o];
+			Entry entry = (Entry) o;
+			
+			// FIXME: is this really of type string? or is it an array of Points?
+			item.SetValue<string> (prop, entry.Text);
 		}
 	}
 }

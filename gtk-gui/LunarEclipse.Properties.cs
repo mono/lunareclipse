@@ -23,7 +23,7 @@ namespace LunarEclipse {
         
         private Gtk.Entry ObjectName;
         
-        private Gtk.Entry ObjectType;
+        private Gtk.Label ObjectType;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize();
@@ -70,20 +70,20 @@ namespace LunarEclipse {
             Gtk.Table.TableChild w3 = ((Gtk.Table.TableChild)(this.tableNameType[this.ObjectName]));
             w3.LeftAttach = ((uint)(1));
             w3.RightAttach = ((uint)(2));
+            w3.XOptions = ((Gtk.AttachOptions)(4));
             w3.YOptions = ((Gtk.AttachOptions)(4));
             // Container child tableNameType.Gtk.Table+TableChild
-            this.ObjectType = new Gtk.Entry();
-            this.ObjectType.CanFocus = true;
+            this.ObjectType = new Gtk.Label();
             this.ObjectType.Name = "ObjectType";
-            this.ObjectType.Text = Mono.Unix.Catalog.GetString("Canvas");
-            this.ObjectType.IsEditable = false;
-            this.ObjectType.InvisibleChar = '●';
+            this.ObjectType.Xalign = 0F;
+            this.ObjectType.LabelProp = Mono.Unix.Catalog.GetString("Canvas");
             this.tableNameType.Add(this.ObjectType);
             Gtk.Table.TableChild w4 = ((Gtk.Table.TableChild)(this.tableNameType[this.ObjectType]));
             w4.TopAttach = ((uint)(1));
             w4.BottomAttach = ((uint)(2));
             w4.LeftAttach = ((uint)(1));
             w4.RightAttach = ((uint)(2));
+            w4.XOptions = ((Gtk.AttachOptions)(4));
             w4.YOptions = ((Gtk.AttachOptions)(4));
             this.vboxProperties.Add(this.tableNameType);
             Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.vboxProperties[this.tableNameType]));

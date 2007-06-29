@@ -41,7 +41,11 @@ namespace LunarEclipse {
 		}
 		
 		public virtual DependencyObject DependencyObject {
-			set { properties.Destroy (); properties = null; }
+			set {
+				if (properties != null)
+					properties.Destroy ();
+				properties = null;
+			}
 		}
 	}
 }
