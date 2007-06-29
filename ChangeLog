@@ -1,5 +1,9 @@
 2007-06-29  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	Fixed undo for shapes
+
+2007-06-29  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* Model/Draw/SelectionDraw.cs: You can now undo/redo movements to
 	  shapes
 

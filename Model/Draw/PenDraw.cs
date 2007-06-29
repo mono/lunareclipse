@@ -43,14 +43,11 @@ namespace LunarEclipse
             geometry.Figures.Add(figure);
             
             figure.Segments = new PathSegmentCollection();
-            Console.WriteLine("Path set");
-            Console.WriteLine("Path started");
         }
 
 
         internal override void Resize (MouseEventArgs e)
         {
-            Console.WriteLine("Path resizing");
             Point end = e.GetPosition(Panel);
             double top = (double)Element.GetValue(Canvas.TopProperty);
             double left = (double)Element.GetValue(Canvas.LeftProperty);
@@ -58,12 +55,10 @@ namespace LunarEclipse
             LineSegment seg = new LineSegment();
             seg.Point = end;
             figure.Segments.Add(seg);
-            Console.WriteLine("Path resized");
         }
         
         internal override void DrawEnd (MouseEventArgs point)
         {
-            Console.WriteLine("Path ending");
             BezierSegment bezier;
             PathSegmentCollection beziers = new PathSegmentCollection();
             
@@ -111,7 +106,6 @@ namespace LunarEclipse
             }
             
             beziers.Add(bezier);
-            Console.WriteLine("Path ended");
         }
 
     }
