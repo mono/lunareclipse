@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using System.Windows;
+using System.Windows.Controls;
 
 using Gtk;
 
@@ -88,12 +89,30 @@ namespace LunarEclipse {
 			
 			for (i = 0; i < info.Length; i++) {
 				FieldInfo field = (FieldInfo) props[info[i].Name];
-				if (field == null)
+				if (field == null && !info[i].Attached)
 					continue;
 				
 				string propName = info[i].Name.Substring (0, info[i].Name.Length - 8);
-				DependencyProperty prop = (DependencyProperty) field.GetValue (item);
-				object value = item.GetValue (prop);
+				DependencyProperty prop = null;
+				object value = null;
+				
+				if (!info[i].Attached) {
+					prop = (DependencyProperty) field.GetValue (item);
+					value = item.GetValue (prop);
+				} else {
+					// Attached properties
+					switch (info[i].Name) {
+					case "LeftProperty":
+						prop = Canvas.LeftProperty;
+						value = item.GetValue (prop);
+						break;
+					case "TopProperty":
+						prop = Canvas.TopProperty;
+						value = item.GetValue (prop);
+						break;
+					}
+				}
+				
 				Widget label = new Label (propName);
 				label.Show ();
 				
@@ -102,7 +121,10 @@ namespace LunarEclipse {
 				((SpinButton) widget).SetRange (0.0, (double) Int32.MaxValue);
 				((SpinButton) widget).Numeric = true;
 				
-				Console.WriteLine ("Layout: {0} = {1} ({2})", propName, value, value.GetType ());
+				Console.WriteLine ("Layout: {0} = {1} ({2})", propName, 
+				                   value != null ? value.ToString () : "(null)", 
+				                   value != null ? value.GetType ().ToString () : "(null)");
+				
 				if (value != null) {
 					switch (value.GetType ().Name) {
 					case "Double":

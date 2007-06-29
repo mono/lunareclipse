@@ -8,27 +8,28 @@ using System.Collections;
 using System.Collections.Generic;
 
 using System.Windows;
+using System.Windows.Media;
 
 using Gtk;
 
 namespace LunarEclipse {
 	public class PropertyGroupAppearance : PropertyGroup {
 		enum PropType {
-			Cap,
 			Data,
 			Double,
 			Integer,
 			Percent,
 			Stretch,
-			LineJoin,
 			DashArray,
+			PenLineCap,
+			PenLineJoin,
 			Visibility,
 		}
 		
-		static string [] capEntries = { "Flat", "Square", "Round", "Triangle" };
-		static string [] stretchEntries = { "None", "Fill", "Uniform", "UniformToFill" };
-		static string [] lineJoinEntries = { "Miter", "Bevel", "Round" };
-		static string [] visibilityEntries = { "Visible", "Hidden", "Collapsed" };
+		static string [] stretchEnums = { "None", "Fill", "Uniform", "UniformToFill" };
+		static string [] penLineCapEnums = { "Flat", "Square", "Round", "Triangle" };
+		static string [] penLineJoinEnums = { "Miter", "Bevel", "Round" };
+		static string [] visibilityEnums = { "Visible", "Collapsed", "Hidden" };
 		
 		struct PropInfo {
 			public string Name;
@@ -44,21 +45,21 @@ namespace LunarEclipse {
 		}
 		
 		static PropInfo [] info = new PropInfo [14] {
-			new PropInfo ("OpacityProperty",            PropType.Percent,    false),
-			new PropInfo ("VisibilityProperty",         PropType.Visibility, false),
-			new PropInfo ("DataProperty",               PropType.Data,       false),
-			new PropInfo ("RadiusXProperty",            PropType.Double,     false),
-			new PropInfo ("RadiusYProperty",            PropType.Double,     false),
-			new PropInfo ("StrokeThicknessProperty",    PropType.Integer,    false),
+			new PropInfo ("OpacityProperty",            PropType.Percent,     false),
+			new PropInfo ("VisibilityProperty",         PropType.Visibility,  false),
+			new PropInfo ("DataProperty",               PropType.Data,        false),
+			new PropInfo ("RadiusXProperty",            PropType.Double,      false),
+			new PropInfo ("RadiusYProperty",            PropType.Double,      false),
+			new PropInfo ("StrokeThicknessProperty",    PropType.Integer,     false),
 			// extended properties
-			new PropInfo ("StretchProperty",            PropType.Stretch,    true),
-			new PropInfo ("StrokeDashArrayProperty",    PropType.DashArray,  true),
-			new PropInfo ("StrokeDashCapProperty",      PropType.Cap,        true),
-			new PropInfo ("StrokeDashOffsetProperty",   PropType.Integer,    true),
-			new PropInfo ("StrokeStartLineCapProperty", PropType.Cap,        true),
-			new PropInfo ("StrokeEndLineCapProperty",   PropType.Cap,        true),
-			new PropInfo ("StrokeLineJoinProperty",     PropType.LineJoin,   true),
-			new PropInfo ("StrokeMiterLimitProperty",   PropType.Integer,    true)
+			new PropInfo ("StretchProperty",            PropType.Stretch,     true),
+			new PropInfo ("StrokeDashArrayProperty",    PropType.DashArray,   true),
+			new PropInfo ("StrokeDashCapProperty",      PropType.PenLineCap,  true),
+			new PropInfo ("StrokeDashOffsetProperty",   PropType.Integer,     true),
+			new PropInfo ("StrokeStartLineCapProperty", PropType.PenLineCap,  true),
+			new PropInfo ("StrokeEndLineCapProperty",   PropType.PenLineCap,  true),
+			new PropInfo ("StrokeLineJoinProperty",     PropType.PenLineJoin, true),
+			new PropInfo ("StrokeMiterLimitProperty",   PropType.Integer,     true)
 		};
 		
 		DependencyObject item;
@@ -81,7 +82,7 @@ namespace LunarEclipse {
 				return;
 			}
 			
-			List<FieldInfo> props = new List<FieldInfo> ();
+			Hashtable props = new Hashtable ();
 			for (Type type = item.GetType (); type != null; type = type.BaseType) {
 				FieldInfo[] fields = type.GetFields ();
 				foreach (FieldInfo field in fields) {
@@ -94,7 +95,7 @@ namespace LunarEclipse {
 								erows++;
 							else
 								rows++;
-							props.Add (field);
+							props.Add (info[i].Name, field);
 							hasProps = true;
 							break;
 						}
@@ -116,82 +117,90 @@ namespace LunarEclipse {
 			propTable = new Hashtable ();
 			
 			for (i = 0; i < info.Length; i++) {
-				foreach (FieldInfo field in props) {
-					if (field.Name == info[i].Name) {
-						string propName = info[i].Name.Substring (0, info[i].Name.Length - 8);
-						DependencyProperty prop = (DependencyProperty) field.GetValue (item);
-						object value = item.GetValue (prop);
-						Adjustment adj;
-						
-						Widget label = new Label (propName);
-						label.Show ();
-						
-						Widget widget = null;
-						
-						switch (info[i].Type) {
-						case PropType.Cap:
-							widget = new ComboBox (capEntries);
-							((ComboBox) widget).Changed += new EventHandler (OnComboChanged);
-							break;
-						case PropType.Data:
-							widget = new Entry ();
-							((Entry) widget).Changed += new EventHandler (OnDataChanged);
-							break;
-						case PropType.Double:
-							adj = new Adjustment (0.0, 0.0, Double.MaxValue, 1.0, 10.0, 100.0);
-							widget = new SpinButton (adj, 1.0, 2);
-							((SpinButton) widget).Numeric = true;
-							if (value != null)
-								((SpinButton) widget).Value = (double) value;
-							((SpinButton) widget).Changed += new EventHandler (OnDoubleChanged);
-							break;
-						case PropType.Integer:
-							adj = new Adjustment (0.0, 0.0, Int32.MaxValue, 1.0, 10.0, 100.0);
-							widget = new SpinButton (adj, 1.0, 0);
-							((SpinButton) widget).Numeric = true;
-							if (value != null)
-								((SpinButton) widget).Value = (double) value;
-							((SpinButton) widget).Changed += new EventHandler (OnIntegerChanged);
-							break;
-						case PropType.Percent:
-							adj = new Adjustment (0.0, 0.0, 1.0, 0.01, 0.1, 1.0);
-							widget = new SpinButton (adj, 0.01, 2);
-							((SpinButton) widget).Numeric = true;
-							((SpinButton) widget).SetRange (0.0, 1.0);
-							if (value != null)
-								((SpinButton) widget).Value = (double) value;
-							((SpinButton) widget).Changed += new EventHandler (OnDoubleChanged);
-							break;
-						case PropType.Stretch:
-							widget = new ComboBox (stretchEntries);
-							((ComboBox) widget).Changed += new EventHandler (OnComboChanged);
-							break;
-						case PropType.LineJoin:
-							widget = new ComboBox (lineJoinEntries);
-							((ComboBox) widget).Changed += new EventHandler (OnComboChanged);
-							break;
-						case PropType.DashArray:
-							widget = new Button ("...");
-							break;
-						case PropType.Visibility:
-							widget = new ComboBox (visibilityEntries);
-							((ComboBox) widget).Changed += new EventHandler (OnComboChanged);
-							break;
-						}
-						
-						propTable.Add (widget, prop);
-						widget.Show ();
-						
-						if (info[i].Extended) {
-							((Table) extended).Attach (label, 0, 1, etop, etop + 1);
-							((Table) extended).Attach (widget, 1, 2, etop, etop + 1);
-							etop++;
-						} else {
-							((Table) main).Attach (label, 0, 1, top, top + 1);
-							((Table) main).Attach (widget, 1, 2, top, top + 1);
-							top++;
-						}
-					}
+				FieldInfo field = (FieldInfo) props[info[i].Name];
+				if (field == null)
+					continue;
+				
+				string propName = info[i].Name.Substring (0, info[i].Name.Length - 8);
+				DependencyProperty prop = (DependencyProperty) field.GetValue (item);
+				object value = item.GetValue (prop);
+				Adjustment adj;
+				
+				Widget label = new Label (propName);
+				label.Show ();
+				
+				Widget widget = null;
+				
+				Console.WriteLine ("Appearance: {0} = {1} ({2})", propName, 
+				                   value != null ? value.ToString () : "(null)", 
+				                   value != null ? value.GetType ().ToString () : "(null)");
+				
+				switch (info[i].Type) {
+				case PropType.PenLineCap:
+					widget = new ComboBox (penLineCapEnums);
+					((ComboBox) widget).Active = (int) value;
+					((ComboBox) widget).Changed += new EventHandler (OnCapChanged);
+					break;
+				case PropType.Data:
+					widget = new Entry ();
+					((Entry) widget).Changed += new EventHandler (OnDataChanged);
+					break;
+				case PropType.Double:
+					adj = new Adjustment (0.0, 0.0, Double.MaxValue, 1.0, 10.0, 100.0);
+					widget = new SpinButton (adj, 1.0, 2);
+					((SpinButton) widget).Numeric = true;
+					if (value != null)
+						((SpinButton) widget).Value = (double) value;
+					((SpinButton) widget).Changed += new EventHandler (OnDoubleChanged);
+					break;
+				case PropType.Integer:
+					adj = new Adjustment (0.0, 0.0, Int32.MaxValue, 1.0, 10.0, 100.0);
+					widget = new SpinButton (adj, 1.0, 0);
+					((SpinButton) widget).Numeric = true;
+					if (value != null)
+						((SpinButton) widget).Value = (double) value;
+					((SpinButton) widget).Changed += new EventHandler (OnIntegerChanged);
+					break;
+				case PropType.Percent:
+					adj = new Adjustment (0.0, 0.0, 1.0, 0.01, 0.1, 1.0);
+					widget = new SpinButton (adj, 0.01, 2);
+					((SpinButton) widget).Numeric = true;
+					((SpinButton) widget).SetRange (0.0, 1.0);
+					if (value != null)
+						((SpinButton) widget).Value = (double) value;
+					((SpinButton) widget).Changed += new EventHandler (OnDoubleChanged);
+					break;
+				case PropType.Stretch:
+					widget = new ComboBox (stretchEnums);
+					((ComboBox) widget).Active = (int) value;
+					((ComboBox) widget).Changed += new EventHandler (OnStretchChanged);
+					break;
+				case PropType.PenLineJoin:
+					widget = new ComboBox (penLineJoinEnums);
+					((ComboBox) widget).Active = (int) value;
+					((ComboBox) widget).Changed += new EventHandler (OnLineJoinChanged);
+					break;
+				case PropType.DashArray:
+					widget = new Button ("...");
+					break;
+				case PropType.Visibility:
+					widget = new ComboBox (visibilityEnums);
+					((ComboBox) widget).Active = (int) value;
+					((ComboBox) widget).Changed += new EventHandler (OnVisibilityChanged);
+					break;
+				}
+				
+				propTable.Add (widget, prop);
+				widget.Show ();
+				
+				if (info[i].Extended) {
+					((Table) extended).Attach (label, 0, 1, etop, etop + 1);
+					((Table) extended).Attach (widget, 1, 2, etop, etop + 1);
+					etop++;
+				} else {
+					((Table) main).Attach (label, 0, 1, top, top + 1);
+					((Table) main).Attach (widget, 1, 2, top, top + 1);
+					top++;
 				}
 			}
 			
@@ -227,12 +236,36 @@ namespace LunarEclipse {
 		}
 		
 		// callbacks
-		void OnComboChanged (object o, EventArgs e)
+		void OnCapChanged (object o, EventArgs e)
 		{
 			DependencyProperty prop = (DependencyProperty) propTable[o];
 			ComboBox combo = (ComboBox) o;
 			
-			item.SetValue (prop, combo.ActiveText);
+			item.SetValue<PenLineCap> (prop, (PenLineCap) combo.Active);
+		}
+		
+		void OnStretchChanged (object o, EventArgs e)
+		{
+			DependencyProperty prop = (DependencyProperty) propTable[o];
+			ComboBox combo = (ComboBox) o;
+			
+			item.SetValue<Stretch> (prop, (Stretch) combo.Active);
+		}
+		
+		void OnLineJoinChanged (object o, EventArgs e)
+		{
+			DependencyProperty prop = (DependencyProperty) propTable[o];
+			ComboBox combo = (ComboBox) o;
+			
+			item.SetValue<PenLineJoin> (prop, (PenLineJoin) combo.Active);
+		}
+		
+		void OnVisibilityChanged (object o, EventArgs e)
+		{
+			DependencyProperty prop = (DependencyProperty) propTable[o];
+			ComboBox combo = (ComboBox) o;
+			
+			item.SetValue<Visibility> (prop, (Visibility) combo.Active);
 		}
 		
 		void OnDoubleChanged (object o, EventArgs e)
