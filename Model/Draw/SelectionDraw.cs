@@ -65,7 +65,7 @@ namespace LunarEclipse.Model
                 double height = (double)v.GetValue(Shape.HeightProperty);
                 
                 double rectTop, rectLeft, rectWidth, rectHeight;
-                DrawBase.GetNormalisedBounds(Element, out rectTop, out rectLeft, out rectWidth, out rectHeight);
+                GetNormalisedBounds(out rectTop, out rectLeft, out rectWidth, out rectHeight);
                                          
                 if(((rectLeft < (left + width)) && (rectLeft + rectWidth) > left)
                    && (rectTop < (top + height)) && ((rectTop + rectHeight) > top))

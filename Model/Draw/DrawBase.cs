@@ -48,6 +48,17 @@ namespace LunarEclipse.Model
             set { position = value; }
         }
         
+        private double Left
+        {
+            get { return (double)Element.GetValue(Canvas.LeftProperty); }
+            set { Element.SetValue<double>(Canvas.LeftProperty, value); }
+        }
+        
+        private double Top
+        {
+            get { return (double)Element.GetValue(Canvas.TopProperty); }
+            set { Element.SetValue<double>(Canvas.TopProperty, value); }
+        }
 #endregion Properties
         
         internal DrawBase(Shape element)
@@ -67,8 +78,8 @@ namespace LunarEclipse.Model
             
             Prepare();
             position = point.GetPosition(panel);
-            Element.SetValue<double>(Canvas.LeftProperty, position.X);
-            Element.SetValue<double>(Canvas.TopProperty, position.Y);
+            Left = position.X;
+            Top = position.Y;
         }
         
         internal virtual void Prepare()
@@ -92,30 +103,36 @@ namespace LunarEclipse.Model
         internal virtual void DrawEnd(MouseEventArgs point)
         {
             double top, left, width, height;
-            GetNormalisedBounds(Element, out top, out left, out width, out height);
+            GetNormalisedBounds(out top, out left, out width, out height);
             Element.Width = width;
             Element.Height = height;
-            Element.SetValue<double>(Canvas.LeftProperty, left);
-            Element.SetValue<double>(Canvas.TopProperty, top);
+            Left = left;
+            Top = top;
         }
         
-        protected static void GetNormalisedBounds(Shape shape, out double top, out double left, out double width, out double height)
+        protected void GetNormalisedBounds(out double top, out double left, out double width, out double height)
         {
-            width = shape.Width;
-            left = (double)shape.GetValue(Canvas.LeftProperty);
+            width = Element.Width;
+            left = Left;
             if(width < 0)
             {
                 left = left + width;
                 width = -width;
             }
             
-            height = shape.Height;
-            top = (double)shape.GetValue(Canvas.TopProperty);
+            height = Element.Height;
+            top = Top;
             if(height < 0)
             {
                 top = top + height;
                 height = -height;
             }
+        }
+        
+        protected virtual void MoveBy(Point p)
+        {
+            Left += p.X;
+            Top += p.Y;
         }
     }
 }
