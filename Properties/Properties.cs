@@ -3,6 +3,9 @@
 //
 
 using System;
+using System.Reflection;
+using System.Collections;
+using System.Collections.Generic;
 
 using System.Windows;
 
@@ -10,6 +13,7 @@ using Gtk;
 
 namespace LunarEclipse {
 	public partial class Properties : Gtk.Bin, IPropertyGroup {
+		DependencyProperty nameProp;
 		DependencyObject item;
 		
 		PropertyGroup brush;
@@ -55,12 +59,23 @@ namespace LunarEclipse {
 		
 		public DependencyObject DependencyObject {
 			set {
+				nameProp = null;
 				item = value;
 				
 				if (item != null) {
-					ObjectName.Text = item.Name;
+					ObjectName.Text = item.Name == null || item.Name == String.Empty ? "<No Name>" : item.Name;
 					ObjectName.Sensitive = true;
 					ObjectType.Text = item.GetType ().Name;
+					
+					for (Type type = item.GetType (); nameProp == null && type != null; type = type.BaseType) {
+						FieldInfo[] fields = type.GetFields ();
+						foreach (FieldInfo field in fields) {
+							if (field.Name == "NameProperty") {
+								nameProp = (DependencyProperty) field.GetValue (item);
+								break;
+							}
+						}
+					}
 				} else {
 					ObjectName.Text = "<No Name>";
 					ObjectName.Sensitive = false;
@@ -93,9 +108,19 @@ namespace LunarEclipse {
 			}
 		}
 		
-		void OnNameChanged (object sender, EventArgs e)
+		void OnNameChanged (object o, EventArgs e)
 		{
+			Entry entry = (Entry) o;
 			
+			if (entry.Text == String.Empty)
+				entry.Text = "<No Name>";
+			
+			if (entry.Text == "<No Name>") {
+				entry.SelectRegion (0, -1);
+				item.SetValue<string> (nameProp, null);
+			} else {
+				item.SetValue<string> (nameProp, entry.Text);
+			}
 		}
 	}
 }

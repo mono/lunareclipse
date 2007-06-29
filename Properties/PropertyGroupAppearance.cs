@@ -82,9 +82,9 @@ namespace LunarEclipse {
 			}
 			
 			List<FieldInfo> props = new List<FieldInfo> ();
-			for (Type current = item.GetType (); current != null; current = current.BaseType) {
-				FieldInfo[] currentFields = current.GetFields ();
-				foreach (FieldInfo field in currentFields) {
+			for (Type type = item.GetType (); type != null; type = type.BaseType) {
+				FieldInfo[] fields = type.GetFields ();
+				foreach (FieldInfo field in fields) {
 					if (!field.FieldType.Equals (typeof (DependencyProperty)))
 						continue;
 					
