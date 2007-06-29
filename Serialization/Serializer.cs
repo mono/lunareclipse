@@ -73,9 +73,9 @@ namespace LunarEclipse
                 checkableTypes = new Type[] { baseType };
             else
                 checkableTypes = new Type[] { baseType, typeof(Canvas) };
-            
+
             List<KeyValuePair<Type, FieldInfo>> fields = new List<KeyValuePair<Type, FieldInfo>>();
-            
+
             writer.WriteStartElement(baseType.Name);
             foreach(Type t in checkableTypes)
                 for(Type current = t; current != null; current = current.BaseType)

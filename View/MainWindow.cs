@@ -32,10 +32,10 @@ namespace LunarEclipse.View
     		Build ();
     		
             Canvas c = new Canvas();
-            c.Width = 640;
-            c.Height = 480;
+            c.Width = 800;
+            c.Height = 600;
             
-    		GtkSilver moonlight = new GtkSilver(640, 480);
+    		GtkSilver moonlight = new GtkSilver(800, 600);
             moonlight.Attach(c);
 			moonlight.Show ();
 			
