@@ -130,13 +130,21 @@ namespace LunarEclipse.Model
         {
             Point mousePoint = e.GetPosition(Panel);
             mousePoint.Offset(-Position.X, -Position.Y);
+            
             base.Resize(e);
 
             if(this.clickedOnShape)
             {
-                Console.WriteLine("Moving");
+                if(selectedObjects.Count == 0)
+                {
+                    Shape s;
+                    ClickedOnShape(mouseStart, out s);
+                    selectedObjects.Add(s);
+                }
+                
                 foreach(Shape s in this.selectedObjects)
                     MoveShape(s, mousePoint);
+                
                 Element.Width = 0;
                 Element.Height = 0;
             }
@@ -159,6 +167,7 @@ namespace LunarEclipse.Model
             Point mouseLocation = e.GetPosition(Panel);
             bool clickedOnShape = ClickedOnShape(mouseLocation, out shape);
             bool mouseDidntMove = mouseStart.Equals(Position);
+            
             if(clickedOnShape && mouseDidntMove)
             {
                 if(!e.Ctrl && !e.Shift)
