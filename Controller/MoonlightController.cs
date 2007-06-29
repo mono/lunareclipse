@@ -53,9 +53,6 @@ namespace LunarEclipse.Controller
         {
             moonlight.Canvas.Children.Clear();
             undo.Clear();
-            Rectangle r = new Rectangle();
-            moonlight.Canvas.Children.Add(r);
-            moonlight.Canvas.Children.Remove(r);
         }
         
         bool active = false;

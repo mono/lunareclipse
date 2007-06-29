@@ -1,5 +1,9 @@
 2007-06-28  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	Added better handling for selection. Still not done yet.
+
+2007-06-28  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	Small fix for circle drawing
 
 2007-06-28  Alan McGovern <alan.mcgovern@gmail.com> 

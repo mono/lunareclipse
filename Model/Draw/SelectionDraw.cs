@@ -72,11 +72,7 @@ namespace LunarEclipse.Model
                 {
                    // Console.WriteLine("Hit");
                     if(!selectedObjects.Contains(v))
-                    {
-                        v.Stroke = new SolidColorBrush(Colors.Green);
-                        v.Fill = new SolidColorBrush(Colors.Black);
-                        shapes.Add(v);
-                    }
+                        Select(v);
                 }
             }
             
@@ -93,25 +89,50 @@ namespace LunarEclipse.Model
 
         internal override void Resize (MouseEventArgs e)
         {
-            foreach(Shape s in this.selectedObjects)
-            {
-                s.Fill = new SolidColorBrush(Colors.White);
-                s.Stroke = new SolidColorBrush(Colors.Red);
-            }
-            this.selectedObjects.Clear();
-            List<Shape> shapes = GetSelectedObjects(e);
+            base.Resize(e);
             
-
-                base.Resize(e);
-                
-                foreach(Shape s in shapes)
-                    if(!selectedObjects.Contains(s))
-                        selectedObjects.Add(s);
+            if(!e.Ctrl && !e.Shift)
+                DeselectAll();
+            
+            List<Shape> shapes = GetSelectedObjects(e);
+            foreach(Shape s in shapes)
+                if(!selectedObjects.Contains(s))
+                    Select(s);
         }
 
         internal override void DrawEnd (MouseEventArgs e)
         {
             Panel.Children.Remove(Element);
+            
+            if(clickedOnShape && !e.Ctrl && !e.Shift && e.GetPosition(Panel).Equals(Position))
+            {
+                this.DeselectAll();
+                
+                List<Shape> shapes = this.GetSelectedObjects(e);
+                foreach(Shape s in shapes)
+                    if(!selectedObjects.Contains(s))
+                        Select(s);
+            }
+        }
+        
+        private void DeselectAll()
+        {
+            while(this.selectedObjects.Count > 0)
+                Deselect(this.selectedObjects[0]);
+        }
+        
+        private void Deselect(Shape s)
+        {
+            s.Fill = new SolidColorBrush(Colors.White);
+            s.Stroke = new SolidColorBrush(Colors.Red);
+            this.selectedObjects.Remove(s);
+        }
+        
+        private void Select(Shape s)
+        {
+              s.Stroke = new SolidColorBrush(Colors.Green);
+              s.Fill = new SolidColorBrush(Colors.Black);
+              this.selectedObjects.Add(s);
         }
     }
 }
