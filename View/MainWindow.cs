@@ -67,7 +67,6 @@ namespace LunarEclipse.View
 			Add (book);
 			
             controller = new MoonlightController(moonlight);
-            moonlight.Load("~/Desktop/moonlight/moon/test/tester.xaml");
             HookEvents(true);
             Show ();
     	}
@@ -113,7 +112,7 @@ namespace LunarEclipse.View
             
             b = new Button("Selection");
             b.Clicked += delegate {
-                controller.Current = new SelectionDraw();
+                controller.Current = new SelectionDraw(this.controller);
                 Console.WriteLine("Draw is" + controller.Current.GetType().Name.ToString());
             };
             widgets.Add(b);

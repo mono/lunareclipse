@@ -11,12 +11,12 @@ using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.Collections.Generic;
-
-
+using LunarEclipse.Controller;
 namespace LunarEclipse.Model
 {
     public class SelectionDraw : DrawBase
     {
+        private MoonlightController controller;
         private Point mouseStart;
         private bool clickedOnShape;
         private bool prepared;
@@ -32,9 +32,10 @@ namespace LunarEclipse.Model
             get { return false; }
         }
 
-        public SelectionDraw()
+        public SelectionDraw(MoonlightController controller)
             :base(new SelectionRectangle())
         {
+            this.controller = controller;
             selectedObjects = new List<Shape>();
         }
         
@@ -128,6 +129,7 @@ namespace LunarEclipse.Model
 
         internal override void Resize (MouseEventArgs e)
         {
+            Shape clickedShape;
             Point mousePoint = e.GetPosition(Panel);
             mousePoint.Offset(-Position.X, -Position.Y);
             
@@ -135,12 +137,12 @@ namespace LunarEclipse.Model
 
             if(this.clickedOnShape)
             {
+                ClickedOnShape(mouseStart, out clickedShape);
+                if(clickedShape!= null && !selectedObjects.Contains(clickedShape))
+                    DeselectAll();
+                
                 if(selectedObjects.Count == 0)
-                {
-                    Shape s;
-                    ClickedOnShape(mouseStart, out s);
-                    selectedObjects.Add(s);
-                }
+                    Select(clickedShape);
                 
                 foreach(Shape s in this.selectedObjects)
                     MoveShape(s, mousePoint);
@@ -181,6 +183,17 @@ namespace LunarEclipse.Model
                     
             if(!clickedOnShape && mouseDidntMove)
                 DeselectAll();
+            
+            if(!mouseDidntMove)
+            {
+                Point start = mouseStart;
+                start.Offset(-Position.X, -Position.Y);
+                foreach(Shape s in selectedObjects)
+                {
+
+                    controller.UndoEngine.PushUndo(new UndoMoveShape(s, start));
+                }
+            }
         }
         
         private void DeselectAll()
@@ -205,8 +218,9 @@ namespace LunarEclipse.Model
         
         private void MoveShape(Shape s, Point offset)
         {
-            s.SetValue<double>(Canvas.LeftProperty, (double)s.GetValue(Canvas.LeftProperty) + offset.X);
-            s.SetValue<double>(Canvas.TopProperty, (double)s.GetValue(Canvas.TopProperty) + offset.Y);
+            Point oldPoint = new Point((double)s.GetValue(Canvas.LeftProperty), (double)s.GetValue(Canvas.TopProperty));
+            s.SetValue<double>(Canvas.LeftProperty, oldPoint.X + offset.X);
+            s.SetValue<double>(Canvas.TopProperty, oldPoint.Y + offset.Y);
         }
     }
 }
