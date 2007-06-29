@@ -27,7 +27,7 @@ namespace LunarEclipse {
 				if (properties != null)
 					properties.Destroy ();
 				properties = value;
-				Add (value);
+				expander.Add (value);
 			}
 		}
 		

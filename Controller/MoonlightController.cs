@@ -19,6 +19,7 @@ namespace LunarEclipse.Controller
 {
     public class MoonlightController
     {
+		IPropertyGroup properties;
         private UndoEngine undo;
         private GtkSilver moonlight;
     	private DrawBase current;
@@ -40,9 +41,10 @@ namespace LunarEclipse.Controller
             get { return undo; }
         }
     	
-        public MoonlightController(GtkSilver moonlight)
+        public MoonlightController(GtkSilver moonlight, IPropertyGroup properties)
         {
             this.moonlight = moonlight;
+			this.properties = properties;
             moonlight.Canvas.MouseLeftButtonDown += new MouseEventHandler(MouseLeftDown);
             moonlight.Canvas.MouseMove += new MouseEventHandler(MouseMove);
             moonlight.Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseLeftUp);
@@ -83,6 +85,12 @@ namespace LunarEclipse.Controller
 
             current.DrawEnd(e);
             active = false;
+			
+			if (current is SelectionDraw) {
+				SelectionDraw selection = (SelectionDraw) current;
+				if (selection.SelectedObjects.Count == 1)
+					properties.DependencyObject = selection.SelectedObjects[0];
+			}
         }
         
 

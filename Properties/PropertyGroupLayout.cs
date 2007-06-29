@@ -13,25 +13,32 @@ using Gtk;
 
 namespace LunarEclipse {
 	public class PropertyGroupLayout : PropertyGroup {
+		enum PropType {
+			Double,
+			Integer
+		}
+		
 		struct PropInfo {
 			public string Name;
+			public PropType Type;
 			public bool Attached;
 			public bool CanAuto;
 			
-			public PropInfo (string name, bool attached, bool canAuto)
+			public PropInfo (string name, PropType type, bool attached, bool canAuto)
 			{
 				Name = name;
+				Type = type;
 				Attached = attached;
 				CanAuto = canAuto;
 			}
 		}
 		
 		static PropInfo [] info = new PropInfo [5] {
-			new PropInfo ("WidthProperty",  false, true),
-			new PropInfo ("HeightProperty", false, true),
-			new PropInfo ("LeftProperty",   true,  false),
-			new PropInfo ("TopProperty",    true,  false),
-			new PropInfo ("ZIndexProperty", false, false),
+			new PropInfo ("WidthProperty",  PropType.Double,  false, true),
+			new PropInfo ("HeightProperty", PropType.Double,  false, true),
+			new PropInfo ("LeftProperty",   PropType.Double,  true,  false),
+			new PropInfo ("TopProperty",    PropType.Double,  true,  false),
+			new PropInfo ("ZIndexProperty", PropType.Integer, false, false),
 		};
 		
 		DependencyObject item;
@@ -53,7 +60,7 @@ namespace LunarEclipse {
 				return;
 			}
 			
-			List<FieldInfo> props = new List<FieldInfo> ();
+			Hashtable props = new Hashtable ();
 			for (Type type = item.GetType (); type != null; type = type.BaseType) {
 				FieldInfo[] fields = type.GetFields ();
 				foreach (FieldInfo field in fields) {
@@ -62,7 +69,7 @@ namespace LunarEclipse {
 					
 					for (i = 0; i < info.Length; i++) {
 						if (field.Name == info[i].Name) {
-							props.Add (field);
+							props.Add (field.Name, field);
 							break;
 						}
 					}
@@ -80,39 +87,55 @@ namespace LunarEclipse {
 			uint top = 0;
 			
 			for (i = 0; i < info.Length; i++) {
-				foreach (FieldInfo field in props) {
-					if (field.Name == info[i].Name) {
-						string propName = info[i].Name.Substring (0, info[i].Name.Length - 8);
-						DependencyProperty prop = (DependencyProperty) field.GetValue (item);
-						Widget label = new Label (propName);
-						label.Show ();
-						
-						Widget value = new SpinButton (null, 1.0, 0);
-						((SpinButton) value).Changed += new EventHandler (OnIntegerChanged);
-						((SpinButton) value).SetRange (0.0, Int32.MaxValue);
-						((SpinButton) value).Numeric = true;
-						
-						propTable.Add (value, prop);
-						value.Show ();
-						
-						if (info[i].CanAuto) {
-							Box hbox = new HBox (false, 6);
-							hbox.PackStart (value, true, true, 0);
-							Button button = new Button ("Auto");
-							button.Clicked += new EventHandler (OnAutoClicked);
-							spinTable.Add (button, value);
-							button.Show ();
-							hbox.PackStart (button, false, false, 0);
-							hbox.Show ();
-							
-							value = hbox;
-						}
-						
-						table.Attach (label, 0, 1, top, top + 1);
-						table.Attach (value, 1, 2, top, top + 1);
-						top++;
+				FieldInfo field = (FieldInfo) props[info[i].Name];
+				if (field == null)
+					continue;
+				
+				string propName = info[i].Name.Substring (0, info[i].Name.Length - 8);
+				DependencyProperty prop = (DependencyProperty) field.GetValue (item);
+				object value = item.GetValue (prop);
+				Widget label = new Label (propName);
+				label.Show ();
+				
+				Adjustment adj = new Adjustment (0.0, 0.0, Int32.MaxValue, 1.0, 10.0, 100.0);
+				Widget widget = new SpinButton (adj, 1.0, 0);
+				((SpinButton) widget).SetRange (0.0, (double) Int32.MaxValue);
+				((SpinButton) widget).Numeric = true;
+				
+				Console.WriteLine ("Layout: {0} = {1} ({2})", propName, value, value.GetType ());
+				if (value != null) {
+					switch (value.GetType ().Name) {
+					case "Double":
+						((SpinButton) widget).Value = (double) value;
+						break;
+					case "Int32":
+						((SpinButton) widget).Value = (int) value;
+						break;
 					}
 				}
+				
+				((SpinButton) widget).Changed += new EventHandler (OnIntegerChanged);
+				((SpinButton) widget).ValueChanged += new EventHandler (OnIntegerChanged);
+				
+				propTable.Add (widget, prop);
+				widget.Show ();
+				
+				if (info[i].CanAuto) {
+					Box hbox = new HBox (false, 6);
+					hbox.PackStart (widget, true, true, 0);
+					Button button = new Button ("Auto");
+					button.Clicked += new EventHandler (OnAutoClicked);
+					spinTable.Add (button, widget);
+					button.Show ();
+					hbox.PackStart (button, false, false, 0);
+					hbox.Show ();
+					
+					widget = hbox;
+				}
+				
+				table.Attach (label, 0, 1, top, top + 1);
+				table.Attach (widget, 1, 2, top, top + 1);
+				top++;
 			}
 			
 			table.Show ();
@@ -139,10 +162,10 @@ namespace LunarEclipse {
 			SpinButton spin = (SpinButton) o;
 			
 			if (((Entry) spin).Text == "Auto") {
-				item.SetValue<int> (prop, 0);
+				item.SetValue<double> (prop, 0.0);
 			} else {
-				int v = (int) spin.Value;
-				item.SetValue<int> (prop, v);
+				double v = spin.Value;
+				item.SetValue<double> (prop, v);
 			}
 		}
 		

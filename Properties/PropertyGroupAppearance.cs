@@ -120,65 +120,75 @@ namespace LunarEclipse {
 					if (field.Name == info[i].Name) {
 						string propName = info[i].Name.Substring (0, info[i].Name.Length - 8);
 						DependencyProperty prop = (DependencyProperty) field.GetValue (item);
+						object value = item.GetValue (prop);
+						Adjustment adj;
+						
 						Widget label = new Label (propName);
 						label.Show ();
 						
-						Widget value = null;
+						Widget widget = null;
 						
 						switch (info[i].Type) {
 						case PropType.Cap:
-							value = new ComboBox (capEntries);
-							((ComboBox) value).Changed += new EventHandler (OnComboChanged);
+							widget = new ComboBox (capEntries);
+							((ComboBox) widget).Changed += new EventHandler (OnComboChanged);
 							break;
 						case PropType.Data:
-							value = new Entry ();
-							((Entry) value).Changed += new EventHandler (OnDataChanged);
+							widget = new Entry ();
+							((Entry) widget).Changed += new EventHandler (OnDataChanged);
 							break;
 						case PropType.Double:
-							value = new SpinButton (null, 1.0, 2);
-							((SpinButton) value).Numeric = true;
-							((SpinButton) value).SetRange (0.0, Double.MaxValue);
-							((SpinButton) value).Changed += new EventHandler (OnDoubleChanged);
+							adj = new Adjustment (0.0, 0.0, Double.MaxValue, 1.0, 10.0, 100.0);
+							widget = new SpinButton (adj, 1.0, 2);
+							((SpinButton) widget).Numeric = true;
+							if (value != null)
+								((SpinButton) widget).Value = (double) value;
+							((SpinButton) widget).Changed += new EventHandler (OnDoubleChanged);
 							break;
 						case PropType.Integer:
-							value = new SpinButton (null, 1.0, 0);
-							((SpinButton) value).Numeric = true;
-							((SpinButton) value).SetRange (0.0, Int32.MaxValue);
-							((SpinButton) value).Changed += new EventHandler (OnIntegerChanged);
+							adj = new Adjustment (0.0, 0.0, Int32.MaxValue, 1.0, 10.0, 100.0);
+							widget = new SpinButton (adj, 1.0, 0);
+							((SpinButton) widget).Numeric = true;
+							if (value != null)
+								((SpinButton) widget).Value = (double) value;
+							((SpinButton) widget).Changed += new EventHandler (OnIntegerChanged);
 							break;
 						case PropType.Percent:
-							value = new SpinButton (null, 0.01, 2);
-							((SpinButton) value).Numeric = true;
-							((SpinButton) value).SetRange (0.0, 1.0);
-							((SpinButton) value).Changed += new EventHandler (OnDoubleChanged);
+							adj = new Adjustment (0.0, 0.0, 1.0, 0.01, 0.1, 1.0);
+							widget = new SpinButton (adj, 0.01, 2);
+							((SpinButton) widget).Numeric = true;
+							((SpinButton) widget).SetRange (0.0, 1.0);
+							if (value != null)
+								((SpinButton) widget).Value = (double) value;
+							((SpinButton) widget).Changed += new EventHandler (OnDoubleChanged);
 							break;
 						case PropType.Stretch:
-							value = new ComboBox (stretchEntries);
-							((ComboBox) value).Changed += new EventHandler (OnComboChanged);
+							widget = new ComboBox (stretchEntries);
+							((ComboBox) widget).Changed += new EventHandler (OnComboChanged);
 							break;
 						case PropType.LineJoin:
-							value = new ComboBox (lineJoinEntries);
-							((ComboBox) value).Changed += new EventHandler (OnComboChanged);
+							widget = new ComboBox (lineJoinEntries);
+							((ComboBox) widget).Changed += new EventHandler (OnComboChanged);
 							break;
 						case PropType.DashArray:
-							value = new Button ("...");
+							widget = new Button ("...");
 							break;
 						case PropType.Visibility:
-							value = new ComboBox (visibilityEntries);
-							((ComboBox) value).Changed += new EventHandler (OnComboChanged);
+							widget = new ComboBox (visibilityEntries);
+							((ComboBox) widget).Changed += new EventHandler (OnComboChanged);
 							break;
 						}
 						
-						propTable.Add (value, prop);
-						value.Show ();
+						propTable.Add (widget, prop);
+						widget.Show ();
 						
 						if (info[i].Extended) {
 							((Table) extended).Attach (label, 0, 1, etop, etop + 1);
-							((Table) extended).Attach (value, 1, 2, etop, etop + 1);
+							((Table) extended).Attach (widget, 1, 2, etop, etop + 1);
 							etop++;
 						} else {
 							((Table) main).Attach (label, 0, 1, top, top + 1);
-							((Table) main).Attach (value, 1, 2, top, top + 1);
+							((Table) main).Attach (widget, 1, 2, top, top + 1);
 							top++;
 						}
 					}
@@ -191,7 +201,7 @@ namespace LunarEclipse {
 			((Box) properties).PackStart (main);
 			
 			if (erows > 0) {
-				Widget expander = new Expander ("");
+				Widget expander = new Expander ("More...");
 				((Expander) expander).Expanded = false;
 				
 				extended.Show ();

@@ -27,7 +27,7 @@ namespace LunarEclipse {
 		{
 			this.Build ();
 			
-			ObjectName.Text = "<No Name>";
+			ObjectName.Text = "<No Object Selected>";
 			ObjectName.Sensitive = false;
 			ObjectName.Changed += new EventHandler (OnNameChanged);
 			ObjectType.Text = "";
@@ -63,7 +63,7 @@ namespace LunarEclipse {
 				item = value;
 				
 				if (item != null) {
-					ObjectName.Text = item.Name == null || item.Name == String.Empty ? "<No Name>" : item.Name;
+					ObjectName.Text = item.Name != null ? item.Name : "";
 					ObjectName.Sensitive = true;
 					ObjectType.Text = item.GetType ().Name;
 					
@@ -77,7 +77,7 @@ namespace LunarEclipse {
 						}
 					}
 				} else {
-					ObjectName.Text = "<No Name>";
+					ObjectName.Text = "<No Object Selected>";
 					ObjectName.Sensitive = false;
 					ObjectType.Text = "";
 				}
@@ -112,15 +112,8 @@ namespace LunarEclipse {
 		{
 			Entry entry = (Entry) o;
 			
-			if (entry.Text == String.Empty)
-				entry.Text = "<No Name>";
-			
-			if (entry.Text == "<No Name>") {
-				entry.SelectRegion (0, -1);
-				item.SetValue<string> (nameProp, null);
-			} else {
+			if (nameProp != null)
 				item.SetValue<string> (nameProp, entry.Text);
-			}
 		}
 	}
 }
