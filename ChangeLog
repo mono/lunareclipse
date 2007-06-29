@@ -1,3 +1,7 @@
+2007-06-29  Alan McGovern <alan.mcgovern@gmail.com> 
+
+	Shape selection semi-complete
+
 2007-06-29  Jeffrey Stedfast  <fejj@novell.com>
 
 	* View/MainWindow.cs: Don't ShowAll(), we want to explicitly show only

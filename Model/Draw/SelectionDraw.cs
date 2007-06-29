@@ -17,6 +17,7 @@ namespace LunarEclipse.Model
 {
     public class SelectionDraw : DrawBase
     {
+        private Point mouseStart;
         private bool clickedOnShape;
         private bool prepared;
         private List<Shape> selectedObjects;
@@ -45,7 +46,9 @@ namespace LunarEclipse.Model
         internal override void DrawStart (Panel panel, MouseEventArgs e)
         {
             base.DrawStart(panel, e);
-            clickedOnShape = GetSelectedObjects(e).Count != 0;
+            Shape shape;
+            this.clickedOnShape = this.ClickedOnShape(e.GetPosition(panel), out shape);
+            mouseStart = Position;
         }
         
         private List<Shape> GetSelectedObjects(MouseEventArgs e)
@@ -79,6 +82,37 @@ namespace LunarEclipse.Model
             return shapes;
         }
         
+        private bool ClickedOnShape(Point point, out Shape shape)
+        {
+            foreach(Shape v in Panel.Children)
+            {
+                if(v == Element)
+                    continue;
+                
+                Rectangle rect = (Rectangle)Element;
+                
+                double top = (double)v.GetValue(Canvas.TopProperty);
+                double left = (double)v.GetValue(Canvas.LeftProperty);
+                double width = (double)v.GetValue(Shape.WidthProperty);
+                double height = (double)v.GetValue(Shape.HeightProperty);
+                
+                
+                double rectTop = point.Y;
+                double rectLeft = point.X;
+                double rectWidth = 1;
+                double rectHeight = 1;
+                                         
+                if(((rectLeft < (left + width)) && (rectLeft + rectWidth) > left)
+                   && (rectTop < (top + height)) && ((rectTop + rectHeight) > top))
+                {
+                    shape = v;
+                    return true;
+                }
+            }
+            
+            shape = null;
+            return false;
+        }
         
         internal override void Prepare ()
         {
@@ -89,30 +123,50 @@ namespace LunarEclipse.Model
 
         internal override void Resize (MouseEventArgs e)
         {
+            Point mousePoint = e.GetPosition(Panel);
+            mousePoint.Offset(-Position.X, -Position.Y);
             base.Resize(e);
-            
-            if(!e.Ctrl && !e.Shift)
-                DeselectAll();
-            
-            List<Shape> shapes = GetSelectedObjects(e);
-            foreach(Shape s in shapes)
-                if(!selectedObjects.Contains(s))
-                    Select(s);
+
+            if(this.clickedOnShape)
+            {
+                Console.WriteLine("Moving");
+                foreach(Shape s in this.selectedObjects)
+                    MoveShape(s, mousePoint);
+                Element.Width = 0;
+                Element.Height = 0;
+            }
+            else
+            {
+                if(!e.Ctrl && !e.Shift)
+                    DeselectAll();
+                
+                List<Shape> shapes = GetSelectedObjects(e);
+                foreach(Shape s in shapes)
+                    if(!selectedObjects.Contains(s))
+                        Select(s);
+            }
         }
 
         internal override void DrawEnd (MouseEventArgs e)
         {
             Panel.Children.Remove(Element);
-            
-            if(clickedOnShape && !e.Ctrl && !e.Shift && e.GetPosition(Panel).Equals(Position))
+            Shape shape = null;
+            Point mouseLocation = e.GetPosition(Panel);
+            bool clickedOnShape = ClickedOnShape(mouseLocation, out shape);
+            bool mouseDidntMove = mouseStart.Equals(Position);
+            if(clickedOnShape && mouseDidntMove)
             {
-                this.DeselectAll();
+                if(!e.Ctrl && !e.Shift)
+                    this.DeselectAll();
                 
-                List<Shape> shapes = this.GetSelectedObjects(e);
-                foreach(Shape s in shapes)
-                    if(!selectedObjects.Contains(s))
-                        Select(s);
+                if(this.selectedObjects.Contains(shape))
+                    Deselect(shape);
+                else
+                    Select(shape);
             }
+                    
+            if(!clickedOnShape && mouseDidntMove)
+                DeselectAll();
         }
         
         private void DeselectAll()
@@ -133,6 +187,12 @@ namespace LunarEclipse.Model
               s.Stroke = new SolidColorBrush(Colors.Green);
               s.Fill = new SolidColorBrush(Colors.Black);
               this.selectedObjects.Add(s);
+        }
+        
+        private void MoveShape(Shape s, Point offset)
+        {
+            s.SetValue<double>(Canvas.LeftProperty, (double)s.GetValue(Canvas.LeftProperty) + offset.X);
+            s.SetValue<double>(Canvas.TopProperty, (double)s.GetValue(Canvas.TopProperty) + offset.Y);
         }
     }
 }
