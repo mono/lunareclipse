@@ -1,5 +1,9 @@
 2007-06-29  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	Fixed issue selecting something which is on top of something else
+
+2007-06-29  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	Fixed undo for shapes
 
 2007-06-29  Alan McGovern <alan.mcgovern@gmail.com> 

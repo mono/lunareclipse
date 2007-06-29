@@ -22,6 +22,7 @@ namespace LunarEclipse.Model
         private bool prepared;
         private List<Shape> selectedObjects;
         private bool shapeMoved;
+        private bool shapeAdded;
         
         public List<Shape> SelectedObjects
         {
@@ -140,12 +141,16 @@ namespace LunarEclipse.Model
             if(this.clickedOnShape)
             {
                 ClickedOnShape(mouseStart, out clickedShape);
-                if(clickedShape != null && !selectedObjects.Contains(clickedShape))
-                    DeselectAll();
                 
-                if(selectedObjects.Count == 0)
-                    Select(clickedShape);
-                
+                if(!shapeAdded)
+                {
+                    shapeAdded = true;
+                    if(clickedShape != null && !selectedObjects.Contains(clickedShape))
+                        DeselectAll();
+                    
+                    if(selectedObjects.Count == 0)
+                        Select(clickedShape);
+                }
                 foreach(Shape s in this.selectedObjects)
                     MoveShape(s, mousePoint);
                 
@@ -168,6 +173,7 @@ namespace LunarEclipse.Model
         {
             Panel.Children.Remove(Element);
             Shape shape = null;
+            shapeAdded = false;
             Point mouseLocation = e.GetPosition(Panel);
             bool clickedOnShape = ClickedOnShape(mouseLocation, out shape);
             bool mouseMoved = !mouseStart.Equals(Position);
