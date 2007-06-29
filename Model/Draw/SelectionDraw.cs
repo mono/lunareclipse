@@ -22,6 +22,11 @@ namespace LunarEclipse.Model
         private bool prepared;
         private List<Shape> selectedObjects;
         
+        public List<Shape> SelectedObjects
+        {
+            get { return this.selectedObjects; }
+        }
+        
         public override bool CanUndo
         {
             get { return false; }
