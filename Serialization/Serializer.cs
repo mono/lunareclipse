@@ -156,12 +156,17 @@ namespace LunarEclipse
         {
             Type itemType = item.GetType();
             DependencyObject defaultItem;
+            
+            // If we have not cached an instance of the supplied DependencyObject,
+            // we create a new instance of it and add it to the cache
             if(!defaultValues.TryGetValue(itemType, out defaultItem))
             {
                 defaultItem = (DependencyObject)Activator.CreateInstance(itemType);
                 defaultValues.Add(itemType, defaultItem);
             }
             
+            // Using the cached instance, we check to see if the value supplied
+            // is the same as the default value of a fresh item.
             object defaultValue = defaultItem.GetValue(property);
             if(value == null && defaultValue == null)
                 return true;

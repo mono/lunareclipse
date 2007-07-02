@@ -1,5 +1,9 @@
 2007-07-02  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Serialization/Serializer.cs: Added comments
+
+2007-07-02  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* Serialization/Serializer.cs: Updated the serializer to take advantage
 	  of the just implemented FrameworkElement.Parent property to help
 	  with capturing attached properties.
