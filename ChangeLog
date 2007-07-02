@@ -1,3 +1,13 @@
+2007-07-02  Alan McGovern <alan.mcgovern@gmail.com> 
+
+	* Serialization/Serializer.cs: Updated the serializer to take advantage
+	  of the just implemented FrameworkElement.Parent property to help
+	  with capturing attached properties.
+	* Model/SelectedBorder.cs: Created a border class to put around
+	  selected items
+	* Model/Draw/SelectionDraw.cs: Updated selectiondraw to use the new
+	  Border class
+
 2007-06-29  Alan McGovern <alan.mcgovern@gmail.com> 
 
 	Made default size 800x600

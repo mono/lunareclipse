@@ -14,6 +14,8 @@ using System.Windows.Input;
 using LunarEclipse.View;
 using LunarEclipse.Model;
 using System.Xml;
+using System.Collections.Generic;
+
 
 namespace LunarEclipse.Controller
 {
@@ -24,7 +26,10 @@ namespace LunarEclipse.Controller
         private GtkSilver moonlight;
     	private DrawBase current;
     	private XmlDocument xaml;
-    	
+    	internal Canvas Canvas
+        {
+            get { return this.moonlight.Canvas; }
+        }
     	public DrawBase Current
         {
             get { return this.current; }
@@ -89,7 +94,8 @@ namespace LunarEclipse.Controller
 			if (current is SelectionDraw) {
 				SelectionDraw selection = (SelectionDraw) current;
 				if (selection.SelectedObjects.Count == 1)
-					properties.DependencyObject = selection.SelectedObjects[0];
+                    foreach(KeyValuePair<Shape, SelectedBorder> keypair in selection.SelectedObjects)
+                        properties.DependencyObject = keypair.Key;
 			}
         }
         

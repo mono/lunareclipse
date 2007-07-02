@@ -20,11 +20,11 @@ namespace LunarEclipse.Model
         private Point mouseStart;
         private bool clickedOnShape;
         private bool prepared;
-        private List<Shape> selectedObjects;
+        private Dictionary<Shape, SelectedBorder> selectedObjects;
         private bool shapeMoved;
         private bool shapeAdded;
         
-        public List<Shape> SelectedObjects
+        public Dictionary<Shape, SelectedBorder> SelectedObjects
         {
             get { return this.selectedObjects; }
         }
@@ -38,17 +38,15 @@ namespace LunarEclipse.Model
             :base(new SelectionRectangle())
         {
             this.controller = controller;
-            selectedObjects = new List<Shape>();
+            selectedObjects = new Dictionary<Shape, SelectedBorder>();
         }
         
         internal override void Cleanup ()
         {
-            foreach(Shape s in selectedObjects)
-            {
-                s.Fill = new SolidColorBrush(Colors.White);
-                s.Stroke = new SolidColorBrush(Colors.Red);
-            }
-            selectedObjects.Clear();
+            Shape[] shapes = new Shape[selectedObjects.Count];
+            selectedObjects.Keys.CopyTo(shapes, 0);
+            foreach(Shape s in shapes)
+                Deselect(s);
         }
 
         internal override void DrawStart (Panel panel, MouseEventArgs e)
@@ -62,13 +60,15 @@ namespace LunarEclipse.Model
         
         private List<Shape> GetSelectedObjects(MouseEventArgs e)
         {
+            int i=0;
             List<Shape> shapes = new List<Shape>();
-            
-            foreach(Shape v in Panel.Children)
+            Console.WriteLine("Contains: " + Panel.Children.Count.ToString());
+            foreach(Visual visual in Panel.Children)
             {
-                if(v == Element)
+                Console.WriteLine("Count: " + (++i).ToString());
+                if(visual == Element || !(visual is Shape))
                     continue;
-                
+                Shape v = (Shape)visual;
                 Rectangle rect = (Rectangle)Element;
                 
                 double top = (double)v.GetValue(Canvas.TopProperty);
@@ -82,8 +82,7 @@ namespace LunarEclipse.Model
                 if(((rectLeft < (left + width)) && (rectLeft + rectWidth) > left)
                    && (rectTop < (top + height)) && ((rectTop + rectHeight) > top))
                 {
-                   // Console.WriteLine("Hit");
-                    if(!selectedObjects.Contains(v))
+                    if(!selectedObjects.ContainsKey(v))
                         Select(v);
                 }
             }
@@ -93,11 +92,12 @@ namespace LunarEclipse.Model
         
         private bool ClickedOnShape(Point point, out Shape shape)
         {
-            foreach(Shape v in Panel.Children)
+            foreach(Visual visual in Panel.Children)
             {
-                if(v == Element)
+                if(visual == Element || !(visual is Shape))
                     continue;
                 
+                Shape v = (Shape)visual;
                 Rectangle rect = (Rectangle)Element;
                 
                 double top = (double)v.GetValue(Canvas.TopProperty);
@@ -145,14 +145,14 @@ namespace LunarEclipse.Model
                 if(!shapeAdded)
                 {
                     shapeAdded = true;
-                    if(clickedShape != null && !selectedObjects.Contains(clickedShape))
+                    if(clickedShape != null && !selectedObjects.ContainsKey(clickedShape))
                         DeselectAll();
                     
                     if(selectedObjects.Count == 0)
                         Select(clickedShape);
                 }
-                foreach(Shape s in this.selectedObjects)
-                    MoveShape(s, mousePoint);
+                foreach(KeyValuePair<Shape, SelectedBorder> keypair in selectedObjects)
+                    MoveShape(keypair.Key, mousePoint);
                 
                 Element.Width = 0;
                 Element.Height = 0;
@@ -164,7 +164,7 @@ namespace LunarEclipse.Model
                 
                 List<Shape> shapes = GetSelectedObjects(e);
                 foreach(Shape s in shapes)
-                    if(!selectedObjects.Contains(s))
+                    if(!selectedObjects.ContainsKey(s))
                         Select(s);
             }
         }
@@ -183,7 +183,7 @@ namespace LunarEclipse.Model
                 if(!e.Ctrl && !e.Shift)
                     this.DeselectAll();
                 
-                if(this.selectedObjects.Contains(shape))
+                if(this.selectedObjects.ContainsKey(shape))
                     Deselect(shape);
                 else
                     Select(shape);
@@ -197,38 +197,50 @@ namespace LunarEclipse.Model
                 Point start = mouseStart;
                 start.Offset(-mouseLocation.X, -mouseLocation.Y);
                 Console.WriteLine("Offset is: " + start.ToString());
-                controller.UndoEngine.PushUndo(new UndoMoveShape(selectedObjects.ToArray(), start));
+                Shape[] movedShapes = new Shape[selectedObjects.Keys.Count];
+                selectedObjects.Keys.CopyTo(movedShapes, 0);
+                controller.UndoEngine.PushUndo(new UndoMoveShape(movedShapes, start));
             }
         }
         
         private void DeselectAll()
         {
-            while(this.selectedObjects.Count > 0)
-                Deselect(this.selectedObjects[0]);
+            Shape[] shapes = new Shape[selectedObjects.Count];
+            selectedObjects.Keys.CopyTo(shapes, 0);
+            foreach(Shape s in shapes)
+                Deselect(s);
         }
         
         private void Deselect(Shape s)
         {
-            s.Fill = new SolidColorBrush(Colors.White);
-            s.Stroke = new SolidColorBrush(Colors.Red);
+            SelectedBorder border = this.selectedObjects[s];
+            Visual v = border.Children[0];
+            border.Children.Remove(v);
+            controller.Canvas.Children.Add(v);
+            controller.Canvas.Children.Remove(border);
             this.selectedObjects.Remove(s);
         }
         
         private void Select(Shape s)
         {
-            SolidColorBrush b = new SolidColorBrush(Colors.Green);
-            s.Stroke = b;
-            b = new SolidColorBrush(Colors.Black);
-            b.Opacity = 0.3;
-            s.Fill = b;
-            this.selectedObjects.Add(s);
+            SelectedBorder border = new SelectedBorder();
+            border.Children.Add(s);
+            this.controller.Canvas.Children.Remove(s);
+            this.controller.Canvas.Children.Add(border);
+            this.selectedObjects.Add(s, border);
+            
+            border.SetValue<double>(Canvas.TopProperty,
+                   (double)s.GetValue(Canvas.TopProperty) - SelectedBorder.BorderWidth);
+            border.SetValue<double>(Canvas.LeftProperty,
+                   (double)s.GetValue(Canvas.LeftProperty) - SelectedBorder.BorderWidth);
         }
         
         private void MoveShape(Shape s, Point offset)
         {
+            SelectedBorder b = selectedObjects[s];
             Point oldPoint = new Point((double)s.GetValue(Canvas.LeftProperty), (double)s.GetValue(Canvas.TopProperty));
-            s.SetValue<double>(Canvas.LeftProperty, oldPoint.X + offset.X);
-            s.SetValue<double>(Canvas.TopProperty, oldPoint.Y + offset.Y);
+            b.SetValue<double>(Canvas.LeftProperty, oldPoint.X + offset.X);
+            b.SetValue<double>(Canvas.TopProperty, oldPoint.Y + offset.Y);
             shapeMoved = true;
         }
     }

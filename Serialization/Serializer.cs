@@ -67,15 +67,32 @@ namespace LunarEclipse
             // and then walk up the inheritance tree and pick
             // out all the DependencyProperties it has and
             // then serialise the values of those properties to XAML
-            Type[] checkableTypes;
             Type baseType = item.GetType();
-            if(item is Canvas)
-                checkableTypes = new Type[] { baseType };
-            else
-                checkableTypes = new Type[] { baseType, typeof(Canvas) };
+            List<Type> checkableTypes = new List<Type>();
 
+            // The first type we need to check is the type of the object supplied
+            checkableTypes.Add(baseType);
+            
+            // If the object is a Framework Element, then it has a Parent property.
+            // We add the type of the parent to the list of types we need to scan.
+            // We then check if that item is a Framework element in order to check 
+            // its parent and so on. The Parent objects are needed so we can grab 
+            // attached properties.
+            FrameworkElement e = item as FrameworkElement;
+            while(e != null && e.Parent != null)
+            {
+                Type parentType = e.Parent.GetType();
+                if(!checkableTypes.Contains(parentType))
+                    checkableTypes.Add(parentType);
+                
+                e = e.Parent as FrameworkElement;
+            }
+
+            // Once we have a list of all the types that need to be checked for
+            // we use reflection to scan through them all and pick out all the
+            // DependencyProperties. We have to make sure we don't add the same
+            // field twice.
             List<KeyValuePair<Type, FieldInfo>> fields = new List<KeyValuePair<Type, FieldInfo>>();
-
             writer.WriteStartElement(baseType.Name);
             foreach(Type t in checkableTypes)
                 for(Type current = t; current != null; current = current.BaseType)
@@ -87,8 +104,10 @@ namespace LunarEclipse
                             fields.Add(new KeyValuePair<Type, FieldInfo>(t, field));
                 }
 
-            // We first have to go through all the fields and write out
-            // all the attributes first.
+            // Now that we have all the dependency properties, we need to write
+            // all the ones whose value is *not* a dependency object as attributes.
+            // Every DependencyProperty whose value is a dependency object must
+            // be written as an element
             foreach(KeyValuePair<Type, FieldInfo> keypair in fields)
             {
                 DependencyProperty dependencyProperty = (DependencyProperty)keypair.Value.GetValue(item);
