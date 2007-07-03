@@ -7,16 +7,16 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Shapes;
+using System.Windows.Media;
 
 namespace LunarEclipse
 {
     public class UndoMoveShape : UndoActionBase
     {
         private Point offset;
-        private Shape[] shapes;
+        private Visual[] shapes;
         
-        internal UndoMoveShape(Shape[] shapes, Point offset)
+        internal UndoMoveShape(Visual[] shapes, Point offset)
         {
             this.shapes = shapes;
             this.offset = offset;
@@ -25,7 +25,7 @@ namespace LunarEclipse
         
         public override void Redo ()
         {
-            foreach(Shape shape in shapes)
+            foreach(Visual shape in shapes)
             {
                 Point location = new Point((double)shape.GetValue(Canvas.LeftProperty), (double)shape.GetValue(Canvas.TopProperty));
                 shape.SetValue<double>(Canvas.LeftProperty, location.X - offset.X);
@@ -36,7 +36,7 @@ namespace LunarEclipse
 
         public override void Undo ()
         {
-            foreach(Shape shape in shapes)
+            foreach(Visual shape in shapes)
             {
                 Point location = new Point((double)shape.GetValue(Canvas.LeftProperty), (double)shape.GetValue(Canvas.TopProperty));
                 shape.SetValue<double>(Canvas.LeftProperty, location.X + offset.X);

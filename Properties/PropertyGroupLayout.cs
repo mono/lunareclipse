@@ -121,9 +121,9 @@ namespace LunarEclipse {
 				((SpinButton) widget).SetRange (0.0, (double) Int32.MaxValue);
 				((SpinButton) widget).Numeric = true;
 				
-				Console.WriteLine ("Layout: {0} = {1} ({2})", propName, 
-				                   value != null ? value.ToString () : "(null)", 
-				                   value != null ? value.GetType ().ToString () : "(null)");
+//				Console.WriteLine ("Layout: {0} = {1} ({2})", propName, 
+//				                   value != null ? value.ToString () : "(null)", 
+//				                   value != null ? value.GetType ().ToString () : "(null)");
 				
 				if (value != null) {
 					switch (value.GetType ().Name) {

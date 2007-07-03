@@ -131,9 +131,9 @@ namespace LunarEclipse {
 				
 				Widget widget = null;
 				
-				Console.WriteLine ("Appearance: {0} = {1} ({2})", propName, 
-				                   value != null ? value.ToString () : "(null)", 
-				                   value != null ? value.GetType ().ToString () : "(null)");
+//				Console.WriteLine ("Appearance: {0} = {1} ({2})", propName, 
+//				                   value != null ? value.ToString () : "(null)", 
+//				                   value != null ? value.GetType ().ToString () : "(null)");
 				
 				switch (info[i].Type) {
 				case PropType.PenLineCap:

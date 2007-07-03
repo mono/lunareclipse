@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Controls;
 
-namespace LunarEclipse
+namespace LunarEclipse.Model
 {
     public class SelectedBorder : System.Windows.Controls.Canvas
     {
@@ -20,6 +20,9 @@ namespace LunarEclipse
             this.Background = new SolidColorBrush(Colors.Blue);
             this.IsHitTestVisible = false;
             this.Opacity = 0.3;
+            this.Width = 100;
+            this.Height = 100;
+            Console.WriteLine("This is visual: " + (this is System.Windows.Media.Visual).ToString());
         }
     }
 }

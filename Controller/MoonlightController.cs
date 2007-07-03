@@ -25,11 +25,13 @@ namespace LunarEclipse.Controller
         private UndoEngine undo;
         private GtkSilver moonlight;
     	private DrawBase current;
-    	private XmlDocument xaml;
+        private Serializer serializer;
+        
     	internal Canvas Canvas
         {
             get { return this.moonlight.Canvas; }
         }
+        
     	public DrawBase Current
         {
             get { return this.current; }
@@ -53,6 +55,7 @@ namespace LunarEclipse.Controller
             moonlight.Canvas.MouseLeftButtonDown += new MouseEventHandler(MouseLeftDown);
             moonlight.Canvas.MouseMove += new MouseEventHandler(MouseMove);
             moonlight.Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseLeftUp);
+            serializer = new Serializer();
             undo = new UndoEngine();
         }
         
@@ -94,7 +97,7 @@ namespace LunarEclipse.Controller
 			if (current is SelectionDraw) {
 				SelectionDraw selection = (SelectionDraw) current;
 				if (selection.SelectedObjects.Count == 1)
-                    foreach(KeyValuePair<Shape, SelectedBorder> keypair in selection.SelectedObjects)
+                    foreach(KeyValuePair<Visual, SelectedBorder> keypair in selection.SelectedObjects)
                         properties.DependencyObject = keypair.Key;
 			}
         }
@@ -102,8 +105,7 @@ namespace LunarEclipse.Controller
 
         public string SerializeCanvas()
         {
-            Serializer s = new Serializer();
-            return s.Serialize(this.moonlight.Canvas);
+            return serializer.Serialize(this.moonlight.Canvas);
         }
     }
 }

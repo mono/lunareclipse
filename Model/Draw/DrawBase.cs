@@ -112,6 +112,10 @@ namespace LunarEclipse.Model
         
         protected void GetNormalisedBounds(out double top, out double left, out double width, out double height)
         {
+            // We ensure that the width and height are positive quantities and the top
+            // left corner is actually in the top left. For example: 
+            // top: 10, left: 10, width: -10, height: -10 
+            // is the same as top:0, left:0, width: 10, height: 10
             width = Element.Width;
             left = Left;
             if(width < 0)

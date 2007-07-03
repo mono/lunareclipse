@@ -1,3 +1,7 @@
+2007-07-03  Alan McGovern <alan.mcgovern@gmail.com> 
+
+	Implemented initial support for selecting objects and drawing custom detauls around those objects.
+
 2007-07-02  Alan McGovern <alan.mcgovern@gmail.com> 
 
 	* Serialization/Serializer.cs: Added comments
