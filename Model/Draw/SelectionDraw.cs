@@ -105,12 +105,6 @@ namespace LunarEclipse.Model
             
             
             shapes.Sort(new ZIndexComparer());
-            Console.WriteLine("Found: ");
-            foreach(Visual va in shapes)
-            {
-                Console.Write('\t');
-                Console.WriteLine(va.ToString());
-            }
             return shapes;
         }
         
