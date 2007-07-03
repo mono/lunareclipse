@@ -128,7 +128,7 @@ namespace LunarEclipse.Model
             circle.Width = HandleRadius * 2;
             circle.Height = HandleRadius * 2;
             circle.Fill = new SolidColorBrush(Colors.White);
-            Console.WriteLine("Setting white - Circle Handle");
+            //Console.WriteLine("Setting white - Circle Handle");
             circle.Stroke = new SolidColorBrush(Colors.Blue);
             circle.Cursor = System.Windows.Input.Cursors.Hand;
             return circle;

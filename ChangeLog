@@ -1,5 +1,13 @@
 2007-07-03  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Model/SelectedBorder.cs, Model/Draw/DrawBase.cs,
+	  Model/ZIndexComparer.cs: Removed console.writelines
+	* Model/Draw/SelectionDraw.cs: Removed extra variables
+	* Model/SelectionRectangle.cs: Set ZIndex = int.MaxValue so selection
+	  rectangle is always on top
+
+2007-07-03  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* Model/Draw/SelectionDraw.cs: Removed extra variables
 	* Controller/MoonlightController.cs: Made Undo a method in the
 	  controller so i can preprocess before performing the undo. Added

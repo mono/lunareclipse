@@ -179,7 +179,7 @@ namespace LunarEclipse.Model
                 Point start = mouseStart;
                 start.Offset(-mouseLocation.X, -mouseLocation.Y);
                 //Console.WriteLine("Offset is: " + start.ToString());
-                int i=0;
+
                 Visual[] movedShapes = new Visual[selectedObjects.Keys.Count];
                 selectedObjects.Keys.CopyTo(movedShapes, 0);
                 controller.UndoEngine.PushUndo(new UndoMoveShape(movedShapes, start));

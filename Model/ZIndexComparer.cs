@@ -14,7 +14,7 @@ namespace LunarEclipse
 
         public int Compare(Visual left, Visual right)
         {
-            Console.WriteLine("Compare Start");
+            //Console.WriteLine("Compare Start");
             int leftValue = (int)left.GetValue(UIElement.ZIndexProperty);
             int rightValue = (int)right.GetValue(UIElement.ZIndexProperty);
             return leftValue.CompareTo(rightValue);
