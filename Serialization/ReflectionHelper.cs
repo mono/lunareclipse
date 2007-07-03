@@ -35,20 +35,30 @@ namespace LunarEclipse
             FrameworkElement e = item as FrameworkElement;
             while(e != null && e.Parent != null)
             {
+                Console.WriteLine("Main item: " + item.GetType().Name);
                 Type parentType = e.Parent.GetType();
                 
                 if(!cachedFields.ContainsKey(parentType))
                     cachedFields.Add(parentType, FindFields(parentType));       
                 
-                cached = cachedFields[itemType];
+                cached = cachedFields[parentType];
                 foreach(KeyValuePair<Type, FieldInfo> keypair in cached)
-                    if(!fields.Contains(keypair))
+                    if(!ContainsField(fields, keypair))
                         fields.Add(keypair);
                 
                 e = e.Parent as FrameworkElement;
             }
             
             return fields;
+        }
+        
+        private bool ContainsField(PropertyPairList fields, KeyValuePair<Type, FieldInfo> item)
+        {
+            foreach(KeyValuePair<Type, FieldInfo> keypair in fields)
+                if(keypair.Value.Equals(item.Value))
+                    return true;
+            
+            return false;
         }
 
         private PropertyPairList FindFields(Type type)

@@ -47,6 +47,14 @@ namespace LunarEclipse.Controller
         {
             get { return undo; }
         }
+        
+        public void Undo()
+        {
+            if(Current != null)
+                Current.Cleanup();
+            
+            undo.Undo();
+        }
     	
         public MoonlightController(GtkSilver moonlight, IPropertyGroup properties)
         {
@@ -61,6 +69,8 @@ namespace LunarEclipse.Controller
         
         public void Clear()
         {
+            if(Current != null)
+                Current.Cleanup();
             moonlight.Canvas.Children.Clear();
             undo.Clear();
         }
@@ -103,11 +113,17 @@ namespace LunarEclipse.Controller
                         Console.WriteLine("Selected: " + keypair.Key.ToString());
                     }
 			}
+                    
+                    
+            Console.WriteLine("Children: " + this.Canvas.Children.Count.ToString());
         }
         
 
         public string SerializeCanvas()
         {
+            if(Current != null)
+                Current.Cleanup();
+              
             return serializer.Serialize(this.moonlight.Canvas);
         }
     }

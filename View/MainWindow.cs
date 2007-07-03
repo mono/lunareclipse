@@ -165,9 +165,8 @@ namespace LunarEclipse.View
             
             undo = new Button("Undo");
             undo.Sensitive = false;
-            undo.Clicked += delegate { 
-                controller.Current = null;
-                controller.UndoEngine.Undo(); 
+            undo.Clicked += delegate {
+                controller.Undo(); 
             };
             widgets.Add(undo);
             
@@ -178,7 +177,6 @@ namespace LunarEclipse.View
     	    
     	    b = new Button("Clear");
     	    b.Clicked += delegate {
-                controller.Current = null;
     	        controller.Clear();
     	    };
     	    widgets.Add(b);

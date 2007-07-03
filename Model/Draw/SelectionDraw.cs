@@ -71,7 +71,6 @@ namespace LunarEclipse.Model
             
              //Console.WriteLine(string.Format("RectTop: {0}, Left: {1}, Width: {2}, Height: {3}",
              //                     rectTop, rectLeft, rectWidth, rectHeight));
-            int count=0;
             foreach(Visual v in Panel.Children)
             {
                 Visual visual = v;
@@ -118,7 +117,6 @@ namespace LunarEclipse.Model
         internal override void Resize (MouseEventArgs e)
         {
             List<Visual> clickedShapes = GetSelectedObjects(e);
-            bool clickedShape = clickedShapes.Count != 0;
             Point mousePoint = e.GetPosition(Panel);
             mousePoint.Offset(-Position.X, -Position.Y);
             

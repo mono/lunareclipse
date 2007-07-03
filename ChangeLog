@@ -1,5 +1,18 @@
 2007-07-03  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Model/Draw/SelectionDraw.cs: Removed extra variables
+	* Controller/MoonlightController.cs: Made Undo a method in the
+	  controller so i can preprocess before performing the undo. Added
+	  preprocessing where needed to other methods
+	* View/MainWindow.cs: Moved some logic inside the controller so the
+	  view doesn't need to worry about it
+	* Model/Draw/DrawBase.cs: Was missing a call to the base methods
+	* Model/VisualExtensionMethods.cs: fixed typo which broke the detection
+	  of attached properties. Prevented duplicates from being added to
+	  the list twice.
+
+2007-07-03  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* Controller/MoonlightController.cs: Rewrote the selection canvas
 
 2007-07-03  Alan McGovern <alan.mcgovern@gmail.com> 
