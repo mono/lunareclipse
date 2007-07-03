@@ -55,10 +55,10 @@ namespace LunarEclipse.Model
         {
             base.DrawStart(panel, e);
             List<Visual> selectedShapes = GetSelectedObjects(e);
-            this.clickedOnShape = selectedShapes.Count != 0;
+            clickedOnShape = selectedShapes.Count != 0;
             mouseStart = Position;
             shapeMoved = false;
-            //Console.WriteLine("Mouse down, Clicked?: " + (clickedOnShape).ToString());
+            Console.WriteLine("Mouse down, Clicked?: " + (clickedOnShape).ToString());
         }
         
         private List<Visual> GetSelectedObjects(MouseEventArgs e)
@@ -72,8 +72,9 @@ namespace LunarEclipse.Model
              //Console.WriteLine(string.Format("RectTop: {0}, Left: {1}, Width: {2}, Height: {3}",
              //                     rectTop, rectLeft, rectWidth, rectHeight));
             int count=0;
-            foreach(Visual visual in Panel.Children)
+            foreach(Visual v in Panel.Children)
             {
+                Visual visual = v;
                 //Console.WriteLine("Iteration: " + (++count).ToString());
                 if(visual == Element)
                     continue;
@@ -83,6 +84,14 @@ namespace LunarEclipse.Model
                 double left = (double)visual.GetValue(Canvas.LeftProperty);
                 double width = (double)visual.GetValue(Shape.WidthProperty);
                 double height = (double)visual.GetValue(Shape.HeightProperty);
+                
+                if(visual is SelectedBorder)
+                {
+                    SelectedBorder border = (SelectedBorder)visual;
+                    visual = border.Child;
+                    top -= (Double)((Canvas)border.Parent).GetValue(Canvas.TopProperty);
+                    left -= (Double)((Canvas)border.Parent).GetValue(Canvas.LeftProperty);
+                }
                 
                //Console.WriteLine(string.Format("Top: {0}, Left: {1}, Width: {2}, Height: {3}",
                //                   top, left, width, height));
@@ -96,6 +105,12 @@ namespace LunarEclipse.Model
             
             
             shapes.Sort(new ZIndexComparer());
+            Console.WriteLine("Found: ");
+            foreach(Visual va in shapes)
+            {
+                Console.Write('\t');
+                Console.WriteLine(va.ToString());
+            }
             return shapes;
         }
         
@@ -120,10 +135,11 @@ namespace LunarEclipse.Model
                 if(!shapeAdded)
                 {
                     shapeAdded = true;
-                    if(clickedShape && !selectedObjects.ContainsKey(clickedShapes[0]))
+                    if(!selectedObjects.ContainsKey(clickedShapes[0]))
+                    {
                         DeselectAll();
-                    
-                    Select(clickedShapes[0]);
+                        Select(clickedShapes[0]);
+                    }
                 }
                 
                 foreach(KeyValuePair<Visual, SelectedBorder> keypair in selectedObjects)
@@ -171,6 +187,7 @@ namespace LunarEclipse.Model
                 Point start = mouseStart;
                 start.Offset(-mouseLocation.X, -mouseLocation.Y);
                 //Console.WriteLine("Offset is: " + start.ToString());
+                int i=0;
                 Visual[] movedShapes = new Visual[selectedObjects.Keys.Count];
                 selectedObjects.Keys.CopyTo(movedShapes, 0);
                 controller.UndoEngine.PushUndo(new UndoMoveShape(movedShapes, start));
@@ -203,18 +220,10 @@ namespace LunarEclipse.Model
         private void Select(Visual s)
         {
             SelectedBorder border = new SelectedBorder();
-            this.controller.Canvas.Children.Remove(s);
-            border.Children.Add(s);
-            this.controller.Canvas.Children.Add(border);
-            this.selectedObjects.Add(s, border);
-            
-            border.SetValue<double>(Canvas.TopProperty,
-                   (double)s.GetValue(Canvas.TopProperty) - SelectedBorder.BorderWidth);
-            border.SetValue<double>(Canvas.LeftProperty,
-                   (double)s.GetValue(Canvas.LeftProperty) - SelectedBorder.BorderWidth);
-            
-            s.SetValue<double>(Canvas.TopProperty, SelectedBorder.BorderWidth);
-            s.SetValue<double>(Canvas.LeftProperty, SelectedBorder.BorderWidth);
+            controller.Canvas.Children.Remove(s);
+            border.Child = s;
+            controller.Canvas.Children.Add(border);
+            selectedObjects.Add(s, border);
         }
         
         private void MoveShape(Visual s, Point offset)

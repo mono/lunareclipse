@@ -55,13 +55,13 @@ namespace LunarEclipse
             }
         }
         
-        internal void PushRedo(UndoActionBase action)
+        private void PushRedo(UndoActionBase action)
         {
             this.redo.Push(action);
             RaiseRedoAdded();
         }
         
-        internal UndoActionBase PopRedo()
+        private UndoActionBase PopRedo()
         {
             UndoActionBase b = this.redo.Pop();
             RaiseRedoRemoved();

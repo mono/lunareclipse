@@ -165,7 +165,10 @@ namespace LunarEclipse.View
             
             undo = new Button("Undo");
             undo.Sensitive = false;
-            undo.Clicked += delegate { controller.UndoEngine.Undo(); };
+            undo.Clicked += delegate { 
+                controller.Current = null;
+                controller.UndoEngine.Undo(); 
+            };
             widgets.Add(undo);
             
             redo = new Button("Redo");

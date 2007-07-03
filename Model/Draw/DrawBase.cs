@@ -64,7 +64,6 @@ namespace LunarEclipse.Model
         internal DrawBase(Shape element)
         {
             this.element = element;
-            element.Stroke = new SolidColorBrush(Colors.Red);
         }
         
         internal virtual void Cleanup()
@@ -86,6 +85,7 @@ namespace LunarEclipse.Model
         {
             element = (Shape)Activator.CreateInstance(Element.GetType());
             element.Stroke = new SolidColorBrush(Colors.Red);
+            element.Fill = new SolidColorBrush(Colors.Cyan);
             panel.Children.Add(Element);
         }
         

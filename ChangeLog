@@ -1,5 +1,17 @@
 2007-07-03  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Model/SelectedBorder.cs: Automatically setting the width/height of
+	  the canvas based on the child element
+	* Model/Draw/SelectionDraw.cs: Moving items wrapped in a canvas works
+	  correctly
+	* Model/Draw/DrawBase.cs: Added a default fill to shapes
+	* Controller/UndoEngine.cs: Made some methods private as they shouldn't
+	  be publicly accessible.
+	* View/MainWindow.cs: Correctly clean up the current draw item when
+	  undoing an action
+
+2007-07-03  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	Implemented initial support for selecting objects and drawing custom detauls around those objects.
 
 2007-07-02  Alan McGovern <alan.mcgovern@gmail.com> 
