@@ -178,6 +178,7 @@ namespace LunarEclipse.View
     	    
     	    b = new Button("Clear");
     	    b.Clicked += delegate {
+                controller.Current = null;
     	        controller.Clear();
     	    };
     	    widgets.Add(b);
