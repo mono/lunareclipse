@@ -98,7 +98,10 @@ namespace LunarEclipse.Controller
 				SelectionDraw selection = (SelectionDraw) current;
 				if (selection.SelectedObjects.Count == 1)
                     foreach(KeyValuePair<Visual, SelectedBorder> keypair in selection.SelectedObjects)
+                    {
                         properties.DependencyObject = keypair.Key;
+                        Console.WriteLine("Selected: " + keypair.Key.ToString());
+                    }
 			}
         }
         

@@ -19,8 +19,9 @@ namespace LunarEclipse
         {
             this.Opacity = 0.33;
             this.Fill = new SolidColorBrush(Colors.Blue);
+            Console.WriteLine("Setting blue on selection rectangle");
             this.Stroke = new SolidColorBrush(Colors.Green);
-            //this.StrokeDashArray = new double[] {1,2,3,5,8,13 };
+            this.StrokeDashArray = new double[] {5, 5 };
             this.StrokeThickness = 2;
         }
     }

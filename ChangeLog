@@ -1,5 +1,9 @@
 2007-07-03  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Controller/MoonlightController.cs: Rewrote the selection canvas
+
+2007-07-03  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* LunarEclipse.mdp: Correctly cleaning up the current draw item when
 	  clearing the canvas
 

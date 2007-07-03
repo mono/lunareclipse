@@ -19,9 +19,14 @@ namespace LunarEclipse.Model
         public LineDraw()
             : base(new System.Windows.Shapes.Line())
         {
-            Element.Fill = new SolidColorBrush(Colors.Red);
+            
         }
-        
+        internal override void Prepare ()
+        {
+            Element.Fill = new SolidColorBrush(Colors.Red);
+            Console.WriteLine("Setting red on new line");
+        }
+
         internal override void DrawStart (Panel panel, MouseEventArgs e)
         {
             base.DrawStart(panel, e);

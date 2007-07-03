@@ -86,6 +86,7 @@ namespace LunarEclipse.Model
             element = (Shape)Activator.CreateInstance(Element.GetType());
             element.Stroke = new SolidColorBrush(Colors.Red);
             element.Fill = new SolidColorBrush(Colors.Cyan);
+            Console.WriteLine("Setting cyan on new drawbase");
             panel.Children.Add(Element);
         }
         
