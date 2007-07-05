@@ -31,7 +31,6 @@ namespace LunarEclipse.Model
         internal override void DrawStart (Panel panel, MouseEventArgs e)
         {
             base.DrawStart(panel, e);
-            Console.WriteLine("Drawing line start");
             Line l = Element as Line;
             l.X1 = (l.X2 = Position.X);
             l.Y1 = (l.Y2 = Position.Y);
@@ -45,8 +44,6 @@ namespace LunarEclipse.Model
             Point p = end.GetPosition(Panel);
             l.X2 = p.X;
             l.Y2 = p.Y;
-            
-            Console.WriteLine("Resizing to: " + p.ToString());
         }
     }
 }
