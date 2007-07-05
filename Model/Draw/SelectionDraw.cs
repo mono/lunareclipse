@@ -69,16 +69,12 @@ namespace LunarEclipse.Model
             double rectTop, rectLeft, rectWidth, rectHeight;
             GetNormalisedBounds(out rectTop, out rectLeft, out rectWidth, out rectHeight);
             
-             //Console.WriteLine(string.Format("RectTop: {0}, Left: {1}, Width: {2}, Height: {3}",
-             //                     rectTop, rectLeft, rectWidth, rectHeight));
             foreach(Visual v in Panel.Children)
             {
                 Visual visual = v;
-                //Console.WriteLine("Iteration: " + (++count).ToString());
                 if(visual == Element)
                     continue;
                 
-                //Console.WriteLine("Inside with: " + visual.ToString());
                 double top = (double)visual.GetValue(Canvas.TopProperty);
                 double left = (double)visual.GetValue(Canvas.LeftProperty);
                 double width = (double)visual.GetValue(Shape.WidthProperty);
@@ -92,12 +88,9 @@ namespace LunarEclipse.Model
                     left -= (Double)((Canvas)border.Parent).GetValue(Canvas.LeftProperty);
                 }
                 
-               //Console.WriteLine(string.Format("Top: {0}, Left: {1}, Width: {2}, Height: {3}",
-               //                   top, left, width, height));
                 if(((rectLeft < (left + width)) && (rectLeft + rectWidth) > left)
                    && (rectTop < (top + height)) && ((rectTop + rectHeight) > top))
                 {
-                    //Console.WriteLine("Found: " + visual.ToString());
                     shapes.Add(visual);
                 }
             }
@@ -159,6 +152,7 @@ namespace LunarEclipse.Model
             bool clickedOnShape = shapes.Count != 0;
             bool mouseMoved = !mouseStart.Equals(Position);
             shapeAdded = false;
+
             if(clickedOnShape && !mouseMoved)
             {
                 if(!e.Ctrl && !e.Shift)
@@ -178,12 +172,14 @@ namespace LunarEclipse.Model
             {
                 Point start = mouseStart;
                 start.Offset(-mouseLocation.X, -mouseLocation.Y);
-                //Console.WriteLine("Offset is: " + start.ToString());
 
                 Visual[] movedShapes = new Visual[selectedObjects.Keys.Count];
                 selectedObjects.Keys.CopyTo(movedShapes, 0);
                 controller.UndoEngine.PushUndo(new UndoMoveShape(movedShapes, start));
             }
+            
+            foreach(KeyValuePair<Visual, SelectedBorder> keypair in selectedObjects)
+                keypair.Value.MoveType = MoveType.Standard;
         }
         
         private void DeselectAll()
@@ -221,9 +217,56 @@ namespace LunarEclipse.Model
         private void MoveShape(Visual s, Point offset)
         {
             SelectedBorder b = selectedObjects[s];
-            Point oldPoint = new Point((double)b.GetValue(Canvas.LeftProperty), (double)b.GetValue(Canvas.TopProperty));
-            b.SetValue<double>(Canvas.LeftProperty, oldPoint.X + offset.X);
-            b.SetValue<double>(Canvas.TopProperty, oldPoint.Y + offset.Y);
+            double oldLeft = (double)b.Child.GetValue(Canvas.LeftProperty);
+            double oldTop = (double)b.Child.GetValue(Canvas.TopProperty);
+            double oldHeight = (double)b.Child.GetValue(Canvas.HeightProperty);
+            double oldWidth = (double)b.Child.GetValue(Canvas.WidthProperty);
+
+            Console.WriteLine("Border before: " + b.Left.ToString());
+            switch(b.MoveType)
+            {
+                case MoveType.Rotate:
+                    b.RenderTransformOrigin  = new Point(0.5, 0.5);
+                    Point center = new Point(b.Width * 0.5, b.Height * 0.5);
+                    double slope1 = (mouseStart.Y - center.Y) / (mouseStart.X - center.X);
+                    double slope2 = (Position.Y - center.Y) / (Position.X - center.X);
+                    double angle = -(slope1 - slope2) / (1 + slope1 * slope2);
+                    RotateTransform transform = new RotateTransform();
+                transform.CenterX = center.X;
+                transform.CenterY = center.Y;
+                transform.Angle = angle * 360 /( 2 * Math.PI);
+                b.RenderTransform = transform;
+                    break;
+                
+                case MoveType.Standard:
+                    b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
+                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
+                    break;
+                
+                case MoveType.StretchHeight:
+                    b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight + offset.Y);
+                    break;
+                
+                case MoveType.StretchLeft:
+                    Console.WriteLine("Child Before: " + oldLeft.ToString());
+                    b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
+                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - offset.X);    
+                    Console.WriteLine("Child After:  " + b.Child.GetValue(Canvas.LeftProperty).ToString());
+                    //b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.Y);
+                break;
+                
+                case(MoveType.StretchTop):
+                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
+                    b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight - offset.Y);
+                    break;
+                
+                case MoveType.StretchWidth:
+                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.X);
+                    break;
+            }
+
+            b.ResizeBorder();
+            Console.WriteLine("Border after: " + b.Left.ToString());
             shapeMoved = true;
         }
     }

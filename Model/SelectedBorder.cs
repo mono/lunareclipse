@@ -12,19 +12,32 @@ using System.Windows.Controls;
 
 namespace LunarEclipse.Model
 {
+    public enum MoveType
+    {
+        Standard,
+        StretchWidth,
+        StretchHeight,
+        StretchTop,
+        StretchLeft,
+        Rotate
+    }
+    
     public class SelectedBorder : System.Windows.Controls.Canvas
     {
-        public const double BorderWidth = 5;
-        public const double HandleRadius = 3;
+        private MoveType movetype;
+        private bool updating;
+              
+        public const double BorderWidth = 13;
+        public const double HandleRadius = 6.5;
         
         private Visual child;
 
         public SelectedBorder()
         {
-            this.IsHitTestVisible = false;
+            this.movetype = MoveType.Standard;
+            base.SetValue<bool>(IsHitTestVisibleProperty, false);
         }
         
-                
         public Visual Child
         {
             get { return child; }
@@ -36,74 +49,147 @@ namespace LunarEclipse.Model
                 if(child != null)
                     throw new InvalidOperationException("Cannot have more than one child");
                 
-                
                 child = value;
-                Children.Add(value);
+                base.Children.Add(value);
                 
-                SetValue<double>(TopProperty,
-                        (double)value.GetValue(TopProperty) - BorderWidth);
-                SetValue<double>(LeftProperty,
-                        (double)value.GetValue(LeftProperty) - BorderWidth);
-                
-                value.SetValue<double>(Canvas.TopProperty, BorderWidth);
-                value.SetValue<double>(Canvas.LeftProperty, BorderWidth);
-                
-                Width = (double)value.GetValue(WidthProperty) + 2 * BorderWidth;
-                Height = (double)value.GetValue(HeightProperty) + 2 * BorderWidth;
-                
-                DrawHandles();
+                if(!updating)
+                {
+                    updating = true;
+                    ResizeBorder();
+                    DrawHandles();
+                    updating = false;
+                }
             }
+        }
+            
+        
+        public double Left
+        {
+            get { return (double)GetValue(LeftProperty); }
+            set { SetValue<double>(LeftProperty, value); }
+        }
+        public double Top
+        {
+            get { return (double)GetValue(TopProperty); }
+            set { SetValue<double>(TopProperty, value); }
+        }
+        
+        
+        public MoveType MoveType
+        {
+            get { return this.movetype; }
+            internal set { this.movetype = value; }
+        }
+        
+        internal void ResizeBorder()
+        {         
+            Children.Clear();
+            Children.Add(child);
+            
+            double childTop = (double)child.GetValue(TopProperty);
+            double childLeft = (double)child.GetValue(LeftProperty);
+            double childWidth = (double)child.GetValue(WidthProperty);
+            double childHeight = (double)child.GetValue(HeightProperty);
+            
+            // First set the position of the selection canvas
+            Top = Top + (childTop - BorderWidth);
+            Left = Left + (childLeft - BorderWidth);
+            Width = childWidth + BorderWidth * 2;
+            Height = childHeight + BorderWidth * 2;
+            
+            child.SetValue<double>(TopProperty, BorderWidth);
+            child.SetValue<double>(LeftProperty, BorderWidth);
+
+            DrawHandles();
         }
         
         private void DrawHandles()
         {
-            Ellipse circle = new Ellipse();
-            Line line = new Line();
+            Ellipse circle;
+            Line line;
             
             double midX = Width / 2.0;
             double midY = Height / 2.0;
             
             // Top side
-            Children.Add(CreateCircle(new Point(0, 0)));
+            circle = CreateCircle(new Point(0, 0));
+            Children.Add(circle);
+            circle.MouseLeftButtonDown+= delegate {
+                this.movetype = MoveType.Rotate;
+                Console.WriteLine(movetype.ToString());
+            };
             
             Children.Add(CreateLine(new Point(HandleRadius * 2, HandleRadius),
                                     new Point(midX - HandleRadius, HandleRadius)));
             
-            Children.Add(CreateCircle(new Point(midX - HandleRadius, 0)));
-
+            circle = CreateCircle(new Point(midX - HandleRadius, 0));
+            Children.Add(circle);
+            circle.MouseLeftButtonDown+= delegate {
+                movetype = MoveType.StretchTop;
+                Console.WriteLine(movetype.ToString());
+            };
 
             Children.Add(CreateLine(new Point(midX + HandleRadius, HandleRadius),
                                     new Point(Width - HandleRadius * 2, HandleRadius)));
             
             // Right side            
-            Children.Add(CreateCircle(new Point(Width - HandleRadius * 2, 0)));
+            circle = CreateCircle(new Point(Width - HandleRadius * 2, 0));
+            Children.Add(circle);
+            circle.MouseLeftButtonDown+= delegate {
+                movetype = MoveType.Rotate;
+                Console.WriteLine(movetype.ToString());
+            };
             
             Children.Add(CreateLine(new Point(Width - HandleRadius, HandleRadius * 2),
                                     new Point( Width - HandleRadius, midY - HandleRadius)));
             
-            Children.Add(CreateCircle(new Point(Width - HandleRadius * 2, midY - HandleRadius)));
-
+            circle = CreateCircle(new Point(Width - HandleRadius * 2, midY - HandleRadius));
+            Children.Add(circle);
+            circle.MouseLeftButtonDown+= delegate {
+                movetype = MoveType.StretchWidth;
+                Console.WriteLine(movetype.ToString());
+            };
+            
             Children.Add(CreateLine(new Point(Width - HandleRadius, midY + HandleRadius),
                                     new Point(Width - HandleRadius, Height - HandleRadius * 2)));
             
             // Bottom side
-            Children.Add(CreateCircle(new Point(Width - HandleRadius * 2, Height - HandleRadius * 2)));
+            circle = CreateCircle(new Point(Width - HandleRadius * 2, Height - HandleRadius * 2));
+            Children.Add(circle);
+            circle.MouseLeftButtonDown+= delegate {
+                movetype = MoveType.Rotate;
+                Console.WriteLine(movetype.ToString());
+            };
             
             Children.Add(CreateLine(new Point(Width - HandleRadius * 2, Height - HandleRadius),
                                     new Point(midX + HandleRadius, Height - HandleRadius)));
             
-            Children.Add(CreateCircle(new Point(midX - HandleRadius, Height - HandleRadius * 2)));
-            
+            circle = CreateCircle(new Point(midX - HandleRadius, Height - HandleRadius * 2));
+            Children.Add(circle);
+            circle.MouseLeftButtonDown+= delegate {
+                movetype = MoveType.StretchHeight;
+                Console.WriteLine(movetype.ToString());
+            };
             Children.Add(CreateLine(new Point(midX - HandleRadius, Height - HandleRadius),
                                     new Point(HandleRadius * 2, Height - HandleRadius)));
             
             // Left side
-            Children.Add(CreateCircle(new Point(0, Height - HandleRadius * 2)));
+            circle = CreateCircle(new Point(0, Height - HandleRadius * 2));
+            Children.Add(circle);
+            circle.MouseLeftButtonDown+= delegate {
+                movetype = MoveType.Rotate;
+                Console.WriteLine(movetype.ToString());
+            };
             
             Children.Add(CreateLine(new Point(HandleRadius, Height - HandleRadius * 2),
                                     new Point(HandleRadius, midY + HandleRadius)));
             
-            Children.Add(CreateCircle(new Point(0, midY - HandleRadius)));
+            circle = CreateCircle(new Point(0, midY - HandleRadius));
+            Children.Add(circle);
+            circle.MouseLeftButtonDown+= delegate {
+                movetype = MoveType.StretchLeft;
+                Console.WriteLine(movetype.ToString());
+            };
             
             Children.Add(CreateLine(new Point(HandleRadius, midY - HandleRadius),
                                     new Point(HandleRadius, HandleRadius * 2)));
@@ -128,7 +214,6 @@ namespace LunarEclipse.Model
             circle.Width = HandleRadius * 2;
             circle.Height = HandleRadius * 2;
             circle.Fill = new SolidColorBrush(Colors.White);
-            //Console.WriteLine("Setting white - Circle Handle");
             circle.Stroke = new SolidColorBrush(Colors.Blue);
             circle.Cursor = System.Windows.Input.Cursors.Hand;
             return circle;
