@@ -59,7 +59,6 @@ namespace LunarEclipse.View
 	    {
     		string xaml = null;
 
-    		Console.WriteLine ("Loading: {0}", file);
     		try {
     			using (FileStream fs = File.OpenRead (file)){
     				using (StreamReader sr = new StreamReader (fs)){
@@ -75,10 +74,7 @@ namespace LunarEclipse.View
     			Console.Error.WriteLine ("Error loading XAML file {0}", file);
     			return false;
     		}
-    		Console.WriteLine("XAML");
-    		Console.WriteLine("XAML");
-    		Console.WriteLine("XAML");
-    		Console.WriteLine(xaml);
+
     		DependencyObject d = XamlReader.Load (xaml);
     		if (d == null){
     			Console.Error.WriteLine ("No dependency object returned from XamlReader");

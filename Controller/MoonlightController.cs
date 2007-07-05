@@ -113,9 +113,6 @@ namespace LunarEclipse.Controller
                         Console.WriteLine("Selected: " + keypair.Key.ToString());
                     }
 			}
-                    
-                    
-            Console.WriteLine("Children: " + this.Canvas.Children.Count.ToString());
         }
         
 
