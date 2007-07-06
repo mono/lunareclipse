@@ -192,23 +192,16 @@ namespace LunarEclipse.Model
         
         private void Deselect(Visual s)
         {
-            SelectedBorder border = this.selectedObjects[s];
-            Visual v = border.Children[0];
-            border.Children.Remove(v);
-            controller.Canvas.Children.Add(v);
-            controller.Canvas.Children.Remove(border);
-            this.selectedObjects.Remove(s);
+            // First remove the border from the canvas
+            controller.Canvas.Children.Remove(this.selectedObjects[s]);
             
-            s.SetValue<double>(Canvas.TopProperty, 
-                   (double)border.GetValue(Canvas.TopProperty) + SelectedBorder.BorderWidth);
-            s.SetValue<double>(Canvas.LeftProperty,
-                   (double)border.GetValue(Canvas.LeftProperty) + SelectedBorder.BorderWidth);
+            // Then remove the selection from the list of currently selected items
+            this.selectedObjects.Remove(s);
         }
         
         private void Select(Visual s)
         {
             SelectedBorder border = new SelectedBorder();
-            controller.Canvas.Children.Remove(s);
             border.Child = s;
             controller.Canvas.Children.Add(border);
             selectedObjects.Add(s, border);
@@ -222,21 +215,14 @@ namespace LunarEclipse.Model
             double oldHeight = (double)b.Child.GetValue(Canvas.HeightProperty);
             double oldWidth = (double)b.Child.GetValue(Canvas.WidthProperty);
 
-            Console.WriteLine("Border before: " + b.Left.ToString());
             switch(b.MoveType)
             {
                 case MoveType.Rotate:
-                    b.RenderTransformOrigin  = new Point(0.5, 0.5);
-                    Point center = new Point(b.Width * 0.5, b.Height * 0.5);
-                    double slope1 = (mouseStart.Y - center.Y) / (mouseStart.X - center.X);
-                    double slope2 = (Position.Y - center.Y) / (Position.X - center.X);
-                    double angle = -(slope1 - slope2) / (1 + slope1 * slope2);
-                    RotateTransform transform = new RotateTransform();
-                transform.CenterX = center.X;
-                transform.CenterY = center.Y;
-                transform.Angle = angle * 360 /( 2 * Math.PI);
-                b.RenderTransform = transform;
-                    break;
+                Point center = new Point(b.Height * 0.5, b.Width * 0.5);
+                double beginAngle = Math.Atan2(mouseStart.Y - center.Y -b.Top, mouseStart.X - center.X - b.Left);
+                double currentAngle = Math.Atan2((Position.Y - center.Y-b.Top) , (Position.X - center.X- b.Left));
+                b.RotateTransform.Angle = (currentAngle - beginAngle) * 360 / (2 * Math.PI);
+                break;
                 
                 case MoveType.Standard:
                     b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
@@ -248,12 +234,9 @@ namespace LunarEclipse.Model
                     break;
                 
                 case MoveType.StretchLeft:
-                    Console.WriteLine("Child Before: " + oldLeft.ToString());
                     b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
                     b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - offset.X);    
-                    Console.WriteLine("Child After:  " + b.Child.GetValue(Canvas.LeftProperty).ToString());
-                    //b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.Y);
-                break;
+                    break;
                 
                 case(MoveType.StretchTop):
                     b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
@@ -266,7 +249,6 @@ namespace LunarEclipse.Model
             }
 
             b.ResizeBorder();
-            Console.WriteLine("Border after: " + b.Left.ToString());
             shapeMoved = true;
         }
     }

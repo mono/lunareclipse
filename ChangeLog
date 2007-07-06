@@ -1,5 +1,11 @@
 2007-07-06  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Model/Draw/SelectionDraw.cs: Better support for rotation. Selection
+	  canvas is now overlaid on top of the shapes rather than the shapes
+	  placed inside it.
+
+2007-07-06  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* Model/Draw/SquareDraw.cs, Model/Draw/CircleDraw.cs: Constrained
 	  resizing (width == height) now allows you to draw the constrained
 	  shape in any quadrant

@@ -36,6 +36,13 @@ namespace LunarEclipse.Model
         {
             this.movetype = MoveType.Standard;
             base.SetValue<bool>(IsHitTestVisibleProperty, false);
+            this.ZIndex = -1;
+        }
+        
+        public RotateTransform RotateTransform
+        {
+            get { return (RotateTransform)this.RenderTransform; }
+            set { RenderTransform = value; }
         }
         
         public Visual Child
@@ -50,8 +57,16 @@ namespace LunarEclipse.Model
                     throw new InvalidOperationException("Cannot have more than one child");
                 
                 child = value;
-                base.Children.Add(value);
+                if(child.GetValue(RenderTransformProperty) == null)
+                {
+                    RotateTransform t = new RotateTransform();
+                    t.Angle = 0;
+                    t.CenterX = (double)child.GetValue(WidthProperty) * 0.5;
+                    t.CenterY = (double)child.GetValue(HeightProperty) * 0.5;
+                    child.SetValue<object>(RenderTransformProperty, t);
+                }
                 
+                RenderTransform = (RotateTransform)child.GetValue(RenderTransformProperty);
                 if(!updating)
                 {
                     updating = true;
@@ -74,7 +89,6 @@ namespace LunarEclipse.Model
             set { SetValue<double>(TopProperty, value); }
         }
         
-        
         public MoveType MoveType
         {
             get { return this.movetype; }
@@ -84,21 +98,17 @@ namespace LunarEclipse.Model
         internal void ResizeBorder()
         {         
             Children.Clear();
-            Children.Add(child);
-            
+        
             double childTop = (double)child.GetValue(TopProperty);
             double childLeft = (double)child.GetValue(LeftProperty);
             double childWidth = (double)child.GetValue(WidthProperty);
             double childHeight = (double)child.GetValue(HeightProperty);
             
             // First set the position of the selection canvas
-            Top = Top + (childTop - BorderWidth);
-            Left = Left + (childLeft - BorderWidth);
+            Top = (childTop - BorderWidth);
+            Left = (childLeft - BorderWidth);
             Width = childWidth + BorderWidth * 2;
             Height = childHeight + BorderWidth * 2;
-            
-            child.SetValue<double>(TopProperty, BorderWidth);
-            child.SetValue<double>(LeftProperty, BorderWidth);
 
             DrawHandles();
         }
