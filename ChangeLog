@@ -1,3 +1,9 @@
+2007-07-06  Alan McGovern <alan.mcgovern@gmail.com> 
+
+	* Model/Draw/SquareDraw.cs, Model/Draw/CircleDraw.cs: Constrained
+	  resizing (width == height) now allows you to draw the constrained
+	  shape in any quadrant
+
 2007-07-05  Alan McGovern <alan.mcgovern@gmail.com> 
 
 	* Controller/MoonlightController.cs: Removed excess writelines

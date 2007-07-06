@@ -24,16 +24,20 @@ namespace LunarEclipse.Model
             Point end = e.GetPosition(Panel);
             double width = end.X - (double)Element.GetValue(Canvas.LeftProperty);
             double height = end.Y - (double)Element.GetValue(Canvas.TopProperty);
-            
+
             if(Math.Abs(width) > Math.Abs(height))
             {
                 Element.Width = width;
+                if(Math.Sign(width) != Math.Sign(height))
+                    width = -width;
                 Element.Height = width;
             }
             else
             {
-                Element.Width = height;
                 Element.Height = height;
+                if(Math.Sign(width) != Math.Sign(height))
+                    height = -height;
+                Element.Width = height;
             }
         }
     }

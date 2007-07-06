@@ -23,12 +23,23 @@ namespace LunarEclipse.Model
         internal override void Resize (MouseEventArgs e)
         {
             Point end = e.GetPosition(Panel);
-            double width =  end.X - (double)Element.GetValue(Canvas.LeftProperty);
+            double width = end.X - (double)Element.GetValue(Canvas.LeftProperty);
             double height = end.Y - (double)Element.GetValue(Canvas.TopProperty);
             
-            width = Math.Max(width, height);
-            Element.Width = width;
-            Element.Height = width;
+            if(Math.Abs(width) > Math.Abs(height))
+            {
+                Element.Width = width;
+                if(Math.Sign(width) != Math.Sign(height))
+                    width = -width;
+                Element.Height = width;
+            }
+            else
+            {
+                Element.Height = height;
+                if(Math.Sign(width) != Math.Sign(height))
+                    height = -height;
+                Element.Width = height;
+            }
         }
     }
 }
