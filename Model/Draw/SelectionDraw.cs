@@ -75,24 +75,15 @@ namespace LunarEclipse.Model
                 if(visual == Element)
                     continue;
                 
-                double top = (double)visual.GetValue(Canvas.TopProperty);
-                double left = (double)visual.GetValue(Canvas.LeftProperty);
-                double width = (double)visual.GetValue(Shape.WidthProperty);
-                double height = (double)visual.GetValue(Shape.HeightProperty);
-                
-                // If the current visual is a selection border
-                // we need to increase the bounds by border width
-                // and set the current visual to be the borders 'child'
-                if(visual is SelectedBorder)
-                {
-                    visual = ((SelectedBorder)visual).Child;
-                    top -= SelectedBorder.BorderWidth;
-                    left -= SelectedBorder.BorderWidth;
-                    width += SelectedBorder.BorderWidth * 2;
-                    height += SelectedBorder.BorderWidth * 2;
-                }
+                double top;
+                double left;
+                double width;
+                double height;
                 
                 DrawBase.GetTransformedBounds(visual, out top, out left, out width, out height);
+                
+                if(visual is SelectedBorder)
+                    visual = ((SelectedBorder)visual).Child;
                 
                 if(((rectLeft < (left + width)) && (rectLeft + rectWidth) > left)
                    && (rectTop < (top + height)) && ((rectTop + rectHeight) > top))

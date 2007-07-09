@@ -1,5 +1,9 @@
 2007-07-09  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	Partial support for selecting rotated objects
+
+2007-07-09  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* Model/SelectedBorder.cs, Model/Draw/SelectionDraw.cs,
 	  Model/Draw/DrawBase.cs: Shape rotation working correctly.
 

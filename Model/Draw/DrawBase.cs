@@ -133,8 +133,52 @@ namespace LunarEclipse.Model
             }
         }
         
-        protected void GetTransformedBounds(Visual visual, out double top, out double left, out double width, out double height)
+        internal static void GetTransformedBounds(Visual visual, out double top, out double left, out double width, out double height)
         {
+            RotateTransform transform = (RotateTransform)visual.GetValue(Canvas.RenderTransformProperty);
+            top = (double)visual.GetValue(Canvas.TopProperty);
+            left = (double)visual.GetValue(Canvas.LeftProperty);
+            width = (double)visual.GetValue(Shape.WidthProperty) + left;
+            height = (double)visual.GetValue(Shape.HeightProperty) + top;
+            
+            if(visual is SelectedBorder)
+            {
+                left -= SelectedBorder.BorderWidth;
+                width += SelectedBorder.BorderWidth * 2;
+                top -= SelectedBorder.BorderWidth;
+                height += SelectedBorder.BorderWidth * 2;
+            }
+            
+            if(transform == null)
+                return;
+            
+            double angle;
+            double rotatedTopLeft;
+            double rotatedTopRight;
+            double rotatedBottomLeft;
+            double rotatedBottomRight;
+            
+            // Calculate the original angle between the bottom left corner and
+            // the centre of rotation
+            angle = Math.Atan2(top + height - transform.CenterY,
+                               left + width - transform.CenterX);
+            // Then add on the rotation from the transform
+            angle += transform.Angle;
+            Console.WriteLine("Angle1: {0}", angle);
+            // Then using some trigonomtry calculate the new position of the
+            // bottom left corner after the transform
+            Point bottomRight = new Point(Math.Cos(angle) * width / 2,
+                                         Math.Sin (angle) * height / 2);
+            
+            angle = Math.Atan2(top - transform.CenterY,
+                               left + width - transform.CenterX);
+            angle += transform.Angle;
+            Console.WriteLine("Angle2: {0}", angle);
+            Point topRight = new Point(Math.Cos(angle) * width / 2,
+                                       Math.Sin(angle) * height / 2);
+            
+            Console.WriteLine("Bottomright: {0:0.2}", bottomRight);
+            Console.WriteLine("TopRight: {0:0.2}", topRight);
         }
         
         protected virtual void MoveBy(Point p)

@@ -136,6 +136,7 @@ namespace LunarEclipse.Model
             copy.CenterX = current.CenterX + BorderWidth;
             copy.CenterY = current.CenterY + BorderWidth;
             base.SetValue<object>(RenderTransformProperty, copy);
+            Console.WriteLine(copy.Angle);
         }
         
         private void DrawHandles()
