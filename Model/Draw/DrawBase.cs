@@ -133,6 +133,10 @@ namespace LunarEclipse.Model
             }
         }
         
+        protected void GetTransformedBounds(Visual visual, out double top, out double left, out double width, out double height)
+        {
+        }
+        
         protected virtual void MoveBy(Point p)
         {
             Left += p.X;

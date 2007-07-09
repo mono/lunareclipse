@@ -80,18 +80,27 @@ namespace LunarEclipse.Model
                 double width = (double)visual.GetValue(Shape.WidthProperty);
                 double height = (double)visual.GetValue(Shape.HeightProperty);
                 
+                // If the current visual is a selection border
+                // we need to increase the bounds by border width
+                // and set the current visual to be the borders 'child'
                 if(visual is SelectedBorder)
                 {
-                    SelectedBorder border = (SelectedBorder)visual;
-                    visual = border.Child;
-                    top -= (Double)((Canvas)border.Parent).GetValue(Canvas.TopProperty);
-                    left -= (Double)((Canvas)border.Parent).GetValue(Canvas.LeftProperty);
+                    visual = ((SelectedBorder)visual).Child;
+                    top -= SelectedBorder.BorderWidth;
+                    left -= SelectedBorder.BorderWidth;
+                    width += SelectedBorder.BorderWidth * 2;
+                    height += SelectedBorder.BorderWidth * 2;
                 }
+                
+                DrawBase.GetTransformedBounds(visual, out top, out left, out width, out height);
                 
                 if(((rectLeft < (left + width)) && (rectLeft + rectWidth) > left)
                    && (rectTop < (top + height)) && ((rectTop + rectHeight) > top))
                 {
-                    shapes.Add(visual);
+                    // Due to the special handling for borders, we need to
+                    // make sure we don't add the same shape twice
+                    if(!shapes.Contains(visual))
+                        shapes.Add(visual);
                 }
             }
             
@@ -218,9 +227,13 @@ namespace LunarEclipse.Model
             switch(b.MoveType)
             {
                 case MoveType.Rotate:
-                Point center = new Point(b.Height * 0.5, b.Width * 0.5);
-                double beginAngle = Math.Atan2(mouseStart.Y - center.Y -b.Top, mouseStart.X - center.X - b.Left);
-                double currentAngle = Math.Atan2((Position.Y - center.Y-b.Top) , (Position.X - center.X- b.Left));
+                Point center = new Point(b.Width * 0.5 + b.Left, b.Height * 0.5 + b.Top);
+                Console.WriteLine("Center border: " + center.ToString());
+                center = new Point((double)b.Child.GetValue(Canvas.WidthProperty) * 0.5 + (double)b.Child.GetValue(Canvas.LeftProperty),
+                                   (double)b.Child.GetValue(Canvas.HeightProperty) * 0.5 + (double)b.Child.GetValue(Canvas.TopProperty));
+                Console.WriteLine("Center shape: " + center.ToString());
+                double beginAngle = Math.Atan2(mouseStart.Y - (center.Y), mouseStart.X - (center.X));
+                double currentAngle = Math.Atan2((Position.Y - center.Y) , (Position.X - center.X));
                 b.RotateTransform.Angle = (currentAngle - beginAngle) * 360 / (2 * Math.PI);
                 break;
                 
