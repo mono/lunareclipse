@@ -164,7 +164,6 @@ namespace LunarEclipse.Model
                                left + width - transform.CenterX);
             // Then add on the rotation from the transform
             angle += transform.Angle;
-            Console.WriteLine("Angle1: {0}", angle);
             // Then using some trigonomtry calculate the new position of the
             // bottom left corner after the transform
             Point bottomRight = new Point(Math.Cos(angle) * width / 2,
@@ -173,12 +172,8 @@ namespace LunarEclipse.Model
             angle = Math.Atan2(top - transform.CenterY,
                                left + width - transform.CenterX);
             angle += transform.Angle;
-            Console.WriteLine("Angle2: {0}", angle);
             Point topRight = new Point(Math.Cos(angle) * width / 2,
                                        Math.Sin(angle) * height / 2);
-            
-            Console.WriteLine("Bottomright: {0:0.2}", bottomRight);
-            Console.WriteLine("TopRight: {0:0.2}", topRight);
         }
         
         protected virtual void MoveBy(Point p)
