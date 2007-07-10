@@ -109,7 +109,7 @@ namespace LunarEclipse.Controller
 				if (selection.SelectedObjects.Count == 1)
                     foreach(KeyValuePair<Visual, SelectedBorder> keypair in selection.SelectedObjects)
                     {
-                        properties.DependencyObject = keypair.Key;
+                        properties.SelectedObject = keypair.Value;
                         Console.WriteLine("Selected: " + keypair.Key.ToString());
                     }
 			}

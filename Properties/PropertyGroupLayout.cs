@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-
+using LunarEclipse.Model;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -169,7 +169,7 @@ namespace LunarEclipse {
 			get { return item != null; }
 		}
 		
-		public override DependencyObject DependencyObject {
+		public override SelectedBorder SelectedObject {
 			set {
 				propTable = null;
 				spinTable = null;

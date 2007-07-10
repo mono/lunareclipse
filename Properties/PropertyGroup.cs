@@ -5,7 +5,7 @@
 using System;
 
 using System.Windows;
-
+using LunarEclipse.Model;
 using Gtk;
 
 namespace LunarEclipse {
@@ -40,7 +40,7 @@ namespace LunarEclipse {
 			get { return false; }
 		}
 		
-		public virtual DependencyObject DependencyObject {
+		public virtual SelectedBorder SelectedObject {
 			set {
 				if (properties != null)
 					properties.Destroy ();

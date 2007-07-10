@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-
+using LunarEclipse.Model;
 using System.Windows;
 using System.Windows.Media;
 
@@ -224,7 +224,7 @@ namespace LunarEclipse {
 			get { return hasProps; }
 		}
 		
-		public override DependencyObject DependencyObject {
+		public override SelectedBorder SelectedObject {
 			set {
 				propTable = null;
 				SetDependencyObject (value);

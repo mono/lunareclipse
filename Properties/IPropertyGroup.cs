@@ -3,14 +3,13 @@
 //
 
 using System;
-
 using System.Windows;
-
+using LunarEclipse.Model;
 using Gtk;
 
 namespace LunarEclipse {
 	public interface IPropertyGroup {
-		DependencyObject DependencyObject { set; }
+		SelectedBorder SelectedObject { set; }
 		bool HasProperties { get; }
 	}
 }

@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-
+using LunarEclipse.Model;
 using System.Windows;
 
 using Gtk;
@@ -14,7 +14,7 @@ using Gtk;
 namespace LunarEclipse {
 	public partial class Properties : Gtk.Bin, IPropertyGroup {
 		DependencyProperty nameProp;
-		DependencyObject item;
+		SelectedBorder item;
 		
 		PropertyGroup brush;
 		PropertyGroup appearance;
@@ -56,8 +56,8 @@ namespace LunarEclipse {
 		public bool HasProperties {
 			get { return item != null; }
 		}
-		
-		public DependencyObject DependencyObject {
+
+		public SelectedBorder SelectedObject {
 			set {
 				nameProp = null;
 				item = value;
@@ -87,14 +87,14 @@ namespace LunarEclipse {
 				// Brush
 				
 				// Appearance
-				appearance.DependencyObject = item;
+				appearance.SelectedObject = item;
 				if (((PropertyGroup) appearance).HasProperties)
 					appearance.Show ();
 				else
 					appearance.Hide ();
 				
 				// Layout
-				layout.DependencyObject = item;
+				layout.SelectedObject = item;
 				if (((PropertyGroup) layout).HasProperties)
 					layout.Show ();
 				else
