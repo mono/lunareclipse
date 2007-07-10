@@ -82,17 +82,18 @@ namespace LunarEclipse.Model
                 
                 double top;
                 double left;
-                double width;
-                double height;
+                double right;
+                double bottom;
                 
-                DrawBase.GetTransformedBounds(visual, out top, out left, out width, out height);
+                DrawBase.GetTransformedBounds(visual, out top, out left, out right, out bottom);
                 
                 if(visual is SelectedBorder)
                     visual = ((SelectedBorder)visual).Child;
                 
-                if(((rectLeft < (left + width)) && (rectLeft + rectWidth) > left)
-                   && (rectTop < (top + height)) && ((rectTop + rectHeight) > top))
+                if(((rectLeft < (right)) && (rectLeft + rectWidth) > left)
+                   && (rectTop < (bottom)) && ((rectTop + rectHeight) > top))
                 {
+                    Console.WriteLine("Selected: " + visual.ToString());
                     // Due to the special handling for borders, we need to
                     // make sure we don't add the same shape twice
                     if(!shapes.Contains(visual))

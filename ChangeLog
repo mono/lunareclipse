@@ -1,5 +1,10 @@
 2007-07-10  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Model/Draw/SelectionDraw.cs: Correctly calculating the size of the
+	  bounding box for non-rotated shapes.
+
+2007-07-10  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* Model/SelectedBorder.cs, Model/Draw/SelectionDraw.cs,
 	  Controller/MoonlightController.cs: Better detection for when
 	  selection occurs via clicking. Drag-selection is still dodgy for
