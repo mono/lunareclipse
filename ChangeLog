@@ -1,5 +1,12 @@
 2007-07-10  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Model/SelectedBorder.cs, Model/Draw/SelectionDraw.cs,
+	  Controller/MoonlightController.cs: Better detection for when
+	  selection occurs via clicking. Drag-selection is still dodgy for
+	  rotated shapes
+
+2007-07-10  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* Model/Draw/DrawBase.cs: Cleaned up some code
 
 2007-07-10  Alan McGovern <alan.mcgovern@gmail.com> 

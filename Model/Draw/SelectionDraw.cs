@@ -20,7 +20,7 @@ namespace LunarEclipse.Model
     {
         private MoonlightController controller;
         private Point mouseStart;
-        private bool clickedOnShape;
+        private Visual clickedOnShape;
         private bool prepared;
         private Dictionary<Visual, SelectedBorder> selectedObjects;
         private bool shapeMoved;
@@ -49,16 +49,21 @@ namespace LunarEclipse.Model
             selectedObjects.Keys.CopyTo(shapes, 0);
             foreach(Visual s in shapes)
                 Deselect(s);
+            
+            foreach(Visual v in this.controller.Canvas.Children)
+            {
+                UIElement e = v as UIElement;
+                if(e != null)
+                    e.MouseLeftButtonDown -= new MouseEventHandler(ClickedOnVisual);
+            }
         }
 
         internal override void DrawStart (Panel panel, MouseEventArgs e)
         {
             base.DrawStart(panel, e);
-            List<Visual> selectedShapes = GetSelectedObjects(e);
-            clickedOnShape = selectedShapes.Count != 0;
             mouseStart = Position;
             shapeMoved = false;
-            Console.WriteLine("Mouse down, Clicked?: " + (clickedOnShape).ToString());
+            Console.WriteLine("Mouse down, Clicked?: " + (clickedOnShape != null).ToString());
         }
         
         private List<Visual> GetSelectedObjects(MouseEventArgs e)
@@ -102,10 +107,32 @@ namespace LunarEclipse.Model
         
         internal override void Prepare ()
         {
-            if(!prepared)
-                base.Prepare();
+            if(prepared)
+                return;
+            
+            prepared = true;
+            base.Prepare();
+            
+            Console.WriteLine("Preparing");
+            foreach(Visual v in this.controller.Canvas.Children)
+            {
+                UIElement e = v as UIElement;
+                
+                if(e == null)
+                    continue;
+                
+                e.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
+            }
         }
 
+       private void ClickedOnVisual(object sender, MouseEventArgs e)
+       {
+            Console.WriteLine("Clicky");
+            if(sender is SelectedBorder)
+                this.clickedOnShape = ((SelectedBorder)sender).Child;
+            else
+                this.clickedOnShape = (Visual)sender;
+       }
 
         internal override void Resize (MouseEventArgs e)
         {
@@ -115,15 +142,15 @@ namespace LunarEclipse.Model
             
             base.Resize(e);
 
-            if(this.clickedOnShape)
+            if(clickedOnShape != null)
             {
                 if(!shapeAdded)
                 {
                     shapeAdded = true;
-                    if(!selectedObjects.ContainsKey(clickedShapes[0]))
+                    if(!selectedObjects.ContainsKey(clickedOnShape))
                     {
                         DeselectAll();
-                        Select(clickedShapes[0]);
+                        Select(clickedOnShape);
                     }
                 }
                 
@@ -180,6 +207,8 @@ namespace LunarEclipse.Model
             
             foreach(KeyValuePair<Visual, SelectedBorder> keypair in selectedObjects)
                 keypair.Value.MoveType = MoveType.Standard;
+            
+            this.clickedOnShape = null;
         }
         
         private void DeselectAll()
@@ -192,10 +221,12 @@ namespace LunarEclipse.Model
         
         private void Deselect(Visual s)
         {
-            // First remove the border from the canvas
-            controller.Canvas.Children.Remove(this.selectedObjects[s]);
+            SelectedBorder b = this.selectedObjects[s];
+            b.MouseLeftButtonDown -= new MouseEventHandler(ClickedOnVisual);   
             
-            // Then remove the selection from the list of currently selected items
+            // Remove the border from the canvas
+            controller.Canvas.Children.Remove(b);
+            // Remove the selection from the list of currently selected items
             this.selectedObjects.Remove(s);
         }
         
@@ -205,6 +236,7 @@ namespace LunarEclipse.Model
             border.Child = s;
             controller.Canvas.Children.Add(border);
             selectedObjects.Add(s, border);
+            border.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
         }
         
         private void MoveShape(Visual s, Point offset)

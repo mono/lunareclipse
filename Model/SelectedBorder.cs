@@ -35,7 +35,6 @@ namespace LunarEclipse.Model
         public SelectedBorder()
         {
             this.movetype = MoveType.Standard;
-            base.SetValue<int>(ZIndexProperty, int.MaxValue);
         }
         
         public RotateTransform RotateTransform
@@ -61,6 +60,7 @@ namespace LunarEclipse.Model
                 
                 child = value;
                 
+                base.SetValue<int>(ZIndexProperty, (int)child.GetValue(ZIndexProperty) - 1);
                 if(!updating)
                 {
                     updating = true;
