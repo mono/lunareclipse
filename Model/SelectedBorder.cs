@@ -35,14 +35,17 @@ namespace LunarEclipse.Model
         public SelectedBorder()
         {
             this.movetype = MoveType.Standard;
-            base.SetValue<bool>(IsHitTestVisibleProperty, false);
             base.SetValue<int>(ZIndexProperty, int.MaxValue);
         }
         
         public RotateTransform RotateTransform
         {
-            get { return (RotateTransform)this.RenderTransform; }
-            set { RenderTransform = value; }
+            get { return (RotateTransform)this.child.GetValue(RenderTransformProperty); }
+            set 
+            { 
+                this.child.SetValue<object>(RenderTransformProperty, value); 
+                base.SetValue<object>(RenderTransformProperty, value);
+            }
         }
         
         public Visual Child
@@ -72,7 +75,7 @@ namespace LunarEclipse.Model
                     t.Angle = 0;
                     t.CenterX = Width * 0.5;
                     t.CenterY = Height * 0.5;
-                    child.SetValue<object>(RenderTransformProperty, t);
+                    RotateTransform = t;
                 }
             }
         }
@@ -94,17 +97,6 @@ namespace LunarEclipse.Model
             get { return this.movetype; }
             internal set { this.movetype = value; }
         }
-        
-        public override object GetValue (DependencyProperty property)
-        {
-            return child == null ? null : child.GetValue(property);
-        }
-        
-        public override void SetValue<T> (DependencyProperty property, T obj)
-        {
-            child.SetValue<T>(property, obj);
-        }
-
 
         internal void ResizeBorder()
         {         
@@ -136,7 +128,6 @@ namespace LunarEclipse.Model
             copy.CenterX = current.CenterX + BorderWidth;
             copy.CenterY = current.CenterY + BorderWidth;
             base.SetValue<object>(RenderTransformProperty, copy);
-            Console.WriteLine(copy.Angle);
         }
         
         private void DrawHandles()
@@ -149,7 +140,6 @@ namespace LunarEclipse.Model
             double width = (double)base.GetValue(WidthProperty);
             double midX = width / 2.0;
             double midY = height / 2.0;
-
             
             // Top side
             circle = CreateCircle(new Point(0, 0));

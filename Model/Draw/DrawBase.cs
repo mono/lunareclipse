@@ -148,32 +148,6 @@ namespace LunarEclipse.Model
                 top -= SelectedBorder.BorderWidth;
                 height += SelectedBorder.BorderWidth * 2;
             }
-            
-            if(transform == null)
-                return;
-            
-            double angle;
-            double rotatedTopLeft;
-            double rotatedTopRight;
-            double rotatedBottomLeft;
-            double rotatedBottomRight;
-            
-            // Calculate the original angle between the bottom left corner and
-            // the centre of rotation
-            angle = Math.Atan2(top + height - transform.CenterY,
-                               left + width - transform.CenterX);
-            // Then add on the rotation from the transform
-            angle += transform.Angle;
-            // Then using some trigonomtry calculate the new position of the
-            // bottom left corner after the transform
-            Point bottomRight = new Point(Math.Cos(angle) * width / 2,
-                                         Math.Sin (angle) * height / 2);
-            
-            angle = Math.Atan2(top - transform.CenterY,
-                               left + width - transform.CenterX);
-            angle += transform.Angle;
-            Point topRight = new Point(Math.Cos(angle) * width / 2,
-                                       Math.Sin(angle) * height / 2);
         }
         
         protected virtual void MoveBy(Point p)
