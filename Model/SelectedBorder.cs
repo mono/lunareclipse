@@ -73,8 +73,8 @@ namespace LunarEclipse.Model
                 {
                     RotateTransform t = new RotateTransform();
                     t.Angle = 0;
-                    t.CenterX = Width * 0.5;
-                    t.CenterY = Height * 0.5;
+                    t.CenterX = (double)child.GetValue(WidthProperty) * 0.5;
+                    t.CenterY = (double)child.GetValue(HeightProperty) * 0.5;
                     RotateTransform = t;
                 }
             }
