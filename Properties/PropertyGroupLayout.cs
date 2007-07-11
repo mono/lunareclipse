@@ -98,17 +98,17 @@ namespace LunarEclipse {
 				
 				if (!info[i].Attached) {
 					prop = (DependencyProperty) field.GetValue (item);
-					value = item.GetValue (prop);
+					value = ((SelectedBorder)item).Child.GetValue (prop);
 				} else {
 					// Attached properties
 					switch (info[i].Name) {
 					case "LeftProperty":
 						prop = Canvas.LeftProperty;
-						value = item.GetValue (prop);
+						value = ((SelectedBorder)item).Child.GetValue (prop);
 						break;
 					case "TopProperty":
 						prop = Canvas.TopProperty;
-						value = item.GetValue (prop);
+						value = ((SelectedBorder)item).Child.GetValue (prop);
 						break;
 					}
 				}
@@ -184,10 +184,12 @@ namespace LunarEclipse {
 			SpinButton spin = (SpinButton) o;
 			
 			if (((Entry) spin).Text == "Auto") {
-				item.SetValue<double> (prop, 0.0);
+				((SelectedBorder)item).Child.SetValue<double> (prop, 0.0);
 			} else {
 				double v = spin.Value;
-				item.SetValue<double> (prop, v);
+				((SelectedBorder)item).Child.SetValue<double> (prop, v);
+                ((SelectedBorder)item).ResizeBorder();
+                Console.WriteLine("Changed other integer: {0:0}", v);
 			}
 		}
 		

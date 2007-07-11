@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using LunarEclipse.Model;
 using System.Windows;
 using System.Windows.Media;
-
+using LunarEclipse.Controller;
 using Gtk;
 
 namespace LunarEclipse {
@@ -122,8 +122,8 @@ namespace LunarEclipse {
 					continue;
 				
 				string propName = info[i].Name.Substring (0, info[i].Name.Length - 8);
-				DependencyProperty prop = (DependencyProperty) field.GetValue (item);
-				object value = item.GetValue (prop);
+				DependencyProperty prop = (DependencyProperty) field.GetValue (((SelectedBorder)item).Child);
+				object value = ((SelectedBorder)item).GetValue (prop);
 				Adjustment adj;
 				
 				Widget label = new Label (propName);
@@ -237,32 +237,36 @@ namespace LunarEclipse {
 			DependencyProperty prop = (DependencyProperty) propTable[o];
 			ComboBox combo = (ComboBox) o;
 			
-			item.SetValue<PenLineCap> (prop, (PenLineCap) combo.Active);
-		}
+			((SelectedBorder)item).Child.SetValue<PenLineCap> (prop, (PenLineCap) combo.Active);
+		    ((SelectedBorder)item).ResizeBorder();
+        }
 		
 		void OnStretchChanged (object o, EventArgs e)
 		{
 			DependencyProperty prop = (DependencyProperty) propTable[o];
 			ComboBox combo = (ComboBox) o;
 			
-			item.SetValue<Stretch> (prop, (Stretch) combo.Active);
-		}
+			((SelectedBorder)item).Child.SetValue<Stretch> (prop, (Stretch) combo.Active);
+		    ((SelectedBorder)item).ResizeBorder();
+        }
 		
 		void OnLineJoinChanged (object o, EventArgs e)
 		{
 			DependencyProperty prop = (DependencyProperty) propTable[o];
 			ComboBox combo = (ComboBox) o;
 			
-			item.SetValue<PenLineJoin> (prop, (PenLineJoin) combo.Active);
-		}
+			((SelectedBorder)item).Child.SetValue<PenLineJoin> (prop, (PenLineJoin) combo.Active);
+		    ((SelectedBorder)item).ResizeBorder();
+        }
 		
 		void OnVisibilityChanged (object o, EventArgs e)
 		{
 			DependencyProperty prop = (DependencyProperty) propTable[o];
 			ComboBox combo = (ComboBox) o;
 			
-			item.SetValue<Visibility> (prop, (Visibility) combo.Active);
-		}
+			((SelectedBorder)item).Child.SetValue<Visibility> (prop, (Visibility) combo.Active);
+		    ((SelectedBorder)item).ResizeBorder();
+        }
 		
 		void OnDoubleChanged (object o, EventArgs e)
 		{
@@ -270,7 +274,9 @@ namespace LunarEclipse {
 			SpinButton spin = (SpinButton) o;
 			double v = spin.Value;
 			
-			item.SetValue<double> (prop, v);
+			((SelectedBorder)item).Child.SetValue<double> (prop, v);
+            ((SelectedBorder)item).ResizeBorder();
+            Console.WriteLine("Changed double");
 		}
 		
 		void OnIntegerChanged (object o, EventArgs e)
@@ -279,7 +285,9 @@ namespace LunarEclipse {
 			SpinButton spin = (SpinButton) o;
 			int v = (int) spin.Value;
 			
-			item.SetValue<int> (prop, v);
+			((SelectedBorder)item).Child.SetValue<int> (prop, v);
+            ((SelectedBorder)item).ResizeBorder();
+            Console.WriteLine("Changed integer");
 		}
 		
 		void OnDataChanged (object o, EventArgs e)
@@ -288,7 +296,8 @@ namespace LunarEclipse {
 			Entry entry = (Entry) o;
 			
 			// FIXME: is this really of type string? or is it an array of Points?
-			item.SetValue<string> (prop, entry.Text);
-		}
+			((SelectedBorder)item).Child.SetValue<string> (prop, entry.Text);
+		    ((SelectedBorder)item).ResizeBorder();
+        }
 	}
 }

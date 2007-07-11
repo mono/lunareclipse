@@ -60,7 +60,7 @@ namespace LunarEclipse.Model
                 
                 child = value;
                 
-                base.SetValue<int>(ZIndexProperty, (int)child.GetValue(ZIndexProperty) - 1);
+                base.SetValue<int>(ZIndexProperty, int.MaxValue);
                 if(!updating)
                 {
                     updating = true;
@@ -123,6 +123,8 @@ namespace LunarEclipse.Model
             if(current == null)
                 return;
             
+            current.CenterX = (double)Child.GetValue(WidthProperty) * 0.5;
+            current.CenterY = (double)Child.GetValue(HeightProperty) * 0.5;
             RotateTransform copy = new RotateTransform();
             copy.Angle = current.Angle;
             copy.CenterX = current.CenterX + BorderWidth;
