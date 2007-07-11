@@ -23,6 +23,7 @@ namespace LunarEclipse.Model
         private Visual clickedOnShape;
         private bool prepared;
         private Dictionary<Visual, SelectedBorder> selectedObjects;
+        private double initialRotation = 0;
         private bool shapeMoved;
         private bool shapeAdded;
         
@@ -63,7 +64,11 @@ namespace LunarEclipse.Model
             base.DrawStart(panel, e);
             mouseStart = Position;
             shapeMoved = false;
-            Console.WriteLine("Mouse down, Clicked?: " + (clickedOnShape != null).ToString());
+            if(clickedOnShape == null)
+                return;
+            
+            RotateTransform t = this.clickedOnShape.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
+            this.initialRotation = (t != null) ? t.Angle : 0;
         }
         
         private List<Visual> GetSelectedObjects(MouseEventArgs e)
@@ -93,7 +98,6 @@ namespace LunarEclipse.Model
                 if(((rectLeft < (right)) && (rectLeft + rectWidth) > left)
                    && (rectTop < (bottom)) && ((rectTop + rectHeight) > top))
                 {
-                    Console.WriteLine("Selected: " + visual.ToString());
                     // Due to the special handling for borders, we need to
                     // make sure we don't add the same shape twice
                     if(!shapes.Contains(visual))
@@ -177,7 +181,7 @@ namespace LunarEclipse.Model
             Panel.Children.Remove(Element);
             List<Visual> shapes = GetSelectedObjects(e);
             Point mouseLocation = e.GetPosition(Panel);
-            bool clickedOnShape = shapes.Count != 0;
+            bool clickedOnShape = shapes.Count != 0 || this.clickedOnShape != null;
             bool mouseMoved = !mouseStart.Equals(Position);
             shapeAdded = false;
 
@@ -191,6 +195,9 @@ namespace LunarEclipse.Model
                         Deselect(s);
                     else
                         Select(s);
+                
+                if(this.clickedOnShape != null && !this.selectedObjects.ContainsKey(this.clickedOnShape))
+                    Select(this.clickedOnShape);
             }
                     
             if(!clickedOnShape && !mouseMoved)
@@ -204,6 +211,13 @@ namespace LunarEclipse.Model
                 Visual[] movedShapes = new Visual[selectedObjects.Keys.Count];
                 selectedObjects.Keys.CopyTo(movedShapes, 0);
                 controller.UndoEngine.PushUndo(new UndoMoveShape(movedShapes, start));
+            }
+            
+            if(this.clickedOnShape != null)
+            {
+                RotateTransform t = this.clickedOnShape.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
+                if(t != null && t.Angle != this.initialRotation)
+                    this.controller.UndoEngine.PushUndo(new UndoRotation(this.clickedOnShape, initialRotation, t.Angle));
             }
             
             foreach(KeyValuePair<Visual, SelectedBorder> keypair in selectedObjects)
@@ -269,21 +283,29 @@ namespace LunarEclipse.Model
                     break;
                 
                 case MoveType.StretchHeight:
-                    b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight + offset.Y);
+                    if((oldHeight + offset.Y) >= 0)
+                        b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight + offset.Y);
                     break;
                 
                 case MoveType.StretchLeft:
-                    b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
-                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - offset.X);    
+                    if((oldWidth - offset.X) >= 0)
+                    {
+                        b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
+                        b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - offset.X);
+                    }
                     break;
                 
                 case(MoveType.StretchTop):
-                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
-                    b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight - offset.Y);
+                    if((oldHeight - offset.Y) >= 0)
+                    {
+                        b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
+                        b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight - offset.Y);
+                    }
                     break;
                 
                 case MoveType.StretchWidth:
-                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.X);
+                    if((oldWidth + offset.X) >= 0)
+                        b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.X);
                     break;
             }
 

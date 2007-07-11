@@ -1,5 +1,10 @@
 2007-07-11  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Model/Draw/SelectionDraw.cs, Controller/UndoActions/UndoRotation.cs,
+	  LunarEclipse.mdp: Added ability to undo rotations
+
+2007-07-11  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* Model/SelectedBorder.cs, Model/Draw/SelectionDraw.cs: Much cleaner
 	  rotating now. Using RenderTransformOrigin to specifiy the offset at
 	  which the transform should be applied
