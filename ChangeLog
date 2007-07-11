@@ -2,6 +2,10 @@
 
 	* LunarEclipse.mdp: Removed extra file
 
+2007-07-11  Alan McGovern <alan.mcgovern@gmail.com> 
+
+	* LunarEclipse.mdp: Removed extra file
+
 2007-07-10  Alan McGovern <alan.mcgovern@gmail.com> 
 
 	* Model/Draw/SelectionDraw.cs: Correctly calculating the size of the

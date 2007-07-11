@@ -251,17 +251,15 @@ namespace LunarEclipse.Model
             switch(b.MoveType)
             {
                 case MoveType.Rotate:
-                Point center = new Point((double)b.GetValue(Canvas.WidthProperty) * 0.5 + 
-                                         (double)b.GetValue(Canvas.LeftProperty),
-                                         (double)b.GetValue(Canvas.HeightProperty) * 0.5 +
-                                         (double)b.GetValue(Canvas.TopProperty));
-
+                Point center;
                 center = new Point((double)b.Child.GetValue(Canvas.WidthProperty) * 0.5 + (double)b.Child.GetValue(Canvas.LeftProperty),
                                    (double)b.Child.GetValue(Canvas.HeightProperty) * 0.5 + (double)b.Child.GetValue(Canvas.TopProperty));
                
-                double beginAngle = Math.Atan2(mouseStart.Y - (center.Y), mouseStart.X - (center.X));
-                double currentAngle = Math.Atan2((Position.Y - center.Y) , (Position.X - center.X));
-                b.RotateTransform.Angle = (currentAngle - beginAngle) * 360 / (2 * Math.PI);
+                Point mouseStart = new Point(Position.X - offset.X, Position.Y - offset.Y);
+                double slope1 = (mouseStart.Y - center.Y) / (mouseStart.X - center.X);
+                double slope2 = (Position.Y - center.Y) / (Position.X - center.X);
+                double difference = Math.Atan((slope2 - slope1) / ( 1 + slope1 * slope2));
+                b.RotateTransform.Angle += difference * 360 / (2 * Math.PI);
                 break;
                 
                 case MoveType.Standard:
