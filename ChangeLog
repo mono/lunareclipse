@@ -1,5 +1,11 @@
 2007-07-11  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Model/SelectedBorder.cs, Model/Draw/SelectionDraw.cs: Much cleaner
+	  rotating now. Using RenderTransformOrigin to specifiy the offset at
+	  which the transform should be applied
+
+2007-07-11  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* Model/SelectedBorder.cs: Resetting the rotation to be about the
 	  correct point in the shape after the shape is altered
 	* Properties/PropertyGroupLayout.cs,

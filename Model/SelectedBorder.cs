@@ -42,8 +42,8 @@ namespace LunarEclipse.Model
             get { return (RotateTransform)this.child.GetValue(RenderTransformProperty); }
             set 
             { 
-                this.child.SetValue<object>(RenderTransformProperty, value); 
-                base.SetValue<object>(RenderTransformProperty, value);
+                this.child.SetValue<RotateTransform>(RenderTransformProperty, value); 
+                base.SetValue<RotateTransform>(RenderTransformProperty, value);
             }
         }
         
@@ -68,15 +68,13 @@ namespace LunarEclipse.Model
                     DrawHandles();
                     updating = false;
                 }
+
+                child.SetValue<Point>(RenderTransformOriginProperty, new Point(0.5, 0.5));
+                base.SetValue<Point>(RenderTransformOriginProperty, new Point(0.5, 0.5));
                 
-                if(child.GetValue(RenderTransformProperty) == null)
-                {
-                    RotateTransform t = new RotateTransform();
-                    t.Angle = 0;
-                    t.CenterX = (double)child.GetValue(WidthProperty) * 0.5;
-                    t.CenterY = (double)child.GetValue(HeightProperty) * 0.5;
-                    RotateTransform = t;
-                }
+                if(RotateTransform == null)
+                    RotateTransform = new RotateTransform();
+                base.SetValue<RotateTransform>(RenderTransformProperty, RotateTransform);
             }
         }
             
@@ -114,22 +112,7 @@ namespace LunarEclipse.Model
             base.SetValue<double>(HeightProperty, childHeight + BorderWidth * 2);
 
             DrawHandles();
-            DrawTransform();
-        }
-        
-        private void DrawTransform()
-        {
-            RotateTransform current = this.RotateTransform;
-            if(current == null)
-                return;
-            
-            current.CenterX = (double)Child.GetValue(WidthProperty) * 0.5;
-            current.CenterY = (double)Child.GetValue(HeightProperty) * 0.5;
-            RotateTransform copy = new RotateTransform();
-            copy.Angle = current.Angle;
-            copy.CenterX = current.CenterX + BorderWidth;
-            copy.CenterY = current.CenterY + BorderWidth;
-            base.SetValue<object>(RenderTransformProperty, copy);
+            //DrawTransform();
         }
         
         private void DrawHandles()

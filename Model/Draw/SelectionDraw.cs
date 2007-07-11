@@ -259,7 +259,8 @@ namespace LunarEclipse.Model
                 double slope1 = (mouseStart.Y - center.Y) / (mouseStart.X - center.X);
                 double slope2 = (Position.Y - center.Y) / (Position.X - center.X);
                 double difference = Math.Atan((slope2 - slope1) / ( 1 + slope1 * slope2));
-                b.RotateTransform.Angle += difference * 360 / (2 * Math.PI);
+                if(!double.IsNaN(difference))
+                    b.RotateTransform.Angle += difference * 360 / (2 * Math.PI);
                 break;
                 
                 case MoveType.Standard:
