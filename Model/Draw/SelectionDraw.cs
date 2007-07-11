@@ -108,22 +108,22 @@ namespace LunarEclipse.Model
         
         internal override void Prepare ()
         {
-            if(prepared)
-                return;
-            
-            prepared = true;
             base.Prepare();
-            
-            Console.WriteLine("Preparing");
-            foreach(Visual v in this.controller.Canvas.Children)
+         
+            if(!prepared)
             {
-                UIElement e = v as UIElement;
-                
-                if(e == null)
-                    continue;
-                
-                e.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
+                Console.WriteLine("Preparing");
+                foreach(Visual v in this.controller.Canvas.Children)
+                {
+                    UIElement e = v as UIElement;
+                    
+                    if(e == null)
+                        continue;
+                    
+                    e.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
+                }
             }
+            prepared = true;
         }
 
        private void ClickedOnVisual(object sender, MouseEventArgs e)

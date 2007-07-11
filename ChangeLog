@@ -1,5 +1,9 @@
 2007-07-11  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	Fixed an issue with Preparing the selection draw
+
+2007-07-11  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* LunarEclipse.mdp: Removed extra file
 
 2007-07-11  Alan McGovern <alan.mcgovern@gmail.com> 
