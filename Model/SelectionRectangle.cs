@@ -10,7 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Media;
 
-namespace LunarEclipse
+namespace LunarEclipse.Model
 {
     public class SelectionRectangle : Rectangle
     {

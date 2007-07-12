@@ -160,7 +160,7 @@ namespace LunarEclipse.Model
                 }
                 
                 foreach(KeyValuePair<Visual, SelectedBorder> keypair in selectedObjects)
-                    MoveShape(keypair.Key, mousePoint);
+                    MoveShape(keypair.Key, mousePoint, e);
                 
                 Element.Width = 0;
                 Element.Height = 0;
@@ -232,7 +232,10 @@ namespace LunarEclipse.Model
             // that on the nextMouseDown, a standard move will be performed unless
             // the user clicks on one of the handles for stretching/skewing/rotating
             foreach(KeyValuePair<Visual, SelectedBorder> keypair in selectedObjects)
-                keypair.Value.MoveType = MoveType.Standard;
+            {
+                Console.WriteLine("Setting null");
+                keypair.Value.Handle = null;
+            }
             
             // Reset the clicked on shape = null
             this.clickedOnShape = null;
@@ -266,17 +269,18 @@ namespace LunarEclipse.Model
             border.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
         }
         
-        private void MoveShape(Visual s, Point offset)
+        private void MoveShape(Visual s, Point offset, MouseEventArgs e)
         {
             SelectedBorder b = selectedObjects[s];
             double oldLeft = (double)b.Child.GetValue(Canvas.LeftProperty);
             double oldTop = (double)b.Child.GetValue(Canvas.TopProperty);
             double oldHeight = (double)b.Child.GetValue(Canvas.HeightProperty);
             double oldWidth = (double)b.Child.GetValue(Canvas.WidthProperty);
-
-            switch(b.MoveType)
+            
+            // Doing a rotation
+            if(b.Handle == b.RotateHandle1 || b.Handle == b.RotateHandle2 ||
+               b.Handle == b.RotateHandle3 || b.Handle == b.RotateHandle4)
             {
-                case MoveType.Rotate:
                 Point center;
                 center = new Point((double)b.Child.GetValue(Canvas.WidthProperty) * 0.5 + (double)b.Child.GetValue(Canvas.LeftProperty),
                                    (double)b.Child.GetValue(Canvas.HeightProperty) * 0.5 + (double)b.Child.GetValue(Canvas.TopProperty));
@@ -285,44 +289,97 @@ namespace LunarEclipse.Model
                 double slope1 = (mouseStart.Y - center.Y) / (mouseStart.X - center.X);
                 double slope2 = (Position.Y - center.Y) / (Position.X - center.X);
                 double difference = Math.Atan((slope2 - slope1) / ( 1 + slope1 * slope2));
+                
+                // Sometimes the angle will hit infinity, so in those cases
+                // don't apply the change and wait for the next mouse move which
+                // will give a proper angle
                 if(!double.IsNaN(difference))
                     b.RotateTransform.Angle += difference * 360 / (2 * Math.PI);
-                break;
-                
-                case MoveType.Standard:
-                    b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
-                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
-                    break;
-                
-                case MoveType.StretchHeight:
-                    if((oldHeight + offset.Y) >= 0)
-                        b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight + offset.Y);
-                    break;
-                
-                case MoveType.StretchLeft:
-                    if((oldWidth - offset.X) >= 0)
-                    {
-                        b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
-                        b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - offset.X);
-                    }
-                    break;
-                
-                case(MoveType.StretchTop):
-                    if((oldHeight - offset.Y) >= 0)
-                    {
-                        b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
-                        b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight - offset.Y);
-                    }
-                    break;
-                
-                case MoveType.StretchWidth:
-                    if((oldWidth + offset.X) >= 0)
-                        b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.X);
-                    break;
             }
+            
+            if(b.Handle == null)
+            {
+                b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
+                b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
+            }
+            
+            // Stretching the height/top
+            if(b.Handle == b.HeightHandle1 || b.Handle == b.HeightHandle2)
+                ResizeHeight(b, offset, e);
+            
+//            if(b.Handle == b.WidthHandle1 || b.Handle == b.WidthHandle2)
+//                ResizeWidth(b, offset, e);
+//            switch(b.Handle)
+//            {
+//                case MoveType.Rotate:
+
+//                
+
+//                
+//                case MoveType.Height:
+//                    ResizeHeight(b, offset);
+//                    break;
+//                
+//                case MoveType.Width:
+//                //left
+//                    if((oldWidth - offset.X) >= 0)
+//                    {
+//                        b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
+//                        b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - offset.X);
+//                    }
+//                
+//                //width
+//                    if((oldWidth + offset.X) >= 0)
+//                        b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.X);
+//                    break;
+//            }
 
             b.ResizeBorder();
             shapeMoved = true;
+        }
+        
+        private void ResizeHeight(SelectedBorder b, Point offset, MouseEventArgs e)
+        {
+            double oldLeft = (double)b.Child.GetValue(Canvas.LeftProperty);
+            double oldTop = (double)b.Child.GetValue(Canvas.TopProperty);
+            double oldHeight = (double)b.Child.GetValue(Canvas.HeightProperty);
+            double oldWidth = (double)b.Child.GetValue(Canvas.WidthProperty);
+            
+            double top1 = e.GetPosition(b.HeightHandle1).Y;
+            double top2 = e.GetPosition(b.HeightHandle2).Y;
+
+            Console.WriteLine("top1: {0}", top1);
+            Console.WriteLine("top2: {0}", top2);
+            Console.WriteLine("top1 - top2: {0}", top1 - top2);
+
+            // Check to see if we should be changing the 'Top' property
+            
+            if(b.Handle == b.HeightHandle1 && (top1-top2) > 0)
+            {
+                Console.WriteLine("A");
+                if((oldHeight - offset.Y) >= 0)
+                {
+                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
+                    b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight - offset.Y);
+                }
+//                
+//                if((oldHeight + offset.Y) >= 0)
+//                    b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight + offset.Y);
+            }
+            else if(b.Handle == b.HeightHandle2 && (top1 - top2) > 0)
+            {
+                Console.WriteLine("B");
+                if((oldHeight + offset.Y) >= 0)
+                    b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight + offset.Y);
+            }
+//            else // Else we change the 'Height' propert
+//            {
+//                if((oldHeight - offset.Y) >= 0)
+//                {
+//                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
+//                    b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight - offset.Y);
+//                }
+//            }
         }
     }
 }
