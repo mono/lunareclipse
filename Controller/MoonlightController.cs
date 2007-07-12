@@ -78,11 +78,14 @@ namespace LunarEclipse.Controller
         bool active = false;
         private void MouseLeftDown(object sender, MouseEventArgs e)
         {
+           Console.WriteLine("Mouse down");
             if(current == null || active)
                 return;
             
             active = true;
+            try{this.Canvas.CaptureMouse();}catch{}
             current.DrawStart(this.moonlight.Canvas, e);
+            
             if(current.CanUndo)
                 undo.PushUndo(new UndoAddObject(moonlight.Canvas.Children, current.Element));
         }
@@ -97,23 +100,31 @@ namespace LunarEclipse.Controller
         
         private void MouseLeftUp(object sender, MouseEventArgs e)
         {
+            Console.WriteLine("Mouse up");
             if(!active)
                 return;
 
             current.DrawEnd(e);
             active = false;
-			
-			if (current is SelectionDraw) {
-				SelectionDraw selection = (SelectionDraw) current;
-				if (selection.SelectedObjects.Count == 1)
-                    foreach(KeyValuePair<Visual, SelectedBorder> keypair in selection.SelectedObjects)
-                    {
-                        properties.SelectedObject = keypair.Value;
-                        Console.WriteLine("Selected: " + keypair.Key.ToString());
-                    }
-			}
+            try{this.Canvas.ReleaseMouseCapture();}catch{}
+            
+			if (!(current is SelectionDraw))
+                return;
+            
+			SelectionDraw selection = (SelectionDraw) current;
+			if (selection.SelectedObjects.Count == 1)
+            {
+               foreach(KeyValuePair<Visual, SelectedBorder> keypair in selection.SelectedObjects)
+               {
+                   properties.SelectedObject = keypair.Value;
+                   Console.WriteLine("Selected: " + keypair.Key.ToString());
+               }
+            }
+            else
+            {
+                properties.SelectedObject = null;
+            }
         }
-        
 
         public string SerializeCanvas()
         {

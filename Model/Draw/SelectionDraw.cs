@@ -185,24 +185,30 @@ namespace LunarEclipse.Model
             bool mouseMoved = !mouseStart.Equals(Position);
             shapeAdded = false;
 
-            if(clickedOnShape && !mouseMoved)
+            // If we clicked and released on a visual, we select it, unless
+            // we are using one of the modifiers (ctrl/shift)
+            // If we clicked and released on an empty area of canvas, we deselect
+            // everything
+            if(!mouseMoved)
             {
-                if(!e.Ctrl && !e.Shift)
-                    this.DeselectAll();
-                
-                foreach(Visual s in shapes)
-                    if(this.selectedObjects.ContainsKey(s))
-                        Deselect(s);
-                    else
-                        Select(s);
-                
-                if(this.clickedOnShape != null && !this.selectedObjects.ContainsKey(this.clickedOnShape))
-                    Select(this.clickedOnShape);
-            }
+                if(this.clickedOnShape != null)
+                {
+                    if(!e.Ctrl && !e.Shift)
+                        this.DeselectAll();
                     
-            if(!clickedOnShape && !mouseMoved)
-                DeselectAll();
+                    if(!this.selectedObjects.ContainsKey(this.clickedOnShape))
+                        Select(this.clickedOnShape);
+                    else
+                        Deselect(this.clickedOnShape);
+                }
+                else
+                {
+                    DeselectAll();
+                }
+            }
             
+            // If we did move some shapes using a click+drag, then we need to push
+            // an undo action onto the stack for the group of items which were moved
             if(shapeMoved)
             {
                 Point start = mouseStart;
@@ -213,6 +219,8 @@ namespace LunarEclipse.Model
                 controller.UndoEngine.PushUndo(new UndoMoveShape(movedShapes, start));
             }
             
+            // If we have clicked on a shape, check to see if it was rotated
+            // if it was push an undo action for that rotation
             if(this.clickedOnShape != null)
             {
                 RotateTransform t = this.clickedOnShape.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
@@ -220,9 +228,13 @@ namespace LunarEclipse.Model
                     this.controller.UndoEngine.PushUndo(new UndoRotation(this.clickedOnShape, initialRotation, t.Angle));
             }
             
+            // Reset all the 'move types' to be a standard move. This is needed so
+            // that on the nextMouseDown, a standard move will be performed unless
+            // the user clicks on one of the handles for stretching/skewing/rotating
             foreach(KeyValuePair<Visual, SelectedBorder> keypair in selectedObjects)
                 keypair.Value.MoveType = MoveType.Standard;
             
+            // Reset the clicked on shape = null
             this.clickedOnShape = null;
         }
         
