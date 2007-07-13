@@ -309,19 +309,9 @@ namespace LunarEclipse.Model
             if(b.Handle == b.HeightHandle1 || b.Handle == b.HeightHandle2)
                 ResizeHeight(b, offset, e);
             
-//            if(b.Handle == b.WidthHandle1 || b.Handle == b.WidthHandle2)
-//                ResizeWidth(b, offset, e);
-//            switch(b.Handle)
-//            {
-//                case MoveType.Rotate:
+            if(b.Handle == b.WidthHandle1 || b.Handle == b.WidthHandle2)
+                ResizeWidth(b, offset, e);
 
-//                
-
-//                
-//                case MoveType.Height:
-//                    ResizeHeight(b, offset);
-//                    break;
-//                
 //                case MoveType.Width:
 //                //left
 //                    if((oldWidth - offset.X) >= 0)
@@ -340,6 +330,50 @@ namespace LunarEclipse.Model
             shapeMoved = true;
         }
         
+        private void ResizeWidth(SelectedBorder b, Point offset, MouseEventArgs e)
+        {
+            double oldLeft    = (double)b.Child.GetValue(Canvas.LeftProperty);
+            double oldWidth = (double)b.Child.GetValue(Canvas.WidthProperty);
+            
+            double angle = 0;
+            RotateTransform rt = b.Child.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
+            if(rt != null)
+                angle = Math.Abs(rt.Angle % 360);
+            
+            // Check to see if we should be changing the 'Top' property
+            if(b.Handle == b.WidthHandle2 && (angle < 90 || angle >= 270))
+            {
+                Console.WriteLine("A");
+                Console.WriteLine("Delta: {0:0.00}", offset);
+                if((oldWidth - offset.X) >= 0)
+                {
+                    b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
+                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - offset.X);
+                }
+            }
+            else if(b.Handle == b.WidthHandle2 && (angle >= 90 || angle < 270))
+            {
+                Console.WriteLine("C");
+                 if((oldWidth - offset.X) >= 0)
+                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.X);
+            }
+            else if(b.Handle == b.WidthHandle1 && (angle < 90 || angle >= 270))
+            {
+                Console.WriteLine("B");
+                if((oldWidth + offset.X) >= 0)
+                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.X);
+            }
+            else if(b.Handle == b.WidthHandle1 && (angle >= 90 || angle < 270))
+            {
+                Console.WriteLine("D");
+                if((oldWidth + offset.X) >= 0)
+                {
+                   b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
+                   b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth -  offset.X);
+                }
+            }
+        }
+        
         private void ResizeHeight(SelectedBorder b, Point offset, MouseEventArgs e)
         {
             double oldTop    = (double)b.Child.GetValue(Canvas.TopProperty);
@@ -348,10 +382,9 @@ namespace LunarEclipse.Model
             double angle = 0;
             RotateTransform rt = b.Child.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
             if(rt != null)
-                angle = rt.Angle % 360;
+                angle = Math.Abs(rt.Angle % 360);
             
             // Check to see if we should be changing the 'Top' property
-            
             if(b.Handle == b.HeightHandle1 && (angle < 90 || angle >= 270))
             {
                 Console.WriteLine("A");
@@ -364,13 +397,9 @@ namespace LunarEclipse.Model
             }
             else if(b.Handle == b.HeightHandle1 && (angle >= 90 || angle < 270))
             {
-                Console.WriteLine("C");
-                Console.WriteLine("Delta: {0:0.00}", offset);
+                 Console.WriteLine("C");
                 if((oldHeight + offset.Y) >= 0)
-                {
-                   b.Child.SetValue<double>(Canvas.TopProperty, oldTop - offset.Y);
-                   b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight +  offset.Y);
-                }
+                    b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight + offset.Y);
             }
             else if(b.Handle == b.HeightHandle2 && (angle < 90 || angle >= 270))
             {
@@ -381,8 +410,12 @@ namespace LunarEclipse.Model
             else if(b.Handle == b.HeightHandle2 && (angle >= 90 || angle < 270))
             {
                 Console.WriteLine("D");
+                Console.WriteLine("Delta: {0:0.00}", offset);
                 if((oldHeight - offset.Y) >= 0)
-                    b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight - offset.Y);
+                {
+                   b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
+                   b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight -  offset.Y);
+                }
             }
         }
     }
