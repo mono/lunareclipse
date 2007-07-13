@@ -277,7 +277,14 @@ namespace LunarEclipse.Model
             double oldHeight = (double)b.Child.GetValue(Canvas.HeightProperty);
             double oldWidth = (double)b.Child.GetValue(Canvas.WidthProperty);
             
-            // Doing a rotation
+            // Do a standard move of the selected shapes
+            if(b.Handle == null)
+            {
+                b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
+                b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
+            }
+            
+            // Do a rotation of the selected shape
             if(b.Handle == b.RotateHandle1 || b.Handle == b.RotateHandle2 ||
                b.Handle == b.RotateHandle3 || b.Handle == b.RotateHandle4)
             {
@@ -297,13 +304,8 @@ namespace LunarEclipse.Model
                     b.RotateTransform.Angle += difference * 360 / (2 * Math.PI);
             }
             
-            if(b.Handle == null)
-            {
-                b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
-                b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
-            }
-            
-            // Stretching the height/top
+
+            // Stretch the height/top
             if(b.Handle == b.HeightHandle1 || b.Handle == b.HeightHandle2)
                 ResizeHeight(b, offset, e);
             
@@ -340,46 +342,48 @@ namespace LunarEclipse.Model
         
         private void ResizeHeight(SelectedBorder b, Point offset, MouseEventArgs e)
         {
-            double oldLeft = (double)b.Child.GetValue(Canvas.LeftProperty);
-            double oldTop = (double)b.Child.GetValue(Canvas.TopProperty);
+            double oldTop    = (double)b.Child.GetValue(Canvas.TopProperty);
             double oldHeight = (double)b.Child.GetValue(Canvas.HeightProperty);
-            double oldWidth = (double)b.Child.GetValue(Canvas.WidthProperty);
             
-            double top1 = e.GetPosition(b.HeightHandle1).Y;
-            double top2 = e.GetPosition(b.HeightHandle2).Y;
-
-            Console.WriteLine("top1: {0}", top1);
-            Console.WriteLine("top2: {0}", top2);
-            Console.WriteLine("top1 - top2: {0}", top1 - top2);
-
+            double angle = 0;
+            RotateTransform rt = b.Child.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
+            if(rt != null)
+                angle = rt.Angle % 360;
+            
             // Check to see if we should be changing the 'Top' property
             
-            if(b.Handle == b.HeightHandle1 && (top1-top2) > 0)
+            if(b.Handle == b.HeightHandle1 && (angle < 90 || angle >= 270))
             {
                 Console.WriteLine("A");
+                Console.WriteLine("Delta: {0:0.00}", offset);
                 if((oldHeight - offset.Y) >= 0)
                 {
                     b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
                     b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight - offset.Y);
                 }
-//                
-//                if((oldHeight + offset.Y) >= 0)
-//                    b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight + offset.Y);
             }
-            else if(b.Handle == b.HeightHandle2 && (top1 - top2) > 0)
+            else if(b.Handle == b.HeightHandle1 && (angle >= 90 || angle < 270))
+            {
+                Console.WriteLine("C");
+                Console.WriteLine("Delta: {0:0.00}", offset);
+                if((oldHeight + offset.Y) >= 0)
+                {
+                   b.Child.SetValue<double>(Canvas.TopProperty, oldTop - offset.Y);
+                   b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight +  offset.Y);
+                }
+            }
+            else if(b.Handle == b.HeightHandle2 && (angle < 90 || angle >= 270))
             {
                 Console.WriteLine("B");
                 if((oldHeight + offset.Y) >= 0)
                     b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight + offset.Y);
             }
-//            else // Else we change the 'Height' propert
-//            {
-//                if((oldHeight - offset.Y) >= 0)
-//                {
-//                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
-//                    b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight - offset.Y);
-//                }
-//            }
+            else if(b.Handle == b.HeightHandle2 && (angle >= 90 || angle < 270))
+            {
+                Console.WriteLine("D");
+                if((oldHeight - offset.Y) >= 0)
+                    b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight - offset.Y);
+            }
         }
     }
 }
