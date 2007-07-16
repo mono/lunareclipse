@@ -332,44 +332,49 @@ namespace LunarEclipse.Model
         
         private void ResizeWidth(SelectedBorder b, Point offset, MouseEventArgs e)
         {
+            double angle = 0;
             double oldLeft    = (double)b.Child.GetValue(Canvas.LeftProperty);
             double oldWidth = (double)b.Child.GetValue(Canvas.WidthProperty);
+            double oldTop = (double)b.Child.GetValue(Canvas.TopProperty);
             
-            double angle = 0;
             RotateTransform rt = b.Child.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
             if(rt != null)
                 angle = Math.Abs(rt.Angle % 360);
             
+            Point rotatedOffset = new Point(offset.Y * Math.Sin(angle) + offset.X / Math.Sin(angle),
+                                            offset.X * Math.Cos(angle) + offset.Y * Math.Sin(angle));
+            rotatedOffset = offset;          
             // Check to see if we should be changing the 'Top' property
             if(b.Handle == b.WidthHandle2 && (angle < 90 || angle >= 270))
             {
                 Console.WriteLine("A");
                 Console.WriteLine("Delta: {0:0.00}", offset);
-                if((oldWidth - offset.X) >= 0)
+                if((oldWidth - rotatedOffset.X) >= 0)
                 {
-                    b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
-                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - offset.X);
+                    b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + rotatedOffset.X);
+                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - rotatedOffset.X);
+                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + rotatedOffset.X * Math.Sin(angle /360 * 2 * Math.PI) / 2 );
                 }
             }
             else if(b.Handle == b.WidthHandle2 && (angle >= 90 || angle < 270))
             {
                 Console.WriteLine("C");
-                 if((oldWidth - offset.X) >= 0)
-                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.X);
+                 if((oldWidth - rotatedOffset.X) >= 0)
+                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + rotatedOffset.X);
             }
             else if(b.Handle == b.WidthHandle1 && (angle < 90 || angle >= 270))
             {
                 Console.WriteLine("B");
-                if((oldWidth + offset.X) >= 0)
-                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.X);
+                if((oldWidth + rotatedOffset.X) >= 0)
+                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + rotatedOffset.X);
             }
             else if(b.Handle == b.WidthHandle1 && (angle >= 90 || angle < 270))
             {
                 Console.WriteLine("D");
-                if((oldWidth + offset.X) >= 0)
+                if((oldWidth + rotatedOffset.X) >= 0)
                 {
-                   b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
-                   b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth -  offset.X);
+                   b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + rotatedOffset.X);
+                   b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth -  rotatedOffset.X);
                 }
             }
         }
