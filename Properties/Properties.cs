@@ -65,7 +65,7 @@ namespace LunarEclipse {
 				if (item != null) {
 					ObjectName.Text = item.Name != null ? item.Name : "";
 					ObjectName.Sensitive = true;
-					ObjectType.Text = item.GetType ().Name;
+					ObjectType.Text = value.Child.GetType ().Name;
 					
 					for (Type type = item.GetType (); nameProp == null && type != null; type = type.BaseType) {
 						FieldInfo[] fields = type.GetFields ();
