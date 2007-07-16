@@ -95,6 +95,9 @@ namespace LunarEclipse.Model
                 if(visual is SelectedBorder)
                     visual = ((SelectedBorder)visual).Child;
                 
+                if(visual is SelectedBorder)
+                    Console.WriteLine("oopsie");
+                
                 if(((rectLeft < (right)) && (rectLeft + rectWidth) > left)
                    && (rectTop < (bottom)) && ((rectTop + rectHeight) > top))
                 {
@@ -167,12 +170,22 @@ namespace LunarEclipse.Model
             }
             else
             {
-                if(!e.Ctrl && !e.Shift)
-                    DeselectAll();
-                
+                // Make sure that everything is selected that is currently
+                // highlighted by the selection rectangle
                 foreach(Visual s in clickedShapes)
                     if(!selectedObjects.ContainsKey(s))
                         Select(s);
+                
+                // If the user is not holding ctrl or shift, deselect everything
+                // that was previously selected but is *not* currently in the list
+                // of selected objects
+                List<Visual> deselectList = new List<Visual>();
+                foreach(Visual v in this.selectedObjects.Keys)   
+                    if(!clickedShapes.Contains(v))
+                        deselectList.Add(v);
+
+                foreach(Visual v in deselectList)
+                    Deselect(v);
             }
         }
 
@@ -251,6 +264,7 @@ namespace LunarEclipse.Model
         
         private void Deselect(Visual s)
         {
+            Console.WriteLine("Deselect method: {0}", s.ToString());
             SelectedBorder b = this.selectedObjects[s];
             b.MouseLeftButtonDown -= new MouseEventHandler(ClickedOnVisual);   
             
@@ -262,6 +276,7 @@ namespace LunarEclipse.Model
         
         private void Select(Visual s)
         {
+            Console.WriteLine("Selecting: {0}", s.ToString());
             SelectedBorder border = new SelectedBorder();
             border.Child = s;
             controller.Canvas.Children.Add(border);

@@ -1,5 +1,11 @@
 2007-07-16  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Model/Draw/SelectionDraw.cs: Selecting/deselecting is now a lot
+	  faster when using the selection rectangle. I don't regenerate the
+	  entire list of selected shapes every time.
+
+2007-07-16  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	Added partial support for recalculating the width/height when resizing diagonally so the shape doesn't move.
 
 2007-07-13  Alan McGovern <alan.mcgovern@gmail.com> 
