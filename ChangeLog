@@ -1,5 +1,10 @@
 2007-07-16  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Model/Draw/SelectionDraw.cs: Shape cannot be forced into 'negative'
+	  widht/height through resizing now.
+
+2007-07-16  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* Model/Draw/SelectionDraw.cs: Selecting/deselecting is now a lot
 	  faster when using the selection rectangle. I don't regenerate the
 	  entire list of selected shapes every time.
