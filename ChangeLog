@@ -1,3 +1,21 @@
+2007-07-17  Alan McGovern <amcgovern@novell.com> 
+
+	* Properties/Properties.cs: Added in supporting code for the Brush
+	  group
+	* Properties/PropertyGroupBrushes.cs: Initial implementation of the
+	  PropertyGroup for brushes
+	* Properties/PropertyGroupLayout.cs: Updated to use the
+	  ReflectionHelper
+	* Properties/PropertyGroup.cs: Bugfixed the SelectedBorder property
+	* Properties/PropertyGroupAppearance.cs: Using Enum helper methods
+	  where appropriate. Using ReflectionHelper. Fixes so operations are
+	  performed on the selected shape rather than the selection canvas
+	  surrounding that shape.
+	* Serialization/Serializer.cs: updated to work with the new static
+	  reflection helper
+	* Serialization/ReflectionHelper.cs: Reflection helper is now a
+	  threadsafe static class.
+
 2007-07-16  Alan McGovern <alan.mcgovern@gmail.com> 
 
 	Display the type of the object that is selected

@@ -6,11 +6,12 @@ using System;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-using LunarEclipse.Model;
 using System.Windows;
 using System.Windows.Controls;
-
 using Gtk;
+using LunarEclipse.Model;
+using PropertyPairList = System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<System.Type, System.Reflection.FieldInfo>>;
+
 
 namespace LunarEclipse {
 	public class PropertyGroupLayout : PropertyGroup {
@@ -61,22 +62,11 @@ namespace LunarEclipse {
 				return;
 			}
 			
-			Hashtable props = new Hashtable ();
-			for (Type type = item.GetType (); type != null; type = type.BaseType) {
-				FieldInfo[] fields = type.GetFields ();
-				foreach (FieldInfo field in fields) {
-					if (!field.FieldType.Equals (typeof (DependencyProperty)))
-						continue;
-					
-					for (i = 0; i < info.Length; i++) {
-						if (field.Name == info[i].Name) {
-							props.Add (field.Name, field);
-							break;
-						}
-					}
-				}
-			}
-			
+            PropertyPairList pairs = ReflectionHelper.GetDependencyProperties(item);
+			Hashtable props = new Hashtable();
+            foreach(KeyValuePair<Type, FieldInfo> keypair in pairs)
+                props.Add(keypair.Value.Name, keypair.Value);
+            
 			if (props.Count == 0) {
 				Properties = null;
 				return;

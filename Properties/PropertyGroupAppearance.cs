@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Media;
 using LunarEclipse.Controller;
 using Gtk;
+using PropertyPairList = System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<System.Type, System.Reflection.FieldInfo>>;
 
 namespace LunarEclipse {
 	public class PropertyGroupAppearance : PropertyGroup {
@@ -26,10 +27,10 @@ namespace LunarEclipse {
 			Visibility,
 		}
 		
-		static string [] stretchEnums = { "None", "Fill", "Uniform", "UniformToFill" };
-		static string [] penLineCapEnums = { "Flat", "Square", "Round", "Triangle" };
-		static string [] penLineJoinEnums = { "Miter", "Bevel", "Round" };
-		static string [] visibilityEnums = { "Visible", "Collapsed", "Hidden" };
+		static string [] stretchEnums = Enum.GetNames(typeof(System.Windows.Media.Stretch));
+		static string [] penLineCapEnums = Enum.GetNames(typeof(System.Windows.Media.PenLineCap));
+		static string [] penLineJoinEnums = Enum.GetNames(typeof(System.Windows.Media.PenLineJoin));
+		static string [] visibilityEnums = Enum.GetNames(typeof(System.Windows.Visibility));
 		
 		struct PropInfo {
 			public string Name;
@@ -68,9 +69,10 @@ namespace LunarEclipse {
 		
 		public PropertyGroupAppearance () : base ("Appearance")
 		{
+			
 		}
 		
-		void SetDependencyObject (DependencyObject item)
+		void SetDependencyObject (SelectedBorder item)
 		{
 			uint rows = 0, erows = 0, i;
 			uint top = 0, etop = 0;
@@ -83,26 +85,24 @@ namespace LunarEclipse {
 			}
 			
 			Hashtable props = new Hashtable ();
-			for (Type type = item.GetType (); type != null; type = type.BaseType) {
-				FieldInfo[] fields = type.GetFields ();
-				foreach (FieldInfo field in fields) {
-					if (!field.FieldType.Equals (typeof (DependencyProperty)))
-						continue;
-					
-					for (i = 0; i < info.Length; i++) {
-						if (field.Name == info[i].Name) {
-							if (info[i].Extended)
-								erows++;
-							else
-								rows++;
-							props.Add (info[i].Name, field);
-							hasProps = true;
-							break;
-						}
-					}
-				}
-			}
+            PropertyPairList pairs = ReflectionHelper.GetDependencyProperties(item.Child);
+            foreach(KeyValuePair<Type, FieldInfo> keypair in pairs)
+            {
+                for(int j=0; j < info.Length; j++)
+                {
+                    if(keypair.Value.Name != info[j].Name)
+                        continue;
+
+                    if (info[j].Extended)
+					    erows++;
+			        else
+				        rows++;
+				    props.Add (info[j].Name, keypair.Value);
+				    break;
+                }
+            }
 			
+			hasProps = props.Count > 0;
 			if (!hasProps) {
 				Properties = null;
 				return;
@@ -123,7 +123,7 @@ namespace LunarEclipse {
 				
 				string propName = info[i].Name.Substring (0, info[i].Name.Length - 8);
 				DependencyProperty prop = (DependencyProperty) field.GetValue (((SelectedBorder)item).Child);
-				object value = ((SelectedBorder)item).GetValue (prop);
+				object value = ((SelectedBorder)item).Child.GetValue (prop);
 				Adjustment adj;
 				
 				Widget label = new Label (propName);
@@ -204,7 +204,7 @@ namespace LunarEclipse {
 			
 			Widget properties = new VBox (false, 3);
 			((Box) properties).PackStart (main);
-			
+
 			if (erows > 0) {
 				Widget expander = new Expander ("More...");
 				((Expander) expander).Expanded = false;

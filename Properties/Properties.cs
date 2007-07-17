@@ -22,7 +22,7 @@ namespace LunarEclipse {
 		PropertyGroup common;
 		PropertyGroup text;
 		PropertyGroup misc;
-		
+
 		public Properties ()
 		{
 			this.Build ();
@@ -35,7 +35,10 @@ namespace LunarEclipse {
 			// build the property groups
 			
 			// Brush
-			
+			brush = new PropertyGroupBrushes();
+            vboxProperties.PackStart(brush, false, false, 0);
+            brush.Hide ();
+            
 			// Appearance
 			appearance = new PropertyGroupAppearance ();
 			vboxProperties.PackStart (appearance, false, false, 0);
@@ -67,11 +70,11 @@ namespace LunarEclipse {
 					ObjectName.Sensitive = true;
 					ObjectType.Text = value.Child.GetType ().Name;
 					
-					for (Type type = item.GetType (); nameProp == null && type != null; type = type.BaseType) {
+					for (Type type = item.Child.GetType (); nameProp == null && type != null; type = type.BaseType) {
 						FieldInfo[] fields = type.GetFields ();
 						foreach (FieldInfo field in fields) {
 							if (field.Name == "NameProperty") {
-								nameProp = (DependencyProperty) field.GetValue (item);
+								nameProp = (DependencyProperty) field.GetValue (item.Child);
 								break;
 							}
 						}
@@ -85,17 +88,22 @@ namespace LunarEclipse {
 				// build the property groups
 				
 				// Brush
-				
+				brush.SelectedObject = item;
+                if(brush.HasProperties)
+                    brush.Show ();
+                else
+                    brush.Hide ();
+
 				// Appearance
 				appearance.SelectedObject = item;
-				if (((PropertyGroup) appearance).HasProperties)
+				if (appearance.HasProperties)
 					appearance.Show ();
-				else
+				else				
 					appearance.Hide ();
 				
 				// Layout
 				layout.SelectedObject = item;
-				if (((PropertyGroup) layout).HasProperties)
+				if (layout.HasProperties)
 					layout.Show ();
 				else
 					layout.Hide ();

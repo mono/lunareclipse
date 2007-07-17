@@ -20,13 +20,11 @@ namespace LunarEclipse
 {
     internal class Serializer
     {
-        private ReflectionHelper reflectionHelper;
         private Dictionary<Type, DependencyObject> defaultValues;
         
         internal Serializer()
         {
             defaultValues = new Dictionary<Type, DependencyObject>();
-            reflectionHelper = new ReflectionHelper();
         }
 
         private string CleanName(string fieldName)
@@ -72,7 +70,7 @@ namespace LunarEclipse
             
             // Gets all the dependency properties for this item type
             // and any relevant attached properties.
-            PropertyPairList fields = reflectionHelper.GetDependencyProperties(item);
+            PropertyPairList fields = ReflectionHelper.GetDependencyProperties(item);
             
             // First we need to write all the dependency properties whose value is *not*
             // a dependency object as attributes. Every DependencyProperty whose value

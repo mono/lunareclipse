@@ -11,7 +11,8 @@ using Gtk;
 namespace LunarEclipse {
 	public abstract partial class PropertyGroup : Bin, IPropertyGroup {
 		Widget properties = null;
-		
+		SelectedBorder selectedObject;
+        
 		public PropertyGroup (string name)
 		{
 			this.Build ();
@@ -41,11 +42,8 @@ namespace LunarEclipse {
 		}
 		
 		public virtual SelectedBorder SelectedObject {
-			set {
-				if (properties != null)
-					properties.Destroy ();
-				properties = null;
-			}
+            get { return selectedObject; }
+            set { selectedObject = value; }
 		}
 	}
 }

@@ -10,49 +10,52 @@ namespace LunarEclipse
 {
     internal class ReflectionHelper
     {
-        private Dictionary<Type, PropertyPairList> cachedFields;
+        private static Dictionary<Type, PropertyPairList> cachedFields;
         
         
-        public ReflectionHelper()
+        static ReflectionHelper()
         {
-            this.cachedFields = new Dictionary<Type, PropertyPairList>();
+            cachedFields = new Dictionary<Type, PropertyPairList>();
         }
         
         
-        public PropertyPairList GetDependencyProperties(DependencyObject item)
+        public static PropertyPairList GetDependencyProperties(DependencyObject item)
         {
-            Type itemType = item.GetType();
-            PropertyPairList cached;
-            PropertyPairList fields = new PropertyPairList();
-
-            // Get all the fields for the type of this item
-            if(!cachedFields.ContainsKey(itemType))
-                cachedFields.Add(itemType, FindFields(itemType));
-            fields.AddRange(cachedFields[itemType]);
-            
-            // Check to see if there are any attached properties from
-            // a parent element which need to added to the list aswell
-            FrameworkElement e = item as FrameworkElement;
-            while(e != null && e.Parent != null)
+            lock(cachedFields)
             {
-                Console.WriteLine("Main item: " + item.GetType().Name);
-                Type parentType = e.Parent.GetType();
+                Type itemType = item.GetType();
+                PropertyPairList cached;
+                PropertyPairList fields = new PropertyPairList();
+
+                // Get all the fields for the type of this item
+                if(!cachedFields.ContainsKey(itemType))
+                    cachedFields.Add(itemType, FindFields(itemType));
+                fields.AddRange(cachedFields[itemType]);
                 
-                if(!cachedFields.ContainsKey(parentType))
-                    cachedFields.Add(parentType, FindFields(parentType));       
+                // Check to see if there are any attached properties from
+                // a parent element which need to added to the list aswell
+                FrameworkElement e = item as FrameworkElement;
+                while(e != null && e.Parent != null)
+                {
+                    Console.WriteLine("Main item: " + item.GetType().Name);
+                    Type parentType = e.Parent.GetType();
+                    
+                    if(!cachedFields.ContainsKey(parentType))
+                        cachedFields.Add(parentType, FindFields(parentType));       
+                    
+                    cached = cachedFields[parentType];
+                    foreach(KeyValuePair<Type, FieldInfo> keypair in cached)
+                        if(!ContainsField(fields, keypair))
+                            fields.Add(keypair);
+                    
+                    e = e.Parent as FrameworkElement;
+                }
                 
-                cached = cachedFields[parentType];
-                foreach(KeyValuePair<Type, FieldInfo> keypair in cached)
-                    if(!ContainsField(fields, keypair))
-                        fields.Add(keypair);
-                
-                e = e.Parent as FrameworkElement;
+                return fields;
             }
-            
-            return fields;
         }
         
-        private bool ContainsField(PropertyPairList fields, KeyValuePair<Type, FieldInfo> item)
+        private static bool ContainsField(PropertyPairList fields, KeyValuePair<Type, FieldInfo> item)
         {
             foreach(KeyValuePair<Type, FieldInfo> keypair in fields)
                 if(keypair.Value.Equals(item.Value))
@@ -61,7 +64,7 @@ namespace LunarEclipse
             return false;
         }
 
-        private PropertyPairList FindFields(Type type)
+        private static PropertyPairList FindFields(Type type)
         {
             Console.WriteLine("Getting fields for" + type.Name);
             Type current = type;
