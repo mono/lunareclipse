@@ -1,5 +1,9 @@
 2007-07-18  Alan McGovern <amcgovern@novell.com> 
 
+	w00t! I can resize without the shape shifting position
+
+2007-07-18  Alan McGovern <amcgovern@novell.com> 
+
 	Always set a default when using the color changer. Misc cleanups
 
 2007-07-17  Alan McGovern <amcgovern@novell.com> 

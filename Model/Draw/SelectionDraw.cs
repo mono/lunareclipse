@@ -16,6 +16,19 @@ using LunarEclipse;
 
 namespace LunarEclipse.Model
 {
+	public static class Converter
+	{
+		public static double DegreesToRadians(double angle)
+		{
+			return (angle * Math.PI) / 180.0 ;
+		}
+		
+		public static double RadiansToDegrees(double angle)
+		{
+			return (angle / Math.PI) * 180.0;
+		}
+		
+	}
     public class SelectionDraw : DrawBase
     {
         private MoonlightController controller;
@@ -335,17 +348,24 @@ namespace LunarEclipse.Model
         private void ResizeWidth(SelectedBorder b, Point offset, MouseEventArgs e)
         {
             double angle = 0;
-            double oldLeft    = (double)b.Child.GetValue(Canvas.LeftProperty);
+			double oldLeft    = (double)b.Child.GetValue(Canvas.LeftProperty);
             double oldWidth = (double)b.Child.GetValue(Canvas.WidthProperty);
             double oldTop = (double)b.Child.GetValue(Canvas.TopProperty);
-            
+            double oldHeight = (double)b.Child.GetValue(Canvas.HeightProperty);
+			Console.WriteLine("Left: {0}", oldLeft);
+			Console.WriteLine("Width: {0}", oldWidth);
+			Point rotatedOffset;
             RotateTransform rt = b.Child.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
             if(rt != null)
                 angle = Math.Abs(rt.Angle % 360);
-            
-            Point rotatedOffset = new Point(offset.Y * Math.Sin(angle) + offset.X / Math.Sin(angle),
-                                            offset.X * Math.Cos(angle) + offset.Y * Math.Sin(angle));
-            rotatedOffset = offset;          
+
+			Console.WriteLine("Initial Offset: {0}", offset);
+			double mouseDistanceTravelled = Math.Sqrt(offset.X * offset.X + offset.Y * offset.Y);
+			double mouseAngle = Math.Atan2(offset.Y, offset.X);
+			
+			rotatedOffset = new Point(mouseDistanceTravelled * Math.Cos(mouseAngle - Converter.DegreesToRadians(angle)),
+			                   mouseDistanceTravelled * Math.Sin(mouseAngle - Converter.DegreesToRadians(angle)));
+			Console.WriteLine("Rotated Offset: {0}", rotatedOffset);
             // Check to see if we should be changing the 'Top' property
             if(b.Handle == b.WidthHandle2 && (angle < 90 || angle >= 270))
             {
@@ -353,10 +373,11 @@ namespace LunarEclipse.Model
                 Console.WriteLine("Delta: {0:0.00}", offset);
                 if((oldWidth - rotatedOffset.X) >= 0)
                 {
-                    b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + rotatedOffset.X);
-                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - rotatedOffset.X);
-                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + rotatedOffset.X * Math.Sin(angle /360 * 2 * Math.PI) / 2 );
-                    
+					double cosAngle = Math.Cos(Converter.DegreesToRadians(angle));
+					double sinAngle = Math.Sin(Converter.DegreesToRadians(angle));
+					b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - rotatedOffset.X);
+					b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + rotatedOffset.X * cosAngle + rotatedOffset.X * (1 - cosAngle) / 2);
+                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + rotatedOffset.X / 2.0 * Math.Sin(Converter.DegreesToRadians(angle)));
                 }
             }
             else if(b.Handle == b.WidthHandle2 && (angle >= 90 || angle < 270))
