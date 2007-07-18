@@ -31,7 +31,7 @@ namespace LunarEclipse
             fillButton = new Button("Fill");
             fillButton.Show ();
             fillButton.Clicked +=
-                delegate (object sender, EventArgs e){ this.active = (Button)sender; };
+                delegate (object sender,   EventArgs e){ this.active = (Button)sender; };
 			box.PackStart(fillButton);
 
             strokeButton = new Button("Stroke");
@@ -49,18 +49,19 @@ namespace LunarEclipse
             colorPicker = new ColorSelection();
             colorPicker.ColorChanged += delegate {
                 Gdk.Color current = colorPicker.CurrentColor;
-				Brush brush = new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)(current.Red * (255.0 / ushort.MaxValue)), 
-				                                                                     (byte)(current.Green * (255.0 / ushort.MaxValue)), 
-				                                                                     (byte)(current.Blue * (255.0 / ushort.MaxValue))));
+				Brush brush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(
+				                 (byte)(colorPicker.CurrentAlpha * (255.0 / ushort.MaxValue)),
+	                             (byte)(current.Red * (255.0 / ushort.MaxValue)), 
+	                             (byte)(current.Green * (255.0 / ushort.MaxValue)), 
+	                             (byte)(current.Blue * (255.0 / ushort.MaxValue))));
                 
 				if(active == fillButton)
-                    this.SelectedObject.Child.SetValue<Brush>(Shape.FillProperty, brush);
+                    SelectedObject.Child.SetValue<Brush>(Shape.FillProperty, brush);
                 else if(active == backgroundButton)
                     SelectedObject.Child.SetValue<Brush>(Canvas.BackgroundProperty, brush);
                 else if(active == strokeButton)
                     SelectedObject.Child.SetValue<Brush>(Shape.StrokeProperty, brush);
             };
-			
 			
 			colorPicker.Show ();
             box.PackEnd(colorPicker);
@@ -104,7 +105,12 @@ namespace LunarEclipse
                 else if(keypair.Value.Name == "BackgroundProperty")
                     hasProperties = (backgroundButton.Visible = true);
             }
-            
+			
+			if(fillButton.Visible)
+				active = fillButton;
+            else if(backgroundButton.Visible)
+				active = backgroundButton;
+
             if(hasProperties)
                 Properties.Show();
         }
