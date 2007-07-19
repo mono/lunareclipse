@@ -1,5 +1,10 @@
 2007-07-18  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/Draw/SelectionDraw.cs: Implemented a bit more of the code
+	  needed for resizing shapes while rotated.
+
+2007-07-18  Alan McGovern <amcgovern@novell.com> 
+
 	w00t! I can resize without the shape shifting position
 
 2007-07-18  Alan McGovern <amcgovern@novell.com> 
