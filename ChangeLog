@@ -1,5 +1,9 @@
 2007-07-20  Alan McGovern <amcgovern@novell.com> 
 
+	Added a comment explaining the need for the crazy math
+
+2007-07-20  Alan McGovern <amcgovern@novell.com> 
+
 	Refactored the code to be much shorter
 
 2007-07-20  Alan McGovern <amcgovern@novell.com> 

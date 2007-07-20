@@ -369,7 +369,8 @@ namespace LunarEclipse.Model
 			offset = new Point(mouseDistanceTravelled * Math.Cos(mouseAngle - Converter.DegreesToRadians(angle)),
 			                   mouseDistanceTravelled * Math.Sin(mouseAngle - Converter.DegreesToRadians(angle)));
 			
-			// Change the width
+			// When resizing shapes, we need to do some crazy maths to make sure
+			// that when we resize, the shape doesn't 'float' around the canvas.
 			if(b.Handle == b.WidthHandle1)
             {
                 if((oldWidth + offset.X) >= 0)
