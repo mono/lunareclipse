@@ -313,7 +313,7 @@ namespace LunarEclipse.Model
             }
             
             // Do a rotation of the selected shape
-            if(b.Handle == b.RotateHandle1 || b.Handle == b.RotateHandle2 ||
+            else if(b.Handle == b.RotateHandle1 || b.Handle == b.RotateHandle2 ||
                b.Handle == b.RotateHandle3 || b.Handle == b.RotateHandle4)
             {
                 Point center;
@@ -334,147 +334,74 @@ namespace LunarEclipse.Model
                     b.RotateTransform.Angle += difference * 360 / (2 * Math.PI);
             }
             
-            // Stretch the height/top
-            if(b.Handle == b.HeightHandle1 || b.Handle == b.HeightHandle2)
-                ResizeHeight(b, offset, e);
-            
-            if(b.Handle == b.WidthHandle1 || b.Handle == b.WidthHandle2)
-                ResizeWidth(b, offset, e);
-
+			else
+			{
+				ResizeHeightOrWidth(b, offset, e);
+			}
+			
             b.ResizeBorder();
             shapeMoved = true;
         }
         
-        private void ResizeWidth(SelectedBorder b, Point offset, MouseEventArgs e)
+        private void ResizeHeightOrWidth(SelectedBorder b, Point offset, MouseEventArgs e)
         {
-            double angle = 0;
+			RotateTransform rt = b.Child.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
+            
+			// Get the absolute value of the angle the shape is rotated by
+			double angle = (rt != null) ? Math.Abs(rt.Angle % 360) : 0;
+			// Get the initial values for it's dimensions
 			double oldLeft    = (double)b.Child.GetValue(Canvas.LeftProperty);
             double oldWidth = (double)b.Child.GetValue(Canvas.WidthProperty);
             double oldTop = (double)b.Child.GetValue(Canvas.TopProperty);
             double oldHeight = (double)b.Child.GetValue(Canvas.HeightProperty);
-			Console.WriteLine("Left: {0}", oldLeft);
-			Console.WriteLine("Width: {0}", oldWidth);
-			Point rotatedOffset;
-            RotateTransform rt = b.Child.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
-            if(rt != null)
-                angle = Math.Abs(rt.Angle % 360);
 
-			Console.WriteLine("Initial Offset: {0}", offset);
-			double mouseDistanceTravelled = Math.Sqrt(offset.X * offset.X + offset.Y * offset.Y);
-			double mouseAngle = Math.Atan2(offset.Y, offset.X);
+			// Calculate the cos and sin of the angle of the rotated shape
 			double cosAngle = Math.Cos(Converter.DegreesToRadians(angle));
 			double sinAngle = Math.Sin(Converter.DegreesToRadians(angle));
 			
-			rotatedOffset = new Point(mouseDistanceTravelled * Math.Cos(mouseAngle - Converter.DegreesToRadians(angle)),
-			                          mouseDistanceTravelled * Math.Sin(mouseAngle - Converter.DegreesToRadians(angle)));
-			Console.WriteLine("Rotated Offset: {0}", rotatedOffset);
-			// Check to see if we should be changing the 'Top' property
-			if(b.Handle == b.WidthHandle2 && (angle < 90 || angle >= 270))
-			{
-				Console.WriteLine("A");
-				Console.WriteLine("Delta: {0:0.00}", offset);
-                if((oldWidth - rotatedOffset.X) >= 0)
-				{
-					b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - rotatedOffset.X);
-					b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + rotatedOffset.X * cosAngle + rotatedOffset.X * (1 - cosAngle) / 2);
-					b.Child.SetValue<double>(Canvas.TopProperty, oldTop + rotatedOffset.X / 2.0 * sinAngle);
-                }
-            }
-            else if(b.Handle == b.WidthHandle2 && (angle >= 90 || angle < 270))
-            {
-                Console.WriteLine("C");
-                if((oldWidth - rotatedOffset.X) >= 0)
-				{
-					b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - rotatedOffset.X);
-					b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + rotatedOffset.X * cosAngle + rotatedOffset.X * (1 - cosAngle) / 2);
-					b.Child.SetValue<double>(Canvas.TopProperty, oldTop + rotatedOffset.X * sinAngle / 2.0);
-                }
-            }
-            else if(b.Handle == b.WidthHandle1 && (angle < 90 || angle >= 270))
-            {
-                Console.WriteLine("B");
-                if((oldWidth + rotatedOffset.X) >= 0)
-                {
-					b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + rotatedOffset.X);
-					b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft  - rotatedOffset.X * (1 - cosAngle) / 2);
-                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + rotatedOffset.X * sinAngle / 2.0);
-                }
-            }
-            else if(b.Handle == b.WidthHandle1 && (angle >= 90 || angle < 270))
-            {
-				Console.WriteLine("D");
-                if((oldWidth + rotatedOffset.X) >= 0)
-                {
-					b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft  - rotatedOffset.X * (1 - cosAngle) / 2);
-                    b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + rotatedOffset.X);
-                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + rotatedOffset.X * sinAngle / 2.0);
-                }
-            }
-        }
-        
-        private void ResizeHeight(SelectedBorder b, Point offset, MouseEventArgs e)
-        {
-            double angle = 0;
-			double oldLeft    = (double)b.Child.GetValue(Canvas.LeftProperty);
-            double oldWidth = (double)b.Child.GetValue(Canvas.WidthProperty);
-            double oldTop = (double)b.Child.GetValue(Canvas.TopProperty);
-            double oldHeight = (double)b.Child.GetValue(Canvas.HeightProperty);
-
-
-            RotateTransform rt = b.Child.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
-            if(rt != null)
-                angle = Math.Abs(rt.Angle % 360);
-            
-			double sinAngle = Math.Sin(Converter.DegreesToRadians(angle));
-			double cosAngle = Math.Cos(Converter.DegreesToRadians(angle));
+			// When a shape is rotated, we need to convert the mouse X, Y coordinates from
+			// canvas coordinates into 'shape' coordinates. In 'shape' coordinates, the
+			// X coord corresponds to moving perpendicularly to the width of the rotated
+			// shape and the Y coordinate corresponds to moving perpendicularly to the Height
+			// of the rotated shape.
 			double mouseDistanceTravelled = Math.Sqrt(offset.X * offset.X + offset.Y * offset.Y);
 			double mouseAngle = Math.Atan2(offset.Y, offset.X);
 			offset = new Point(mouseDistanceTravelled * Math.Cos(mouseAngle - Converter.DegreesToRadians(angle)),
 			                   mouseDistanceTravelled * Math.Sin(mouseAngle - Converter.DegreesToRadians(angle)));
 			
-            // Check to see if we should be changing the 'Top' property
-            if(b.Handle == b.HeightHandle1 && (angle < 90 || angle >= 270))
+			// Change the width
+			if(b.Handle == b.WidthHandle1)
             {
-                Console.WriteLine("A");
-                Console.WriteLine("Delta: {0:0.00}", offset);
-                if((oldHeight - offset.Y) >= 0)
+                if((oldWidth + offset.X) >= 0)
                 {
-					b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight - offset.Y);
-					b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft - offset.Y * sinAngle / 2.0);
-                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y * cosAngle + offset.Y * (1 - cosAngle) / 2.0);
-                    
+					b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.X);
+					b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft  - offset.X * (1 - cosAngle) / 2);
+                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.X * sinAngle / 2.0);
                 }
             }
-            else if(b.Handle == b.HeightHandle1 && (angle >= 90 || angle < 270))
-            {
-                 Console.WriteLine("C");
-                if((oldHeight - offset.Y) >= 0)
-                {
-					b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight - offset.Y);
-					b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft - offset.Y * sinAngle / 2.0);
-                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y * cosAngle + offset.Y * (1 - cosAngle) / 2.0);
+			else if(b.Handle == b.WidthHandle2)
+			{
+                if((oldWidth - offset.X) >= 0)
+				{
+					b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - offset.X);
+					b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X * cosAngle + offset.X * (1 - cosAngle) / 2);
+					b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.X / 2.0 * sinAngle);
                 }
             }
-            else if(b.Handle == b.HeightHandle2 && (angle < 90 || angle >= 270))
+
+			// Change the height
+			else if(b.Handle == b.HeightHandle1 && (oldHeight - offset.Y) >= 0)
             {
-                Console.WriteLine("B");
-                if((oldHeight + offset.Y) >= 0)
-                {
-					b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight + offset.Y);
-					b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft - offset.Y * sinAngle / 2.0 );//+ offset.Y * sinAngle / 2.0);
-                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop -  offset.Y * (1 - cosAngle) / 2.0);
-                }
+				b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight - offset.Y);
+				b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft - offset.Y * sinAngle / 2.0);
+				b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y * cosAngle + offset.Y * (1 - cosAngle) / 2.0);
+            }
+            else if(b.Handle == b.HeightHandle2 && (oldHeight + offset.Y) >= 0)
+            {
+				b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight + offset.Y);
+				b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft - offset.Y * sinAngle / 2.0 );//+ offset.Y * sinAngle / 2.0);
+				b.Child.SetValue<double>(Canvas.TopProperty, oldTop -  offset.Y * (1 - cosAngle) / 2.0);
 			}
-			else if(b.Handle == b.HeightHandle2 && (angle >= 90 || angle < 270))
-            {
-                Console.WriteLine("D");
-				if((oldHeight + offset.Y) >= 0)
-                {
-					b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight + offset.Y);
-					b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft - offset.Y * sinAngle / 2.0 );//+ offset.Y * sinAngle / 2.0);
-                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop -  offset.Y * (1 - cosAngle) / 2.0);
-                }
-            }
         }
     }
 }

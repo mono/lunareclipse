@@ -1,5 +1,9 @@
 2007-07-20  Alan McGovern <amcgovern@novell.com> 
 
+	Refactored the code to be much shorter
+
+2007-07-20  Alan McGovern <amcgovern@novell.com> 
+
 	Resizing now works for all rotation angles
 
 2007-07-18  Alan McGovern <amcgovern@novell.com> 
