@@ -371,23 +371,17 @@ namespace LunarEclipse.Model
 			
 			// When resizing shapes, we need to do some crazy maths to make sure
 			// that when we resize, the shape doesn't 'float' around the canvas.
-			if(b.Handle == b.WidthHandle1)
+			if(b.Handle == b.WidthHandle1 && (oldWidth + offset.X) >= 0)
             {
-                if((oldWidth + offset.X) >= 0)
-                {
-					b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.X);
-					b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft  - offset.X * (1 - cosAngle) / 2);
-                    b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.X * sinAngle / 2.0);
-                }
+				b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.X);
+				b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft  - offset.X * (1 - cosAngle) / 2);
+				b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.X * sinAngle / 2.0);
             }
-			else if(b.Handle == b.WidthHandle2)
+			else if(b.Handle == b.WidthHandle2 && (oldWidth - offset.X) >= 0)
 			{
-                if((oldWidth - offset.X) >= 0)
-				{
-					b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - offset.X);
-					b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X * cosAngle + offset.X * (1 - cosAngle) / 2);
-					b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.X / 2.0 * sinAngle);
-                }
+				b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - offset.X);
+				b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X * cosAngle + offset.X * (1 - cosAngle) / 2);
+				b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.X / 2.0 * sinAngle);
             }
 
 			// Change the height

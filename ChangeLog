@@ -1,5 +1,9 @@
 2007-07-20  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/Draw/SelectionDraw.cs: Cosmetic
+
+2007-07-20  Alan McGovern <amcgovern@novell.com> 
+
 	Added a comment explaining the need for the crazy math
 
 2007-07-20  Alan McGovern <amcgovern@novell.com> 
