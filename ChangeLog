@@ -1,5 +1,9 @@
 2007-07-20  Alan McGovern <amcgovern@novell.com> 
 
+	* Controls: Added the outline for the Timeline control
+
+2007-07-20  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/Draw/DrawBase.cs: Removed excess variable
 	* Properties/PropertyGroupLayout.cs: Fixed bizarre bug where hooking
 	  into Changed and ValuedChanged would result in the spinbutton
