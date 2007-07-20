@@ -111,10 +111,6 @@ namespace LunarEclipse {
 				((SpinButton) widget).SetRange (0.0, (double) Int32.MaxValue);
 				((SpinButton) widget).Numeric = true;
 				
-//				Console.WriteLine ("Layout: {0} = {1} ({2})", propName, 
-//				                   value != null ? value.ToString () : "(null)", 
-//				                   value != null ? value.GetType ().ToString () : "(null)");
-				
 				if (value != null) {
 					switch (value.GetType ().Name) {
 					case "Double":
@@ -125,9 +121,8 @@ namespace LunarEclipse {
 						break;
 					}
 				}
-				
-				((SpinButton) widget).Changed += new EventHandler (OnIntegerChanged);
-				((SpinButton) widget).ValueChanged += new EventHandler (OnIntegerChanged);
+
+				((SpinButton) widget).ValueChanged += new EventHandler(OnIntegerChanged);
 				
 				propTable.Add (widget, prop);
 				widget.Show ();

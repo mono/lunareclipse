@@ -135,7 +135,6 @@ namespace LunarEclipse.Model
         
         internal static void GetTransformedBounds(Visual visual, out double top, out double left, out double width, out double height)
         {
-            RotateTransform transform = (RotateTransform)visual.GetValue(Canvas.RenderTransformProperty);
             top = (double)visual.GetValue(Canvas.TopProperty);
             left = (double)visual.GetValue(Canvas.LeftProperty);
             width = (double)visual.GetValue(Shape.WidthProperty) + left;
