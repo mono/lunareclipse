@@ -1,5 +1,9 @@
 2007-07-24  Alan McGovern <amcgovern@novell.com> 
 
+	If the time would go negative, instead send it to 00:00
+
+2007-07-24  Alan McGovern <amcgovern@novell.com> 
+
 	* Controls/TimeLine/KeyframeMarker.cs, Controls/TimeLine/Timeline.cs,
 	  Controls/TimeLine/AnimationTimeline.cs,
 	  Controls/TimeLine/TimelineMarker.cs, LunarEclipse.mdp,

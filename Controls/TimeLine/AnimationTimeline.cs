@@ -117,21 +117,17 @@ namespace LunarEclipse.View
 			Point offset = e.GetPosition(Canvas);
 			location.X -= offset.X;
 			location.Y -= offset.Y;
-			try
-			{
-				TimeSpan difference = TimeSpan.FromSeconds(location.X / PixelsPerDivision);
+
+			TimeSpan difference = TimeSpan.FromSeconds(location.X / PixelsPerDivision);
 				
-				if(startTime.TotalMilliseconds + difference.TotalMilliseconds < 0)
-					return;
-				
+			if(startTime.TotalMilliseconds + difference.TotalMilliseconds < 0)
+				startTime = TimeSpan.Zero;
+			else
 				startTime = startTime.Add(difference);
-				Canvas.Children.Clear();
-				DrawDivisions();
-			}
-			finally
-			{
-				location = offset;
-			}
+			
+			location = offset;
+			Canvas.Children.Clear();
+			DrawDivisions();
 		}
 		
 		private void MouseUp(object sender, MouseEventArgs e)
