@@ -43,8 +43,12 @@ namespace LunarEclipse.View
 			Widget toolbox = InitialiseWidgets ();
 			toolbox.ShowAll ();
 			mainContainer.Add (toolbox);
+			VBox vbox = new VBox();
+			vbox.PackStart(moonlight);
+			vbox.PackEnd(new AnimationTimeline(800, 70));
+			vbox.ShowAll();
+    		mainContainer.Add (vbox);
 			
-    		mainContainer.Add (moonlight);
 			
 			Widget propertyPane = new Properties ();
 			propertyPane.Show ();

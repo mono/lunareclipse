@@ -23,11 +23,25 @@ namespace LunarEclipse.View
 	    extern static IntPtr xaml_create_from_file (string file, ref int kind_type);
 
     	IntPtr surface;
+		private Canvas c;
+		private int height;
+		private int width;
+		
         public Canvas Canvas
         {
             get { return c; }
         }
-    	private Canvas c;
+		
+		public int Height
+		{
+			get { return height; }
+		}
+		
+		public int Width
+		{
+			get { return width; }
+		}
+
 
     	public static readonly string filePath = System.IO.Path.Combine(
                             Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "file.xaml");
@@ -36,10 +50,13 @@ namespace LunarEclipse.View
                     
     	public GtkSilver (int w, int h)
     	{
-    		surface = surface_new (w, h);
+			width = w;
+			height = h;
+    		surface = surface_new (Width, Height);
     		Raw = surface_get_drawing_area (surface);
     	}
 
+		
     	public void Attach (Canvas canvas)
     	{
     		if (canvas == null)

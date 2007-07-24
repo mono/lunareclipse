@@ -1,3 +1,11 @@
+2007-07-24  Alan McGovern <amcgovern@novell.com> 
+
+	* Controls/TimeLine/KeyframeMarker.cs, Controls/TimeLine/Timeline.cs,
+	  Controls/TimeLine/AnimationTimeline.cs,
+	  Controls/TimeLine/TimelineMarker.cs, LunarEclipse.mdp,
+	  View/MainWindow.cs, View/GtkMoonlight.cs: Implemented initial
+	  version of the animation timeline
+
 2007-07-20  Alan McGovern <amcgovern@novell.com> 
 
 	* Controls: Added the outline for the Timeline control

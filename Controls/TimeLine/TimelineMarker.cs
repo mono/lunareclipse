@@ -6,23 +6,28 @@
 
 using System;
 using System.Windows.Shapes;
-
+using System.Windows.Media;
 namespace LunarEclipse
 {
 	public class TimelineMarker : Rectangle
 	{
+		public const double Width = 2;
+		private TimeSpan time;
 		
-		private int time;
-		
-		public int Time
+		public TimeSpan Time
 		{
 			get { return time; }
 			internal set { time = value; }
 		}
 		
-		public TimelineMarker(int time)
+		public TimelineMarker(double height, TimeSpan time)
 		{
 			this.time = time;
+			base.Height = height;
+			base.Width = TimelineMarker.Width;
+			
+			Stroke = new SolidColorBrush(Colors.White);
+			Fill = new SolidColorBrush(Colors.White);
 		}
 	}
 }
