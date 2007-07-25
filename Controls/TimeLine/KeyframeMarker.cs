@@ -6,9 +6,9 @@
 
 using System;
 
-namespace LunarEclipse
+namespace LunarEclipse.View
 {
-	public class KeyframeMarker
+	/*public class KeyframeMarker : IMarker
 	{
 		private int id;
 		private TimeSpan time;
@@ -22,7 +22,7 @@ namespace LunarEclipse
 		public TimeSpan Time
 		{
 			get { return time; }
-			internal set { time = value; }
+			set { time = value; }
 		}
 		
 		public KeyframeMarker(int id, TimeSpan time)
@@ -30,5 +30,5 @@ namespace LunarEclipse
 			this.id = id;
 			this.time = time;
 		}
-	}
+	}*/
 }

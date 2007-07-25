@@ -20,10 +20,10 @@ namespace LunarEclipse.View
 		
 		private DependencyObject clickedItem;
 		private Point location;
-		private TimelineMarker marker;
+		private PositionMarker marker;
 		private bool started;
 		private TimeSpan startTime;
-
+		private Point startLocation;
 		
 		
 		public AnimationTimeline(int width, int height)
@@ -33,11 +33,10 @@ namespace LunarEclipse.View
 			c.Width = width;
 			c.Height = height;
 			Attach(c);
-			//marker = new TimelineMarker();
+			marker = new PositionMarker(TimeSpan.Zero, 0, 0);
 			startTime = TimeSpan.Zero;
-			//marker.MouseLeftButtonDown += delegate { clickedItem = marker; };
+			marker.MouseLeftButtonDown += delegate { clickedItem = marker; };
 			
-			//Canvas.Children.Add(marker);
 			Canvas.MouseLeftButtonDown += new MouseEventHandler(MouseDown);
 			Canvas.MouseMove += new MouseEventHandler(MouseMove);
 			Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseUp);
@@ -48,7 +47,6 @@ namespace LunarEclipse.View
 		
 		private void DrawDivisions()
 		{
-			
 			TextBlock b = new TextBlock(); b.Text = "3";
 			TimelineMarker marker = null;
 			double height = Height - b.ActualHeight;
@@ -77,17 +75,21 @@ namespace LunarEclipse.View
 
 				AddMarker(marker);
 			}
+			
+			this.marker.Height = height;
+			this.marker.Width = height / 8.0;
+			AddMarker(this.marker);
 		}
 		
-		private void AddMarker(TimelineMarker marker)
+		private void AddMarker(IMarker marker)
 		{
 			TimeSpan difference = marker.Time - startTime;
 			double left = difference.TotalSeconds * PixelsPerDivision;
-			marker.SetValue<double>(System.Windows.Controls.Canvas.LeftProperty, left);
-			Canvas.Children.Add(marker);
+			marker.Left = left - marker.Width / 2;
+			Canvas.Children.Add((Visual)marker);
 			
 			// Only add the timestamp for integer seconds
-			if(marker.Height <= Height / 2.0)
+			if(marker.Height <= Height / 2.0 || !(marker is TimelineMarker))
 				return;
 			
 			TextBlock block = new TextBlock();
@@ -106,6 +108,7 @@ namespace LunarEclipse.View
 			
 			started = true;
 			location = e.GetPosition(Canvas);
+			startLocation = location;
 			Canvas.CaptureMouse();
 		}
 		
@@ -117,13 +120,27 @@ namespace LunarEclipse.View
 			Point offset = e.GetPosition(Canvas);
 			location.X -= offset.X;
 			location.Y -= offset.Y;
-
+			
 			TimeSpan difference = TimeSpan.FromSeconds(location.X / PixelsPerDivision);
-				
-			if(startTime.TotalMilliseconds + difference.TotalMilliseconds < 0)
-				startTime = TimeSpan.Zero;
-			else
-				startTime = startTime.Add(difference);
+			
+			// This means that we clicked and dragged directly on the timeline
+			if(this.clickedItem == null)
+			{
+				if(startTime.TotalMilliseconds + difference.TotalMilliseconds < 0)
+					startTime = TimeSpan.Zero;
+				else
+					startTime = startTime.Add(difference);
+			}
+			// This means we tried to move either a position marker, keyframe
+			// marker or whatever
+			else if(clickedItem is IMarker)
+			{
+				IMarker mark = (IMarker)clickedItem;
+				if(marker.Time.TotalMilliseconds - difference.TotalMilliseconds < 0)
+					marker.Time = TimeSpan.Zero;
+				else
+					marker.Time = marker.Time.Subtract(difference);
+			}
 			
 			location = offset;
 			Canvas.Children.Clear();
@@ -134,8 +151,17 @@ namespace LunarEclipse.View
 		{
 			if(!started)
 				return;
+
+			bool moved = !startLocation.Equals(e.GetPosition(Canvas));
+			if(!moved)
+			{
+				this.marker.Time = this.startTime.Add(TimeSpan.FromSeconds(startLocation.X / AnimationTimeline.PixelsPerDivision));
+				Canvas.Children.Remove(this.marker);
+				AddMarker(this.marker);
+			}
 			
 			started = false;
+			this.clickedItem = null;
 			Canvas.ReleaseMouseCapture();
 		}
 	}
