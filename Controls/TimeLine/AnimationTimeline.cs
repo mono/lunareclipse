@@ -18,7 +18,7 @@ namespace LunarEclipse.View
 	{
 		private const double PixelsPerDivision = 80;
 		
-		private DependencyObject clickedItem;
+		private IMarker clickedItem;
 		private Point location;
 		private PositionMarker marker;
 		private bool started;
@@ -133,9 +133,8 @@ namespace LunarEclipse.View
 			}
 			// This means we tried to move either a position marker, keyframe
 			// marker or whatever
-			else if(clickedItem is IMarker)
+			else
 			{
-				IMarker mark = (IMarker)clickedItem;
 				if(marker.Time.TotalMilliseconds - difference.TotalMilliseconds < 0)
 					marker.Time = TimeSpan.Zero;
 				else
