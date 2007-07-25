@@ -63,6 +63,7 @@
     <File name="./Controls/TimeLine/PositionMarker.cs" subtype="Code" buildaction="Compile" />
     <File name="./Controls/TimeLine/IMarker.cs" subtype="Code" buildaction="Compile" />
     <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controller/Recorder.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
