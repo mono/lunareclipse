@@ -1,5 +1,9 @@
 2007-07-26  Alan McGovern <amcgovern@novell.com> 
 
+	Bugfix: Now plays nicely with a TransformGroup as the RenderTransform as opposed to a rotateTransform
+
+2007-07-26  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/SelectedBorder.cs, Model/Draw/SelectionDraw.cs: Switched to
 	  using TransformGroup rather than an actual RotateTransform
 

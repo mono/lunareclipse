@@ -345,10 +345,8 @@ namespace LunarEclipse.Model
         
         private void ResizeHeightOrWidth(SelectedBorder b, Point offset, MouseEventArgs e)
         {
-			RotateTransform rt = b.Child.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
-            
 			// Get the absolute value of the angle the shape is rotated by
-			double angle = (rt != null) ? rt.Angle % 360 : 0;
+			double angle = (b.Rotate != null) ? b.Rotate.Angle % 360 : 0;
 			if(angle < 0)
 				angle += 360;
 			
