@@ -39,7 +39,10 @@ namespace LunarEclipse.Controller
             { 
                 if(current != null) 
                     current.Cleanup();
-                this.current = value;
+                current = value;
+				
+				if(current != null)
+					current.Prepare();
             }
         }
         

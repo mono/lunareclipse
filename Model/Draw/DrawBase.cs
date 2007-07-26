@@ -73,9 +73,9 @@ namespace LunarEclipse.Model
         
         internal virtual void DrawStart(Panel panel, MouseEventArgs point)
         {
-            this.panel = panel;
-            
             Prepare();
+			this.panel = panel;
+			panel.Children.Add(Element);
             position = point.GetPosition(panel);
             Left = position.X;
             Top = position.Y;
@@ -86,7 +86,6 @@ namespace LunarEclipse.Model
             element = (Shape)Activator.CreateInstance(Element.GetType());
             element.Stroke = new SolidColorBrush(Colors.Red);
             element.Fill = new SolidColorBrush(Colors.Cyan);
-            panel.Children.Add(Element);
         }
         
         internal virtual void Resize(MouseEventArgs e)
