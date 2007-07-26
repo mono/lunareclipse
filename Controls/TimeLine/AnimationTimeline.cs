@@ -43,6 +43,7 @@ namespace LunarEclipse.View
 			Attach(c);
 			
 			marker = new PositionMarker(TimeSpan.Zero, 0, 0);
+			marker.ZIndex = 1;
 			divisionMarkers = new List<IMarker>();
 			divisionTextblocks = new List<TextBlock>();
 			
@@ -53,6 +54,7 @@ namespace LunarEclipse.View
 			Canvas.MouseMove += new MouseEventHandler(MouseMove);
 			Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseUp);
 			
+			Canvas.Children.Add(marker);
 			Canvas.Background = new SolidColorBrush(Colors.Black);
 			
 			int divisions = (int)Math.Ceiling(Width / PixelsPerDivision) * 4;
@@ -112,10 +114,10 @@ namespace LunarEclipse.View
 			// Push any of the unused markers or blocks outside of the visible area
 			// on the canvas.
 			while(currentMarker < divisionMarkers.Count)
-				divisionMarkers[currentMarker++].Left = -1;
+				divisionMarkers[currentMarker++].Left = -200;
 			
 			while(currentTextblock < divisionTextblocks.Count)
-				divisionTextblocks[currentTextblock++].SetValue<double>(System.Windows.Controls.Canvas.LeftProperty, -1);
+				divisionTextblocks[currentTextblock++].SetValue<double>(System.Windows.Controls.Canvas.LeftProperty, -200);
 			
 			// Make sure that the position marker is placed correctly on
 			// the canvas
@@ -192,7 +194,6 @@ namespace LunarEclipse.View
 			if(!moved)
 			{
 				marker.Time = startTime.Add(TimeSpan.FromSeconds(startLocation.X / AnimationTimeline.PixelsPerDivision));
-				Canvas.Children.Remove(marker);
 				PlaceMarker(marker, null);
 			}
 			
