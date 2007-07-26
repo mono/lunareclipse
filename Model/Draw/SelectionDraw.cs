@@ -348,7 +348,10 @@ namespace LunarEclipse.Model
 			RotateTransform rt = b.Child.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
             
 			// Get the absolute value of the angle the shape is rotated by
-			double angle = (rt != null) ? Math.Abs(rt.Angle % 360) : 0;
+			double angle = (rt != null) ? rt.Angle % 360 : 0;
+			if(angle < 0)
+				angle += 360;
+			
 			// Get the initial values for it's dimensions
 			double oldLeft    = (double)b.Child.GetValue(Canvas.LeftProperty);
             double oldWidth = (double)b.Child.GetValue(Canvas.WidthProperty);

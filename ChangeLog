@@ -1,5 +1,9 @@
 2007-07-26  Alan McGovern <amcgovern@novell.com> 
 
+	An angle of -10 actually corresponds to a true angle of 350. This fixes rotating with a negative angle
+
+2007-07-26  Alan McGovern <amcgovern@novell.com> 
+
 	Switching to the XAML view cleans up the current draw item in a better way
 
 2007-07-26  Alan McGovern <amcgovern@novell.com> 
