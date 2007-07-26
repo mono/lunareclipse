@@ -1,5 +1,9 @@
 2007-07-26  Alan McGovern <amcgovern@novell.com> 
 
+	Switching to the XAML view cleans up the current draw item in a better way
+
+2007-07-26  Alan McGovern <amcgovern@novell.com> 
+
 	* Controller/MoonlightController.cs: Cosmetic
 
 2007-07-26  Alan McGovern <amcgovern@novell.com> 
