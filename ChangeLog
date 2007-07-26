@@ -1,5 +1,9 @@
 2007-07-26  Alan McGovern <amcgovern@novell.com> 
 
+	* Controller/MoonlightController.cs: Cosmetic
+
+2007-07-26  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/Draw/DrawBase.cs, Controller/MoonlightController.cs: Fixed the
 	  bug where the SelectionDraw wasn't preparing until the first mouse
 	  click (which meant it wouldn't select on the first mouse click)

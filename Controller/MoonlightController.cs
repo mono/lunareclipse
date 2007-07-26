@@ -39,6 +39,7 @@ namespace LunarEclipse.Controller
             { 
                 if(current != null) 
                     current.Cleanup();
+				
                 current = value;
 				
 				if(current != null)
