@@ -5,6 +5,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows;
@@ -16,6 +17,10 @@ namespace LunarEclipse.View
 {
 	public class AnimationTimeline : GtkSilver
 	{
+		//public event EventHandler<T> KeyFrameAdded;
+		//public event EventHandler<T> KeyFrameMoved;
+		//public event EventHandler<T> KeyFrameRemoved;
+		
 		private const double PixelsPerDivision = 80;
 		
 		private IMarker clickedItem;
@@ -25,6 +30,9 @@ namespace LunarEclipse.View
 		private TimeSpan startTime;
 		private Point startLocation;
 		
+		private List<IMarker> divisionMarkers;
+		private List<TextBlock> divisionTextblocks;
+		
 		
 		public AnimationTimeline(int width, int height)
 			:base (width, height)
@@ -33,7 +41,11 @@ namespace LunarEclipse.View
 			c.Width = width;
 			c.Height = height;
 			Attach(c);
+			
 			marker = new PositionMarker(TimeSpan.Zero, 0, 0);
+			divisionMarkers = new List<IMarker>();
+			divisionTextblocks = new List<TextBlock>();
+			
 			startTime = TimeSpan.Zero;
 			marker.MouseLeftButtonDown += delegate { clickedItem = marker; };
 			
@@ -42,62 +54,88 @@ namespace LunarEclipse.View
 			Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseUp);
 			
 			Canvas.Background = new SolidColorBrush(Colors.Black);
+			
+			int divisions = (int)Math.Ceiling(Width / PixelsPerDivision) * 4;
+			for(int i=0; i <= divisions * 4; i++)
+			{
+				divisionMarkers.Add(new TimelineMarker(0, TimeSpan.Zero));
+				Canvas.Children.Add((Visual)divisionMarkers[i]);
+			}
+			
+			divisions /= 4;
+			for(int i=0; i <= divisions; i++)
+			{
+				divisionTextblocks.Add(new TextBlock());
+				Canvas.Children.Add(divisionTextblocks[i]);
+			}
+			
 			DrawDivisions();
 		}
 		
 		private void DrawDivisions()
 		{
 			TextBlock b = new TextBlock(); b.Text = "3";
-			TimelineMarker marker = null;
 			double height = Height - b.ActualHeight;
 			
 			// Calculate the next 'division' that we need to draw. It can be either
 			// at 250ms, 500ms, 750ms, or 0/1000 ms.
 			long currentTime = startTime.Seconds * 1000 + ((startTime.Milliseconds + 125) / 250) * 250;
 			long endTime = (long)startTime.TotalMilliseconds + (long)(Width / PixelsPerDivision) * 1000;
+
 			
-			for(long i = currentTime; i <=  endTime; i += 250)
+			int currentMarker = 0;
+			int currentTextblock = 0;
+			TextBlock block = null;
+			for(long i = currentTime; i <=  endTime; i += 250, block = null)
 			{
-				TimeSpan time = TimeSpan.FromMilliseconds(i);
+				IMarker marker = this.divisionMarkers[currentMarker++];
+				marker.Time = TimeSpan.FromMilliseconds(i);
+				
 				switch(i % 1000)
 				{
-					case 0:
-						marker = new TimelineMarker(height, time);
-						break;
-					case 250:
-					case 750:
-						marker = new TimelineMarker(height / 4, time);
-						break;
-					case 500:
-						marker = new TimelineMarker(height / 2, time);
-						break;
+				case 0:
+					marker.Height = height;
+					block = divisionTextblocks[currentTextblock++];
+					break;
+				case 250:
+				case 750:
+					marker.Height = height / 4.0;
+					break;
+				case 500:
+					marker.Height = height / 2.0;
+					break;
 				}
-
-				AddMarker(marker);
+				
+				PlaceMarker(marker, block);
 			}
 			
+			// Push any of the unused markers or blocks outside of the visible area
+			// on the canvas.
+			while(currentMarker < divisionMarkers.Count)
+				divisionMarkers[currentMarker++].Left = -1;
+			
+			while(currentTextblock < divisionTextblocks.Count)
+				divisionTextblocks[currentTextblock++].SetValue<double>(System.Windows.Controls.Canvas.LeftProperty, -1);
+			
+			// Make sure that the position marker is placed correctly on
+			// the canvas
 			this.marker.Height = height;
 			this.marker.Width = height / 8.0;
-			AddMarker(this.marker);
+			PlaceMarker(this.marker, null);
 		}
 		
-		private void AddMarker(IMarker marker)
+		private void PlaceMarker(IMarker marker, TextBlock block)
 		{
 			TimeSpan difference = marker.Time - startTime;
-			double left = difference.TotalSeconds * PixelsPerDivision;
-			marker.Left = left - marker.Width / 2;
-			Canvas.Children.Add((Visual)marker);
+			marker.Left = difference.TotalSeconds * PixelsPerDivision - marker.Width / 2;
 			
-			// Only add the timestamp for integer seconds
-			if(marker.Height <= Height / 2.0 || !(marker is TimelineMarker))
+			if(block == null)
 				return;
 			
-			TextBlock block = new TextBlock();
 			block.Text = marker.Time.ToString();
 			block.Text = block.Text.Substring(block.Text.IndexOf(':') + 1);
-			block.SetValue<double>(System.Windows.Controls.Canvas.LeftProperty, left - block.ActualWidth / 2);
+			block.SetValue<double>(System.Windows.Controls.Canvas.LeftProperty, marker.Left - block.ActualWidth / 2.0);
 			block.SetValue<double>(System.Windows.Controls.Canvas.TopProperty, Height - block.ActualHeight);
-			Canvas.Children.Add(block);
 			block.Foreground = new SolidColorBrush(Colors.White);
 		}
 		
@@ -142,7 +180,6 @@ namespace LunarEclipse.View
 			}
 			
 			location = offset;
-			Canvas.Children.Clear();
 			DrawDivisions();
 		}
 		
@@ -154,13 +191,13 @@ namespace LunarEclipse.View
 			bool moved = !startLocation.Equals(e.GetPosition(Canvas));
 			if(!moved)
 			{
-				this.marker.Time = this.startTime.Add(TimeSpan.FromSeconds(startLocation.X / AnimationTimeline.PixelsPerDivision));
-				Canvas.Children.Remove(this.marker);
-				AddMarker(this.marker);
+				marker.Time = startTime.Add(TimeSpan.FromSeconds(startLocation.X / AnimationTimeline.PixelsPerDivision));
+				Canvas.Children.Remove(marker);
+				PlaceMarker(marker, null);
 			}
 			
 			started = false;
-			this.clickedItem = null;
+			clickedItem = null;
 			Canvas.ReleaseMouseCapture();
 		}
 	}

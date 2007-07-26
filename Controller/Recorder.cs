@@ -5,12 +5,14 @@
 //
 
 using System;
+using LunarEclipse.View;
 
-namespace LunarEclipse
+namespace LunarEclipse.Controller
 {
 	public class Recorder
 	{
-		public Recorder()
+		
+		public Recorder(AnimationTimeline timeline)
 		{
 		}
 	}

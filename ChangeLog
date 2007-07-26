@@ -1,5 +1,11 @@
 2007-07-25  Alan McGovern <amcgovern@novell.com> 
 
+	* Controls/TimeLine/AnimationTimeline.cs: Now moving existing shapes
+	  around the canvas rather than clearing the children and creating
+	  new visuals each time. Much faster.
+
+2007-07-25  Alan McGovern <amcgovern@novell.com> 
+
 	Added the Recorder class used for recording animations
 
 2007-07-25  Alan McGovern <amcgovern@novell.com> 
