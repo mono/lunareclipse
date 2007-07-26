@@ -70,19 +70,30 @@ namespace LunarEclipse.Model
             get { return this.rotate4; }
         }
         
-        public SelectedBorder()
+		public ScaleTransform Scale
+		{
+			get { return (ScaleTransform)TransformGroup.Children[0]; }
+		}
+		
+		public SkewTransform Skew
+		{
+			get { return (SkewTransform)TransformGroup.Children[1]; }
+		}
+		
+		public RotateTransform Rotate
+		{
+			get { return (RotateTransform)TransformGroup.Children[2]; }
+		}
+
+		public TranslateTransform Translate
+		{
+			get { return (TranslateTransform)TransformGroup.Children[3]; }
+		}
+
+        public TransformGroup TransformGroup
         {
-            
-        }
-        
-        public RotateTransform RotateTransform
-        {
-            get { return (RotateTransform)this.child.GetValue(RenderTransformProperty); }
-            set 
-            {
-                this.child.SetValue<RotateTransform>(RenderTransformProperty, value); 
-                base.SetValue<RotateTransform>(RenderTransformProperty, value);
-            }
+			get { return (TransformGroup)child.GetValue(RenderTransformProperty); }
+			set	{ child.SetValue<TransformGroup>(RenderTransformProperty, value); }
         }
         
         public Visual Child
@@ -106,12 +117,18 @@ namespace LunarEclipse.Model
                     updating = false;
                 }
 
-                child.SetValue<Point>(RenderTransformOriginProperty, new Point(0.5, 0.5));
-                base.SetValue<Point>(RenderTransformOriginProperty, new Point(0.5, 0.5));
-                
-                if(RotateTransform == null)
-                    RotateTransform = new RotateTransform();
-                base.SetValue<RotateTransform>(RenderTransformProperty, RotateTransform);
+
+                if(TransformGroup == null)
+				{
+					child.SetValue<Point>(RenderTransformOriginProperty, new Point(0.5, 0.5));
+					TransformGroup = new TransformGroup();
+                    TransformGroup.Children.Add(new ScaleTransform());
+					TransformGroup.Children.Add(new SkewTransform());
+					TransformGroup.Children.Add(new RotateTransform());
+					TransformGroup.Children.Add(new TranslateTransform());
+				}
+				base.SetValue<object>(RenderTransformProperty, TransformGroup);
+				base.SetValue<object>(RenderTransformOriginProperty, Child.GetValue(RenderTransformOriginProperty));
             }
         }
             
@@ -127,7 +144,12 @@ namespace LunarEclipse.Model
             set { base.SetValue<double>(TopProperty, value); }
         }
 
-        internal void ResizeBorder()
+		public SelectedBorder()
+		{
+			
+		}
+		
+		internal void ResizeBorder()
         {         
             double childTop = (double)child.GetValue(TopProperty);
             double childLeft = (double)child.GetValue(LeftProperty);
@@ -141,7 +163,6 @@ namespace LunarEclipse.Model
             base.SetValue<double>(HeightProperty, childHeight + BorderWidth * 2);
 
             DrawHandles(((VisualCollection)base.GetValue(ChildrenProperty)).Count == 0);
-            //DrawTransform();
         }
         
         private void DrawHandles(bool firstDraw)
@@ -160,7 +181,6 @@ namespace LunarEclipse.Model
             // Top left rotate handle
             if(firstDraw)
             {
-                Console.WriteLine("DRAWING NEW BORDER SHAPES");
                 circle = new Ellipse();
                 Children.Add(circle);
                 rotate1 = circle;

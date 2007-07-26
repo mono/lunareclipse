@@ -207,7 +207,7 @@ namespace LunarEclipse.Model
             Panel.Children.Remove(Element);
             List<Visual> shapes = GetSelectedObjects(e);
             Point mouseLocation = e.GetPosition(Panel);
-            bool clickedOnShape = shapes.Count != 0 || this.clickedOnShape != null;
+            
             bool mouseMoved = !mouseStart.Equals(Position);
             shapeAdded = false;
 
@@ -299,26 +299,26 @@ namespace LunarEclipse.Model
         
         private void MoveShape(Visual s, Point offset, MouseEventArgs e)
         {
-            SelectedBorder b = selectedObjects[s];
-            double oldLeft = (double)b.Child.GetValue(Canvas.LeftProperty);
-            double oldTop = (double)b.Child.GetValue(Canvas.TopProperty);
-            double oldHeight = (double)b.Child.GetValue(Canvas.HeightProperty);
-            double oldWidth = (double)b.Child.GetValue(Canvas.WidthProperty);
+            SelectedBorder border = selectedObjects[s];
+            double oldLeft = (double)border.Child.GetValue(Canvas.LeftProperty);
+            double oldTop = (double)border.Child.GetValue(Canvas.TopProperty);
+            double oldHeight = (double)border.Child.GetValue(Canvas.HeightProperty);
+            double oldWidth = (double)border.Child.GetValue(Canvas.WidthProperty);
             
             // Do a standard move of the selected shapes
-            if(b.Handle == null)
+            if(border.Handle == null)
             {
-                b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
-                b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
+                border.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
+                border.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
             }
             
             // Do a rotation of the selected shape
-            else if(b.Handle == b.RotateHandle1 || b.Handle == b.RotateHandle2 ||
-               b.Handle == b.RotateHandle3 || b.Handle == b.RotateHandle4)
+            else if(border.Handle == border.RotateHandle1 || border.Handle == border.RotateHandle2 ||
+               border.Handle == border.RotateHandle3 || border.Handle == border.RotateHandle4)
             {
                 Point center;
-                center = new Point((double)b.Child.GetValue(Canvas.WidthProperty) * 0.5 + (double)b.Child.GetValue(Canvas.LeftProperty),
-                                   (double)b.Child.GetValue(Canvas.HeightProperty) * 0.5 + (double)b.Child.GetValue(Canvas.TopProperty));
+                center = new Point((double)border.Child.GetValue(Canvas.WidthProperty) * 0.5 + (double)border.Child.GetValue(Canvas.LeftProperty),
+                                   (double)border.Child.GetValue(Canvas.HeightProperty) * 0.5 + (double)border.Child.GetValue(Canvas.TopProperty));
                
                 Point mouseStart = new Point(Position.X - offset.X, Position.Y - offset.Y);
                 
@@ -331,15 +331,15 @@ namespace LunarEclipse.Model
                 // don't apply the change and wait for the next mouse move which
                 // will give a proper angle
                 if(!double.IsNaN(difference))
-                    b.RotateTransform.Angle += difference * 360 / (2 * Math.PI);
+                    border.Rotate.Angle += Converter.RadiansToDegrees(difference);
             }
             
 			else
 			{
-				ResizeHeightOrWidth(b, offset, e);
+				ResizeHeightOrWidth(border, offset, e);
 			}
 			
-            b.ResizeBorder();
+            border.ResizeBorder();
             shapeMoved = true;
         }
         

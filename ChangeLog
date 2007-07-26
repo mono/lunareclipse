@@ -1,5 +1,10 @@
 2007-07-26  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/SelectedBorder.cs, Model/Draw/SelectionDraw.cs: Switched to
+	  using TransformGroup rather than an actual RotateTransform
+
+2007-07-26  Alan McGovern <amcgovern@novell.com> 
+
 	An angle of -10 actually corresponds to a true angle of 350. This fixes rotating with a negative angle
 
 2007-07-26  Alan McGovern <amcgovern@novell.com> 
