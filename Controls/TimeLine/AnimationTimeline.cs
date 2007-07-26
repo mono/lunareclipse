@@ -71,10 +71,10 @@ namespace LunarEclipse.View
 				Canvas.Children.Add(divisionTextblocks[i]);
 			}
 			
-			DrawDivisions();
+			PlaceDivisions();
 		}
 		
-		private void DrawDivisions()
+		private void PlaceDivisions()
 		{
 			TextBlock b = new TextBlock(); b.Text = "3";
 			double height = Height - b.ActualHeight;
@@ -182,7 +182,7 @@ namespace LunarEclipse.View
 			}
 			
 			location = offset;
-			DrawDivisions();
+			PlaceDivisions();
 		}
 		
 		private void MouseUp(object sender, MouseEventArgs e)

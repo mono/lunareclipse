@@ -1,5 +1,12 @@
 2007-07-26  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/Draw/RecordDraw.cs, Controller/Recorder.cs,
+	  Controls/TimeLine/KeyframeMarker.cs,
+	  Controls/TimeLine/AnimationTimeline.cs, LunarEclipse.mdp: Updated
+	  animation handling
+
+2007-07-26  Alan McGovern <amcgovern@novell.com> 
+
 	* Controls/TimeLine/AnimationTimeline.cs: The position marker is
 	  correctly displayed onscreen now
 

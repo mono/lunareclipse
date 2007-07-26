@@ -5,18 +5,18 @@
 //
 
 using System;
-
+using System.Windows.Shapes;
+using System.Windows.Controls;
 namespace LunarEclipse.View
 {
-	/*public class KeyframeMarker : IMarker
+	public class KeyframeMarker : Ellipse, IMarker
 	{
-		private int id;
 		private TimeSpan time;
 		
-		
-		public int Id
+		public double Left
 		{
-			get { return id; }
+			get { return (double)GetValue(Canvas.LeftProperty); }
+			set { SetValue<double>(Canvas.LeftProperty, value); }
 		}
 		
 		public TimeSpan Time
@@ -25,10 +25,9 @@ namespace LunarEclipse.View
 			set { time = value; }
 		}
 		
-		public KeyframeMarker(int id, TimeSpan time)
+		public KeyframeMarker(TimeSpan time)
 		{
-			this.id = id;
 			this.time = time;
 		}
-	}*/
+	}
 }
