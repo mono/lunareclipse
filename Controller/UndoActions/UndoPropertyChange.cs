@@ -8,7 +8,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace LunarEclipse
+namespace LunarEclipse.Controller
 {
     public class UndoPropertyChange : UndoActionBase
     {
@@ -16,6 +16,17 @@ namespace LunarEclipse
         private DependencyProperty property;
         private object oldvalue;
         private object newvalue;
+		
+		public object OldValue
+		{
+			get { return oldvalue; }
+			set { oldvalue = value; }
+		}
+		public object NewValue
+		{
+			get { return newvalue; }
+			set { newvalue = value; }
+		}
         
         public UndoPropertyChange(DependencyObject item, DependencyProperty property, object oldvalue, object newvalue)
         {

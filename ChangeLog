@@ -1,5 +1,15 @@
 2007-07-27  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/Draw/SelectionDraw.cs, Controller/UndoActions/UndoMoveShape.cs,
+	  Controller/UndoActions/UndoActionBase.cs,
+	  Controller/UndoActions/UndoPropertyChange.cs,
+	  Controller/UndoActions/UndoGroup.cs,
+	  Controller/UndoActions/UndoAddObject.cs, LunarEclipse.mdp: Now
+	  using the new UndoGroup. Greatly simplifies the undo logic for
+	  events that change multiple properties at the same time.
+
+2007-07-27  Alan McGovern <amcgovern@novell.com> 
+
 	* Properties/PropertyGroupBrushes.cs: Cosmetic
 
 2007-07-27  Alan McGovern <amcgovern@novell.com> 

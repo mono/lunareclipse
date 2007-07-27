@@ -36,9 +36,9 @@ namespace LunarEclipse.Model
         private Visual clickedOnShape;
         private bool prepared;
         private Dictionary<Visual, SelectedBorder> selectedObjects;
-        private double initialRotation = 0;
         private bool shapeMoved;
         private bool shapeAdded;
+		private UndoGroup undoGroup;
         
         public Dictionary<Visual, SelectedBorder> SelectedObjects
         {
@@ -79,9 +79,8 @@ namespace LunarEclipse.Model
             shapeMoved = false;
             if(clickedOnShape == null)
                 return;
-            
-            RotateTransform t = this.clickedOnShape.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
-            this.initialRotation = (t != null) ? t.Angle : 0;
+			
+			undoGroup = new UndoGroup();
         }
         
         private List<Visual> GetSelectedObjects(MouseEventArgs e)
@@ -132,7 +131,6 @@ namespace LunarEclipse.Model
          
             if(!prepared)
             {
-                Console.WriteLine("Preparing");
                 foreach(Visual v in this.controller.Canvas.Children)
                 {
                     UIElement e = v as UIElement;
@@ -148,7 +146,6 @@ namespace LunarEclipse.Model
 
        private void ClickedOnVisual(object sender, MouseEventArgs e)
        {
-            Console.WriteLine("Clicky");
             if(sender is SelectedBorder)
                 this.clickedOnShape = ((SelectedBorder)sender).Child;
             else
@@ -232,29 +229,6 @@ namespace LunarEclipse.Model
                 }
             }
             
-            // If we did move some shapes using a click+drag, then we need to push
-            // an undo action onto the stack for the group of items which were moved
-            if(shapeMoved)
-            {
-                Point start = mouseStart;
-                start.Offset(-mouseLocation.X, -mouseLocation.Y);
-
-                Visual[] movedShapes = new Visual[selectedObjects.Keys.Count];
-                selectedObjects.Keys.CopyTo(movedShapes, 0);
-                controller.UndoEngine.PushUndo(new UndoMoveShape(movedShapes, start));
-            }
-            
-            // If we have clicked on a shape, check to see if it was rotated
-            // if it was push an undo action for that rotation
-            if(this.clickedOnShape != null)
-            {
-				
-				RotateTransform t =(RotateTransform) ((TransformGroup)clickedOnShape.GetValue(Canvas.RenderTransformProperty)).Children[(int)TransformType.Rotate];
-				Console.WriteLine("Clicked: {0}, {1}", clickedOnShape, t == null);
-				if(t.Angle != this.initialRotation)
-                    this.controller.UndoEngine.PushUndo(new UndoRotation(this.clickedOnShape, initialRotation, t.Angle));
-            }
-            
             // Reset all the 'move types' to be a standard move. This is needed so
             // that on the nextMouseDown, a standard move will be performed unless
             // the user clicks on one of the handles for stretching/skewing/rotating
@@ -262,7 +236,9 @@ namespace LunarEclipse.Model
                 keypair.Value.Handle = null;
             
             // Reset the clicked on shape = null
-            this.clickedOnShape = null;
+            clickedOnShape = null;
+			if(undoGroup.Undos.Count > 0)
+				controller.UndoEngine.PushUndo(undoGroup);
         }
         
         private void DeselectAll()
@@ -305,7 +281,11 @@ namespace LunarEclipse.Model
             if(border.Handle == null)
 			{
 				shapeMoved = true;
-                border.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
+				
+				undoGroup.Undos.Add(new UndoPropertyChange(border.Child,Canvas.LeftProperty, oldLeft, oldLeft + offset.X));
+				undoGroup.Undos.Add(new UndoPropertyChange(border.Child, Canvas.TopProperty, oldTop, oldTop + offset.Y));
+                
+				border.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
                 border.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
             }
             
@@ -316,8 +296,10 @@ namespace LunarEclipse.Model
 			        border.Handle == border.RotateHandle4)
             {
                 Point center;
-                center = new Point((double)border.Child.GetValue(Canvas.WidthProperty) * 0.5 + (double)border.Child.GetValue(Canvas.LeftProperty),
-                                   (double)border.Child.GetValue(Canvas.HeightProperty) * 0.5 + (double)border.Child.GetValue(Canvas.TopProperty));
+                center = new Point((double)border.Child.GetValue(Canvas.WidthProperty) * 0.5 + 
+				                   (double)border.Child.GetValue(Canvas.LeftProperty),
+                                   (double)border.Child.GetValue(Canvas.HeightProperty) * 0.5 + 
+				                   (double)border.Child.GetValue(Canvas.TopProperty));
                
                 Point mouseStart = new Point(Position.X - offset.X, Position.Y - offset.Y);
                 
@@ -330,8 +312,12 @@ namespace LunarEclipse.Model
                 // don't apply the change and wait for the next mouse move which
                 // will give a proper angle
                 if(!double.IsNaN(difference))
+				{
+					undoGroup.Undos.Add(new UndoRotation(border.Child, border.Rotate.Angle,
+					                                     border.Rotate.Angle + Converter.RadiansToDegrees(difference))); 
                     border.Rotate.Angle += Converter.RadiansToDegrees(difference);
-            }
+				}
+			}
             
 			else
 			{
@@ -368,6 +354,12 @@ namespace LunarEclipse.Model
 			offset = new Point(mouseDistanceTravelled * Math.Cos(mouseAngle - Converter.DegreesToRadians(angle)),
 			                   mouseDistanceTravelled * Math.Sin(mouseAngle - Converter.DegreesToRadians(angle)));
 			
+			// Create the necessary undo's to be able to completely undo this change.
+			UndoPropertyChange undoWidth = new UndoPropertyChange(b.Child, Canvas.WidthProperty, oldWidth, null);
+			UndoPropertyChange undoHeight = new UndoPropertyChange(b.Child, Canvas.HeightProperty, oldHeight, null);
+			UndoPropertyChange undoLeft = new UndoPropertyChange(b.Child, Canvas.LeftProperty, oldLeft, null);
+			UndoPropertyChange undoTop = new UndoPropertyChange(b.Child, Canvas.TopProperty, oldTop, null);
+			
 			// When resizing shapes, we need to do some crazy maths to make sure
 			// that when we resize, the shape doesn't 'float' around the canvas.
 			if(b.Handle == b.WidthHandle1 && (oldWidth + offset.X) >= 0)
@@ -396,6 +388,16 @@ namespace LunarEclipse.Model
 				b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft - offset.Y * sinAngle / 2.0 );
 				b.Child.SetValue<double>(Canvas.TopProperty, oldTop -  offset.Y * (1 - cosAngle) / 2.0);
 			}
-        }
-    }
+			
+			undoHeight.NewValue = b.Child.GetValue(Canvas.HeightProperty);
+			undoLeft.NewValue = b.Child.GetValue(Canvas.LeftProperty);
+			undoTop.NewValue = b.Child.GetValue(Canvas.TopProperty);
+			undoWidth.NewValue = b.Child.GetValue(Canvas.WidthProperty);
+			
+			this.undoGroup.Undos.Add(undoHeight);
+			this.undoGroup.Undos.Add(undoLeft);
+			this.undoGroup.Undos.Add(undoTop);
+			this.undoGroup.Undos.Add(undoWidth);
+		}
+	}
 }

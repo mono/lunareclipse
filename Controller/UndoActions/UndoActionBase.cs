@@ -6,14 +6,10 @@
 
 using System;
 
-namespace LunarEclipse
+namespace LunarEclipse.Controller
 {
     public abstract class UndoActionBase
     {
-        protected UndoActionBase()
-        {
-        }
-        
         public abstract void Undo();
         public abstract void Redo();
     }

@@ -7,7 +7,7 @@
 using System;
 using System.Collections;
 using System.Windows;
-namespace LunarEclipse
+namespace LunarEclipse.Controller
 {
     public class UndoAddObject : UndoActionBase
     {
