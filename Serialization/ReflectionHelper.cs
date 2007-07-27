@@ -37,7 +37,6 @@ namespace LunarEclipse
                 FrameworkElement e = item as FrameworkElement;
                 while(e != null && e.Parent != null)
                 {
-                    Console.WriteLine("Main item: " + item.GetType().Name);
                     Type parentType = e.Parent.GetType();
                     
                     if(!cachedFields.ContainsKey(parentType))
@@ -66,7 +65,6 @@ namespace LunarEclipse
 
         private static PropertyPairList FindFields(Type type)
         {
-            Console.WriteLine("Getting fields for" + type.Name);
             Type current = type;
             PropertyPairList fields = new PropertyPairList();
             

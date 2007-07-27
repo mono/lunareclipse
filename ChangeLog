@@ -1,5 +1,9 @@
 2007-07-27  Alan McGovern <amcgovern@novell.com> 
 
+	* Serialization/ReflectionHelper.cs: Cosmetic
+
+2007-07-27  Alan McGovern <amcgovern@novell.com> 
+
 	Rather than storing an Undo item for every small change in one group, if there is an existing undo object that changes the same property, it is updated instead
 
 2007-07-27  Alan McGovern <amcgovern@novell.com> 
