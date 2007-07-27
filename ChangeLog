@@ -1,3 +1,7 @@
+2007-07-27  Alan McGovern <amcgovern@novell.com> 
+
+	Cosmetic
+
 2007-07-26  Alan McGovern <amcgovern@novell.com> 
 
 	Bugfix: Now plays nicely with a TransformGroup as the RenderTransform as opposed to a rotateTransform

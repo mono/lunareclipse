@@ -395,7 +395,7 @@ namespace LunarEclipse.Model
             else if(b.Handle == b.HeightHandle2 && (oldHeight + offset.Y) >= 0)
             {
 				b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight + offset.Y);
-				b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft - offset.Y * sinAngle / 2.0 );//+ offset.Y * sinAngle / 2.0);
+				b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft - offset.Y * sinAngle / 2.0 );
 				b.Child.SetValue<double>(Canvas.TopProperty, oldTop -  offset.Y * (1 - cosAngle) / 2.0);
 			}
         }
