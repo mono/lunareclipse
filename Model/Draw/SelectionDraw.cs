@@ -237,7 +237,7 @@ namespace LunarEclipse.Model
             
             // Reset the clicked on shape = null
             clickedOnShape = null;
-			if(undoGroup.Undos.Count > 0)
+			if(undoGroup.Count > 0)
 				controller.UndoEngine.PushUndo(undoGroup);
         }
         
@@ -282,8 +282,8 @@ namespace LunarEclipse.Model
 			{
 				shapeMoved = true;
 				
-				undoGroup.Undos.Add(new UndoPropertyChange(border.Child,Canvas.LeftProperty, oldLeft, oldLeft + offset.X));
-				undoGroup.Undos.Add(new UndoPropertyChange(border.Child, Canvas.TopProperty, oldTop, oldTop + offset.Y));
+				undoGroup.Add(new UndoPropertyChange(border.Child,Canvas.LeftProperty, oldLeft, oldLeft + offset.X));
+				undoGroup.Add(new UndoPropertyChange(border.Child, Canvas.TopProperty, oldTop, oldTop + offset.Y));
                 
 				border.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
                 border.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
@@ -313,7 +313,7 @@ namespace LunarEclipse.Model
                 // will give a proper angle
                 if(!double.IsNaN(difference))
 				{
-					undoGroup.Undos.Add(new UndoRotation(border.Child, border.Rotate.Angle,
+					undoGroup.Add(new UndoRotation(border.Child, border.Rotate.Angle,
 					                                     border.Rotate.Angle + Converter.RadiansToDegrees(difference))); 
                     border.Rotate.Angle += Converter.RadiansToDegrees(difference);
 				}
@@ -394,10 +394,10 @@ namespace LunarEclipse.Model
 			undoTop.NewValue = b.Child.GetValue(Canvas.TopProperty);
 			undoWidth.NewValue = b.Child.GetValue(Canvas.WidthProperty);
 			
-			this.undoGroup.Undos.Add(undoHeight);
-			this.undoGroup.Undos.Add(undoLeft);
-			this.undoGroup.Undos.Add(undoTop);
-			this.undoGroup.Undos.Add(undoWidth);
+			this.undoGroup.Add(undoHeight);
+			this.undoGroup.Add(undoLeft);
+			this.undoGroup.Add(undoTop);
+			this.undoGroup.Add(undoWidth);
 		}
 	}
 }

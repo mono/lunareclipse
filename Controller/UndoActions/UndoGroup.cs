@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace LunarEclipse.Controller
 {
@@ -13,12 +14,14 @@ namespace LunarEclipse.Controller
 	{
 		private List<UndoActionBase> undos;
 		
-		public List<UndoActionBase> Undos
+		
+		public int Count
 		{
-			get { return undos; }
+			get { return undos.Count; }
 		}
 		
 		public UndoGroup()
+			:base(null)
 		{
 			undos = new List<UndoActionBase>();
 		}
@@ -33,6 +36,40 @@ namespace LunarEclipse.Controller
 		{
 			for (int i= 0; i < undos.Count; i++)
 				undos[i].Redo();
+		}
+		
+		public void Add(UndoActionBase undo)
+		{
+			// We need to do a check to see if this property has already been changed
+			// in this group. If it has, then we update the existing undo, otherwise
+			// we add it to the group
+			if(undo is UndoPropertyChange)
+			{
+				if(!UpdateExisting((UndoPropertyChange)undo))
+					undos.Add(undo);
+			}
+			else
+			{
+				undos.Add(undo);
+			}
+		}
+		
+		private bool UpdateExisting(UndoPropertyChange undo)
+		{
+			for(int i=0; i < this.undos.Count; i++)
+			{
+				UndoPropertyChange existing = undos[i] as UndoPropertyChange;
+				if(existing == null 
+				   || !existing.GetType().Equals(undo.GetType())
+				   || existing.Target != undo.Target
+				   || existing.TargetProperty != undo.TargetProperty)
+					continue;
+				
+				existing.NewValue = undo.NewValue;
+				return true;
+			}
+			
+			return false;
 		}
 	}
 }

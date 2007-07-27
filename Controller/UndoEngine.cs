@@ -45,6 +45,10 @@ namespace LunarEclipse
         
         internal void PushUndo(UndoActionBase action, bool clearRedo)
         {
+			Console.WriteLine("Added: " + action.ToString());
+			if(action is UndoGroup)
+				Console.WriteLine("Count: {0}", ((UndoGroup)action).Count);
+			
             this.undo.Push(action);
             RaiseUndoAdded();
             

@@ -9,31 +9,32 @@ namespace LunarEclipse.Controller
 {
     
     
-    public class UndoRotation : UndoActionBase
+    public class UndoRotation : UndoPropertyChange
     {
-        private double finalAngle;
-        private double initialAngle;
-        private Visual visual;
-        
+		private Visual Visual
+		{
+			get { return (Visual)Target; }
+		}
+		
         public UndoRotation(Visual visual, double initialAngle, double finalAngle)
+			:base(visual, null, initialAngle, finalAngle)
         {
-            this.finalAngle = finalAngle;
-            this.initialAngle = initialAngle;
-            this.visual = visual;
+
         }
         
         public override void Redo ()
         {
-			TransformGroup g = (TransformGroup)visual.GetValue(Canvas.RenderTransformProperty);
+			TransformGroup g = (TransformGroup)Visual.GetValue(Canvas.RenderTransformProperty);
 			RotateTransform t = (RotateTransform)g.Children[(int)TransformType.Rotate];
-			t.Angle = finalAngle;
+			t.Angle = (double)NewValue;
 		}
         
 		public override void Undo ()
 		{
-			TransformGroup g = (TransformGroup)visual.GetValue(Canvas.RenderTransformProperty);
+			TransformGroup g = (TransformGroup)Visual.GetValue(Canvas.RenderTransformProperty);
 			RotateTransform t = (RotateTransform)g.Children[(int)TransformType.Rotate];
-			t.Angle = initialAngle;
+			t.Angle = (double)OldValue;
         }
+		
     }
 }

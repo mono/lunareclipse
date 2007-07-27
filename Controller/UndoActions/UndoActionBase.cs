@@ -5,12 +5,26 @@
 //
 
 using System;
+using System.Windows;
 
 namespace LunarEclipse.Controller
 {
     public abstract class UndoActionBase
     {
-        public abstract void Undo();
+		private DependencyObject target;
+		
+		internal DependencyObject Target
+		{
+			get { return target; }
+			set { target = value; }
+		}
+        
+		protected UndoActionBase(DependencyObject target)
+		{
+			this.target = target;
+		}
+		
+		public abstract void Undo();
         public abstract void Redo();
     }
 }

@@ -12,24 +12,23 @@ namespace LunarEclipse.Controller
     public class UndoAddObject : UndoActionBase
     {
         private DependencyObject collection;
-        private DependencyObject item;
         
         public UndoAddObject(DependencyObject collection, DependencyObject item)
+			:base(item)
         {
             this.collection = collection;
-            this.item = item;
         }
         
         public override void Redo ()
         {
             Type t = collection.GetType();
-            t.GetMethod("Add").Invoke(collection, new object[] { item });
+            t.GetMethod("Add").Invoke(collection, new object[] { Target });
         }
         
         public override void Undo ()
         {
             Type t = collection.GetType();
-            t.GetMethod("Remove").Invoke(collection, new object[] { item });
+            t.GetMethod("Remove").Invoke(collection, new object[] { Target });
         }
     }
 }

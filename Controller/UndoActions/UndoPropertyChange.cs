@@ -12,7 +12,6 @@ namespace LunarEclipse.Controller
 {
     public class UndoPropertyChange : UndoActionBase
     {
-        private DependencyObject item;
         private DependencyProperty property;
         private object oldvalue;
         private object newvalue;
@@ -27,10 +26,15 @@ namespace LunarEclipse.Controller
 			get { return newvalue; }
 			set { newvalue = value; }
 		}
+		
+		public DependencyProperty TargetProperty
+		{
+			get { return property; }
+		}
         
         public UndoPropertyChange(DependencyObject item, DependencyProperty property, object oldvalue, object newvalue)
-        {
-            this.item = item;
+			:base(item)
+		{
             this.property = property;
             this.oldvalue = oldvalue;
             this.newvalue = newvalue;
@@ -38,13 +42,13 @@ namespace LunarEclipse.Controller
         
         public override void Redo ()
         {
-            item.SetValue<object>(property, newvalue);
+            Target.SetValue<object>(property, newvalue);
         }
 
         
         public override void Undo ()
         {
-            item.SetValue<object>(property, oldvalue);
+            Target.SetValue<object>(property, oldvalue);
         }
     }
 }
