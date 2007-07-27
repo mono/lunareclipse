@@ -93,7 +93,6 @@ namespace LunarEclipse
                 return;
             
             PropertyPairList properties =  ReflectionHelper.GetDependencyProperties(border.Child);
-            Type t = border.GetType();
 			foreach(KeyValuePair<Type, FieldInfo> keypair in properties)
             {
                 if(keypair.Value.Name == "StrokeProperty")
