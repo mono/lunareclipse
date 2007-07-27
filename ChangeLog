@@ -1,5 +1,10 @@
 2007-07-27  Alan McGovern <amcgovern@novell.com> 
 
+	* LunarEclipse.mdp: Update the undo code to be able to undo rotations
+	  in a transform group
+
+2007-07-27  Alan McGovern <amcgovern@novell.com> 
+
 	Cosmetic
 
 2007-07-26  Alan McGovern <amcgovern@novell.com> 

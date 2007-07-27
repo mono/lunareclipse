@@ -169,7 +169,6 @@ namespace LunarEclipse.Model
         {
             VisualCollection Children = (VisualCollection)base.GetValue(ChildrenProperty);
             Ellipse circle;
-            Line line;
             
             double left = 0;
             double top = 0;

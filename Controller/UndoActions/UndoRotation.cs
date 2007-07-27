@@ -3,35 +3,37 @@
 using System;
 using System.Windows.Controls;
 using System.Windows.Media;
-namespace LunarEclipse
+using LunarEclipse.Model;
+
+namespace LunarEclipse.Controller
 {
     
     
     public class UndoRotation : UndoActionBase
     {
-        private double angle;
+        private double finalAngle;
         private double initialAngle;
         private Visual visual;
         
-        public UndoRotation(Visual visual, double initialAngle, double angle)
+        public UndoRotation(Visual visual, double initialAngle, double finalAngle)
         {
-            this.angle = angle;
+            this.finalAngle = finalAngle;
             this.initialAngle = initialAngle;
             this.visual = visual;
         }
         
         public override void Redo ()
         {
-            RotateTransform t = visual.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
-            if(t != null)
-                t.Angle = angle;
-        }
+			TransformGroup g = (TransformGroup)visual.GetValue(Canvas.RenderTransformProperty);
+			RotateTransform t = (RotateTransform)g.Children[(int)TransformType.Rotate];
+			t.Angle = finalAngle;
+		}
         
-        public override void Undo ()
-        {
-            RotateTransform t = visual.GetValue(Canvas.RenderTransformProperty) as RotateTransform;
-            if(t != null)
-                t.Angle = initialAngle;
+		public override void Undo ()
+		{
+			TransformGroup g = (TransformGroup)visual.GetValue(Canvas.RenderTransformProperty);
+			RotateTransform t = (RotateTransform)g.Children[(int)TransformType.Rotate];
+			t.Angle = initialAngle;
         }
     }
 }
