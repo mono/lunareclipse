@@ -16,8 +16,19 @@ using LunarEclipse;
 
 namespace LunarEclipse.Model
 {
-    public class SelectionDraw : DrawBase
-    {
+	public class Selector : DrawBase
+	{
+#region Events
+		
+		public event EventHandler<PropertyChangedEventArgs> ChangedWidth;
+		public event EventHandler<PropertyChangedEventArgs> ChangedHeight;
+		public event EventHandler<PropertyChangedEventArgs> ChangedTop;
+		public event EventHandler<PropertyChangedEventArgs> ChangedLeft;
+		public event EventHandler<PropertyChangedEventArgs> ChangedRotation;
+		
+#endregion
+		
+		
         private MoonlightController controller;
         private Point mouseStart;
         private Visual clickedOnShape;
@@ -25,7 +36,6 @@ namespace LunarEclipse.Model
         private Dictionary<Visual, SelectedBorder> selectedObjects;
         private bool shapeMoved;
         private bool shapeAdded;
-		private UndoGroup undoGroup;
         
         public Dictionary<Visual, SelectedBorder> SelectedObjects
         {
@@ -37,7 +47,7 @@ namespace LunarEclipse.Model
             get { return false; }
         }
 
-        public SelectionDraw(MoonlightController controller)
+        public Selector(MoonlightController controller)
             :base(new SelectionRectangle())
         {
             this.controller = controller;
@@ -67,7 +77,7 @@ namespace LunarEclipse.Model
             if(clickedOnShape == null)
                 return;
 			
-			undoGroup = new UndoGroup();
+			//undoGroup = new UndoGroup();
         }
         
         private List<Visual> GetSelectedObjects(MouseEventArgs e)
@@ -224,8 +234,8 @@ namespace LunarEclipse.Model
             
             // Reset the clicked on shape = null
             clickedOnShape = null;
-			if(undoGroup.Count > 0)
-				controller.UndoEngine.PushUndo(undoGroup);
+			//if(undoGroup.Count > 0)
+				//controller.UndoEngine.PushUndo(undoGroup);
         }
         
         private void DeselectAll()
@@ -268,14 +278,14 @@ namespace LunarEclipse.Model
 			{
 				shapeMoved = true;
 				
-				undoGroup.Add(new UndoPropertyChange(border.Child,Canvas.LeftProperty, oldLeft, oldLeft + offset.X));
-				undoGroup.Add(new UndoPropertyChange(border.Child, Canvas.TopProperty, oldTop, oldTop + offset.Y));
+				//undoGroup.Add(new UndoPropertyChange(border.Child,Canvas.LeftProperty, oldLeft, oldLeft + offset.X));
+				//undoGroup.Add(new UndoPropertyChange(border.Child, Canvas.TopProperty, oldTop, oldTop + offset.Y));
                 
 				border.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
                 border.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
             }
             
-            // Do a rotation of the selected shape
+            // Do a rotationPropertyChangedEventArgs of the selected shape
             else if(border.Handle == border.RotateHandle1 || 
 			        border.Handle == border.RotateHandle2 ||
 			        border.Handle == border.RotateHandle3 || 
@@ -299,8 +309,8 @@ namespace LunarEclipse.Model
                 // will give a proper angle
                 if(!double.IsNaN(difference))
 				{
-					undoGroup.Add(new UndoRotation(border.Child, border.Rotate.Angle,
-					                                     border.Rotate.Angle + Toolbox.RadiansToDegrees(difference))); 
+					//undoGroup.Add(new UndoRotation(border.Child, border.Rotate.Angle,
+					//                                   border.Rotate.Angle + Converter.RadiansToDegrees(difference))); 
                     border.Rotate.Angle += Toolbox.RadiansToDegrees(difference);
 				}
 			}
@@ -339,13 +349,7 @@ namespace LunarEclipse.Model
 			double mouseAngle = Math.Atan2(offset.Y, offset.X);
 			offset = new Point(mouseDistanceTravelled * Math.Cos(mouseAngle - Toolbox.DegreesToRadians(angle)),
 			                   mouseDistanceTravelled * Math.Sin(mouseAngle - Toolbox.DegreesToRadians(angle)));
-			
-			// Create the necessary undo's to be able to completely undo this change.
-			UndoPropertyChange undoWidth = new UndoPropertyChange(b.Child, Canvas.WidthProperty, oldWidth, null);
-			UndoPropertyChange undoHeight = new UndoPropertyChange(b.Child, Canvas.HeightProperty, oldHeight, null);
-			UndoPropertyChange undoLeft = new UndoPropertyChange(b.Child, Canvas.LeftProperty, oldLeft, null);
-			UndoPropertyChange undoTop = new UndoPropertyChange(b.Child, Canvas.TopProperty, oldTop, null);
-			
+
 			// When resizing shapes, we need to do some crazy maths to make sure
 			// that when we resize, the shape doesn't 'float' around the canvas.
 			if(b.Handle == b.WidthHandle1 && (oldWidth + offset.X) >= 0)
@@ -374,16 +378,6 @@ namespace LunarEclipse.Model
 				b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft - offset.Y * sinAngle / 2.0 );
 				b.Child.SetValue<double>(Canvas.TopProperty, oldTop -  offset.Y * (1 - cosAngle) / 2.0);
 			}
-			
-			undoHeight.NewValue = b.Child.GetValue(Canvas.HeightProperty);
-			undoLeft.NewValue = b.Child.GetValue(Canvas.LeftProperty);
-			undoTop.NewValue = b.Child.GetValue(Canvas.TopProperty);
-			undoWidth.NewValue = b.Child.GetValue(Canvas.WidthProperty);
-			
-			this.undoGroup.Add(undoHeight);
-			this.undoGroup.Add(undoLeft);
-			this.undoGroup.Add(undoTop);
-			this.undoGroup.Add(undoWidth);
 		}
 	}
 }

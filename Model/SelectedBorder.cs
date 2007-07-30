@@ -144,9 +144,9 @@ namespace LunarEclipse.Model
             set { base.SetValue<double>(TopProperty, value); }
         }
 
-		public SelectedBorder()
+		public SelectedBorder(Visual child)
 		{
-			
+			Child = child;
 		}
 		
 		internal void ResizeBorder()
