@@ -1,5 +1,12 @@
 2007-07-31  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/Draw/RecordDraw.cs, Controller/MoonlightController.cs,
+	  Controls/TimeLine/AnimationTimeline.cs, LunarEclipse.mdp,
+	  View/MainWindow.cs: Initial commit of the complete recordingdraw,
+	  so you can record animations
+
+2007-07-31  Alan McGovern <amcgovern@novell.com> 
+
 	* Serialization/ReflectionHelper.cs: Quick hack to generate the
 	  property path for XAML
 

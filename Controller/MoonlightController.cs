@@ -26,6 +26,7 @@ namespace LunarEclipse.Controller
         private GtkSilver moonlight;
     	private DrawBase current;
         private Serializer serializer;
+		private AnimationTimeline timeline;
         
     	internal Canvas Canvas
         {
@@ -46,6 +47,11 @@ namespace LunarEclipse.Controller
 					current.Prepare();
             }
         }
+		
+		public AnimationTimeline Timeline
+		{
+			get { return timeline; }
+		}
         
         public UndoEngine UndoEngine
         {
@@ -60,10 +66,11 @@ namespace LunarEclipse.Controller
             undo.Undo();
         }
     	
-        public MoonlightController(GtkSilver moonlight, IPropertyGroup properties)
+        public MoonlightController(GtkSilver moonlight, AnimationTimeline timeline, IPropertyGroup properties)
         {
             this.moonlight = moonlight;
 			this.properties = properties;
+			this.timeline = timeline;
             moonlight.Canvas.MouseLeftButtonDown += new MouseEventHandler(MouseLeftDown);
             moonlight.Canvas.MouseMove += new MouseEventHandler(MouseMove);
             moonlight.Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseLeftUp);

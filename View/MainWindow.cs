@@ -26,6 +26,8 @@ namespace LunarEclipse.View
         Button undo;
         Button redo;
         Notebook book;
+		AnimationTimeline timeline;
+		Box animationWidgets;
 		
 		public MainWindow (): base (Gtk.WindowType.Toplevel)
     	{
@@ -38,17 +40,18 @@ namespace LunarEclipse.View
     		GtkSilver moonlight = new GtkSilver(800, 600);
             moonlight.Attach(c);
 			moonlight.Show ();
-			
+			timeline = new AnimationTimeline(800, 70);
     		mainContainer = new HBox ();
 			Widget toolbox = InitialiseWidgets ();
 			toolbox.ShowAll ();
 			mainContainer.Add (toolbox);
+			animationWidgets = InitialiseAnimationWidgets();
+			mainContainer.Add(animationWidgets);
 			VBox vbox = new VBox();
 			vbox.PackStart(moonlight);
-			vbox.PackEnd(new AnimationTimeline(800, 70));
+			vbox.PackEnd(timeline);
 			vbox.ShowAll();
     		mainContainer.Add (vbox);
-			
 			
 			Widget propertyPane = new Properties ();
 			propertyPane.Show ();
@@ -74,11 +77,46 @@ namespace LunarEclipse.View
 			book.Show ();
 			Add (book);
 			
-            controller = new MoonlightController (moonlight, properties);
+            controller = new MoonlightController (moonlight, timeline, properties);
             HookEvents(true);
             Show ();
     	}
 
+		private Box InitialiseAnimationWidgets()
+		{
+			Box box = new VBox();
+			Button b = new Button("Start");
+			
+			b.Clicked += delegate (object sender, EventArgs e) {
+				Button button = (Button)sender;
+				
+				if(button.Label == "Start")
+				{
+					this.controller.Current.Cleanup();
+					this.controller.Current.Prepare();
+				}
+			};
+			box.Add(b);
+			
+			b = new Button("Play");
+			b.Clicked += delegate (object sender, EventArgs e) {
+				RecordDraw animation = (RecordDraw)controller.Current;
+				if(b.Label == "Play")
+				{
+					Console.WriteLine("Playing");
+					animation.Seek(TimeSpan.Zero);
+					animation.Play();
+				}
+				else if(b.Label == "Stop");
+				{
+					animation.Stop();
+				}
+				
+				b.Label = b.Label == "Play" ? "Stop" : "Play";
+			};
+			box.Add(b);
+			return box;
+		}
 
         private void HookEvents(bool hook)
         {
@@ -166,6 +204,13 @@ namespace LunarEclipse.View
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };    	    
     	    widgets.Add(b);
+			
+			b = new Button("Record");
+			b.Clicked += delegate {
+				controller.Current = new RecordDraw(controller);
+				this.animationWidgets.ShowAll();
+			};
+			widgets.Add(b);
             
             undo = new Button("Undo");
             undo.Sensitive = false;

@@ -33,6 +33,11 @@ namespace LunarEclipse.View
 		private List<IMarker> divisionMarkers;
 		private List<TextBlock> divisionTextblocks;
 		
+		public TimeSpan CurrentPosition
+		{
+			get { return this.marker.Time; }
+		}
+		
 		
 		public AnimationTimeline(int width, int height)
 			:base (width, height)
