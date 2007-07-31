@@ -307,11 +307,11 @@ namespace LunarEclipse.Model
                 // will give a proper angle
                 if(!double.IsNaN(difference))
 				{
-					RaiseEvent(ChangedRotation, border.Child,
+					RaiseEvent(ChangedRotation, border.Rotate,
 					           RotateTransform.AngleProperty, 
 					           border.Rotate.Angle, 
 					           border.Rotate.Angle + Toolbox.RadiansToDegrees(difference));
-                    border.Rotate.Angle += Toolbox.RadiansToDegrees(difference);
+					border.Rotate.Angle += Toolbox.RadiansToDegrees(difference);
 				}
 			}
             

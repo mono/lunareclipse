@@ -1,5 +1,9 @@
 2007-07-31  Alan McGovern <amcgovern@novell.com> 
 
+	The rotation undo'ing now works right. I misunderstood attached properties ;)
+
+2007-07-31  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/Draw/RecordDraw.cs, Model/Draw/Selector.cs,
 	  Model/Draw/SelectionDraw.cs, Model/Draw/DrawBase.cs,
 	  Controller/UndoEngine.cs, Controller/MoonlightController.cs,
