@@ -1,5 +1,10 @@
 2007-07-31  Alan McGovern <amcgovern@novell.com> 
 
+	* Serialization/ReflectionHelper.cs: Quick hack to generate the
+	  property path for XAML
+
+2007-07-31  Alan McGovern <amcgovern@novell.com> 
+
 	* Serialization/Serializer.cs: Fix for serializing string types
 
 2007-07-31  Alan McGovern <amcgovern@novell.com> 

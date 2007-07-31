@@ -80,9 +80,21 @@ namespace LunarEclipse
 
                 current = current.BaseType;
             }
-            
             return fields;
         }
+		
+		public static string GetFullPath(DependencyObject target, DependencyProperty property)
+		{
+			lock(cachedFields)
+			{
+				if(property == System.Windows.Controls.Canvas.TopProperty)
+					return "(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)";
+				
+				if(property == System.Windows.Controls.Canvas.LeftProperty)
+					return "(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)";
+			}
+			return null;
+		}
     }
 }   
 
