@@ -18,6 +18,7 @@ namespace LunarEclipse.Model
 {
 	public class Selector : DrawBase
 	{
+		
 #region Events
 		
 		public event EventHandler<PropertyChangedEventArgs> ChangedWidth;
@@ -36,22 +37,22 @@ namespace LunarEclipse.Model
         private Dictionary<Visual, SelectedBorder> selectedObjects;
         private bool shapeMoved;
         private bool shapeAdded;
+		
+		protected MoonlightController Controller
+		{
+			get { return controller; }
+		}
         
         public Dictionary<Visual, SelectedBorder> SelectedObjects
         {
             get { return this.selectedObjects; }
-        }
-        
-        public override bool CanUndo
-        {
-            get { return false; }
         }
 
         public Selector(MoonlightController controller)
             :base(new SelectionRectangle())
         {
             this.controller = controller;
-            selectedObjects = new Dictionary<Visual, SelectedBorder>();
+            this.selectedObjects = new Dictionary<Visual, SelectedBorder>();
         }
         
         internal override void Cleanup ()
@@ -76,8 +77,6 @@ namespace LunarEclipse.Model
             shapeMoved = false;
             if(clickedOnShape == null)
                 return;
-			
-			//undoGroup = new UndoGroup();
         }
         
         private List<Visual> GetSelectedObjects(MouseEventArgs e)
@@ -105,7 +104,7 @@ namespace LunarEclipse.Model
                     visual = ((SelectedBorder)visual).Child;
                 
                 if(visual is SelectedBorder)
-                    Console.WriteLine("oopsie");
+                    throw new Exception("I've done the impossible");
                 
                 if(((rectLeft < (right)) && (rectLeft + rectWidth) > left)
                    && (rectTop < (bottom)) && ((rectTop + rectHeight) > top))
@@ -138,6 +137,7 @@ namespace LunarEclipse.Model
                     e.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
                 }
             }
+			
             prepared = true;
         }
 
@@ -234,8 +234,6 @@ namespace LunarEclipse.Model
             
             // Reset the clicked on shape = null
             clickedOnShape = null;
-			//if(undoGroup.Count > 0)
-				//controller.UndoEngine.PushUndo(undoGroup);
         }
         
         private void DeselectAll()
@@ -278,10 +276,10 @@ namespace LunarEclipse.Model
 			{
 				shapeMoved = true;
 				
-				//undoGroup.Add(new UndoPropertyChange(border.Child,Canvas.LeftProperty, oldLeft, oldLeft + offset.X));
-				//undoGroup.Add(new UndoPropertyChange(border.Child, Canvas.TopProperty, oldTop, oldTop + offset.Y));
-                
+				RaiseEvent(ChangedLeft, border.Child, Canvas.LeftProperty, oldLeft, oldLeft + offset.X);
 				border.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
+				
+				RaiseEvent(ChangedTop, border.Child, Canvas.TopProperty, oldTop, oldTop + offset.Y);
                 border.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
             }
             
@@ -309,8 +307,10 @@ namespace LunarEclipse.Model
                 // will give a proper angle
                 if(!double.IsNaN(difference))
 				{
-					//undoGroup.Add(new UndoRotation(border.Child, border.Rotate.Angle,
-					//                                   border.Rotate.Angle + Converter.RadiansToDegrees(difference))); 
+					RaiseEvent(ChangedRotation, border.Child,
+					           RotateTransform.AngleProperty, 
+					           border.Rotate.Angle, 
+					           border.Rotate.Angle + Toolbox.RadiansToDegrees(difference));
                     border.Rotate.Angle += Toolbox.RadiansToDegrees(difference);
 				}
 			}
@@ -331,10 +331,14 @@ namespace LunarEclipse.Model
 				angle += 360;
 			
 			// Get the initial values for it's dimensions
-			double oldLeft    = (double)b.Child.GetValue(Canvas.LeftProperty);
+			double oldLeft = (double)b.Child.GetValue(Canvas.LeftProperty);
             double oldWidth = (double)b.Child.GetValue(Canvas.WidthProperty);
             double oldTop = (double)b.Child.GetValue(Canvas.TopProperty);
-            double oldHeight = (double)b.Child.GetValue(Canvas.HeightProperty);
+			double oldHeight = (double)b.Child.GetValue(Canvas.HeightProperty);
+			double newLeft = oldLeft;
+			double newWidth = oldWidth;
+			double newTop = oldTop;
+			double newHeight = oldHeight;
 
 			// Calculate the cos and sin of the angle of the rotated shape
 			double cosAngle = Math.Cos(Toolbox.DegreesToRadians(angle));
@@ -354,30 +358,58 @@ namespace LunarEclipse.Model
 			// that when we resize, the shape doesn't 'float' around the canvas.
 			if(b.Handle == b.WidthHandle1 && (oldWidth + offset.X) >= 0)
             {
-				b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth + offset.X);
-				b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft  - offset.X * (1 - cosAngle) / 2);
-				b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.X * sinAngle / 2.0);
+				newWidth = oldWidth + offset.X;
+				newLeft = oldLeft  - offset.X * (1 - cosAngle) / 2;
+				newTop =  oldTop + offset.X * sinAngle / 2.0;
             }
 			else if(b.Handle == b.WidthHandle2 && (oldWidth - offset.X) >= 0)
 			{
-				b.Child.SetValue<double>(Canvas.WidthProperty, oldWidth - offset.X);
-				b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X * cosAngle + offset.X * (1 - cosAngle) / 2);
-				b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.X / 2.0 * sinAngle);
+				newWidth =  oldWidth - offset.X;
+				newLeft = oldLeft + offset.X * cosAngle + offset.X * (1 - cosAngle) / 2;
+				newTop =  oldTop + offset.X / 2.0 * sinAngle;
             }
 
 			// Change the height
 			else if(b.Handle == b.HeightHandle1 && (oldHeight - offset.Y) >= 0)
             {
-				b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight - offset.Y);
-				b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft - offset.Y * sinAngle / 2.0);
-				b.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y * cosAngle + offset.Y * (1 - cosAngle) / 2.0);
+				newHeight =  oldHeight - offset.Y;
+				newLeft = oldLeft - offset.Y * sinAngle / 2.0;
+				newTop =  oldTop + offset.Y * cosAngle + offset.Y * (1 - cosAngle) / 2.0;
             }
             else if(b.Handle == b.HeightHandle2 && (oldHeight + offset.Y) >= 0)
             {
-				b.Child.SetValue<double>(Canvas.HeightProperty, oldHeight + offset.Y);
-				b.Child.SetValue<double>(Canvas.LeftProperty, oldLeft - offset.Y * sinAngle / 2.0 );
-				b.Child.SetValue<double>(Canvas.TopProperty, oldTop -  offset.Y * (1 - cosAngle) / 2.0);
+				newHeight =  oldHeight + offset.Y;
+				newLeft = oldLeft - offset.Y * sinAngle / 2.0;
+				newTop = oldTop -  offset.Y * (1 - cosAngle) / 2.0;
 			}
+			
+			if(oldLeft != newLeft)
+			{
+				RaiseEvent(ChangedLeft, b.Child, Canvas.LeftProperty, oldLeft, newLeft);
+				b.Child.SetValue<object>(Canvas.LeftProperty, newLeft);
+			}
+			if(oldTop != newTop)
+			{
+				RaiseEvent(ChangedTop, b.Child, Canvas.TopProperty, oldTop, newTop);
+				b.Child.SetValue<object>(Canvas.TopProperty, newTop);
+			}
+			if(oldWidth != newWidth)
+			{
+				RaiseEvent(ChangedWidth, b.Child, Canvas.WidthProperty, oldWidth, newWidth);
+				b.Child.SetValue<object>(Canvas.WidthProperty, newWidth);
+			}
+			if(oldHeight != newHeight)
+			{
+				RaiseEvent(ChangedHeight, b.Child, Canvas.HeightProperty, oldHeight, newHeight);
+				b.Child.SetValue<object>(Canvas.HeightProperty, newHeight);
+			}
+		}
+		
+		private void RaiseEvent(EventHandler<PropertyChangedEventArgs> e, DependencyObject target, 
+		                        DependencyProperty property, object oldValue, object newValue)
+		{
+			if(e != null)
+				e (controller, new PropertyChangedEventArgs(target, property, oldValue, newValue));
 		}
 	}
 }

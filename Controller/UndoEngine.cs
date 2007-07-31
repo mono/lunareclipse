@@ -57,12 +57,15 @@ namespace LunarEclipse
                 this.redo.Clear();
                 RaiseRedoRemoved();
             }
+			
+			Console.WriteLine("Undos: {0}", undo.Count);
         }
         
         private void PushRedo(UndoActionBase action)
         {
             this.redo.Push(action);
             RaiseRedoAdded();
+			Console.WriteLine("Redos: {0}", redo.Count);
         }
         
         private UndoActionBase PopRedo()
@@ -96,8 +99,8 @@ namespace LunarEclipse
         internal void Clear()
         {
             this.undo.Clear();
+			RaiseUndoRemoved();
             this.redo.Clear();
-            RaiseUndoRemoved();
             RaiseRedoRemoved();
         }
         

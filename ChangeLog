@@ -1,3 +1,11 @@
+2007-07-31  Alan McGovern <amcgovern@novell.com> 
+
+	* Model/Draw/RecordDraw.cs, Model/Draw/Selector.cs,
+	  Model/Draw/SelectionDraw.cs, Model/Draw/DrawBase.cs,
+	  Controller/UndoEngine.cs, Controller/MoonlightController.cs,
+	  LunarEclipse.mdp: Seperated out the selection code out so that it
+	  can be reused for the Animation recorder. Events kick ass ;)
+
 2007-07-27  Alan McGovern <amcgovern@novell.com> 
 
 	* Serialization/ReflectionHelper.cs: Cosmetic

@@ -39,7 +39,7 @@ namespace LunarEclipse.Model
         protected Panel Panel
         {
             get { return panel; }
-            set { panel = value; }
+            private set { panel = value; }
         }
         
         protected Point Position

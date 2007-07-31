@@ -1,77 +1,77 @@
-<Project name="LunarEclipse" description="" standardNamespace="LunarEclipse" newfilesearch="None" enableviewstate="True" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="LunarEclipse" fileversion="2.0" language="C#" clr-version="Net_2_0" description="" standardNamespace="LunarEclipse" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <Output directory="./bin/Release/" assembly="LunarEclipse" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
       <Build debugmode="True" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Csc" warninglevel="4" nowarn="" includedebuginformation="False" optimize="True" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="WinExe" definesymbols="TRACE" generatexmldocumentation="False" win32Icon="" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" definesymbols="TRACE" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="./bin/Debug/" assembly="LunarEclipse" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
       <Build debugmode="True" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Csc" warninglevel="4" nowarn="" includedebuginformation="True" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="WinExe" definesymbols="DEBUG;TRACE" generatexmldocumentation="False" win32Icon="" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" definesymbols="DEBUG;TRACE" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
-  <DeploymentInformation target="" script="" strategy="File">
-    <excludeFiles />
-  </DeploymentInformation>
   <Contents>
-    <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Controller/MoonlightController.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Controller/Recorder.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Controller/Toolbox.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Controller/UndoEngine.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Controller/UndoActions/UndoActionBase.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Controller/UndoActions/UndoAddObject.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Controller/UndoActions/UndoGroup.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Controller/UndoActions/UndoPropertyChange.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Controller/UndoActions/UndoRotation.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Controls/TimeLine/AnimationTimeline.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Controls/TimeLine/IMarker.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Controls/TimeLine/KeyframeMarker.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Controls/TimeLine/PositionMarker.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Controls/TimeLine/TimelineMarker.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/PropertyChangedEventArgs.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/SelectedBorder.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/SelectionRectangle.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/TransformType.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/ZIndexComparer.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/Draw/CircleDraw.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/Draw/DrawBase.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/Draw/EllipseDraw.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/Draw/LineDraw.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/Draw/PenDraw.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/Draw/RecordDraw.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/Draw/RectangleDraw.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/Draw/SelectionDraw.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/Draw/Selector.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/Draw/SquareDraw.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/MouseClick/CanvasClick.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/MouseClick/ClickBase.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Model/MouseClick/ItemClick.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Properties/IPropertyGroup.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Properties/Properties.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Properties/PropertyGroup.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Properties/PropertyGroupAppearance.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Properties/PropertyGroupBrushes.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Properties/PropertyGroupLayout.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Serialization/ReflectionHelper.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Serialization/Serializer.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./View/GtkMoonlight.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./View/Main.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./View/MainWindow.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./gtk-gui/LunarEclipse.Properties.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./gtk-gui/LunarEclipse.PropertyGroup.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./gtk-gui/LunarEclipse.View.MainWindow.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./gtk-gui/generated.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controller/MoonlightController.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controller/Recorder.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controller/Toolbox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controller/UndoEngine.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controller/UndoActions/UndoActionBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controller/UndoActions/UndoAddObject.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controller/UndoActions/UndoGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controller/UndoActions/UndoPropertyChange.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controller/UndoActions/UndoRotation.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controls/TimeLine/AnimationTimeline.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controls/TimeLine/IMarker.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controls/TimeLine/KeyframeMarker.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controls/TimeLine/PositionMarker.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Controls/TimeLine/TimelineMarker.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/PropertyChangedEventArgs.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/SelectedBorder.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/SelectionRectangle.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/TransformType.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/ZIndexComparer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/Draw/CircleDraw.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/Draw/DrawBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/Draw/EllipseDraw.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/Draw/LineDraw.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/Draw/PenDraw.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/Draw/RectangleDraw.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/Draw/SelectionDraw.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/Draw/Selector.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/Draw/SquareDraw.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/MouseClick/CanvasClick.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/MouseClick/ClickBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/MouseClick/ItemClick.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Properties/IPropertyGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Properties/Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Properties/PropertyGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Properties/PropertyGroupAppearance.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Properties/PropertyGroupBrushes.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Properties/PropertyGroupLayout.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Serialization/ReflectionHelper.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Serialization/Serializer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./View/GtkMoonlight.cs" subtype="Code" buildaction="Compile" />
+    <File name="./View/Main.cs" subtype="Code" buildaction="Compile" />
+    <File name="./View/MainWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="./gtk-gui/LunarEclipse.Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./gtk-gui/LunarEclipse.PropertyGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="./gtk-gui/LunarEclipse.View.MainWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="./gtk-gui/generated.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Model/Draw/RecordDraw.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
-    <ProjectReference type="Gac" localcopy="False" refto="agclr, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <ProjectReference type="Gac" localcopy="False" refto="atk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="False" refto="gdk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="False" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Gac" localcopy="False" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="False" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="agclr, Version=0.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   </References>
+  <DeploymentInformation target="" script="" strategy="File">
+    <excludeFiles />
+  </DeploymentInformation>
 </Project>

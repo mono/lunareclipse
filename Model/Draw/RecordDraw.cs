@@ -5,14 +5,48 @@
 //
 
 using System;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using LunarEclipse.Controller;
 
-namespace LunarEclipse
+namespace LunarEclipse.Model
 {
-	public class RecordDraw
+	public class RecordDraw : Selector
 	{
-		public RecordDraw()
+		private Storyboard storyBoard;
+		
+		public RecordDraw(MoonlightController controller)
+			: base(controller)
+		{
+			ChangedHeight += new EventHandler<PropertyChangedEventArgs>(HeightChanged);
+			ChangedLeft += new EventHandler<PropertyChangedEventArgs>(LeftChanged);
+			ChangedRotation += new EventHandler<PropertyChangedEventArgs>(RotationChanged);
+			ChangedTop += new EventHandler<PropertyChangedEventArgs>(TopChanged);
+			ChangedWidth += new EventHandler<PropertyChangedEventArgs>(WidthChanged);
+		}
+		
+		private void HeightChanged(object sender, PropertyChangedEventArgs e)
 		{
 			
+		}
+		
+		private void LeftChanged(object sender, PropertyChangedEventArgs e)
+		{
+			
+		}
+		
+		private void RotationChanged(object sender, PropertyChangedEventArgs e)
+		{
+			
+		}
+		
+		private void TopChanged(object sender, PropertyChangedEventArgs e)
+		{
+			
+		}
+		
+		private void WidthChanged(object sender, PropertyChangedEventArgs e)
+		{
 			
 		}
 	}

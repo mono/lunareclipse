@@ -90,6 +90,7 @@ namespace LunarEclipse.Controller
             try{this.Canvas.CaptureMouse();}catch{}
             current.DrawStart(this.moonlight.Canvas, e);
             
+			Console.WriteLine("Current: {0}", current.ToString());
             if(current.CanUndo)
                 undo.PushUndo(new UndoAddObject(moonlight.Canvas.Children, current.Element));
         }
