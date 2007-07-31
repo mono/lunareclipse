@@ -1,5 +1,9 @@
 2007-07-31  Alan McGovern <amcgovern@novell.com> 
 
+	Removed comment out crap
+
+2007-07-31  Alan McGovern <amcgovern@novell.com> 
+
 	The rotation undo'ing now works right. I misunderstood attached properties ;)
 
 2007-07-31  Alan McGovern <amcgovern@novell.com> 
