@@ -97,7 +97,7 @@ namespace LunarEclipse
                 object dependencyValue = keypair.Value.GetValue(item);
                 object value = item.GetValue((DependencyProperty)dependencyValue);
 
-                if(value is IEnumerable)
+                if(value is IEnumerable && !(value is string))
                     SerialiseCollection(keypair.Value, value, writer);
                 
                 else if(value is DependencyObject)

@@ -1,5 +1,9 @@
 2007-07-31  Alan McGovern <amcgovern@novell.com> 
 
+	* Serialization/Serializer.cs: Fix for serializing string types
+
+2007-07-31  Alan McGovern <amcgovern@novell.com> 
+
 	Removed comment out crap
 
 2007-07-31  Alan McGovern <amcgovern@novell.com> 
