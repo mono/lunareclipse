@@ -10,8 +10,9 @@ using System.Windows.Controls;
 namespace LunarEclipse.View
 {
 #warning fixme
-	public class KeyframeMarker : Canvas, IMarker
+	public class KeyframeMarker : Control, IMarker
 	{
+		private Ellipse ellipse;
 		private TimeSpan time;
 		
 		public double Left
@@ -27,7 +28,9 @@ namespace LunarEclipse.View
 		}
 		
 		public KeyframeMarker(TimeSpan time)
+			: base()
 		{
+			ellipse = (Ellipse)InitializeFromXaml("<Ellipse Name=\"Ellipse\"/>");
 			this.time = time;
 		}
 	}

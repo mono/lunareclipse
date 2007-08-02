@@ -1,5 +1,10 @@
 2007-08-02  Alan McGovern <amcgovern@novell.com> 
 
+	* Controls/TimeLine/KeyframeMarker.cs: Fixed more rendering issues from
+	  the change to inheriting from Control instead of shape
+
+2007-08-02  Alan McGovern <amcgovern@novell.com> 
+
 	Initial refactor to make things compliant with the refresh.
 
 2007-07-31  Alan McGovern <amcgovern@novell.com> 

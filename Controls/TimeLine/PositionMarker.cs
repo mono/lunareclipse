@@ -8,11 +8,13 @@ using System;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace LunarEclipse.View
 {
 	public class PositionMarker : Control, IMarker
 	{
+		private Ellipse ellipse;
 		private TimeSpan time;
 
 		public int ZIndex
@@ -29,29 +31,27 @@ namespace LunarEclipse.View
 		
 		public double Left
 		{
-			get { return (double)GetValue(System.Windows.Controls.Canvas.LeftProperty); }
-			set { SetValue<double>(System.Windows.Controls.Canvas.LeftProperty, value);}
+			get { return (double)GetValue(Canvas.LeftProperty); }
+			set { SetValue<double>(Canvas.LeftProperty, value);}
 		}
 		
 		public PositionMarker(TimeSpan time, double width, double height)
+			: base()
 		{
+			ellipse = (Ellipse)InitializeFromXaml("<Ellipse Name=\"Ellipse\" />");
 			this.time = time;
-			Width = width;
 			Height = height;
-			SetValue<object>(Shape.FillProperty, new SolidColorBrush(Colors.Yellow));
-//			RadialGradientBrush b = new RadialGradientBrush();
-//			GradientStopCollection stops = new GradientStopCollection();
-//			
-//			GradientStop stop = new GradientStop();
-//			stop.Color = Colors.Yellow;
-//			stops.Add(stop);
-//			
-//			stop = new GradientStop();
-//			stop.Color = Colors.Transparent;
-//			stops.Add(stop);
-//			
-//			b.GradientStops = stops;
-//			Fill = b;
+			Width = width;
+			ellipse.SetValue<object>(Shape.FillProperty, new SolidColorBrush(Colors.Yellow));
 		}
+		
+		public override void SetValue<T> (DependencyProperty property, T obj)
+		{
+			if(property == Shape.WidthProperty || property == Shape.HeightProperty)
+				ellipse.SetValue<T>(property, obj);
+			
+			base.SetValue<T>(property, obj);
+		}
+
 	}
 }
