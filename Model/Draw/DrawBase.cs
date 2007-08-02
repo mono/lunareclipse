@@ -18,7 +18,7 @@ namespace LunarEclipse.Model
     {
 #region Fields
         
-        private Shape element;
+        private Visual element;
         private Panel panel;
         private Point position;
         
@@ -31,7 +31,7 @@ namespace LunarEclipse.Model
             get { return true; }
         }
         
-        public Shape Element
+        public Visual Element
         {
             get { return element; }
         }
@@ -59,9 +59,22 @@ namespace LunarEclipse.Model
             get { return (double)Element.GetValue(Canvas.TopProperty); }
             set { Element.SetValue<double>(Canvas.TopProperty, value); }
         }
+		
+		public double Width
+		{
+			get { return (double)Element.GetValue(Shape.WidthProperty); }
+			set { Element.SetValue<double>(Shape.WidthProperty, value); }
+		}
+		
+		public double Height
+		{
+			get { return (double)Element.GetValue(Shape.HeightProperty); }
+			set { Element.SetValue<double>(Shape.HeightProperty, value); }
+		}
+		
 #endregion Properties
         
-        internal DrawBase(Shape element)
+        internal DrawBase(Visual element)
         {
             this.element = element;
         }
@@ -83,9 +96,9 @@ namespace LunarEclipse.Model
         
         internal virtual void Prepare()
         {
-            element = (Shape)Activator.CreateInstance(Element.GetType());
-            element.Stroke = new SolidColorBrush(Colors.Red);
-            element.Fill = new SolidColorBrush(Colors.Cyan);
+            element = (Visual)Activator.CreateInstance(Element.GetType());
+            element.SetValue<object>(Shape.StrokeProperty, new SolidColorBrush(Colors.Red));
+            element.SetValue<object>(Shape.FillProperty, new SolidColorBrush(Colors.Cyan));
         }
         
         internal virtual void Resize(MouseEventArgs e)
@@ -95,16 +108,16 @@ namespace LunarEclipse.Model
             double y = end.Y - position.Y;
             
             position = end;
-            Element.Width += x;
-            Element.Height += y;
+            Width += x;
+            Height += y;
         }
         
         internal virtual void DrawEnd(MouseEventArgs point)
         {
             double top, left, width, height;
             GetNormalisedBounds(out top, out left, out width, out height);
-            Element.Width = width;
-            Element.Height = height;
+            Width = width;
+            Height = height;
             Left = left;
             Top = top;
         }
@@ -115,7 +128,7 @@ namespace LunarEclipse.Model
             // left corner is actually in the top left. For example: 
             // top: 10, left: 10, width: -10, height: -10 
             // is the same as top:0, left:0, width: 10, height: 10
-            width = Element.Width;
+            width = Width;
             left = Left;
             if(width < 0)
             {
@@ -123,7 +136,7 @@ namespace LunarEclipse.Model
                 width = -width;
             }
             
-            height = Element.Height;
+            height = Height;
             top = Top;
             if(height < 0)
             {

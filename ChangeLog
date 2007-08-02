@@ -1,3 +1,7 @@
+2007-08-02  Alan McGovern <amcgovern@novell.com> 
+
+	Initial refactor to make things compliant with the refresh.
+
 2007-07-31  Alan McGovern <amcgovern@novell.com> 
 
 	* Model/Draw/RecordDraw.cs, Controller/MoonlightController.cs,

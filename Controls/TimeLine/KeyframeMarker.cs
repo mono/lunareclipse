@@ -9,7 +9,8 @@ using System.Windows.Shapes;
 using System.Windows.Controls;
 namespace LunarEclipse.View
 {
-	public class KeyframeMarker : Ellipse, IMarker
+#warning fixme
+	public class KeyframeMarker : Canvas, IMarker
 	{
 		private TimeSpan time;
 		

@@ -172,8 +172,8 @@ namespace LunarEclipse.Model
                 foreach(KeyValuePair<Visual, SelectedBorder> keypair in selectedObjects)
                     MoveShape(keypair.Key, mousePoint, e);
                 
-                Element.Width = 0;
-                Element.Height = 0;
+                Width = 0;
+                Height = 0;
             }
             else
             {

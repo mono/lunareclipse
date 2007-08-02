@@ -27,17 +27,17 @@ namespace LunarEclipse.Model
 
             if(Math.Abs(width) > Math.Abs(height))
             {
-                Element.Width = width;
+                Width = width;
                 if(Math.Sign(width) != Math.Sign(height))
                     width = -width;
-                Element.Height = width;
+                Height = width;
             }
             else
             {
-                Element.Height = height;
+                Height = height;
                 if(Math.Sign(width) != Math.Sign(height))
                     height = -height;
-                Element.Width = height;
+                Width = height;
             }
         }
     }

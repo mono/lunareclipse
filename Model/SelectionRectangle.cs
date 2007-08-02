@@ -12,17 +12,33 @@ using System.Windows.Media;
 
 namespace LunarEclipse.Model
 {
-    public class SelectionRectangle : Rectangle
+#warning Fix me
+    public class SelectionRectangle : Control
     {
+		private Rectangle rect;
+		
         public SelectionRectangle()
             :base()
         {
-            this.Opacity = 0.33;
-            this.Fill = new SolidColorBrush(Colors.Blue);
-            this.Stroke = new SolidColorBrush(Colors.Green);
-            this.StrokeDashArray = new double[] {5, 5 };
-            this.StrokeThickness = 2;
-            this.ZIndex = int.MaxValue;
+			InitializeFromXaml("<Canvas><Rectangle Name=\"Rect\" /></Canvas>");
+			rect = (Rectangle)FindName("Rect");
+            rect.Opacity = 0.33;
+            rect.Fill = new SolidColorBrush(Colors.Blue);
+            rect.Stroke = new SolidColorBrush(Colors.Green);
+            rect.StrokeDashArray = new double[] {5, 5 };
+            rect.StrokeThickness = 2;
+            SetValue<int>(ZIndexProperty, int.MaxValue);
         }
+		
+		public override object GetValue (DependencyProperty property)
+		{
+			return rect.GetValue(property);
+		}
+		
+		public override void SetValue<T> (DependencyProperty property, T obj)
+		{
+			rect.SetValue<T>(property, obj);
+		}
+
     }
 }

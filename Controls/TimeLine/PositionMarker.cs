@@ -7,12 +7,19 @@
 using System;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace LunarEclipse.View
 {
-	public class PositionMarker : Ellipse, IMarker
+	public class PositionMarker : Control, IMarker
 	{
 		private TimeSpan time;
+
+		public int ZIndex
+		{
+			get { return (int)GetValue(Shape.ZIndexProperty); }
+			set { SetValue<int>(Shape.ZIndexProperty, value); }
+		}
 		
 		public TimeSpan Time
 		{
@@ -31,7 +38,7 @@ namespace LunarEclipse.View
 			this.time = time;
 			Width = width;
 			Height = height;
-			Fill = new SolidColorBrush(Colors.Yellow);
+			SetValue<object>(Shape.FillProperty, new SolidColorBrush(Colors.Yellow));
 //			RadialGradientBrush b = new RadialGradientBrush();
 //			GradientStopCollection stops = new GradientStopCollection();
 //			

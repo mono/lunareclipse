@@ -25,7 +25,7 @@ namespace LunarEclipse.Model
         internal override void Prepare ()
         {
             base.Prepare();
-            Element.Fill = new SolidColorBrush(Colors.Red);
+            Element.SetValue<object>(Shape.FillProperty, new SolidColorBrush(Colors.Red));
         }
 
         internal override void DrawStart (Panel panel, MouseEventArgs e)
