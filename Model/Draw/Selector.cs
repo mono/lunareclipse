@@ -35,7 +35,6 @@ namespace LunarEclipse.Model
         private Visual clickedOnShape;
         private bool prepared;
         private Dictionary<Visual, SelectedBorder> selectedObjects;
-        private bool shapeMoved;
         private bool shapeAdded;
 		
 		protected MoonlightController Controller
@@ -74,7 +73,6 @@ namespace LunarEclipse.Model
         {
             base.DrawStart(panel, e);
             mouseStart = Position;
-            shapeMoved = false;
             if(clickedOnShape == null)
                 return;
         }
@@ -273,9 +271,7 @@ namespace LunarEclipse.Model
 
             // Do a standard move of the selected shapes
             if(border.Handle == null)
-			{
-				shapeMoved = true;
-				
+			{	
 				RaiseEvent(ChangedLeft, border.Child, Canvas.LeftProperty, oldLeft, oldLeft + offset.X);
 				border.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
 				
