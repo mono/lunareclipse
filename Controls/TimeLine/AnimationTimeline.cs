@@ -17,9 +17,7 @@ namespace LunarEclipse.View
 {
 	public class AnimationTimeline : GtkSilver
 	{
-		//public event EventHandler<T> KeyFrameAdded;
-		//public event EventHandler<T> KeyFrameMoved;
-		//public event EventHandler<T> KeyFrameRemoved;
+		public event EventHandler CurrentPositionChanged;
 		
 		private const double PixelsPerDivision = 80;
 		
@@ -199,6 +197,9 @@ namespace LunarEclipse.View
 			if(!moved)
 			{
 				marker.Time = startTime.Add(TimeSpan.FromSeconds(startLocation.X / AnimationTimeline.PixelsPerDivision));
+				if(this.CurrentPositionChanged != null)
+					CurrentPositionChanged(this, EventArgs.Empty);
+				
 				PlaceMarker(marker, null);
 			}
 			

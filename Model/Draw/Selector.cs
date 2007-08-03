@@ -271,12 +271,14 @@ namespace LunarEclipse.Model
 
             // Do a standard move of the selected shapes
             if(border.Handle == null)
-			{	
-				RaiseEvent(ChangedLeft, border.Child, Canvas.LeftProperty, oldLeft, oldLeft + offset.X);
+			{
+				Console.WriteLine("Changing Left");
 				border.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
+				RaiseEvent(ChangedLeft, border.Child, Canvas.LeftProperty, oldLeft, oldLeft + offset.X);
 				
-				RaiseEvent(ChangedTop, border.Child, Canvas.TopProperty, oldTop, oldTop + offset.Y);
+				Console.WriteLine("Changing Top");
                 border.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
+				RaiseEvent(ChangedTop, border.Child, Canvas.TopProperty, oldTop, oldTop + offset.Y);
             }
             
             // Do a rotationPropertyChangedEventArgs of the selected shape
@@ -303,11 +305,11 @@ namespace LunarEclipse.Model
                 // will give a proper angle
                 if(!double.IsNaN(difference))
 				{
+					border.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
 					RaiseEvent(ChangedRotation, border.Rotate,
 					           RotateTransform.AngleProperty, 
 					           border.Rotate.Angle, 
 					           border.Rotate.Angle + Toolbox.RadiansToDegrees(difference));
-					border.Rotate.Angle += Toolbox.RadiansToDegrees(difference);
 				}
 			}
             
@@ -381,23 +383,23 @@ namespace LunarEclipse.Model
 			
 			if(oldLeft != newLeft)
 			{
-				RaiseEvent(ChangedLeft, b.Child, Canvas.LeftProperty, oldLeft, newLeft);
 				b.Child.SetValue<object>(Canvas.LeftProperty, newLeft);
+				RaiseEvent(ChangedLeft, b.Child, Canvas.LeftProperty, oldLeft, newLeft);
 			}
 			if(oldTop != newTop)
 			{
-				RaiseEvent(ChangedTop, b.Child, Canvas.TopProperty, oldTop, newTop);
 				b.Child.SetValue<object>(Canvas.TopProperty, newTop);
+				RaiseEvent(ChangedTop, b.Child, Canvas.TopProperty, oldTop, newTop);
 			}
 			if(oldWidth != newWidth)
 			{
-				RaiseEvent(ChangedWidth, b.Child, Canvas.WidthProperty, oldWidth, newWidth);
 				b.Child.SetValue<object>(Canvas.WidthProperty, newWidth);
+				RaiseEvent(ChangedWidth, b.Child, Canvas.WidthProperty, oldWidth, newWidth);
 			}
 			if(oldHeight != newHeight)
 			{
-				RaiseEvent(ChangedHeight, b.Child, Canvas.HeightProperty, oldHeight, newHeight);
 				b.Child.SetValue<object>(Canvas.HeightProperty, newHeight);
+				RaiseEvent(ChangedHeight, b.Child, Canvas.HeightProperty, oldHeight, newHeight);
 			}
 		}
 		

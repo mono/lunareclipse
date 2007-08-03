@@ -22,6 +22,7 @@ namespace LunarEclipse.Model
 		public RecordDraw(MoonlightController controller)
 			: base(controller)
 		{
+			controller.Timeline.CurrentPositionChanged += new EventHandler(TimeChanged);
 			ChangedHeight += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
 			ChangedLeft += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
 			ChangedRotation += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
@@ -35,7 +36,8 @@ namespace LunarEclipse.Model
 			{
 				prepared = true;
 				storyboard = new Storyboard();
-				storyboard.Completed += new EventHandler(Completed); 
+				storyboard.Completed += new EventHandler(Completed);
+				storyboard.Pause();
 				Controller.Canvas.Resources.Add(storyboard);
 			}
 		}
@@ -58,30 +60,27 @@ namespace LunarEclipse.Model
 
 		public void Play()
 		{
-			PrintKeyframes();
-			Seek(TimeSpan.Zero);
+			try{
+				PrintStats();
+			//Seek(TimeSpan.Zero);
 			storyboard.Begin();
+			}
+			catch(Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+			}
 		}
 		
-		// This just prints all the keyframes out for each of the timelines so i
-		// can visually see them as the serializer isn't working 100% for this
-		// scenario.
-		private void PrintKeyframes()
+		private void PrintStats()
 		{
-			foreach(DoubleAnimationUsingKeyFrames line in this.storyboard.Children)
+			foreach(DoubleAnimationUsingKeyFrames l in this.storyboard.Children)
 			{
-				Console.Write(line.GetValue(Storyboard.TargetPropertyProperty));
-				Console.Write('\t');
-				Console.Write(line.GetValue(Storyboard.TargetNameProperty));
-				Console.WriteLine();
-				foreach(LinearDoubleKeyFrame kf in line.KeyFrames)
-				{
-					Console.Write(kf.KeyTime);
-					Console.Write('\t');
-					Console.Write(kf.Value);
-					Console.WriteLine();
-				}
+				Console.WriteLine("Target: {0}", l.GetValue(Storyboard.TargetPropertyProperty));
+				
+				foreach(LinearDoubleKeyFrame kf in l.KeyFrames)
+					Console.WriteLine("Time: {0} \t Value: {1}", kf.KeyTime.ToString(), kf.Value.ToString());
 			}
+				
 		}
 		
 		public void Seek(TimeSpan time)
@@ -92,6 +91,11 @@ namespace LunarEclipse.Model
 		public void Stop()
 		{
 			storyboard.Stop();
+		}
+		
+		private void TimeChanged(object sender, EventArgs e)
+		{
+			//Seek(this.Controller.Timeline.CurrentPosition);
 		}
 		
 		private void PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -118,9 +122,13 @@ namespace LunarEclipse.Model
 				keyframe.KeyTime = Controller.Timeline.CurrentPosition;
 				timeline.KeyFrames.Add(keyframe);
 			}
+
 			
-			// Update the keyframes value
+			// Update the keyframes value and seek the animation to this keyframe
 			keyframe.Value = (double)e.NewValue;
+			keyframe.Value = (double)e.NewValue - (double)e.OldValue;
+			Console.WriteLine(keyframe.Value);
+			//Seek(keyframe.KeyTime.TimeSpan);
 		}
 		
 		private DoubleAnimationUsingKeyFrames GetTimeline(DependencyObject target, DependencyProperty property)
