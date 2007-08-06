@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using LunarEclipse.Controller;
 using System.Windows.Controls;
 using System.Windows;
+using LunarEclipse.Serialization;
 
 namespace LunarEclipse.Model
 {

@@ -9,7 +9,7 @@ using System.Windows.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
-
+using LunarEclipse.Serialization;
 using PropertyPairList = System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<System.Type, System.Reflection.FieldInfo>>;
 
 namespace LunarEclipse

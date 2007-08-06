@@ -9,7 +9,7 @@ using System.Windows.Shapes;
 using System.Windows.Controls;
 namespace LunarEclipse.View
 {
-#warning fixme
+#warning FIXME
 	public class KeyframeMarker : Control, IMarker
 	{
 		private Ellipse ellipse;

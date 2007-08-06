@@ -6,21 +6,106 @@ using System.Reflection;
 using System.Collections.Generic;
 using PropertyPairList = System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<System.Type, System.Reflection.FieldInfo>>;
 
-namespace LunarEclipse
+namespace LunarEclipse.Serialization
 {
+	public class PropertyData
+	{
+		private Type declaringType;
+		private FieldInfo fieldInfo;
+		private DependencyProperty property;
+		
+		public Type DeclaringType
+		{
+			get { return declaringType; }
+		}
+		
+		public FieldInfo FieldInfo
+		{
+			get { return fieldInfo; }
+		}
+		
+		public DependencyProperty Property
+		{
+			get { return property; }
+		}
+		
+		public PropertyData(FieldInfo propertyType, Type declaringType, DependencyProperty property)
+		{
+			this.declaringType = declaringType;
+			this.fieldInfo = propertyType;
+			this.property = property;
+		}
+	}
+	
     internal class ReflectionHelper
     {
+		private static List<PropertyData> allProperties;
         private static Dictionary<Type, PropertyPairList> cachedFields;
         
         
         static ReflectionHelper()
         {
+			allProperties = new List<PropertyData>();
             cachedFields = new Dictionary<Type, PropertyPairList>();
+			SetUpList();
         }
-        
-        
+		
+		private static void SetUpList()
+		{
+			Assembly current = Assembly.GetAssembly(typeof(System.Windows.DependencyProperty));
+			Type[] types = current.GetTypes();
+			foreach(Type t in types)
+			{
+				if(t.IsGenericTypeDefinition || t.IsAbstract || !t.IsPublic)
+					continue;
+				
+				object instance = null;
+				FieldInfo[] props = t.GetFields();
+				
+				foreach(FieldInfo f in props)
+				{
+					if(!f.IsPublic)
+						continue;
+					
+					if(f.FieldType.Equals(typeof(DependencyProperty)))
+					{
+						instance = Activator.CreateInstance(t);
+						break;
+					}
+				}
+				
+				if(instance == null)
+					continue;
+				
+				foreach(FieldInfo f in props)
+					if(f.FieldType.Equals(typeof(DependencyProperty)))
+					{
+						if(AlreadyIn((DependencyProperty)f.GetValue(instance)))
+							continue;
+						
+						allProperties.Add(new PropertyData(f, f.DeclaringType, (DependencyProperty)f.GetValue(instance)));
+						//Console.WriteLine("Type: {0}, PropertyName: {1}", f.DeclaringType, f.Name);
+					}
+			}
+		}
+      
+		private static bool AlreadyIn(DependencyProperty property)
+		{
+			foreach(PropertyData data in allProperties)
+				if(data.Property == property)
+					return true;
+			
+			return false;
+		}
+		
+        public static List<PropertyData> GetProps(DependencyObject item)
+		{
+			return allProperties;
+		}
+		
         public static PropertyPairList GetDependencyProperties(DependencyObject item)
         {
+
             lock(cachedFields)
             {
                 Type itemType = item.GetType();
@@ -38,15 +123,17 @@ namespace LunarEclipse
                 while(e != null && e.Parent != null)
                 {
                     Type parentType = e.Parent.GetType();
-                    
+					Console.WriteLine("Getting parent stuff: {0} -> {1}", itemType.Name, parentType.Name);
                     if(!cachedFields.ContainsKey(parentType))
                         cachedFields.Add(parentType, FindFields(parentType));       
                     
                     cached = cachedFields[parentType];
                     foreach(KeyValuePair<Type, FieldInfo> keypair in cached)
                         if(!ContainsField(fields, keypair))
+						{
+							Console.WriteLine("Adding parent shite");
                             fields.Add(keypair);
-                    
+						}
                     e = e.Parent as FrameworkElement;
                 }
                 

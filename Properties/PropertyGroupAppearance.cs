@@ -12,6 +12,7 @@ using System.Windows.Media;
 using LunarEclipse.Controller;
 using Gtk;
 using PropertyPairList = System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<System.Type, System.Reflection.FieldInfo>>;
+using LunarEclipse.Serialization;
 
 namespace LunarEclipse {
 	public class PropertyGroupAppearance : PropertyGroup {

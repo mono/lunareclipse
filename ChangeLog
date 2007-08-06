@@ -1,3 +1,12 @@
+2007-08-06  Alan McGovern <amcgovern@novell.com> 
+
+	* Model/Draw/RecordDraw.cs, Controller/MoonlightController.cs,
+	  Controls/TimeLine/KeyframeMarker.cs, Properties/PropertyGroupBrushes.cs,
+	  Properties/PropertyGroupLayout.cs,
+	  Properties/PropertyGroupAppearance.cs, Serialization/Serializer.cs,
+	  Serialization/ReflectionHelper.cs: Updated the serializer to correctly
+	  detect attached properties
+
 2007-08-03  Alan McGovern <amcgovern@novell.com> 
 
 	* Model/Draw/Selector.cs: Fire the events after the changing the property
