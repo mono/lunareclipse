@@ -54,41 +54,40 @@ namespace LunarEclipse.Serialization
 		{
 			Assembly current = Assembly.GetAssembly(typeof(System.Windows.DependencyProperty));
 			Type[] types = current.GetTypes();
-			foreach(Type t in types)
+			
+			// For every type in the assembly, check to see if it is instantiable and it
+			// has dependency properties. If both conditions are true, instantiate it and 
+			// grab all it's dependency properties into our list.
+			foreach(Type type in types)
 			{
-				if(t.IsGenericTypeDefinition || t.IsAbstract || !t.IsPublic)
+				if(type.IsGenericTypeDefinition || type.IsAbstract || !type.IsPublic)
 					continue;
 				
-				object instance = null;
-				FieldInfo[] props = t.GetFields();
-				
-				foreach(FieldInfo f in props)
+				DependencyObject instance = null;
+				try
 				{
-					if(!f.IsPublic)
-						continue;
-					
-					if(f.FieldType.Equals(typeof(DependencyProperty)))
-					{
-						instance = Activator.CreateInstance(t);
-						break;
-					}
+					instance = Activator.CreateInstance(type) as DependencyObject;
 				}
-				
+				catch
+				{
+					// If i can't instantiate the object, that doesn't matter.
+					continue;
+				}
+
 				if(instance == null)
 					continue;
 				
-				foreach(FieldInfo f in props)
-					if(f.FieldType.Equals(typeof(DependencyProperty)))
-					{
-						if(AlreadyIn((DependencyProperty)f.GetValue(instance)))
-							continue;
-						
-						allProperties.Add(new PropertyData(f, f.DeclaringType, (DependencyProperty)f.GetValue(instance)));
-						//Console.WriteLine("Type: {0}, PropertyName: {1}", f.DeclaringType, f.Name);
-					}
+				PropertyPairList fields = GetDependencyProperties(instance);
+				foreach(KeyValuePair<Type, FieldInfo> keypair in fields)
+				{
+					DependencyProperty val = (DependencyProperty)keypair.Value.GetValue(instance);
+					
+					if(!AlreadyIn(val))
+						allProperties.Add(new PropertyData(keypair.Value, keypair.Key, val));
+				}
 			}
 		}
-      
+		
 		private static bool AlreadyIn(DependencyProperty property)
 		{
 			foreach(PropertyData data in allProperties)
@@ -123,17 +122,15 @@ namespace LunarEclipse.Serialization
                 while(e != null && e.Parent != null)
                 {
                     Type parentType = e.Parent.GetType();
-					Console.WriteLine("Getting parent stuff: {0} -> {1}", itemType.Name, parentType.Name);
                     if(!cachedFields.ContainsKey(parentType))
                         cachedFields.Add(parentType, FindFields(parentType));       
                     
                     cached = cachedFields[parentType];
                     foreach(KeyValuePair<Type, FieldInfo> keypair in cached)
                         if(!ContainsField(fields, keypair))
-						{
-							Console.WriteLine("Adding parent shite");
                             fields.Add(keypair);
-						}
+					
+					
                     e = e.Parent as FrameworkElement;
                 }
                 

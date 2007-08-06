@@ -1,5 +1,12 @@
 2007-08-06  Alan McGovern <amcgovern@novell.com> 
 
+	* Serialization/Serializer.cs: Removed excess console.writelines
+	* Serialization/ReflectionHelper.cs: Refactored to make better use of my
+	  existing code. Seems to be picking up all the attached properties and
+	  serializing them correctly now.
+
+2007-08-06  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/Draw/RecordDraw.cs, Controller/MoonlightController.cs,
 	  Controls/TimeLine/KeyframeMarker.cs, Properties/PropertyGroupBrushes.cs,
 	  Properties/PropertyGroupLayout.cs,

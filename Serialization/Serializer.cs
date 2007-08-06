@@ -42,8 +42,8 @@ namespace LunarEclipse.Serialization
             //FIXME: Nasty hack as the collections don't have a common interface
             IEnumerator enumerator = collection.GetEnumerator();
             enumerator.Reset();
-            if(!enumerator.MoveNext())
-                return;
+			if(!enumerator.MoveNext())
+				return;
 
 			// We need to write the full qualified name for correct serializing, meaning:
 			// <TransformGroup.Children><TransformCollection>..... /> <TransformGroup.Children/>
@@ -115,7 +115,7 @@ namespace LunarEclipse.Serialization
 				{
 					SerialiseCollection(prop.FieldInfo, value, writer);
 				}
-				else
+				else if(!IsDefaultValue(item, prop.Property, value))
                 {
                     writer.WriteStartElement(baseType.Name + "." + CleanName(prop.FieldInfo.Name));
                     Serialize((DependencyObject)value, writer);
@@ -125,7 +125,6 @@ namespace LunarEclipse.Serialization
             
             writer.WriteEndElement();
         }
-        
 
         
         private bool IsDefaultValue(DependencyObject item, DependencyProperty property, object value)
