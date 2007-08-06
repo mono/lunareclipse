@@ -127,7 +127,7 @@ namespace LunarEclipse.Model
 			
 			// Update the keyframes value and seek the animation to this keyframe
 			keyframe.Value = (double)e.NewValue;
-			keyframe.Value = (double)e.NewValue - (double)e.OldValue;
+			//keyframe.Value = (double)e.NewValue - (double)e.OldValue;
 			Console.WriteLine(keyframe.Value);
 			//Seek(keyframe.KeyTime.TimeSpan);
 		}

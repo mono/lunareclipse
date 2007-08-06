@@ -1,5 +1,16 @@
 2007-08-06  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/Draw/RecordDraw.cs: Correctly recording the changing movements.
+	* LunarEclipse.mdp, Serialization/Serializer.cs,
+	  Serialization/ReflectionHelper.cs: The serializer is now much faster
+	  than before as i have a white-list of attached properties which i need
+	  to check as opposed to brute forcing everything.
+	* Serialization/PropertyData.cs: Storing more information than before (such
+	  as whether the property is attached or not) which greatly simplifies
+	  usage of the data.
+
+2007-08-06  Alan McGovern <amcgovern@novell.com> 
+
 	* Properties/PropertyGroupBrushes.cs, Properties/PropertyGroupLayout.cs,
 	  Properties/PropertyGroupAppearance.cs: Commented out the property code
 	  until it can be changed to work with the new data structures

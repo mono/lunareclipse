@@ -35,7 +35,7 @@ namespace LunarEclipse.Serialization
             return fieldName.Substring(0, fieldName.Length - 8);
         }
         
-        private void SerialiseCollection(FieldInfo field, object value, XmlWriter writer)
+        private void SerialiseCollection(PropertyData propertyData, object value, XmlWriter writer)
         {
             IEnumerable collection = (IEnumerable)value;
             
@@ -47,7 +47,14 @@ namespace LunarEclipse.Serialization
 
 			// We need to write the full qualified name for correct serializing, meaning:
 			// <TransformGroup.Children><TransformCollection>..... /> <TransformGroup.Children/>
-			writer.WriteStartElement(field.DeclaringType.Name + '.' + CleanName(field.Name));
+			string name = null;
+			if(propertyData.Attached)
+				name = propertyData.DeclaringType.Name;
+			else
+				name = propertyData.BaseType.Name;
+			
+			name += '.' + CleanName(propertyData.PropertyInfo.Name);
+			writer.WriteStartElement(name);
 			writer.WriteStartElement(value.GetType().Name);
 			
             foreach(DependencyObject o in collection)
@@ -93,7 +100,7 @@ namespace LunarEclipse.Serialization
                 if(!(value is DependencyObject) && (value != null) && !IsDefaultValue(item, dependencyProperty, value))
                 {
                     string name = CleanName(prop.PropertyInfo.Name);
-					if(!prop.AlternateTypes.Contains(baseType))
+					if(prop.Attached)
                         name = prop.DeclaringType.Name + "." + name;
                     writer.WriteAttributeString(name, value.ToString());
                 }
@@ -113,7 +120,7 @@ namespace LunarEclipse.Serialization
 				
                 if(value is IEnumerable)
 				{
-					SerialiseCollection(prop.PropertyInfo, value, writer);
+					SerialiseCollection(prop, value, writer);
 				}
 				else if(!IsDefaultValue(item, prop.Property, value))
                 {
