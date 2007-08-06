@@ -72,9 +72,9 @@ namespace LunarEclipse {
 		{
 			
 		}
-		
+#warning FIX THIS
 		void SetDependencyObject (SelectedBorder item)
-		{
+		{/*
 			uint rows = 0, erows = 0, i;
 			uint top = 0, etop = 0;
 			
@@ -86,7 +86,7 @@ namespace LunarEclipse {
 			}
 			
 			Hashtable props = new Hashtable ();
-            PropertyPairList pairs = ReflectionHelper.GetDependencyProperties(item.Child);
+            PropertyPairList pairs = ReflectionHelper.GetProps(item.Child);
             foreach(KeyValuePair<Type, FieldInfo> keypair in pairs)
             {
                 for(int j=0; j < info.Length; j++)
@@ -218,7 +218,7 @@ namespace LunarEclipse {
 			}
 			
 			properties.Show ();
-			Properties = properties;
+			Properties = properties;*/
 		}
 		
 		public override bool HasProperties {

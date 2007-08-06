@@ -4,24 +4,33 @@ using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Reflection;
 using System.Collections.Generic;
+using System.Windows.Controls;
 using PropertyPairList = System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<System.Type, System.Reflection.FieldInfo>>;
 
 namespace LunarEclipse.Serialization
 {
 	public class PropertyData
 	{
+		private List<Type> alternateTypes;
+		private Type baseType;
 		private Type declaringType;
-		private FieldInfo fieldInfo;
 		private DependencyProperty property;
+		private FieldInfo propertyInfo;
+
+		
+		public List<Type> AlternateTypes
+		{
+			get { return alternateTypes; }
+		}
+		
+		public Type BaseType
+		{
+			get { return baseType; } 
+		}
 		
 		public Type DeclaringType
 		{
 			get { return declaringType; }
-		}
-		
-		public FieldInfo FieldInfo
-		{
-			get { return fieldInfo; }
 		}
 		
 		public DependencyProperty Property
@@ -29,29 +38,39 @@ namespace LunarEclipse.Serialization
 			get { return property; }
 		}
 		
-		public PropertyData(FieldInfo propertyType, Type declaringType, DependencyProperty property)
+		public FieldInfo PropertyInfo
 		{
+			get { return propertyInfo; }
+		}
+
+
+		public PropertyData(Type baseType, Type declaringType, DependencyProperty property, FieldInfo propertyInfo)
+		{
+			this.alternateTypes = new List<Type>();
+			this.baseType = baseType;
 			this.declaringType = declaringType;
-			this.fieldInfo = propertyType;
 			this.property = property;
+			this.propertyInfo = propertyInfo;
 		}
 	}
 	
     internal class ReflectionHelper
     {
-		private static List<PropertyData> allProperties;
-        private static Dictionary<Type, PropertyPairList> cachedFields;
+		private static Dictionary<DependencyProperty, PropertyData> allProperties;
+        private static Dictionary<Type, List<PropertyData>> cachedFields;
         
         
         static ReflectionHelper()
         {
-			allProperties = new List<PropertyData>();
-            cachedFields = new Dictionary<Type, PropertyPairList>();
+			allProperties = new Dictionary<DependencyProperty, PropertyData>();
+            cachedFields = new Dictionary<Type, List<PropertyData>>();
 			SetUpList();
         }
 		
 		private static void SetUpList()
 		{
+			PropertyData data = null;
+			DependencyObject instance = null;
 			Assembly current = Assembly.GetAssembly(typeof(System.Windows.DependencyProperty));
 			Type[] types = current.GetTypes();
 			
@@ -63,94 +82,62 @@ namespace LunarEclipse.Serialization
 				if(type.IsGenericTypeDefinition || type.IsAbstract || !type.IsPublic)
 					continue;
 				
-				DependencyObject instance = null;
-				try
-				{
-					instance = Activator.CreateInstance(type) as DependencyObject;
-				}
-				catch
-				{
-					// If i can't instantiate the object, that doesn't matter.
-					continue;
-				}
+				// If i can't instantiate the object, that doesn't matter.
+				try { instance = Activator.CreateInstance(type) as DependencyObject; }
+				catch { instance = null; }
 
 				if(instance == null)
 					continue;
 				
-				PropertyPairList fields = GetDependencyProperties(instance);
-				foreach(KeyValuePair<Type, FieldInfo> keypair in fields)
+				// For each of the FieldInfo's representing dependency properties, grab the instance
+				// of the dependency property and add it to the dictionary
+				List<PropertyData> fields = GetDependencyProperties(instance);
+				foreach(PropertyData keypair in fields)
 				{
-					DependencyProperty val = (DependencyProperty)keypair.Value.GetValue(instance);
+					DependencyProperty val = keypair.Property;
 					
-					if(!AlreadyIn(val))
-						allProperties.Add(new PropertyData(keypair.Value, keypair.Key, val));
+					// If we don't already have this property in the dictionary, add it
+					if(!allProperties.TryGetValue(val, out data))
+					{
+						data = new PropertyData(keypair.BaseType, keypair.DeclaringType, keypair.Property, keypair.PropertyInfo);
+						allProperties.Add(val, data);
+					}
+					
+					if(!data.DeclaringType.Equals(type) && !data.AlternateTypes.Contains(type))
+						data.AlternateTypes.Add(type);
 				}
 			}
 		}
 		
-		private static bool AlreadyIn(DependencyProperty property)
-		{
-			foreach(PropertyData data in allProperties)
-				if(data.Property == property)
-					return true;
-			
-			return false;
-		}
-		
         public static List<PropertyData> GetProps(DependencyObject item)
 		{
-			return allProperties;
+			PropertyData[] data = new PropertyData[allProperties.Count];
+			allProperties.Values.CopyTo(data, 0);
+			return new List<PropertyData>(data);
 		}
 		
-        public static PropertyPairList GetDependencyProperties(DependencyObject item)
+        private static List<PropertyData> GetDependencyProperties(DependencyObject item)
         {
-
             lock(cachedFields)
             {
-                Type itemType = item.GetType();
-                PropertyPairList cached;
-                PropertyPairList fields = new PropertyPairList();
+				Type itemType = item.GetType();
+                List<PropertyData> cached = null;
+                List<PropertyData> fields = new List<PropertyData>();
 
                 // Get all the fields for the type of this item
                 if(!cachedFields.ContainsKey(itemType))
-                    cachedFields.Add(itemType, FindFields(itemType));
+                    cachedFields.Add(itemType, FindFields(item));
                 fields.AddRange(cachedFields[itemType]);
-                
-                // Check to see if there are any attached properties from
-                // a parent element which need to added to the list aswell
-                FrameworkElement e = item as FrameworkElement;
-                while(e != null && e.Parent != null)
-                {
-                    Type parentType = e.Parent.GetType();
-                    if(!cachedFields.ContainsKey(parentType))
-                        cachedFields.Add(parentType, FindFields(parentType));       
-                    
-                    cached = cachedFields[parentType];
-                    foreach(KeyValuePair<Type, FieldInfo> keypair in cached)
-                        if(!ContainsField(fields, keypair))
-                            fields.Add(keypair);
-					
-					
-                    e = e.Parent as FrameworkElement;
-                }
                 
                 return fields;
             }
         }
-        
-        private static bool ContainsField(PropertyPairList fields, KeyValuePair<Type, FieldInfo> item)
-        {
-            foreach(KeyValuePair<Type, FieldInfo> keypair in fields)
-                if(keypair.Value.Equals(item.Value))
-                    return true;
-            
-            return false;
-        }
 
-        private static PropertyPairList FindFields(Type type)
+        private static List<PropertyData> FindFields(DependencyObject item)
         {
-            Type current = type;
-            PropertyPairList fields = new PropertyPairList();
+			Type baseType = item.GetType();
+            Type current = baseType;
+            List<PropertyData> fields = new List<PropertyData>();
             
             // We get all the DependencyProperty fields in the current type
             // and it's parent type, and keep going up the tree until
@@ -160,24 +147,38 @@ namespace LunarEclipse.Serialization
                 FieldInfo[] currentFields = current.GetFields();
                 foreach(FieldInfo field in currentFields)
                     if(field.FieldType.Equals(typeof(DependencyProperty)))
-                        fields.Add(new KeyValuePair<Type, FieldInfo>(type, field));
+                        fields.Add(new PropertyData(baseType, current, (DependencyProperty)field.GetValue(item), field));
 
                 current = current.BaseType;
             }
             return fields;
         }
 		
+		private static bool HasProperty(Type type, DependencyProperty property)
+		{
+			return false;
+		}
+		
 		public static string GetFullPath(DependencyObject target, DependencyProperty property)
 		{
+			string result = null;
 			lock(cachedFields)
 			{
-				if(property == System.Windows.Controls.Canvas.TopProperty)
-					return "(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)";
+				Type targetType = target.GetType();
+				PropertyData t;
+				if(!allProperties.TryGetValue(property, out t))
+					return null;
 				
-				if(property == System.Windows.Controls.Canvas.LeftProperty)
-					return "(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)";
+				result += '(';
+				if(t.AlternateTypes.Contains(targetType))
+					result += targetType.Name;
+				else
+					result += t.DeclaringType.Name;
+				result += '.';
+				result += Serializer.CleanName(t.PropertyInfo.Name);
+				result += ')';
 			}
-			return null;
+			return result;
 		}
     }
 }   

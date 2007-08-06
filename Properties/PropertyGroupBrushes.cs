@@ -80,9 +80,9 @@ namespace LunarEclipse
                 SetProperties(value);
             }
         }
-        
+#warning FIX THIS
         private void SetProperties(SelectedBorder border)
-        {
+        {/*
             hasProperties = false;
             fillButton.Visible = false;
             strokeButton.Visible = false;
@@ -111,7 +111,7 @@ namespace LunarEclipse
 				active = backgroundButton;
 
             if(hasProperties)
-                Properties.Show();
+                Properties.Show();*/
         }
     }
 }

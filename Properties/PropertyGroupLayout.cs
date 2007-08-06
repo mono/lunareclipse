@@ -51,9 +51,9 @@ namespace LunarEclipse {
 		public PropertyGroupLayout () : base ("Layout")
 		{
 		}
-		
+#warning Fix This
 		void SetDependencyObject (DependencyObject item)
-		{
+		{/*
 			int i;
 			
 			this.item = item;
@@ -148,7 +148,7 @@ namespace LunarEclipse {
 			
 			table.Show ();
 			
-			Properties = table;
+			Properties = table;*/
 		}
 		
 		public override bool HasProperties {

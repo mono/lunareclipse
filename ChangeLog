@@ -1,5 +1,13 @@
 2007-08-06  Alan McGovern <amcgovern@novell.com> 
 
+	* Properties/PropertyGroupBrushes.cs, Properties/PropertyGroupLayout.cs,
+	  Properties/PropertyGroupAppearance.cs: Commented out the property code
+	  until it can be changed to work with the new data structures
+	* Serialization/Serializer.cs, Serialization/ReflectionHelper.cs: Smarter
+	  serializer. Now only prints the fully qualified name when necessary.
+
+2007-08-06  Alan McGovern <amcgovern@novell.com> 
+
 	* Serialization/Serializer.cs: Removed excess console.writelines
 	* Serialization/ReflectionHelper.cs: Refactored to make better use of my
 	  existing code. Seems to be picking up all the attached properties and

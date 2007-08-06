@@ -27,7 +27,7 @@ namespace LunarEclipse.Serialization
             defaultValues = new Dictionary<Type, DependencyObject>();
         }
 
-        private string CleanName(string fieldName)
+        internal static string CleanName(string fieldName)
         {
             // The name of all DependencyProperties ends in "Property", i.e.
             // NameProperty, FillProperty. this method removes "Property" from
@@ -92,8 +92,8 @@ namespace LunarEclipse.Serialization
 
                 if(!(value is DependencyObject) && (value != null) && !IsDefaultValue(item, dependencyProperty, value))
                 {
-                    string name = CleanName(prop.FieldInfo.Name);
-                    if(!prop.DeclaringType.Equals(baseType))
+                    string name = CleanName(prop.PropertyInfo.Name);
+					if(!prop.AlternateTypes.Contains(baseType))
                         name = prop.DeclaringType.Name + "." + name;
                     writer.WriteAttributeString(name, value.ToString());
                 }
@@ -113,11 +113,11 @@ namespace LunarEclipse.Serialization
 				
                 if(value is IEnumerable)
 				{
-					SerialiseCollection(prop.FieldInfo, value, writer);
+					SerialiseCollection(prop.PropertyInfo, value, writer);
 				}
 				else if(!IsDefaultValue(item, prop.Property, value))
                 {
-                    writer.WriteStartElement(baseType.Name + "." + CleanName(prop.FieldInfo.Name));
+                    writer.WriteStartElement(baseType.Name + "." + CleanName(prop.PropertyInfo.Name));
                     Serialize((DependencyObject)value, writer);
                     writer.WriteEndElement();
                 }
