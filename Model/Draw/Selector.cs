@@ -118,27 +118,26 @@ namespace LunarEclipse.Model
             shapes.Sort(new ZIndexComparer());
             return shapes;
         }
-        
-        internal override void Prepare ()
-        {
-            base.Prepare();
-         
-            if(!prepared)
-            {
-                foreach(Visual v in this.controller.Canvas.Children)
-                {
-                    UIElement e = v as UIElement;
-                    
-                    if(e == null)
-                        continue;
-                    
-                    e.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
-                }
-            }
+		
+		internal override void Prepare ()
+		{
+			base.Prepare();
 			
-            prepared = true;
-        }
-
+			if(!prepared)
+			{
+				prepared = true;
+				foreach(Visual v in this.controller.Canvas.Children)
+				{
+					UIElement e = v as UIElement;
+					
+					if(e == null)
+						continue;
+					
+					e.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
+				}
+			}
+		}
+		
        private void ClickedOnVisual(object sender, MouseEventArgs e)
        {
             if(sender is SelectedBorder)
@@ -304,7 +303,7 @@ namespace LunarEclipse.Model
                 // will give a proper angle
                 if(!double.IsNaN(difference))
 				{
-					border.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
+					border.Rotate.Angle += Toolbox.RadiansToDegrees(difference);
 					RaiseEvent(ChangedRotation, border.Rotate,
 					           RotateTransform.AngleProperty, 
 					           border.Rotate.Angle, 
