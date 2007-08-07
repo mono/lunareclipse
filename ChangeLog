@@ -1,5 +1,10 @@
 2007-08-07  Alan McGovern <amcgovern@novell.com> 
 
+	* Serialization/ReflectionHelper.cs: Minor refactoring to tidy up the code
+	  and remove old junk
+
+2007-08-07  Alan McGovern <amcgovern@novell.com> 
+
 	* Controls/TimeLine/KeyframeMarker.cs: Overrode SetValue<T> to set
 	  width/heiht on the  child
 

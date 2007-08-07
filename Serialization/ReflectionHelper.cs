@@ -5,29 +5,25 @@ using System.Windows.Shapes;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Windows.Controls;
-using PropertyPairList = System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<System.Type, System.Reflection.FieldInfo>>;
 
 namespace LunarEclipse.Serialization
 {	
-    internal class ReflectionHelper
+    internal static class ReflectionHelper
     {
 		private static List<PropertyData> attachedProperties;
 		private static Dictionary<Type, List<PropertyData>> allProperties;
-		private static Dictionary<Type, List<PropertyData>> cachedFields;
 		
 		static ReflectionHelper()
         {
 			allProperties = new Dictionary<Type, List<PropertyData>>();
 			attachedProperties = new List<PropertyData>();
-            cachedFields = new Dictionary<Type, List<PropertyData>>();
 			SetUpList();
         }
 		
 		private static void SetUpList()
 		{
-			PropertyData data = null;
 			DependencyObject instance = null;
-			Assembly current = Assembly.GetAssembly(typeof(System.Windows.DependencyProperty));
+			Assembly current = Assembly.GetAssembly(typeof(DependencyProperty));
 			Type[] types = current.GetTypes();
 			
 			// For every type in the assembly, check to see if it is instantiable and it
@@ -46,9 +42,9 @@ namespace LunarEclipse.Serialization
 					continue;
 				
 				// Add any attached properties into a special list so all types can get access to it
-				List<PropertyData> fields = GetDependencyProperties(instance);
+				List<PropertyData> fields = FindFields(instance);
 				foreach(PropertyData property in fields)
-					if(property.Attached && ! attachedProperties.Contains(property))
+					if(property.Attached && !attachedProperties.Contains(property))
 						attachedProperties.Add(property);
 				
 				allProperties.Add(type, fields);
@@ -64,6 +60,7 @@ namespace LunarEclipse.Serialization
 		{
 			List<PropertyData> result;
 			List<PropertyData> properties = allProperties[item.GetType()];
+			
 			if(withAttached)
 			{
 				result = new List<PropertyData>(properties.Count + attachedProperties.Count);
@@ -78,36 +75,19 @@ namespace LunarEclipse.Serialization
 			return result;
 		}
 		
-        private static List<PropertyData> GetDependencyProperties(DependencyObject item)
-        {
-            lock(cachedFields)
-            {
-				Type itemType = item.GetType();
-                List<PropertyData> cached = null;
-                List<PropertyData> fields = new List<PropertyData>();
-
-                // Get all the fields for the type of this item
-                if(!cachedFields.ContainsKey(itemType))
-                    cachedFields.Add(itemType, FindFields(item));
-                fields.AddRange(cachedFields[itemType]);
-                
-                return fields;
-            }
-        }
-
-        private static List<PropertyData> FindFields(DependencyObject item)
+		private static List<PropertyData> FindFields(DependencyObject item)
         {
 			Type baseType = item.GetType();
-            Type current = baseType;
-            List<PropertyData> fields = new List<PropertyData>();
-            
+			Type current = baseType;
+			List<PropertyData> fields = new List<PropertyData>();
+			
             // We get all the DependencyProperty fields in the current type
-            // and it's parent type, and keep going up the tree until
-            // we reach the top of the inheritence tree
-            while(current != null)
-            {
+			// and it's parent type, and keep going up the tree until
+			// we reach the top of the inheritence tree
+			while(current != null)
+			{
                 FieldInfo[] currentFields = current.GetFields();
-                foreach(FieldInfo field in currentFields)
+				foreach(FieldInfo field in currentFields)
 				{
 					if(!field.FieldType.Equals(typeof(DependencyProperty)))
 						continue;
@@ -127,26 +107,24 @@ namespace LunarEclipse.Serialization
 		public static string GetFullPath(DependencyObject target, DependencyProperty property)
 		{
 			string result = null;
-			lock(cachedFields)
+			Type targetType = target.GetType();
+			List<PropertyData> properties = ReflectionHelper.GetProps(target, true);
+			
+			for(int i=0; i < properties.Count; i++)
 			{
-				Type targetType = target.GetType();
-				List<PropertyData> properties = ReflectionHelper.GetProps(target, true);
+				if(properties[i].Property != property)
+					continue;
 				
-				for(int i=0; i < properties.Count; i++)
-				{
-					if(properties[i].Property != property)
-						continue;
-					
-					result += '(';
-					if(properties[i].Attached)
-						result += properties[i].DeclaringType.Name;
-					else
-						result += targetType.Name;
-					result += '.';
-					result += Serializer.CleanName(properties[i].PropertyInfo.Name);
-					result += ')';
-				}
+				result += '(';
+				if(properties[i].Attached)
+					result += properties[i].DeclaringType.Name;
+				else
+					result += targetType.Name;
+				result += '.';
+				result += Serializer.CleanName(properties[i].PropertyInfo.Name);
+				result += ')';
 			}
+			
 			return result;
 		}
     }
