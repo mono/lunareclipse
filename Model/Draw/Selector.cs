@@ -197,7 +197,6 @@ namespace LunarEclipse.Model
         internal override void DrawEnd (MouseEventArgs e)
         {
             Panel.Children.Remove(Element);
-            Point mouseLocation = e.GetPosition(Panel);
             
             bool mouseMoved = !mouseStart.Equals(Position);
             shapeAdded = false;
