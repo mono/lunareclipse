@@ -30,6 +30,7 @@ namespace LunarEclipse.Model
 			ChangedTop += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
 			ChangedWidth += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
 		}
+		
 		internal override void Prepare ()
 		{
 			base.Prepare();
@@ -50,7 +51,6 @@ namespace LunarEclipse.Model
 		internal override void Cleanup ()
 		{
 			base.Cleanup();
-			//Controller.Canvas.Resources.Remove(storyboard);
 		}
 
 		
@@ -61,42 +61,24 @@ namespace LunarEclipse.Model
 
 		public void Play()
 		{
-			try{
-				PrintStats();
-			//Seek(TimeSpan.Zero);
 			storyboard.Begin();
-			}
-			catch(Exception ex)
-			{
-				Console.WriteLine(ex.ToString());
-			}
-		}
-		
-		private void PrintStats()
-		{
-			foreach(DoubleAnimationUsingKeyFrames l in this.storyboard.Children)
-			{
-				Console.WriteLine("Target: {0}", l.GetValue(Storyboard.TargetPropertyProperty));
-				
-				foreach(LinearDoubleKeyFrame kf in l.KeyFrames)
-					Console.WriteLine("Time: {0} \t Value: {1}", kf.KeyTime.ToString(), kf.Value.ToString());
-			}
-				
 		}
 		
 		public void Seek(TimeSpan time)
 		{
-			storyboard.Seek(time);
+			storyboard.BeginTime = time;
+			storyboard.Begin();
+			storyboard.Stop();
 		}
 		
 		public void Stop()
 		{
-			storyboard.Stop();
+			storyboard.Pause();
 		}
 		
 		private void TimeChanged(object sender, EventArgs e)
 		{
-			//Seek(this.Controller.Timeline.CurrentPosition);
+			Seek(this.Controller.Timeline.CurrentPosition);
 		}
 		
 		private void PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -109,6 +91,17 @@ namespace LunarEclipse.Model
 			
 			// Get a timeline: either an existing one or a new one
 			DoubleAnimationUsingKeyFrames timeline = GetTimeline(e.Target, e.Property);
+			
+			// If this is a new timeline, we should add in a keyframe at 00:00 recording 
+			// the initial value of the property. This way if the 'first' keyframe is at
+			// a time other than 0:00, things will move correctly.
+			if(timeline.KeyFrames.Count == 0)
+			{
+				LinearDoubleKeyFrame kf = new LinearDoubleKeyFrame();
+				kf.KeyTime = TimeSpan.Zero;
+				kf.Value = (double)e.OldValue;
+				timeline.KeyFrames.Add(kf);
+			}
 			
 			// For each of the keyframes, if any of them have exactly the same time
 			// as the current time, we select that keyframe and update it's value
@@ -124,12 +117,8 @@ namespace LunarEclipse.Model
 				timeline.KeyFrames.Add(keyframe);
 			}
 
-			
 			// Update the keyframes value and seek the animation to this keyframe
 			keyframe.Value = (double)e.NewValue;
-			//keyframe.Value = (double)e.NewValue - (double)e.OldValue;
-			Console.WriteLine(keyframe.Value);
-			//Seek(keyframe.KeyTime.TimeSpan);
 		}
 		
 		private DoubleAnimationUsingKeyFrames GetTimeline(DependencyObject target, DependencyProperty property)

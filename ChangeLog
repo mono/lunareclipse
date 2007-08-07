@@ -1,5 +1,10 @@
 2007-08-07  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/Draw/RecordDraw.cs: Fixed several bugs involving setting the first
+	  keyframe and seeking
+
+2007-08-07  Alan McGovern <amcgovern@novell.com> 
+
 	* Controls/TimeLine/AnimationTimeline.cs: Fixed a bug where i wasn't using
 	  TotalMilliseconds.
 
