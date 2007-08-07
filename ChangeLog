@@ -1,5 +1,9 @@
 2007-08-07  Alan McGovern <amcgovern@novell.com> 
 
+	* View/MainWindow.cs: Hiding the controls when the record draw is disabled
+
+2007-08-07  Alan McGovern <amcgovern@novell.com> 
+
 	* Controller/MoonlightController.cs: I shouldn't be setting it to null, i
 	  should be cleaning it up
 

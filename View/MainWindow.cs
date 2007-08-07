@@ -100,76 +100,82 @@ namespace LunarEclipse.View
 			
 			b = new Button("Play");
 			b.Clicked += delegate (object sender, EventArgs e) {
-				RecordDraw animation = (RecordDraw)controller.Current;
+				RecordDraw animation = controller.Current as RecordDraw;
+				if(animation == null)
+				{
+					this.animationWidgets.Visible = false;
+					return;
+				}
+				
 				if(b.Label == "Play")
 				{
-					Console.WriteLine("Playing");
 					animation.Seek(TimeSpan.Zero);
+					Console.WriteLine(controller.SerializeCanvas());
 					animation.Play();
 				}
 				else if(b.Label == "Stop");
 				{
 					animation.Stop();
 				}
-				
+
 				b.Label = b.Label == "Play" ? "Stop" : "Play";
 			};
 			box.Add(b);
 			return box;
 		}
-
-        private void HookEvents(bool hook)
-        {
-            if(hook)
-            {
-                book.SwitchPage += 
-                    delegate (object sender, Gtk.SwitchPageArgs args) {
-                    if(args.PageNum == 1)
-                        buffer.Text = this.controller.SerializeCanvas();
-                };
-                
-                controller.UndoEngine.UndoAdded += 
-                    delegate { this.undo.Sensitive = true; };
-                
-                controller.UndoEngine.RedoAdded += 
-                    delegate { this.redo.Sensitive = true; };
-                
-                controller.UndoEngine.RedoRemoved += 
+		
+		private void HookEvents(bool hook)
+		{
+			if(hook)
+			{
+				book.SwitchPage += 
+					delegate (object sender, Gtk.SwitchPageArgs args) {
+						if(args.PageNum == 1)
+							buffer.Text = this.controller.SerializeCanvas();
+					};
+				
+				controller.UndoEngine.UndoAdded += 
+					delegate { this.undo.Sensitive = true; };
+				
+				controller.UndoEngine.RedoAdded += 
+					delegate { this.redo.Sensitive = true; };
+				
+				controller.UndoEngine.RedoRemoved += 
+					delegate (object sender, EventArgs e) {
+						this.redo.Sensitive = ((UndoEngine)sender).RedoCount != 0; 
+					};
+				
+				controller.UndoEngine.UndoRemoved += 
                     delegate (object sender, EventArgs e) {
-                    this.redo.Sensitive = ((UndoEngine)sender).RedoCount != 0; 
-                };
-                
-                controller.UndoEngine.UndoRemoved += 
-                    delegate (object sender, EventArgs e) {
-                    this.undo.Sensitive = ((UndoEngine)sender).UndoCount != 0;
-                };
-
-            }
+						this.undo.Sensitive = ((UndoEngine)sender).UndoCount != 0;
+					};
+				
+			}
 			else
-            {
-                //FIXME Unhook events ;)
-            }
+			{
+				//FIXME Unhook events ;)
+			}
         }
-        
-    	private VBox InitialiseWidgets()
-    	{
-    	    VBox widgets = new VBox();
-    	    Button b;
-            
-            b = new Button("Selection");
-            b.Clicked += delegate {
+		
+		private VBox InitialiseWidgets()
+		{
+			VBox widgets = new VBox();
+			Button b;
+			
+			b = new Button("Selection");
+			b.Clicked += delegate {
                 controller.Current = new SelectionDraw(this.controller);
-                Console.WriteLine("Draw is" + controller.Current.GetType().Name.ToString());
-            };
-            widgets.Add(b);
-            
-            b = new Button("Circle");
-    	    b.Clicked += delegate {
-    	        controller.Current = new CircleDraw();
-    	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
+				Console.WriteLine("Draw is" + controller.Current.GetType().Name.ToString());
+			};
+			widgets.Add(b);
+			
+			b = new Button("Circle");
+			b.Clicked += delegate {
+				controller.Current = new CircleDraw();
+				Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };
-    	    widgets.Add(b);
-            
+			widgets.Add(b);
+			
             b = new Button("Ellipse");
     	    b.Clicked += delegate {
     	        controller.Current = new EllipseDraw();
