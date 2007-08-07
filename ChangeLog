@@ -1,5 +1,10 @@
 2007-08-07  Alan McGovern <amcgovern@novell.com> 
 
+	* Controls/TimeLine/AnimationTimeline.cs: Fixed a bug where i wasn't using
+	  TotalMilliseconds.
+
+2007-08-07  Alan McGovern <amcgovern@novell.com> 
+
 	* View/MainWindow.cs: Hiding the controls when the record draw is disabled
 
 2007-08-07  Alan McGovern <amcgovern@novell.com> 

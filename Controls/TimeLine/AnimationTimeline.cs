@@ -84,10 +84,9 @@ namespace LunarEclipse.View
 			
 			// Calculate the next 'division' that we need to draw. It can be either
 			// at 250ms, 500ms, 750ms, or 0/1000 ms.
-			long currentTime = startTime.Seconds * 1000 + ((startTime.Milliseconds + 125) / 250) * 250;
+			long currentTime = (((long)startTime.TotalMilliseconds + 125) / 250) * 250;
 			long endTime = (long)startTime.TotalMilliseconds + (long)(Width / PixelsPerDivision) * 1000;
 
-			
 			int currentMarker = 0;
 			int currentTextblock = 0;
 			TextBlock block = null;
