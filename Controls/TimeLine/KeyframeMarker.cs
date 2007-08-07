@@ -5,6 +5,7 @@
 //
 
 using System;
+using System.Windows;
 using System.Windows.Shapes;
 using System.Windows.Controls;
 namespace LunarEclipse.View
@@ -33,5 +34,12 @@ namespace LunarEclipse.View
 			ellipse = (Ellipse)InitializeFromXaml("<Ellipse Name=\"Ellipse\"/>");
 			this.time = time;
 		}
+		
+		public override void SetValue<T> (DependencyProperty property, T obj)
+		{
+			if(property == Shape.WidthProperty || property == Shape.HeightProperty)
+				ellipse.SetValue<T>(property, obj);
+		}
+
 	}
 }

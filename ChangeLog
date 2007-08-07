@@ -1,3 +1,8 @@
+2007-08-07  Alan McGovern <amcgovern@novell.com> 
+
+	* Controls/TimeLine/KeyframeMarker.cs: Overrode SetValue<T> to set
+	  width/heiht on the  child
+
 2007-08-06  Alan McGovern <amcgovern@novell.com> 
 
 	* Model/Draw/RecordDraw.cs: Correctly recording the changing movements.
