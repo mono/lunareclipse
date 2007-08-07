@@ -1,5 +1,10 @@
 2007-08-07  Alan McGovern <amcgovern@novell.com> 
 
+	* Controller/MoonlightController.cs: I shouldn't be setting it to null, i
+	  should be cleaning it up
+
+2007-08-07  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/Draw/Selector.cs: Fixed rotation
 
 2007-08-07  Alan McGovern <amcgovern@novell.com> 

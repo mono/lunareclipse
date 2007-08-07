@@ -41,7 +41,7 @@ namespace LunarEclipse.Controller
                 if(current != null) 
                     current.Cleanup();
 				
-                current = value;
+				current = value;
 				
 				if(current != null)
 					current.Prepare();
@@ -140,7 +140,9 @@ namespace LunarEclipse.Controller
 
         public string SerializeCanvas()
         {
-			Current = null;
+			if(Current!=null)
+				Current.Cleanup();
+			
 			return serializer.Serialize(this.moonlight.Canvas);
         }
     }
