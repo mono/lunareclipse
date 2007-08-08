@@ -1,5 +1,11 @@
 2007-08-08  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/MouseClick/ClickBase.cs, Model/MouseClick/CanvasClick.cs,
+	  Model/MouseClick/ItemClick.cs, LunarEclipse.mdp: Not actually used in
+	  the project
+
+2007-08-08  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/NameGenerator.cs, Model/Draw/RecordDraw.cs, Model/Draw/Selector.cs,
 	  Controller/MoonlightController.cs, LunarEclipse.mdp,
 	  Serialization/Serializer.cs: Added automatic setting of the
