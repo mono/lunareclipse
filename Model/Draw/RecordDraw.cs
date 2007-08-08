@@ -59,17 +59,16 @@ namespace LunarEclipse.Model
 
 		public void Play()
 		{
-			Console.WriteLine(this.Controller.SerializeCanvas());
 			storyboard.Begin();
 		}
 		
 		public void Seek(TimeSpan time)
 		{
-			Console.WriteLine(this.Controller.SerializeCanvas());
-			//storyboard.BeginTime = time;
+			Console.WriteLine(Environment.StackTrace);
+			Console.WriteLine(time);
 			storyboard.Begin();
+			storyboard.Pause();
 			storyboard.Seek(time);
-			storyboard.Stop();
 		}
 		
 		public void Stop()
@@ -137,7 +136,6 @@ namespace LunarEclipse.Model
 
 			// There was no pre-existing timeline, so create a new one
 			animation = new DoubleAnimationUsingKeyFrames();
-			animation.BeginTime = TimeSpan.Zero;
 			animation.SetValue<object>(Storyboard.TargetNameProperty, target.Name);
 			animation.SetValue<object>(Storyboard.TargetPropertyProperty, ReflectionHelper.GetFullPath(target, property));
 			storyboard.Children.Add(animation);
