@@ -1,5 +1,9 @@
 2007-08-08  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/Draw/RecordDraw.cs: Removed stacktrace writing
+
+2007-08-08  Alan McGovern <amcgovern@novell.com> 
+
 	* View/MainWindow.cs: Last commit also fixed a selection issue when
 	  recording animations. This commit fixes a build bug from the last commit
 	  ;)
