@@ -1,3 +1,11 @@
+2007-08-08  Alan McGovern <amcgovern@novell.com> 
+
+	* Model/NameGenerator.cs, Model/Draw/RecordDraw.cs, Model/Draw/Selector.cs,
+	  Controller/MoonlightController.cs, LunarEclipse.mdp,
+	  Serialization/Serializer.cs: Added automatic setting of the
+	  'NameProperty' for all dependency properties. Items are named when
+	  serialized or when you try to select/animate them.
+
 2007-08-07  Alan McGovern <amcgovern@novell.com> 
 
 	* Model/Draw/RecordDraw.cs: Fixed several bugs involving setting the first

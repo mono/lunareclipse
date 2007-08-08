@@ -17,7 +17,6 @@ namespace LunarEclipse.Model
 	public class RecordDraw : Selector
 	{
 		private bool prepared;
-		private static int nameCounter;
 		private Storyboard storyboard;
 
 		public RecordDraw(MoonlightController controller)
@@ -39,7 +38,6 @@ namespace LunarEclipse.Model
 				prepared = true;
 				storyboard = new Storyboard();
 				storyboard.Completed += new EventHandler(Completed);
-				storyboard.Pause();
 				Controller.Canvas.Resources.Add(storyboard);
 			}
 		}
@@ -61,11 +59,13 @@ namespace LunarEclipse.Model
 
 		public void Play()
 		{
+			Console.WriteLine(this.Controller.SerializeCanvas());
 			storyboard.Begin();
 		}
 		
 		public void Seek(TimeSpan time)
 		{
+			Console.WriteLine(this.Controller.SerializeCanvas());
 			storyboard.BeginTime = time;
 			storyboard.Begin();
 			storyboard.Stop();
@@ -73,7 +73,7 @@ namespace LunarEclipse.Model
 		
 		public void Stop()
 		{
-			storyboard.Pause();
+			storyboard.Stop();
 		}
 		
 		private void TimeChanged(object sender, EventArgs e)
@@ -84,10 +84,6 @@ namespace LunarEclipse.Model
 		private void PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			LinearDoubleKeyFrame keyframe = null;
-			
-			// Make sure the 'name' of the shape isn't null. This is a hack for the moment.
-			if(string.IsNullOrEmpty(e.Target.Name))
-				e.Target.SetValue<string>(DependencyObject.NameProperty, (nameCounter++).ToString());
 			
 			// Get a timeline: either an existing one or a new one
 			DoubleAnimationUsingKeyFrames timeline = GetTimeline(e.Target, e.Property);

@@ -14,14 +14,15 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using PropertyPairList = System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<System.Type, System.Reflection.FieldInfo>>;
+
 
 namespace LunarEclipse.Serialization
 {
     internal class Serializer
     {
+		private Canvas canvas;
         private Dictionary<Type, DependencyObject> defaultValues;
-        
+		
         internal Serializer()
         {
             defaultValues = new Dictionary<Type, DependencyObject>();
@@ -66,6 +67,8 @@ namespace LunarEclipse.Serialization
         
         public string Serialize(Canvas canvas)
         {
+			this.canvas = canvas;
+			
             StringBuilder sb = new StringBuilder();
             XmlWriterSettings settings = new XmlWriterSettings(); 
             settings.OmitXmlDeclaration=true;
@@ -81,8 +84,10 @@ namespace LunarEclipse.Serialization
         
         private void Serialize(DependencyObject item, XmlWriter writer)
         {
-			
             Type baseType = item.GetType();
+			
+			if(string.IsNullOrEmpty(item.Name))
+				item.SetValue<string>(DependencyObject.NameProperty, NameGenerator.GetName(this.canvas, item));
             
             // Gets all the dependency properties for this item type
             // and any relevant attached properties.

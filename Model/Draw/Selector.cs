@@ -254,6 +254,9 @@ namespace LunarEclipse.Model
         
         private void Select(Visual s)
         {
+			if(string.IsNullOrEmpty(s.Name))
+				s.SetValue<string>(Visual.NameProperty, NameGenerator.GetName(this.Panel, s));
+			
             Console.WriteLine("Selecting: {0}", s.ToString());
             SelectedBorder border = new SelectedBorder(s);
             controller.Canvas.Children.Add(border);

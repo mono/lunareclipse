@@ -28,10 +28,10 @@ namespace LunarEclipse.Controller
         private Serializer serializer;
 		private AnimationTimeline timeline;
         
-    	internal Canvas Canvas
-        {
-            get { return this.moonlight.Canvas; }
-        }
+		internal Canvas Canvas
+		{
+			get { return this.moonlight.Canvas; }
+		}
         
     	public DrawBase Current
         {
@@ -94,7 +94,7 @@ namespace LunarEclipse.Controller
                 return;
             
             active = true;
-            try{this.Canvas.CaptureMouse();}catch{}
+            this.Canvas.CaptureMouse();
             current.DrawStart(this.moonlight.Canvas, e);
             
 			Console.WriteLine("Current: {0}", current.ToString());
@@ -118,7 +118,7 @@ namespace LunarEclipse.Controller
 
             current.DrawEnd(e);
             active = false;
-            try{this.Canvas.ReleaseMouseCapture();}catch{}
+            this.Canvas.ReleaseMouseCapture();
             
 			if (!(current is SelectionDraw))
                 return;
