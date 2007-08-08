@@ -86,7 +86,7 @@ namespace LunarEclipse.View
 		{
 			Box box = new VBox();
 			
-			b = new Button("Play");
+			Button b = new Button("Play");
 			b.Clicked += delegate (object sender, EventArgs e) {
 				RecordDraw animation = controller.Current as RecordDraw;
 				if(animation == null)
