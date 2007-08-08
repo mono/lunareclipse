@@ -1,5 +1,9 @@
 2007-08-08  Alan McGovern <amcgovern@novell.com> 
 
+	* View/MainWindow.cs: 'Start' button is unneccessary
+
+2007-08-08  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/Draw/RecordDraw.cs: Use 'Pause' rather than stop.
 
 2007-08-08  Alan McGovern <amcgovern@novell.com> 

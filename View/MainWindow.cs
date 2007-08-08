@@ -85,18 +85,6 @@ namespace LunarEclipse.View
 		private Box InitialiseAnimationWidgets()
 		{
 			Box box = new VBox();
-			Button b = new Button("Start");
-			
-			b.Clicked += delegate (object sender, EventArgs e) {
-				Button button = (Button)sender;
-				
-				if(button.Label == "Start")
-				{
-					this.controller.Current.Cleanup();
-					this.controller.Current.Prepare();
-				}
-			};
-			box.Add(b);
 			
 			b = new Button("Play");
 			b.Clicked += delegate (object sender, EventArgs e) {
