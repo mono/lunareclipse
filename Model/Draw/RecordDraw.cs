@@ -66,8 +66,9 @@ namespace LunarEclipse.Model
 		public void Seek(TimeSpan time)
 		{
 			Console.WriteLine(this.Controller.SerializeCanvas());
-			storyboard.BeginTime = time;
+			//storyboard.BeginTime = time;
 			storyboard.Begin();
+			storyboard.Seek(time);
 			storyboard.Stop();
 		}
 		

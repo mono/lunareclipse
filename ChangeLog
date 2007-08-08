@@ -1,5 +1,9 @@
 2007-08-08  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/Draw/RecordDraw.cs: Removed the call to .BeginTime
+
+2007-08-08  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/MouseClick/ClickBase.cs, Model/MouseClick/CanvasClick.cs,
 	  Model/MouseClick/ItemClick.cs, LunarEclipse.mdp: Not actually used in
 	  the project
