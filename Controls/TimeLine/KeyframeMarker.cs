@@ -8,7 +8,10 @@ using System;
 using System.Windows;
 using System.Windows.Shapes;
 using System.Windows.Controls;
-namespace LunarEclipse.View
+using System.Windows.Media;
+
+
+namespace LunarEclipse.Controls
 {
 #warning FIXME
 	public class KeyframeMarker : Control, IMarker
@@ -32,6 +35,7 @@ namespace LunarEclipse.View
 			: base()
 		{
 			ellipse = (Ellipse)InitializeFromXaml("<Ellipse Name=\"Ellipse\"/>");
+			ellipse.Fill = new SolidColorBrush(Colors.Green);
 			this.time = time;
 		}
 		
@@ -39,7 +43,8 @@ namespace LunarEclipse.View
 		{
 			if(property == Shape.WidthProperty || property == Shape.HeightProperty)
 				ellipse.SetValue<T>(property, obj);
+			
+			base.SetValue<T>(property, obj);
 		}
-
 	}
 }

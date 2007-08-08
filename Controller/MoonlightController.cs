@@ -11,11 +11,12 @@ using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Input;
-using LunarEclipse.View;
-using LunarEclipse.Model;
 using System.Xml;
 using System.Collections.Generic;
-using  LunarEclipse.Serialization;
+using LunarEclipse.Serialization;
+using LunarEclipse.View;
+using LunarEclipse.Model;
+using LunarEclipse.Controls;
 
 namespace LunarEclipse.Controller
 {

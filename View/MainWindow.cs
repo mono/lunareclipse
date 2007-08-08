@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows;
 using Gtk;
 
+using LunarEclipse.Controls;
 using LunarEclipse.Controller;
 using LunarEclipse.Model;
 

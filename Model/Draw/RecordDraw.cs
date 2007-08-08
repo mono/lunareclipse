@@ -7,9 +7,10 @@
 using System;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using LunarEclipse.Controller;
 using System.Windows.Controls;
 using System.Windows;
+using LunarEclipse.Controls;
+using LunarEclipse.Controller;
 using LunarEclipse.Serialization;
 
 namespace LunarEclipse.Model
@@ -23,6 +24,7 @@ namespace LunarEclipse.Model
 			: base(controller)
 		{
 			controller.Timeline.CurrentPositionChanged += new EventHandler(TimeChanged);
+			controller.Timeline.KeyframeMoved += new EventHandler<KeyframeEventArgs>(KeyframeMoved);
 			ChangedHeight += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
 			ChangedLeft += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
 			ChangedRotation += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
@@ -110,6 +112,7 @@ namespace LunarEclipse.Model
 				keyframe = new LinearDoubleKeyFrame();
 				keyframe.KeyTime = Controller.Timeline.CurrentPosition;
 				timeline.KeyFrames.Add(keyframe);
+				this.Controller.Timeline.AddKeyframe(keyframe.KeyTime.TimeSpan);
 			}
 
 			// Update the keyframes value and seek the animation to this keyframe
@@ -139,6 +142,14 @@ namespace LunarEclipse.Model
 			animation.SetValue<object>(Storyboard.TargetPropertyProperty, ReflectionHelper.GetFullPath(target, property));
 			storyboard.Children.Add(animation);
 			return animation;
+		}
+		
+		private void KeyframeMoved(object sender, KeyframeEventArgs e)
+		{
+			foreach(DoubleAnimationUsingKeyFrames tl in this.storyboard.Children)
+				foreach(LinearDoubleKeyFrame kf in tl.KeyFrames)
+					if(kf.KeyTime == e.OldTime)
+						kf.KeyTime = e.Marker.Time;
 		}
 	}
 }

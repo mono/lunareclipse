@@ -13,11 +13,12 @@ using System.Windows.Media;
 using LunarEclipse.View;
 
 
-namespace LunarEclipse.View
+namespace LunarEclipse.Controls
 {
 	public class AnimationTimeline : GtkSilver
 	{
 		public event EventHandler CurrentPositionChanged;
+		public event EventHandler<KeyframeEventArgs> KeyframeMoved;
 		
 		private const double PixelsPerDivision = 80;
 		
@@ -30,6 +31,7 @@ namespace LunarEclipse.View
 		
 		private List<IMarker> divisionMarkers;
 		private List<TextBlock> divisionTextblocks;
+		private List<KeyframeMarker> keyframeMarkers;
 		
 		public TimeSpan CurrentPosition
 		{
@@ -49,6 +51,7 @@ namespace LunarEclipse.View
 			marker.ZIndex = 1;
 			divisionMarkers = new List<IMarker>();
 			divisionTextblocks = new List<TextBlock>();
+			keyframeMarkers = new List<KeyframeMarker>();
 			
 			startTime = TimeSpan.Zero;
 			marker.MouseLeftButtonDown += delegate { clickedItem = marker; };
@@ -126,13 +129,16 @@ namespace LunarEclipse.View
 			this.marker.Height = height;
 			this.marker.Width = height / 8.0;
 			PlaceMarker(this.marker, null);
+			for(int i=0; i < keyframeMarkers.Count; i++)
+				PlaceMarker(keyframeMarkers[i], null);
 		}
 		
 		private void PlaceMarker(IMarker marker, TextBlock block)
 		{
 			TimeSpan difference = marker.Time - startTime;
 			marker.Left = difference.TotalSeconds * PixelsPerDivision - marker.Width / 2;
-			
+			if(marker is KeyframeMarker)
+			KeyframeMoved(this, new KeyframeEventArgs((KeyframeMarker)marker, startTime));
 			if(block == null)
 				return;
 			
@@ -156,6 +162,8 @@ namespace LunarEclipse.View
 		
 		private void MouseMove(object sender, MouseEventArgs e)
 		{
+			IMarker marker = clickedItem;
+			
 			if(!started)
 				return;
 			
@@ -205,6 +213,39 @@ namespace LunarEclipse.View
 			started = false;
 			clickedItem = null;
 			Canvas.ReleaseMouseCapture();
+		}
+		
+		public void AddKeyframe(TimeSpan time)
+		{
+			Console.WriteLine("Adding: {0}", time);
+			KeyframeMarker marker = new KeyframeMarker(time);
+			marker.Time = time;
+			marker.Width = 15;
+			marker.Height = 15;
+			marker.SetValue<double>(System.Windows.Controls.Canvas.TopProperty, (this.Height - 15.0) / 2.0);
+			marker.MouseLeftButtonDown += delegate (object sender, MouseEventArgs e) {
+				Console.WriteLine("Clicked ya, ya bugger");
+				this.clickedItem = (IMarker)sender;
+			};
+			
+			keyframeMarkers.Add(marker);
+			Canvas.Children.Add(marker);
+			PlaceMarker(marker, null);
+		}
+		
+		public void RemoveSelectedKeyframe()
+		{
+			if(clickedItem is KeyframeMarker)
+			{
+				Canvas.Children.Remove((Visual)clickedItem);
+				keyframeMarkers.Remove((KeyframeMarker)clickedItem);
+			}
+		}
+		
+		public void RemoveKeyframe(KeyframeMarker marker)
+		{
+			Canvas.Children.Remove((Visual)marker);
+			this.keyframeMarkers.Remove(marker);
 		}
 	}
 }

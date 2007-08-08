@@ -1,5 +1,16 @@
 2007-08-08  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/Draw/RecordDraw.cs, Controller/MoonlightController.cs,
+	  Controls/TimeLine/KeyframeEventArgs.cs,
+	  Controls/TimeLine/KeyframeMarker.cs,
+	  Controls/TimeLine/AnimationTimeline.cs,
+	  Controls/TimeLine/PositionMarker.cs,
+	  Controls/TimeLine/TimelineMarker.cs, Controls/TimeLine/IMarker.cs,
+	  LunarEclipse.mdp, View/MainWindow.cs: Added initial support for adding
+	  keyframe markers to the timeline. Doesn't really work yet though ;)
+
+2007-08-08  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/Draw/RecordDraw.cs: Removed stacktrace writing
 
 2007-08-08  Alan McGovern <amcgovern@novell.com> 

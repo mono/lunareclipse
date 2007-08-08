@@ -6,7 +6,7 @@
 
 using System;
 
-namespace LunarEclipse
+namespace LunarEclipse.Controls
 {
 	public interface IMarker
 	{

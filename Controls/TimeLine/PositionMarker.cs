@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows;
 
-namespace LunarEclipse.View
+namespace LunarEclipse.Controls
 {
 	public class PositionMarker : Control, IMarker
 	{
