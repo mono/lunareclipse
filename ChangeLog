@@ -1,5 +1,9 @@
 2007-08-09  Alan McGovern <amcgovern@novell.com> 
 
+	
+
+2007-08-09  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/NameGenerator.cs, Serialization/Serializer.cs: Changed namespace in
 	  Namegenerator
 	* Model/Draw/RecordDraw.cs, Controls/TimeLine/KeyframeMarker.cs,

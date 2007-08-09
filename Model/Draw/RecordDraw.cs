@@ -150,19 +150,10 @@ namespace LunarEclipse.Model
 		
 		private void KeyframeMoved(object sender, KeyframeEventArgs e)
 		{
-			LinearDoubleKeyFrame k = new LinearDoubleKeyFrame();
-			k.KeyTime = TimeSpan.FromDays(10);
-			
-			//DoubleAnimationUsingKeyFrames timeline = (DoubleAnimationUsingKeyFrames)e.Marker.Timeline;
 			foreach(DoubleAnimationUsingKeyFrames timeline in storyboard.Children)
-			{
 				foreach(LinearDoubleKeyFrame kf in timeline.KeyFrames)
 					if(kf.KeyTime == e.OldTime)
 						kf.KeyTime = e.Marker.Time;
-				
-				timeline.KeyFrames.Add(k);
-				timeline.KeyFrames.Remove(k);
-			}
 		}
 	}
 }
