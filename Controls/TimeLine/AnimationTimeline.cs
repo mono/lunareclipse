@@ -195,6 +195,8 @@ namespace LunarEclipse.Controls
 				
 				if(marker is KeyframeMarker)
 					KeyframeMoved(this, new KeyframeEventArgs((KeyframeMarker)marker, oldtime));
+				else if (marker == this.marker)
+					RaiseCurrentPositionChanged();
 			}
 			
 			location = offset;
@@ -210,8 +212,7 @@ namespace LunarEclipse.Controls
 			if(!moved)
 			{
 				marker.Time = startTime.Add(TimeSpan.FromSeconds(startLocation.X / AnimationTimeline.PixelsPerDivision));
-				if(this.CurrentPositionChanged != null)
-					CurrentPositionChanged(this, EventArgs.Empty);
+				RaiseCurrentPositionChanged();
 				
 				PlaceMarker(marker, null);
 			}
@@ -257,6 +258,12 @@ namespace LunarEclipse.Controls
 		{
 			Canvas.Children.Remove((Visual)marker);
 			this.keyframeMarkers.Remove(marker);
+		}
+		
+		private void RaiseCurrentPositionChanged()
+		{
+			if(CurrentPositionChanged != null)
+				CurrentPositionChanged(this, EventArgs.Empty);
 		}
 	}
 }
