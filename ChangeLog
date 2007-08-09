@@ -1,3 +1,11 @@
+2007-08-09  Alan McGovern <amcgovern@novell.com> 
+
+	* Model/NameGenerator.cs, Serialization/Serializer.cs: Changed namespace in
+	  Namegenerator
+	* Model/Draw/RecordDraw.cs, Controls/TimeLine/KeyframeMarker.cs,
+	  Controls/TimeLine/AnimationTimeline.cs: Moving keyframes on the timeline
+	  changes the keyframes in the storyboard
+
 2007-08-08  Alan McGovern <amcgovern@novell.com> 
 
 	* Model/Draw/RecordDraw.cs, Controller/MoonlightController.cs,

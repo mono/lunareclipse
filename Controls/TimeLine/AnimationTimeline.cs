@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using LunarEclipse.View;
 
 
@@ -22,22 +23,21 @@ namespace LunarEclipse.Controls
 		
 		private const double PixelsPerDivision = 80;
 		
-		private IMarker clickedItem;
-		private Point location;
-		private PositionMarker marker;
-		private bool started;
-		private TimeSpan startTime;
-		private Point startLocation;
+		private IMarker clickedItem;   // If a [keyframe|timeline]marker is clicked on, it is stored here
+		private Point location;        // The location of the mouse
+		private PositionMarker marker; // The marker used to denote the current location in the timeline
+		private bool started;          // True when the mouse is clicked, false when it is released again
+		private TimeSpan startTime;    // The starting time displayed on the timeline
+		private Point startLocation;   // The point at which the mouse originally was clicked at
 		
-		private List<IMarker> divisionMarkers;
-		private List<TextBlock> divisionTextblocks;
-		private List<KeyframeMarker> keyframeMarkers;
+		private List<IMarker> divisionMarkers;        // The markers used to indicate the second/quarter second division
+		private List<TextBlock> divisionTextblocks;   // The textblocks used to indicate the time at each whole division
+		private List<KeyframeMarker> keyframeMarkers; // The keyframes currently recorded on the timeline
 		
 		public TimeSpan CurrentPosition
 		{
 			get { return this.marker.Time; }
 		}
-		
 		
 		public AnimationTimeline(int width, int height)
 			:base (width, height)
@@ -82,11 +82,13 @@ namespace LunarEclipse.Controls
 		
 		private void PlaceDivisions()
 		{
+			// This is a hack so i can figure out what 'height' the textblocks are going to be
+			// so i can perform my layout magic
 			TextBlock b = new TextBlock(); b.Text = "3";
 			double height = Height - b.ActualHeight;
 			
 			// Calculate the next 'division' that we need to draw. It can be either
-			// at 250ms, 500ms, 750ms, or 0/1000 ms.
+			// at 250ms, 500ms, 750ms, or 0/1000 ms. This rounds up to the nearest 250.
 			long currentTime = (((long)startTime.TotalMilliseconds + 125) / 250) * 250;
 			long endTime = (long)startTime.TotalMilliseconds + (long)(Width / PixelsPerDivision) * 1000;
 
@@ -129,6 +131,8 @@ namespace LunarEclipse.Controls
 			this.marker.Height = height;
 			this.marker.Width = height / 8.0;
 			PlaceMarker(this.marker, null);
+			
+			// Make sure all the keyframes are in the right place
 			for(int i=0; i < keyframeMarkers.Count; i++)
 				PlaceMarker(keyframeMarkers[i], null);
 		}
@@ -137,8 +141,6 @@ namespace LunarEclipse.Controls
 		{
 			TimeSpan difference = marker.Time - startTime;
 			marker.Left = difference.TotalSeconds * PixelsPerDivision - marker.Width / 2;
-			if(marker is KeyframeMarker)
-			KeyframeMoved(this, new KeyframeEventArgs((KeyframeMarker)marker, startTime));
 			if(block == null)
 				return;
 			
@@ -185,10 +187,14 @@ namespace LunarEclipse.Controls
 			// marker or whatever
 			else
 			{
+				TimeSpan oldtime = marker.Time;
 				if(marker.Time.TotalMilliseconds - difference.TotalMilliseconds < 0)
 					marker.Time = TimeSpan.Zero;
 				else
 					marker.Time = marker.Time.Subtract(difference);
+				
+				if(marker is KeyframeMarker)
+					KeyframeMoved(this, new KeyframeEventArgs((KeyframeMarker)marker, oldtime));
 			}
 			
 			location = offset;
@@ -215,16 +221,21 @@ namespace LunarEclipse.Controls
 			Canvas.ReleaseMouseCapture();
 		}
 		
-		public void AddKeyframe(TimeSpan time)
+		public void AddKeyframe(Timeline timeline, TimeSpan time)
 		{
-			Console.WriteLine("Adding: {0}", time);
-			KeyframeMarker marker = new KeyframeMarker(time);
+			KeyframeMarker marker = new KeyframeMarker(timeline, time);
+
+			// If we already have a marker at the same time for the same timeline, 
+			// do not add another keyframe marker
+			foreach(KeyframeMarker m in keyframeMarkers)
+				if(timeline.Name == m.Timeline.Name && m.Time.Equals(marker.Time))
+					return;
+			
 			marker.Time = time;
 			marker.Width = 15;
 			marker.Height = 15;
 			marker.SetValue<double>(System.Windows.Controls.Canvas.TopProperty, (this.Height - 15.0) / 2.0);
 			marker.MouseLeftButtonDown += delegate (object sender, MouseEventArgs e) {
-				Console.WriteLine("Clicked ya, ya bugger");
 				this.clickedItem = (IMarker)sender;
 			};
 			

@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using LunarEclipse.Controller;
 
-namespace LunarEclipse
+namespace LunarEclipse.Model
 {
 	public static class NameGenerator
 	{

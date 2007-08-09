@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Shapes;
 using System.Windows.Controls;
 using System.Windows.Media;
-
+using System.Windows.Media.Animation;
 
 namespace LunarEclipse.Controls
 {
@@ -18,6 +18,7 @@ namespace LunarEclipse.Controls
 	{
 		private Ellipse ellipse;
 		private TimeSpan time;
+		private Timeline timeline;
 		
 		public double Left
 		{
@@ -31,12 +32,18 @@ namespace LunarEclipse.Controls
 			set { time = value; }
 		}
 		
-		public KeyframeMarker(TimeSpan time)
+		public Timeline Timeline
+		{
+			get { return timeline; }
+		}
+		
+		public KeyframeMarker(Timeline timeline, TimeSpan time)
 			: base()
 		{
 			ellipse = (Ellipse)InitializeFromXaml("<Ellipse Name=\"Ellipse\"/>");
 			ellipse.Fill = new SolidColorBrush(Colors.Green);
 			this.time = time;
+			this.timeline = timeline;
 		}
 		
 		public override void SetValue<T> (DependencyProperty property, T obj)

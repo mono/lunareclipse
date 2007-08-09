@@ -86,6 +86,8 @@ namespace LunarEclipse.Model
 		{
 			LinearDoubleKeyFrame keyframe = null;
 			
+			storyboard.Stop();
+			
 			// Get a timeline: either an existing one or a new one
 			DoubleAnimationUsingKeyFrames timeline = GetTimeline(e.Target, e.Property);
 			
@@ -112,11 +114,12 @@ namespace LunarEclipse.Model
 				keyframe = new LinearDoubleKeyFrame();
 				keyframe.KeyTime = Controller.Timeline.CurrentPosition;
 				timeline.KeyFrames.Add(keyframe);
-				this.Controller.Timeline.AddKeyframe(keyframe.KeyTime.TimeSpan);
+				Controller.Timeline.AddKeyframe(timeline, keyframe.KeyTime.TimeSpan);
 			}
 
 			// Update the keyframes value and seek the animation to this keyframe
 			keyframe.Value = (double)e.NewValue;
+			Seek(keyframe.KeyTime.TimeSpan);
 		}
 		
 		private DoubleAnimationUsingKeyFrames GetTimeline(DependencyObject target, DependencyProperty property)
@@ -138,6 +141,7 @@ namespace LunarEclipse.Model
 
 			// There was no pre-existing timeline, so create a new one
 			animation = new DoubleAnimationUsingKeyFrames();
+			animation.SetValue<string>(Storyboard.NameProperty, NameGenerator.GetName(Panel, animation));
 			animation.SetValue<object>(Storyboard.TargetNameProperty, target.Name);
 			animation.SetValue<object>(Storyboard.TargetPropertyProperty, ReflectionHelper.GetFullPath(target, property));
 			storyboard.Children.Add(animation);
@@ -146,10 +150,19 @@ namespace LunarEclipse.Model
 		
 		private void KeyframeMoved(object sender, KeyframeEventArgs e)
 		{
-			foreach(DoubleAnimationUsingKeyFrames tl in this.storyboard.Children)
-				foreach(LinearDoubleKeyFrame kf in tl.KeyFrames)
+			LinearDoubleKeyFrame k = new LinearDoubleKeyFrame();
+			k.KeyTime = TimeSpan.FromDays(10);
+			
+			//DoubleAnimationUsingKeyFrames timeline = (DoubleAnimationUsingKeyFrames)e.Marker.Timeline;
+			foreach(DoubleAnimationUsingKeyFrames timeline in storyboard.Children)
+			{
+				foreach(LinearDoubleKeyFrame kf in timeline.KeyFrames)
 					if(kf.KeyTime == e.OldTime)
 						kf.KeyTime = e.Marker.Time;
+				
+				timeline.KeyFrames.Add(k);
+				timeline.KeyFrames.Remove(k);
+			}
 		}
 	}
 }
