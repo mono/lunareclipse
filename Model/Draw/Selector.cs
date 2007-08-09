@@ -318,8 +318,6 @@ namespace LunarEclipse.Model
 			{
 				ResizeHeightOrWidth(border, offset, e);
 			}
-			
-            border.ResizeBorder();
         }
         
         private void ResizeHeightOrWidth(SelectedBorder b, Point offset, MouseEventArgs e)
@@ -406,9 +404,16 @@ namespace LunarEclipse.Model
 		
 		private void RaiseEvent(EventHandler<PropertyChangedEventArgs> e, DependencyObject target, 
 		                        DependencyProperty property, object oldValue, object newValue)
-		{
+		{	
 			if(e != null)
 				e (controller, new PropertyChangedEventArgs(target, property, oldValue, newValue));
+			
+			SelectedBorder border;
+			Visual visual = target as Visual;
+			if(visual == null || !selectedObjects.TryGetValue(visual, out border))
+				return;
+			
+			border.ResizeBorder();
 		}
 	}
 }
