@@ -1,3 +1,12 @@
+2007-08-10  Alan McGovern <amcgovern@novell.com> 
+
+	* Model/SelectionChangedEventArgs.cs, Model/DrawChangeEventArgs.cs,
+	  Model/StoryboardManager.cs, Model/Draw/RecordDraw.cs,
+	  Model/Draw/Selector.cs, Controller/MoonlightController.cs,
+	  Controller/StoryboardEventArgs.cs, LunarEclipse.mdp, View/MainWindow.cs,
+	  Serialization/ReflectionHelper.cs: Massive refactor of the timeline
+	  recording stuff. It's still not perfect, but i need to get it committed.
+
 2007-08-09  Alan McGovern <amcgovern@novell.com> 
 
 	

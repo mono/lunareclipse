@@ -1,10 +1,10 @@
 using System;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Reflection;
 using System.Collections.Generic;
-using System.Windows.Controls;
 
 namespace LunarEclipse.Serialization
 {	
@@ -59,6 +59,10 @@ namespace LunarEclipse.Serialization
 		public static List<PropertyData> GetProps(DependencyObject item, bool withAttached)
 		{
 			List<PropertyData> result;
+			Type t = item.GetType();
+			if(!allProperties.ContainsKey(t))
+				return new List<PropertyData>();
+			
 			List<PropertyData> properties = allProperties[item.GetType()];
 			
 			if(withAttached)
@@ -106,26 +110,41 @@ namespace LunarEclipse.Serialization
 		
 		public static string GetFullPath(DependencyObject target, DependencyProperty property)
 		{
-			string result = null;
+			StringBuilder result = new StringBuilder(64);
+			
 			Type targetType = target.GetType();
 			List<PropertyData> properties = ReflectionHelper.GetProps(target, true);
+			
+			if(SpecialCase(target, property, result))
+				return result.ToString();
 			
 			for(int i=0; i < properties.Count; i++)
 			{
 				if(properties[i].Property != property)
 					continue;
 				
-				result += '(';
+				result.Append('(');
 				if(properties[i].Attached)
-					result += properties[i].DeclaringType.Name;
+					result.Append(properties[i].DeclaringType.Name);
 				else
-					result += targetType.Name;
-				result += '.';
-				result += Serializer.CleanName(properties[i].PropertyInfo.Name);
-				result += ')';
+					result.Append(targetType.Name);
+				result.Append('.');
+				result.Append(Serializer.CleanName(properties[i].PropertyInfo.Name));
+				result.Append(')');
+				break;
 			}
 			
-			return result;
+			return result.ToString();
+		}
+		
+		private static bool SpecialCase(DependencyObject target, DependencyProperty property, StringBuilder sb)
+		{
+			if(property == Canvas.LeftProperty)
+				sb.Append("(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)");
+			else if(property == Canvas.TopProperty)
+				sb.Append("(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)");
+			
+			return sb.Length != 0;
 		}
     }
 }   

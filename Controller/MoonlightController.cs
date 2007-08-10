@@ -22,12 +22,26 @@ namespace LunarEclipse.Controller
 {
     public class MoonlightController
     {
+#region Events
+		
+		public event EventHandler<DrawChangeEventArgs> BeforeDrawChange;
+		public event EventHandler<DrawChangeEventArgs> AfterDrawChange;
+		
+#endregion Events
+		
+		
+#region Member Variables
+		
 		IPropertyGroup properties;
-        private UndoEngine undo;
+		bool active;
+		private DrawBase current;
         private GtkSilver moonlight;
-    	private DrawBase current;
         private Serializer serializer;
+		private StoryboardManager storyboardManager;
 		private AnimationTimeline timeline;
+		private UndoEngine undo;
+
+#endregion Member Variables
         
 		internal Canvas Canvas
 		{
@@ -39,15 +53,16 @@ namespace LunarEclipse.Controller
             get { return this.current; }
             set 
             { 
-                if(current != null) 
-                    current.Cleanup();
-				
+				RaiseEvent<DrawChangeEventArgs>(BeforeDrawChange, new DrawChangeEventArgs(current));
 				current = value;
-				
-				if(current != null)
-					current.Prepare();
+				RaiseEvent<DrawChangeEventArgs>(AfterDrawChange, new DrawChangeEventArgs(current));
             }
         }
+		
+		public StoryboardManager StoryboardManager
+		{
+			get { return storyboardManager; }
+		}
 		
 		public AnimationTimeline Timeline
 		{
@@ -58,36 +73,36 @@ namespace LunarEclipse.Controller
         {
             get { return undo; }
         }
-        
-        public void Undo()
-        {
-            if(Current != null)
-                Current.Cleanup();
-            
-            undo.Undo();
-        }
+
     	
         public MoonlightController(GtkSilver moonlight, AnimationTimeline timeline, IPropertyGroup properties)
         {
+			int count=1;
+			this.timeline = timeline;
             this.moonlight = moonlight;
 			this.properties = properties;
-			this.timeline = timeline;
             moonlight.Canvas.MouseLeftButtonDown += new MouseEventHandler(MouseLeftDown);
             moonlight.Canvas.MouseMove += new MouseEventHandler(MouseMove);
             moonlight.Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseLeftUp);
             serializer = new Serializer();
+			storyboardManager = new StoryboardManager(this);
+			storyboardManager.Add(new Storyboard());
             undo = new UndoEngine();
         }
         
+		
         public void Clear()
-        {
-            if(Current != null)
-                Current.Cleanup();
-            moonlight.Canvas.Children.Clear();
-            undo.Clear();
-        }
+		{
+			if(Current != null)
+				Current.Cleanup();
+			
+			moonlight.Canvas.Children.Clear();
+			moonlight.Canvas.Resources.Clear();
+			moonlight.Canvas.Triggers.Clear();
+			undo.Clear();
+		}
         
-        bool active = false;
+        
         private void MouseLeftDown(object sender, MouseEventArgs e)
         {
            Console.WriteLine("Mouse down");
@@ -138,13 +153,30 @@ namespace LunarEclipse.Controller
                 properties.SelectedObject = null;
             }
         }
+		
+		private void RaiseEvent<T>(EventHandler<T> e, T args) where T : EventArgs
+		{
+			if(e != null)
+				e(this, args);
+		}
+		
+		
 
+		
         public string SerializeCanvas()
         {
-			if(Current!=null)
-				Current.Cleanup();
+			////if(Current != null)
+			//	Current.Cleanup();
 			
 			return serializer.Serialize(this.moonlight.Canvas);
         }
-    }
+		
+		public void Undo()
+        {
+            if(Current != null)
+				Current.Cleanup();
+            
+            undo.Undo();
+        }
+	}
 }

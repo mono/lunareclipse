@@ -89,27 +89,22 @@ namespace LunarEclipse.View
 			
 			Button b = new Button("Play");
 			b.Clicked += delegate (object sender, EventArgs e) {
-				RecordDraw animation = controller.Current as RecordDraw;
-				if(animation == null)
-				{
-					this.animationWidgets.Visible = false;
-					return;
-				}
-				
 				if(b.Label == "Play")
 				{
-					animation.Seek(TimeSpan.Zero);
+					this.controller.StoryboardManager.Seek(TimeSpan.Zero);
 					Console.WriteLine(controller.SerializeCanvas());
-					animation.Play();
+					this.controller.StoryboardManager.Play();
 				}
 				else if(b.Label == "Stop");
 				{
-					animation.Stop();
+					controller.StoryboardManager.Stop();
 				}
 
 				b.Label = b.Label == "Play" ? "Stop" : "Play";
 			};
 			box.Add(b);
+			box.ShowAll();
+			box.Visible = false;
 			return box;
 		}
 		
@@ -201,12 +196,13 @@ namespace LunarEclipse.View
     	    widgets.Add(b);
 			
 			b = new Button("Record");
-			b.Clicked += delegate {
-				controller.Current = new RecordDraw(controller);
-				this.animationWidgets.ShowAll();
+			b.Clicked += delegate (object sender, EventArgs e) {
+				controller.StoryboardManager.Recording = !controller.StoryboardManager.Recording;
+				animationWidgets.Visible = controller.StoryboardManager.Recording;
+				((Button)sender).Label = animationWidgets.Visible ? "Stop Recording" : "Record";
 			};
 			widgets.Add(b);
-            
+			
             undo = new Button("Undo");
             undo.Sensitive = false;
             undo.Clicked += delegate {

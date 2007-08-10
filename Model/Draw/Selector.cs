@@ -26,6 +26,8 @@ namespace LunarEclipse.Model
 		public event EventHandler<PropertyChangedEventArgs> ChangedTop;
 		public event EventHandler<PropertyChangedEventArgs> ChangedLeft;
 		public event EventHandler<PropertyChangedEventArgs> ChangedRotation;
+		public event EventHandler<SelectionChangedEventArgs> ItemSelected;
+		public event EventHandler<SelectionChangedEventArgs> ItemDeselected;
 		
 #endregion
 		
@@ -254,14 +256,17 @@ namespace LunarEclipse.Model
         
         private void Select(Visual s)
         {
+			// When selecting an item, we make sure it has a valid name. This means that
+			// when selecting an item for animations or selecting it to change it's properties
+			// in the property pane, it always has a valid name
 			if(string.IsNullOrEmpty(s.Name))
-				s.SetValue<string>(Visual.NameProperty, NameGenerator.GetName(this.Panel, s));
+				s.SetValue<string>(Visual.NameProperty, NameGenerator.GetName(Panel, s));
 			
-            Console.WriteLine("Selecting: {0}", s.ToString());
             SelectedBorder border = new SelectedBorder(s);
             controller.Canvas.Children.Add(border);
             selectedObjects.Add(s, border);
             border.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
+			RaiseEvent<SelectionChangedEventArgs>(ItemSelected, new SelectionChangedEventArgs(s, border));
         }
         
         private void MoveShape(Visual s, Point offset, MouseEventArgs e)
@@ -404,9 +409,8 @@ namespace LunarEclipse.Model
 		
 		private void RaiseEvent(EventHandler<PropertyChangedEventArgs> e, DependencyObject target, 
 		                        DependencyProperty property, object oldValue, object newValue)
-		{	
-			if(e != null)
-				e (controller, new PropertyChangedEventArgs(target, property, oldValue, newValue));
+		{
+			RaiseEvent<PropertyChangedEventArgs>(e, new PropertyChangedEventArgs(target, property, oldValue, newValue));
 			
 			SelectedBorder border;
 			Visual visual = target as Visual;
@@ -414,6 +418,13 @@ namespace LunarEclipse.Model
 				return;
 			
 			border.ResizeBorder();
+		}
+		
+		
+		private void RaiseEvent<T>(EventHandler<T> e, T args) where T : EventArgs
+		{
+			if(e != null)
+				e(controller, args);
 		}
 	}
 }
