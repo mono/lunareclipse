@@ -31,10 +31,10 @@ namespace LunarEclipse.Model
 			
 #region Member Variables
 			
-		private MoonlightController controller;  // The controller this manager is attached to
-		private Storyboard current;              // The currently active storyboard
-		private bool recording;                  // True if we are currently recording
-		private List<Storyboard> storyboards;    // The list of storyboards that are declared
+		private MoonlightController controller;   // The controller this manager is attached to
+		private Storyboard current;                 // The currently active storyboard
+		private bool recording;                       // True if we are currently recording
+		private List<Storyboard> storyboards; // The list of storyboards that are declared
 
 #endregion Member Variables
 		
@@ -69,7 +69,8 @@ namespace LunarEclipse.Model
 			
 			controller.BeforeDrawChanged += new EventHandler<DrawChangeEventArgs>(BeforeDrawChange);
 			controller.DrawChanged += new EventHandler<DrawChangeEventArgs>(AfterDrawChange);
-			
+			controller.Timeline.CurrentPositionChanged += new EventHandler(TimeChanged);
+			controller.Timeline.KeyframeMoved += new EventHandler<LunarEclipse.Controls.KeyframeEventArgs>(KeyframeMoved);
 			LoadFromResources(controller.Canvas);
 		}
 		

@@ -24,7 +24,8 @@ namespace LunarEclipse
         public PenDraw()
             :base(new System.Windows.Shapes.Path())
         {
-
+			PathSegmentCollection beziers = new PathSegmentCollection();
+			beziers.Add(new BezierSegment());
         }
         
         internal override void DrawStart (Panel panel, MouseEventArgs point)
@@ -32,8 +33,6 @@ namespace LunarEclipse
             base.DrawStart(panel, point);
            
             Path path = (Path)Element;
-            path.Stroke = new SolidColorBrush(Colors.Black);
-            path.StrokeThickness = 1;
             
             PathGeometry geometry = new PathGeometry();
             figure = new PathFigure();

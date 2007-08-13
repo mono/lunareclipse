@@ -24,23 +24,12 @@ namespace LunarEclipse.Model
 			this.ChangedWidth += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
 		}
 
+		
 		public override bool CanUndo 
 		{
 			get { return false; }
 		}
-
-		
-		private void PropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			undos.Add(new UndoPropertyChange(e.Target, e.Property, e.OldValue, e.NewValue));
-		}
-		
-		internal override void DrawStart (Panel panel, MouseEventArgs point)
-		{
-			base.DrawStart(panel, point);
-			undos = new UndoGroup();
-		}
-		
+			
 		internal override void DrawEnd (MouseEventArgs point)
 		{
 			base.DrawEnd(point);
@@ -50,6 +39,17 @@ namespace LunarEclipse.Model
 			
 			Controller.UndoEngine.PushUndo(undos);
 			undos = new UndoGroup();
+		}
+		
+		internal override void DrawStart (Panel panel, MouseEventArgs point)
+		{
+			base.DrawStart(panel, point);
+			undos = new UndoGroup();
+		}
+		
+		private void PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			undos.Add(new UndoPropertyChange(e.Target, e.Property, e.OldValue, e.NewValue));
 		}
 	}
 }

@@ -1,5 +1,13 @@
 2007-08-13  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/StoryboardManager.cs, Model/Draw/SquareDraw.cs,
+	  Model/Draw/PenDraw.cs, Model/Draw/RectangleDraw.cs,
+	  Model/Draw/SelectionDraw.cs, Model/Draw/DrawBase.cs,
+	  Controller/MoonlightController.cs, View/MainWindow.cs: Misc code
+	  cleanups
+
+2007-08-13  Alan McGovern <amcgovern@novell.com> 
+
 	
 
 2007-08-13  Alan McGovern <amcgovern@novell.com> 

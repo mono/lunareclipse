@@ -77,7 +77,6 @@ namespace LunarEclipse.Controller
     	
         public MoonlightController(GtkSilver moonlight, AnimationTimeline timeline, IPropertyGroup properties)
         {
-			int count=1;
 			this.timeline = timeline;
             this.moonlight = moonlight;
 			this.properties = properties;

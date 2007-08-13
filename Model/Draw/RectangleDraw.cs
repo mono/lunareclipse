@@ -16,6 +16,7 @@ namespace LunarEclipse.Model
         public RectangleDraw()
             : base(new System.Windows.Shapes.Rectangle())
         {
+			
         }
     }
 }

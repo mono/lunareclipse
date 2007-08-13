@@ -48,13 +48,13 @@ namespace LunarEclipse.Model
             set { position = value; }
         }
         
-        private double Left
+        protected double Left
         {
             get { return (double)Element.GetValue(Canvas.LeftProperty); }
             set { Element.SetValue<double>(Canvas.LeftProperty, value); }
         }
         
-        private double Top
+        protected double Top
         {
             get { return (double)Element.GetValue(Canvas.TopProperty); }
             set { Element.SetValue<double>(Canvas.TopProperty, value); }
@@ -74,44 +74,21 @@ namespace LunarEclipse.Model
 		
 #endregion Properties
         
+		
+#region Methods
+		
         internal DrawBase(Visual element)
         {
             this.element = element;
         }
         
+		
         internal virtual void Cleanup()
         {
             // By default nothing needs to be cleaned up
         }
         
-        internal virtual void DrawStart(Panel panel, MouseEventArgs point)
-        {
-			element = (Visual)Activator.CreateInstance(Element.GetType());
-            element.SetValue<object>(Shape.StrokeProperty, new SolidColorBrush(Colors.Red));
-            element.SetValue<object>(Shape.FillProperty, new SolidColorBrush(Colors.Cyan));
-			this.panel = panel;
-			panel.Children.Add(Element);
-            position = point.GetPosition(panel);
-            Left = position.X;
-            Top = position.Y;
-        }
-        
-		internal virtual void Prepare()
-        {
-			// By default, nothing has to be 'prepared'
-        }
-        
-        internal virtual void MouseMove(MouseEventArgs e)
-        {
-            Point end = e.GetPosition(panel);
-            double x = end.X - position.X;
-            double y = end.Y - position.Y;
-            
-            position = end;
-            Width += x;
-            Height += y;
-        }
-        
+		        
         internal virtual void DrawEnd(MouseEventArgs point)
         {
             double top, left, width, height;
@@ -121,8 +98,22 @@ namespace LunarEclipse.Model
             Left = left;
             Top = top;
         }
+		
+
+        internal virtual void DrawStart(Panel panel, MouseEventArgs point)
+        {
+			this.panel = panel;
+			
+			element = (Visual)Activator.CreateInstance(Element.GetType());
+            element.SetValue<object>(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
+			panel.Children.Add(Element);
+            position = point.GetPosition(panel);
+            Left = position.X;
+            Top = position.Y;
+        }
         
-        protected void GetNormalisedBounds(out double top, out double left, out double width, out double height)
+		
+		protected void GetNormalisedBounds(out double top, out double left, out double width, out double height)
         {
             // We ensure that the width and height are positive quantities and the top
             // left corner is actually in the top left. For example: 
@@ -144,8 +135,9 @@ namespace LunarEclipse.Model
                 height = -height;
             }
         }
-        
-        internal static void GetTransformedBounds(Visual visual, out double top, out double left, out double width, out double height)
+		
+		
+		internal static void GetTransformedBounds(Visual visual, out double top, out double left, out double width, out double height)
         {
             top = (double)visual.GetValue(Canvas.TopProperty);
             left = (double)visual.GetValue(Canvas.LeftProperty);
@@ -159,12 +151,26 @@ namespace LunarEclipse.Model
                 top -= SelectedBorder.BorderWidth;
                 height += SelectedBorder.BorderWidth * 2;
             }
-        }
-        
-        protected virtual void MoveBy(Point p)
+		}
+		
+		
+		internal virtual void MouseMove(MouseEventArgs e)
         {
-            Left += p.X;
-            Top += p.Y;
+            Point end = e.GetPosition(panel);
+            double x = end.X - position.X;
+            double y = end.Y - position.Y;
+            
+            position = end;
+            Width += x;
+            Height += y;
         }
+		
+		
+		internal virtual void Prepare()
+        {
+			// By default, nothing has to be 'prepared'
+        }
+		
+#endregion Methods
     }
 }

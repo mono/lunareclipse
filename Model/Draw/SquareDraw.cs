@@ -18,8 +18,10 @@ namespace LunarEclipse.Model
         public SquareDraw()
             : base(new System.Windows.Shapes.Rectangle())
         {
+			
         }
 
+		
         internal override void MouseMove (MouseEventArgs e)
         {
             Point end = e.GetPosition(Panel);
