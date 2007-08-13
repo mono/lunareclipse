@@ -1,5 +1,9 @@
 2007-08-13  Alan McGovern <amcgovern@novell.com> 
 
+	
+
+2007-08-13  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/Draw/SquareDraw.cs, Model/Draw/CircleDraw.cs, Model/Draw/PenDraw.cs,
 	  Model/Draw/Selector.cs, Model/Draw/LineDraw.cs, Model/Draw/DrawBase.cs,
 	  Controller/MoonlightController.cs: Partial refactor of the DrawBase
