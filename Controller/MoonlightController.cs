@@ -132,7 +132,7 @@ namespace LunarEclipse.Controller
             if(!active)
                 return;
 
-            current.Resize(e);
+            current.MouseMove(e);
         }
         
         private void MouseLeftUp(object sender, MouseEventArgs e)

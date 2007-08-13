@@ -59,7 +59,7 @@ namespace LunarEclipse.Model
             get { return (double)Element.GetValue(Canvas.TopProperty); }
             set { Element.SetValue<double>(Canvas.TopProperty, value); }
         }
-		
+
 		public double Width
 		{
 			get { return (double)Element.GetValue(Shape.WidthProperty); }
@@ -81,12 +81,14 @@ namespace LunarEclipse.Model
         
         internal virtual void Cleanup()
         {
-            
+            // By default nothing needs to be cleaned up
         }
         
         internal virtual void DrawStart(Panel panel, MouseEventArgs point)
         {
-            Prepare();
+			element = (Visual)Activator.CreateInstance(Element.GetType());
+            element.SetValue<object>(Shape.StrokeProperty, new SolidColorBrush(Colors.Red));
+            element.SetValue<object>(Shape.FillProperty, new SolidColorBrush(Colors.Cyan));
 			this.panel = panel;
 			panel.Children.Add(Element);
             position = point.GetPosition(panel);
@@ -94,14 +96,12 @@ namespace LunarEclipse.Model
             Top = position.Y;
         }
         
-        internal virtual void Prepare()
+		internal virtual void Prepare()
         {
-            element = (Visual)Activator.CreateInstance(Element.GetType());
-            element.SetValue<object>(Shape.StrokeProperty, new SolidColorBrush(Colors.Red));
-            element.SetValue<object>(Shape.FillProperty, new SolidColorBrush(Colors.Cyan));
+			// By default, nothing has to be 'prepared'
         }
         
-        internal virtual void Resize(MouseEventArgs e)
+        internal virtual void MouseMove(MouseEventArgs e)
         {
             Point end = e.GetPosition(panel);
             double x = end.X - position.X;

@@ -148,13 +148,13 @@ namespace LunarEclipse.Model
                 this.clickedOnShape = (Visual)sender;
        }
 
-        internal override void Resize (MouseEventArgs e)
+        internal override void MouseMove (MouseEventArgs e)
         {
             List<Visual> clickedShapes = GetSelectedObjects(e);
             Point mousePoint = e.GetPosition(Panel);
             mousePoint.Offset(-Position.X, -Position.Y);
             
-            base.Resize(e);
+            base.MouseMove(e);
 
             if(clickedOnShape != null)
             {

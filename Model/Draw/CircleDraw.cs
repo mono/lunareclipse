@@ -19,7 +19,7 @@ namespace LunarEclipse.Model
         {
         }
         
-        internal override void Resize (MouseEventArgs e)
+        internal override void MouseMove (MouseEventArgs e)
         {
             Point end = e.GetPosition(Panel);
             double width = end.X - (double)Element.GetValue(Canvas.LeftProperty);

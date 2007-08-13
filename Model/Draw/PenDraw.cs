@@ -46,7 +46,7 @@ namespace LunarEclipse
         }
 
 
-        internal override void Resize (MouseEventArgs e)
+        internal override void MouseMove (MouseEventArgs e)
         {
             Point end = e.GetPosition(Panel);
             double top = (double)Element.GetValue(Canvas.TopProperty);
