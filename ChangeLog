@@ -1,3 +1,7 @@
+2007-08-13  Alan McGovern <amcgovern@novell.com> 
+
+	
+
 2007-08-13   <> 
 
 	* Controller/MoonlightController.cs, Model/StoryboardManager.cs: Cleaning up

@@ -327,7 +327,7 @@ namespace LunarEclipse.Model
         {
 			// Get the absolute value of the angle the shape is rotated by
 			double angle = (b.Rotate != null) ? b.Rotate.Angle % 360 : 0;
-			if(angle < 0)
+			if (angle < 0)
 				angle += 360;
 			
 			// Get the initial values for it's dimensions
@@ -383,6 +383,7 @@ namespace LunarEclipse.Model
 				newTop = oldTop -  offset.Y * (1 - cosAngle) / 2.0;
 			}
 			
+			// If the values changed, then fire the corresponding events
 			if(oldLeft != newLeft)
 			{
 				b.Child.SetValue<object>(Canvas.LeftProperty, newLeft);
