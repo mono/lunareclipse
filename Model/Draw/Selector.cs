@@ -278,11 +278,9 @@ namespace LunarEclipse.Model
             // Do a standard move of the selected shapes
             if(border.Handle == null)
 			{
-				Console.WriteLine("Changing Left");
 				border.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
 				RaiseEvent(ChangedLeft, border.Child, Canvas.LeftProperty, oldLeft, oldLeft + offset.X);
 				
-				Console.WriteLine("Changing Top");
                 border.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
 				RaiseEvent(ChangedTop, border.Child, Canvas.TopProperty, oldTop, oldTop + offset.Y);
             }
