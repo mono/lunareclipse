@@ -24,8 +24,8 @@ namespace LunarEclipse.Controller
     {
 #region Events
 		
-		public event EventHandler<DrawChangeEventArgs> BeforeDrawChange;
-		public event EventHandler<DrawChangeEventArgs> AfterDrawChange;
+		public event EventHandler<DrawChangeEventArgs> BeforeDrawChanged;
+		public event EventHandler<DrawChangeEventArgs> DrawChanged;
 		
 #endregion Events
 		
@@ -53,9 +53,9 @@ namespace LunarEclipse.Controller
             get { return this.current; }
             set 
             { 
-				RaiseEvent<DrawChangeEventArgs>(BeforeDrawChange, new DrawChangeEventArgs(current));
+				RaiseEvent<DrawChangeEventArgs>(BeforeDrawChanged, new DrawChangeEventArgs(current));
 				current = value;
-				RaiseEvent<DrawChangeEventArgs>(AfterDrawChange, new DrawChangeEventArgs(current));
+				RaiseEvent<DrawChangeEventArgs>(DrawChanged, new DrawChangeEventArgs(current));
             }
         }
 		
@@ -81,6 +81,15 @@ namespace LunarEclipse.Controller
 			this.timeline = timeline;
             this.moonlight = moonlight;
 			this.properties = properties;
+			
+			BeforeDrawChanged += delegate {
+				if(Current != null) Current.Cleanup();
+			};
+			
+			DrawChanged += delegate {
+				if(Current != null) Current.Prepare();
+			};
+			
             moonlight.Canvas.MouseLeftButtonDown += new MouseEventHandler(MouseLeftDown);
             moonlight.Canvas.MouseMove += new MouseEventHandler(MouseMove);
             moonlight.Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseLeftUp);

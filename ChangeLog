@@ -1,5 +1,10 @@
 2007-08-13   <> 
 
+	* Controller/MoonlightController.cs, Model/StoryboardManager.cs: Cleaning up
+	  and preparing the draws correctly
+
+2007-08-13   <> 
+
 	* Model/Draw/Selector.cs: Removed writelines
 
 2007-08-10  Alan McGovern <amcgovern@novell.com> 

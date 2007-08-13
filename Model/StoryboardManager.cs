@@ -67,8 +67,8 @@ namespace LunarEclipse.Model
 			this.controller = controller;
 			storyboards = new List<Storyboard>();
 			
-			controller.BeforeDrawChange += new EventHandler<DrawChangeEventArgs>(BeforeDrawChange);
-			controller.AfterDrawChange += new EventHandler<DrawChangeEventArgs>(AfterDrawChange);
+			controller.BeforeDrawChanged += new EventHandler<DrawChangeEventArgs>(BeforeDrawChange);
+			controller.DrawChanged += new EventHandler<DrawChangeEventArgs>(AfterDrawChange);
 			
 			LoadFromResources(controller.Canvas);
 		}
