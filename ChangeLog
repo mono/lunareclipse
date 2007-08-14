@@ -1,5 +1,14 @@
 2007-08-13  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/StoryboardManager.cs: Using the resolver so that the correct
+	  properties are updated
+	* Serialization/ReflectionHelper.cs: Created a new 'Resolver' which can
+	  resolve the property paths (i.e.
+	  (UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)
+	  ) down to a specific DependencyObject and DependencyProperty.
+
+2007-08-13  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/StoryboardManager.cs, Model/Draw/SquareDraw.cs,
 	  Model/Draw/PenDraw.cs, Model/Draw/RectangleDraw.cs,
 	  Model/Draw/SelectionDraw.cs, Model/Draw/DrawBase.cs,

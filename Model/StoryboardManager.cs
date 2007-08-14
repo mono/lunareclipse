@@ -152,8 +152,15 @@ namespace LunarEclipse.Model
 			LinearDoubleKeyFrame keyframe = null;
 			Stop();
 			
+			DependencyObject target;
+			DependencyProperty property;
+			string path = ReflectionHelper.GetFullPath(e.Target, e.Property);
+			ReflectionHelper.Resolve(path, e.Target, out target, out property);
+			if(string.IsNullOrEmpty(target.Name))
+				target.SetValue<string>(DependencyObject.NameProperty, NameGenerator.GetName(this.controller.Canvas, target));
+			
 			// Get a timeline: either an existing one or a new one
-			DoubleAnimationUsingKeyFrames timeline = GetTimeline(e.Target, e.Property);
+			DoubleAnimationUsingKeyFrames timeline = GetTimeline(target, property);
 			
 			// If this is a new timeline, we should add in a keyframe at 00:00 recording 
 			// the initial value of the property. This way if the 'first' keyframe is at
@@ -185,6 +192,7 @@ namespace LunarEclipse.Model
 			double difference = (double)e.NewValue - (double)e.OldValue;
 			keyframe.Value += difference;
 			e.Target.SetValue<object>(e.Property, e.OldValue);
+			target.SetValue<object>(property, e.NewValue);
 			Seek(keyframe.KeyTime.TimeSpan);
 		}
 		

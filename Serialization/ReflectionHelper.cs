@@ -4,7 +4,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Reflection;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace LunarEclipse.Serialization
 {	
@@ -12,11 +14,13 @@ namespace LunarEclipse.Serialization
     {
 		private static List<PropertyData> attachedProperties;
 		private static Dictionary<Type, List<PropertyData>> allProperties;
+		private static Dictionary<string, DependencyProperty> propertyByName;
 		
 		static ReflectionHelper()
         {
 			allProperties = new Dictionary<Type, List<PropertyData>>();
 			attachedProperties = new List<PropertyData>();
+			propertyByName = new Dictionary<string, DependencyProperty>();
 			SetUpList();
         }
 		
@@ -49,6 +53,16 @@ namespace LunarEclipse.Serialization
 				
 				allProperties.Add(type, fields);
 			}
+			
+			foreach(List<PropertyData> list in allProperties.Values)
+				foreach(PropertyData propData in list)
+				{
+					string name = propData.DeclaringType.Name + '.' + Serializer.CleanName(propData.PropertyInfo.Name);
+					if(!propertyByName.ContainsKey(name))
+						propertyByName.Add(name, propData.Property);
+				}
+					
+				
 		}
 		
         public static List<PropertyData> GetProps(DependencyObject item)
@@ -107,7 +121,7 @@ namespace LunarEclipse.Serialization
 			
 			return fields;
 		}
-		
+
 		public static string GetFullPath(DependencyObject target, DependencyProperty property)
 		{
 			StringBuilder result = new StringBuilder(64);
@@ -135,6 +149,65 @@ namespace LunarEclipse.Serialization
 			}
 			
 			return result.ToString();
+		}
+
+		public static void Resolve(string propertyPath, DependencyObject original, out DependencyObject target, out DependencyProperty property)
+		{
+			// Initially we assume that the final object we will be applying the property to is the same as
+			// the original object
+			target = original;
+			
+			// Match a string like (a.b).(c.d).(e.f)[4]  or  (a.b)[4].(c.d)[2].(e.f)
+			// and split it into it's componant parts. In the case of the second string, i'll get this
+			// (a.b)[4]   and    (c.d)[2]   and (e.f)
+			Regex e = new Regex("(\\([a-zA-Z]+.[a-zA-Z]+\\)(\\[\\d+\\])?)");
+			MatchCollection matches = e.Matches(propertyPath);
+			
+			for(int i=0; i < matches.Count; i++)
+			{
+				// Get the property that is targeted by this string
+				string[] parts = matches[i].Value.Split(')');
+				string propertyName = parts[0].Substring(1, parts[0].Length - 1);
+				Console.WriteLine("Checking: {0}", propertyName);
+				property = ReflectionHelper.propertyByName[propertyName];
+
+				// When this condition is true, we know we have found the target object and the property
+				// which we need to apply to the object
+				if(i == (matches.Count - 1))
+				{
+					Console.WriteLine("Returning: {0}, {1}", target.Name, propertyName);
+					return;
+				}
+				target = (DependencyObject)target.GetValue(property);
+				
+				
+				if(parts.Length > 1 && parts[1].Length > 2)
+					target = GetFromIndex(parts[1], target);
+				
+				Console.WriteLine(target);
+			}
+
+			target = null;
+			property = null;
+		}
+		private static DependencyObject GetFromIndex(string s, DependencyObject o)
+		{
+			Console.WriteLine("Checking index: {0}", s);
+			s = s.Substring(1, s.Length - 2);
+			int i = 0;
+			int index = int.Parse(s);
+			Console.WriteLine("Calculated index: {0}", index);
+			IEnumerable enumerable = (IEnumerable)o;
+			foreach(object obj in enumerable)
+			{
+				if(i++ != index)
+					continue;
+				
+				Console.WriteLine("Found the object: {0}", obj.ToString());
+				return (DependencyObject)obj;
+			}
+			
+			return null;
 		}
 		
 		private static bool SpecialCase(DependencyObject target, DependencyProperty property, StringBuilder sb)
