@@ -75,7 +75,12 @@ namespace LunarEclipse.Model
 		internal override void Cleanup ()
 		{
 			base.Cleanup();
-			
+			Toolbox.PropertyChanged -= delegate (object sender, PropertyChangedEventArgs e) {
+				SelectedBorder b;
+				Visual v = e.Target as Visual;
+				if(v != null && selectedObjects.TryGetValue(v, out b))
+					b.ResizeBorder();
+			};
 			Visual[] shapes = new Visual[selectedObjects.Count];
 			selectedObjects.Keys.CopyTo(shapes, 0);
 			foreach(Visual s in shapes)
@@ -313,6 +318,13 @@ namespace LunarEclipse.Model
 			
 			if(!prepared)
 			{
+				Toolbox.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e) {
+					SelectedBorder b;
+					Visual v = e.Target as Visual;
+					if(v != null && selectedObjects.TryGetValue(v, out b))
+						b.ResizeBorder();
+				};
+				
 				prepared = true;
 				foreach(Visual v in this.controller.Canvas.Children)
 				{

@@ -42,13 +42,13 @@ namespace LunarEclipse.Controller
         
         public override void Redo ()
         {
-            Target.SetValue<object>(property, newvalue);
+			Toolbox.ChangeProperty(Target, property, newvalue);
         }
 
         
         public override void Undo ()
         {
-            Target.SetValue<object>(property, oldvalue);
+			Toolbox.ChangeProperty(Target, property, oldvalue);
         }
     }
 }

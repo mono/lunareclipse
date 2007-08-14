@@ -1,3 +1,10 @@
+2007-08-14  Alan McGovern <amcgovern@novell.com> 
+
+	* Model/Draw/Selector.cs, Controller/UndoActions/UndoPropertyChange.cs,
+	  Controller/Toolbox.cs: Added in supporting code so i have events when a
+	  property changes. Updated 2 sections of code to use this new code to
+	  make animation recording slicker
+
 2007-08-13  Alan McGovern <amcgovern@novell.com> 
 
 	* Model/StoryboardManager.cs: Using the resolver so that the correct
