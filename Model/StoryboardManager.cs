@@ -32,9 +32,10 @@ namespace LunarEclipse.Model
 #region Member Variables
 			
 		private MoonlightController controller;   // The controller this manager is attached to
-		private Storyboard current;                 // The currently active storyboard
-		private bool recording;                       // True if we are currently recording
-		private List<Storyboard> storyboards; // The list of storyboards that are declared
+		private Storyboard current;               // The currently active storyboard
+		private bool recording;                   // True if we are currently recording
+		private List<Storyboard> storyboards;     // The list of storyboards that are declared
+		private UndoGroup undos;
 
 #endregion Member Variables
 		
@@ -71,6 +72,7 @@ namespace LunarEclipse.Model
 			controller.DrawChanged += new EventHandler<DrawChangeEventArgs>(AfterDrawChange);
 			controller.Timeline.CurrentPositionChanged += new EventHandler(TimeChanged);
 			controller.Timeline.KeyframeMoved += new EventHandler<LunarEclipse.Controls.KeyframeEventArgs>(KeyframeMoved);
+			undos = new UndoGroup();
 			LoadFromResources(controller.Canvas);
 		}
 		
@@ -132,6 +134,16 @@ namespace LunarEclipse.Model
 				s.ChangedRotation += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
 				s.ChangedTop += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
 				s.ChangedWidth += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
+				s.MouseDown += delegate {
+					Console.WriteLine("MOUSITY DOWNITY");
+					Stop();
+				};
+				s.MouseUp += delegate {
+					Console.WriteLine("MOUSITY UPPITY: {0}", undos.Count);
+					undos.Undo();
+					undos.Clear();
+					Seek(controller.Timeline.CurrentPosition);
+				};
 			}
 			else
 			{
@@ -141,19 +153,30 @@ namespace LunarEclipse.Model
 				s.ChangedRotation -= new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
 				s.ChangedTop -= new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
 				s.ChangedWidth -= new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
+				s.MouseDown -= delegate {
+					Stop();
+				};
+				s.MouseUp -= delegate {
+					undos.Undo();
+					undos.Clear();
+					Seek(controller.Timeline.CurrentPosition);
+				};
 			}
 		}
 		
 		private void PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
+			DependencyObject target = null;
+			DependencyProperty property = null;
+			LinearDoubleKeyFrame keyframe = null;
+			
 			if(!Recording || Current == null)
 				return;
-			
-			LinearDoubleKeyFrame keyframe = null;
-			Stop();
-			
-			DependencyObject target;
-			DependencyProperty property;
+
+			// Sometimes the dependency object we're changing the property of is not
+			// the object passed in. We are actually changing one of it's children. In this
+			// case we need to resolve down to that child and use it instead
+
 			string path = ReflectionHelper.GetFullPath(e.Target, e.Property);
 			ReflectionHelper.Resolve(path, e.Target, out target, out property);
 			if(string.IsNullOrEmpty(target.Name))
@@ -168,8 +191,8 @@ namespace LunarEclipse.Model
 			if(timeline.KeyFrames.Count == 0)
 			{
 				LinearDoubleKeyFrame kf = new LinearDoubleKeyFrame();
-				kf.KeyTime = controller.Timeline.CurrentPosition;
-				kf.Value = (double)e.OldValue;
+				kf.KeyTime = TimeSpan.Zero;
+				kf.Value = (double)(target == e.Target ? e.OldValue : target.GetValue(property));
 				timeline.KeyFrames.Add(kf);
 			}
 			
@@ -183,7 +206,7 @@ namespace LunarEclipse.Model
 			if(keyframe == null)
 			{
 				keyframe = new LinearDoubleKeyFrame();
-				keyframe.Value = 0;
+				keyframe.Value = (double)(target == e.Target ? e.OldValue : target.GetValue(property));
 				keyframe.KeyTime = controller.Timeline.CurrentPosition;
 				timeline.KeyFrames.Add(keyframe);
 				controller.Timeline.AddKeyframe(timeline, keyframe.KeyTime.TimeSpan);
@@ -191,9 +214,8 @@ namespace LunarEclipse.Model
 			
 			double difference = (double)e.NewValue - (double)e.OldValue;
 			keyframe.Value += difference;
-			e.Target.SetValue<object>(e.Property, e.OldValue);
-			target.SetValue<object>(property, e.NewValue);
-			Seek(keyframe.KeyTime.TimeSpan);
+			undos.Add(new UndoPropertyChange(e.Target, e.Property, e.OldValue, e.NewValue));
+			//e.Target.SetValue<object>(e.Property, e.OldValue);
 		}
 		
 		public void Remove(Storyboard storyboard)
@@ -263,6 +285,7 @@ namespace LunarEclipse.Model
 			if(Current == null)
 				return;
 			
+			Current.Stop();
 			Current.Begin();
 			Current.Pause();
 			Current.Seek(time);

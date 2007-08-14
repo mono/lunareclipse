@@ -118,6 +118,7 @@ namespace LunarEclipse.Model
 		
 		internal override void DrawEnd (MouseEventArgs e)
 		{
+			base.DrawEnd(e);
 			Panel.Children.Remove(Element);
 			
 			bool mouseMoved = !mouseStart.Equals(Position);
@@ -328,20 +329,14 @@ namespace LunarEclipse.Model
 		private void RaiseEvent(EventHandler<PropertyChangedEventArgs> e, DependencyObject target, 
 								DependencyProperty property, object oldValue, object newValue)
 		{
-			RaiseEvent<PropertyChangedEventArgs>(e, new PropertyChangedEventArgs(target, property, oldValue, newValue));
-			
+			Toolbox.RaiseEvent<PropertyChangedEventArgs>(e, controller, new PropertyChangedEventArgs(target, property, oldValue, newValue));
+						
 			SelectedBorder border;
 			Visual visual = target as Visual;
 			if(visual == null || !selectedObjects.TryGetValue(visual, out border))
 				return;
 			
 			border.ResizeBorder();
-		}
-		
-		private void RaiseEvent<T>(EventHandler<T> e, T args) where T : EventArgs
-		{
-			if(e != null)
-				e(controller, args);
 		}
 		
 		private void ResizeHeightOrWidth(SelectedBorder b, Point offset, MouseEventArgs e)
@@ -439,7 +434,7 @@ namespace LunarEclipse.Model
 			controller.Canvas.Children.Add(border);
 			selectedObjects.Add(s, border);
 			border.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
-			RaiseEvent<SelectionChangedEventArgs>(ItemSelected, new SelectionChangedEventArgs(s, border));
+			Toolbox.RaiseEvent<SelectionChangedEventArgs>(ItemSelected, controller, new SelectionChangedEventArgs(s, border));
 		}
 		
 #endregion Private/Internal Methods

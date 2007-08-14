@@ -19,5 +19,11 @@ namespace LunarEclipse
 		{
 			return (angle / Math.PI) * 180.0;
 		}
+		
+		internal static void RaiseEvent<T>(EventHandler<T> e, object sender, T args) where T : EventArgs
+		{
+			if(e != null)
+				e(sender, args);
+		}
 	}
 }

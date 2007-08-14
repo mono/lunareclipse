@@ -53,9 +53,9 @@ namespace LunarEclipse.Controller
             get { return this.current; }
             set 
             { 
-				RaiseEvent<DrawChangeEventArgs>(BeforeDrawChanged, new DrawChangeEventArgs(current));
+				Toolbox.RaiseEvent<DrawChangeEventArgs>(BeforeDrawChanged, this, new DrawChangeEventArgs(current));
 				current = value;
-				RaiseEvent<DrawChangeEventArgs>(DrawChanged, new DrawChangeEventArgs(current));
+				Toolbox.RaiseEvent<DrawChangeEventArgs>(DrawChanged, this, new DrawChangeEventArgs(current));
             }
         }
 		
@@ -162,14 +162,6 @@ namespace LunarEclipse.Controller
             }
         }
 		
-		private void RaiseEvent<T>(EventHandler<T> e, T args) where T : EventArgs
-		{
-			if(e != null)
-				e(this, args);
-		}
-		
-		
-
 		
         public string SerializeCanvas()
         {

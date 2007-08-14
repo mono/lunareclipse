@@ -16,6 +16,14 @@ namespace LunarEclipse.Model
 {
     public abstract class DrawBase
     {
+#region Events
+
+		public event EventHandler<EventArgs> MouseDown;
+		public event EventHandler<EventArgs> MouseUp;
+		
+#endregion Events
+		
+		
 #region Fields
         
         private Visual element;
@@ -97,11 +105,13 @@ namespace LunarEclipse.Model
             Height = height;
             Left = left;
             Top = top;
+			Toolbox.RaiseEvent<EventArgs>(MouseUp, Panel, EventArgs.Empty);
         }
 		
 
         internal virtual void DrawStart(Panel panel, MouseEventArgs point)
         {
+			Toolbox.RaiseEvent<EventArgs>(MouseDown, Panel, EventArgs.Empty);
 			this.panel = panel;
 			
 			element = (Visual)Activator.CreateInstance(Element.GetType());

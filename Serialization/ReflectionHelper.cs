@@ -168,23 +168,18 @@ namespace LunarEclipse.Serialization
 				// Get the property that is targeted by this string
 				string[] parts = matches[i].Value.Split(')');
 				string propertyName = parts[0].Substring(1, parts[0].Length - 1);
-				Console.WriteLine("Checking: {0}", propertyName);
 				property = ReflectionHelper.propertyByName[propertyName];
 
 				// When this condition is true, we know we have found the target object and the property
 				// which we need to apply to the object
 				if(i == (matches.Count - 1))
-				{
-					Console.WriteLine("Returning: {0}, {1}", target.Name, propertyName);
 					return;
-				}
+
 				target = (DependencyObject)target.GetValue(property);
 				
 				
 				if(parts.Length > 1 && parts[1].Length > 2)
 					target = GetFromIndex(parts[1], target);
-				
-				Console.WriteLine(target);
 			}
 
 			target = null;
@@ -192,18 +187,14 @@ namespace LunarEclipse.Serialization
 		}
 		private static DependencyObject GetFromIndex(string s, DependencyObject o)
 		{
-			Console.WriteLine("Checking index: {0}", s);
 			s = s.Substring(1, s.Length - 2);
 			int i = 0;
 			int index = int.Parse(s);
-			Console.WriteLine("Calculated index: {0}", index);
 			IEnumerable enumerable = (IEnumerable)o;
 			foreach(object obj in enumerable)
 			{
 				if(i++ != index)
 					continue;
-				
-				Console.WriteLine("Found the object: {0}", obj.ToString());
 				return (DependencyObject)obj;
 			}
 			
