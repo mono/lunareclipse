@@ -3,47 +3,39 @@
 //
 
 using System;
-
+using System.Collections.Generic;
 using System.Windows;
-using LunarEclipse.Model;
-using Gtk;
 
-namespace LunarEclipse {
-	public abstract partial class PropertyGroup : Bin, IPropertyGroup {
-		Widget properties = null;
-		SelectedBorder selectedObject;
-        
+using LunarEclipse.Model;
+
+namespace LunarEclipse
+{
+	public abstract class PropertyGroup
+	{
+		private string name;
+		private List<PropertyInfo> properties;
+		private SelectedBorder selectedObject;
+		
 		public PropertyGroup (string name)
 		{
-			this.Build ();
-			
-			PropertyGroupLabel.Text = "<b>" + name + "</b>";
-			PropertyGroupLabel.UseMarkup = true;
-			expander.Expanded = false;
+			this.name = name;
+			properties = new List<PropertyInfo>();
 		}
 		
-		protected Widget Properties {
+		public bool HasProperties
+		{
+			get { return properties.Count != 0; }
+		}
+		
+		public List<PropertyInfo> Properties
+		{
 			get { return properties; }
-			set {
-				if (properties != null)
-					properties.Destroy ();
-				properties = value;
-				expander.Add (value);
-			}
 		}
 		
-		protected bool Expanded {
-			get { return expander.Expanded; }
-			set { expander.Expanded = value; }
-		}
-		
-		public virtual bool HasProperties {
-			get { return false; }
-		}
-		
-		public virtual SelectedBorder SelectedObject {
-            get { return selectedObject; }
-            set { selectedObject = value; }
+		public virtual SelectedBorder SelectedObject
+		{
+			get { return selectedObject; }
+			set { selectedObject = value; }
 		}
 	}
 }

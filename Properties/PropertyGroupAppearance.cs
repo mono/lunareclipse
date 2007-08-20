@@ -6,63 +6,49 @@ using System;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-using LunarEclipse.Model;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Controls;
+using System.Windows.Shapes;
+
+using LunarEclipse.Model;
 using LunarEclipse.Controller;
-using Gtk;
-using PropertyPairList = System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<System.Type, System.Reflection.FieldInfo>>;
 using LunarEclipse.Serialization;
 
 namespace LunarEclipse {
 	public class PropertyGroupAppearance : PropertyGroup {
-		enum PropType {
-			Data,
-			Double,
-			Integer,
-			Percent,
-			Stretch,
-			DashArray,
-			PenLineCap,
-			PenLineJoin,
-			Visibility,
-		}
+
 		
 		static string [] stretchEnums = Enum.GetNames(typeof(System.Windows.Media.Stretch));
 		static string [] penLineCapEnums = Enum.GetNames(typeof(System.Windows.Media.PenLineCap));
 		static string [] penLineJoinEnums = Enum.GetNames(typeof(System.Windows.Media.PenLineJoin));
 		static string [] visibilityEnums = Enum.GetNames(typeof(System.Windows.Visibility));
 		
-		struct PropInfo {
-			public string Name;
-			public PropType Type;
-			public bool Extended;
-			
-			public PropInfo (string name, PropType type, bool extended)
-			{
-				Name = name;
-				Type = type;
-				Extended = extended;
-			}
-		}
+		static PropertyInfo [] info = GeneratePropertyInfo();
 		
-		static PropInfo [] info = new PropInfo [14] {
-			new PropInfo ("OpacityProperty",            PropType.Percent,     false),
-			new PropInfo ("VisibilityProperty",         PropType.Visibility,  false),
-			new PropInfo ("DataProperty",               PropType.Data,        false),
-			new PropInfo ("RadiusXProperty",            PropType.Double,      false),
-			new PropInfo ("RadiusYProperty",            PropType.Double,      false),
-			new PropInfo ("StrokeThicknessProperty",    PropType.Integer,     false),
+		static PropertyInfo [] GeneratePropertyInfo()
+		{
+			List<PropertyInfo> props = new List<PropertyInfo>();
+
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(Rectangle.OpacityProperty), PropertyType.Percent));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(Rectangle.VisibilityProperty), PropertyType.Visibility));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(Rectangle.RadiusXProperty), PropertyType.Double));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(Rectangle.RadiusYProperty), PropertyType.Double));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(Rectangle.StrokeThicknessProperty), PropertyType.Integer));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.DataProperty), PropertyType.Data));
+
 			// extended properties
-			new PropInfo ("StretchProperty",            PropType.Stretch,     true),
-			new PropInfo ("StrokeDashArrayProperty",    PropType.DashArray,   true),
-			new PropInfo ("StrokeDashCapProperty",      PropType.PenLineCap,  true),
-			new PropInfo ("StrokeDashOffsetProperty",   PropType.Integer,     true),
-			new PropInfo ("StrokeStartLineCapProperty", PropType.PenLineCap,  true),
-			new PropInfo ("StrokeEndLineCapProperty",   PropType.PenLineCap,  true),
-			new PropInfo ("StrokeLineJoinProperty",     PropType.PenLineJoin, true),
-			new PropInfo ("StrokeMiterLimitProperty",   PropType.Integer,     true)
-		};
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StretchProperty), PropertyType.Stretch, false, true));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StrokeDashArrayProperty), PropertyType.DashArray, false, true));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StrokeDashCapProperty), PropertyType.PenLineCap, false, true));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StrokeDashOffsetProperty), PropertyType.Integer, false, true));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StrokeStartLineCapProperty), PropertyType.PenLineCap, false, true));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StrokeEndLineCapProperty), PropertyType.PenLineCap, false, true));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StrokeLineJoinProperty), PropertyType.PenLineJoin, false, true));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StrokeMiterLimitProperty), PropertyType.Integer, false, true));
+			
+			return props.ToArray();
+		}
 		
 		DependencyObject item;
 		bool hasProps = false;
@@ -221,10 +207,6 @@ namespace LunarEclipse {
 			Properties = properties;*/
 		}
 		
-		public override bool HasProperties {
-			get { return hasProps; }
-		}
-		
 		public override SelectedBorder SelectedObject {
 			set {
 				propTable = null;
@@ -232,73 +214,73 @@ namespace LunarEclipse {
 			}
 		}
 		
-		// callbacks
-		void OnCapChanged (object o, EventArgs e)
-		{
-			DependencyProperty prop = (DependencyProperty) propTable[o];
-			ComboBox combo = (ComboBox) o;
-			
-			((SelectedBorder)item).Child.SetValue<PenLineCap> (prop, (PenLineCap) combo.Active);
-		    ((SelectedBorder)item).ResizeBorder();
-        }
-		
-		void OnStretchChanged (object o, EventArgs e)
-		{
-			DependencyProperty prop = (DependencyProperty) propTable[o];
-			ComboBox combo = (ComboBox) o;
-			
-			((SelectedBorder)item).Child.SetValue<Stretch> (prop, (Stretch) combo.Active);
-		    ((SelectedBorder)item).ResizeBorder();
-        }
-		
-		void OnLineJoinChanged (object o, EventArgs e)
-		{
-			DependencyProperty prop = (DependencyProperty) propTable[o];
-			ComboBox combo = (ComboBox) o;
-			
-			((SelectedBorder)item).Child.SetValue<PenLineJoin> (prop, (PenLineJoin) combo.Active);
-		    ((SelectedBorder)item).ResizeBorder();
-        }
-		
-		void OnVisibilityChanged (object o, EventArgs e)
-		{
-			DependencyProperty prop = (DependencyProperty) propTable[o];
-			ComboBox combo = (ComboBox) o;
-			
-			((SelectedBorder)item).Child.SetValue<Visibility> (prop, (Visibility) combo.Active);
-		    ((SelectedBorder)item).ResizeBorder();
-        }
-		
-		void OnDoubleChanged (object o, EventArgs e)
-		{
-			DependencyProperty prop = (DependencyProperty) propTable[o];
-			SpinButton spin = (SpinButton) o;
-			double v = spin.Value;
-			
-			((SelectedBorder)item).Child.SetValue<double> (prop, v);
-            ((SelectedBorder)item).ResizeBorder();
-            Console.WriteLine("Changed double");
-		}
-		
-		void OnIntegerChanged (object o, EventArgs e)
-		{
-			DependencyProperty prop = (DependencyProperty) propTable[o];
-			SpinButton spin = (SpinButton) o;
-			int v = (int) spin.Value;
-			
-			((SelectedBorder)item).Child.SetValue<int> (prop, v);
-            ((SelectedBorder)item).ResizeBorder();
-            Console.WriteLine("Changed integer");
-		}
-		
-		void OnDataChanged (object o, EventArgs e)
-		{
-			DependencyProperty prop = (DependencyProperty) propTable[o];
-			Entry entry = (Entry) o;
-			
-			// FIXME: is this really of type string? or is it an array of Points?
-			((SelectedBorder)item).Child.SetValue<string> (prop, entry.Text);
-		    ((SelectedBorder)item).ResizeBorder();
-        }
+//		// callbacks
+//		void OnCapChanged (object o, EventArgs e)
+//		{
+//			DependencyProperty prop = (DependencyProperty) propTable[o];
+//			ComboBox combo = (ComboBox) o;
+//			
+//			((SelectedBorder)item).Child.SetValue<PenLineCap> (prop, (PenLineCap) combo.Active);
+//		    ((SelectedBorder)item).ResizeBorder();
+//        }
+//		
+//		void OnStretchChanged (object o, EventArgs e)
+//		{
+//			DependencyProperty prop = (DependencyProperty) propTable[o];
+//			ComboBox combo = (ComboBox) o;
+//			
+//			((SelectedBorder)item).Child.SetValue<Stretch> (prop, (Stretch) combo.Active);
+//		    ((SelectedBorder)item).ResizeBorder();
+//        }
+//		
+//		void OnLineJoinChanged (object o, EventArgs e)
+//		{
+//			DependencyProperty prop = (DependencyProperty) propTable[o];
+//			ComboBox combo = (ComboBox) o;
+//			
+//			((SelectedBorder)item).Child.SetValue<PenLineJoin> (prop, (PenLineJoin) combo.Active);
+//		    ((SelectedBorder)item).ResizeBorder();
+//        }
+//		
+//		void OnVisibilityChanged (object o, EventArgs e)
+//		{
+//			DependencyProperty prop = (DependencyProperty) propTable[o];
+//			ComboBox combo = (ComboBox) o;
+//			
+//			((SelectedBorder)item).Child.SetValue<Visibility> (prop, (Visibility) combo.Active);
+//		    ((SelectedBorder)item).ResizeBorder();
+//        }
+//		
+//		void OnDoubleChanged (object o, EventArgs e)
+//		{
+//			DependencyProperty prop = (DependencyProperty) propTable[o];
+//			SpinButton spin = (SpinButton) o;
+//			double v = spin.Value;
+//			
+//			((SelectedBorder)item).Child.SetValue<double> (prop, v);
+//            ((SelectedBorder)item).ResizeBorder();
+//            Console.WriteLine("Changed double");
+//		}
+//		
+//		void OnIntegerChanged (object o, EventArgs e)
+//		{
+//			DependencyProperty prop = (DependencyProperty) propTable[o];
+//			SpinButton spin = (SpinButton) o;
+//			int v = (int) spin.Value;
+//			
+//			((SelectedBorder)item).Child.SetValue<int> (prop, v);
+//            ((SelectedBorder)item).ResizeBorder();
+//            Console.WriteLine("Changed integer");
+//		}
+//		
+//		void OnDataChanged (object o, EventArgs e)
+//		{
+//			DependencyProperty prop = (DependencyProperty) propTable[o];
+//			Entry entry = (Entry) o;
+//			
+//			// FIXME: is this really of type string? or is it an array of Points?
+//			((SelectedBorder)item).Child.SetValue<string> (prop, entry.Text);
+//		    ((SelectedBorder)item).ResizeBorder();
+//        }
 	}
 }

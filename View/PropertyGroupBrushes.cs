@@ -66,11 +66,6 @@ namespace LunarEclipse
 			colorPicker.Show ();
             box.PackEnd(colorPicker);
             box.Show ();
-            Properties = box;
-        }
-        
-        public override bool HasProperties {
-            get { return hasProperties; }
         }
         
         public override SelectedBorder SelectedObject {

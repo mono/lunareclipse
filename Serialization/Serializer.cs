@@ -92,7 +92,7 @@ namespace LunarEclipse.Serialization
             
             // Gets all the dependency properties for this item type
             // and any relevant attached properties.
-            List<PropertyData> fields = ReflectionHelper.GetProps(item);
+            List<PropertyData> fields = ReflectionHelper.GetProperties(item);
             
             // First we need to write all the dependency properties whose value is *not*
             // a dependency object as attributes. Every DependencyProperty whose value

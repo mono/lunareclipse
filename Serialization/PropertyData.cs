@@ -11,11 +11,12 @@ using System.Windows;
 
 namespace LunarEclipse
 {
-	internal class PropertyData
+	public class PropertyData
 	{
 		private bool attached;
 		private Type baseType;
 		private Type declaringType;
+		private string name;
 		private DependencyProperty property;
 		private FieldInfo propertyInfo;
 
@@ -33,6 +34,11 @@ namespace LunarEclipse
 		public Type DeclaringType
 		{
 			get { return declaringType; }
+		}
+		
+		public string Name
+		{
+			get { return name; }
 		}
 		
 		public DependencyProperty Property
@@ -53,6 +59,8 @@ namespace LunarEclipse
 			this.declaringType = declaringType;
 			this.property = property;
 			this.propertyInfo = propertyInfo;
+			
+			this.name = LunarEclipse.Serialization.Serializer.CleanName(propertyInfo.Name);
 		}
 		
 		

@@ -135,11 +135,9 @@ namespace LunarEclipse.Model
 				s.ChangedTop += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
 				s.ChangedWidth += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
 				s.MouseDown += delegate {
-					Console.WriteLine("MOUSITY DOWNITY");
 					Stop();
 				};
 				s.MouseUp += delegate {
-					Console.WriteLine("MOUSITY UPPITY: {0}", undos.Count);
 					undos.Undo();
 					undos.Clear();
 					Seek(controller.Timeline.CurrentPosition);

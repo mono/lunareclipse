@@ -32,7 +32,7 @@ namespace LunarEclipse.Controller
 		
 #region Member Variables
 		
-		IPropertyGroup properties;
+		//IPropertyGroup properties;
 		bool active;
 		private DrawBase current;
         private GtkSilver moonlight;
@@ -75,11 +75,11 @@ namespace LunarEclipse.Controller
         }
 
     	
-        public MoonlightController(GtkSilver moonlight, AnimationTimeline timeline, IPropertyGroup properties)
+        public MoonlightController(GtkSilver moonlight, AnimationTimeline timeline)
         {
 			this.timeline = timeline;
             this.moonlight = moonlight;
-			this.properties = properties;
+			//this.properties = properties;
 			
 			BeforeDrawChanged += delegate {
 				if(Current != null) Current.Cleanup();
@@ -152,13 +152,13 @@ namespace LunarEclipse.Controller
             {
                foreach(KeyValuePair<Visual, SelectedBorder> keypair in selection.SelectedObjects)
                {
-                   properties.SelectedObject = keypair.Value;
+                   //properties.SelectedObject = keypair.Value;
                    Console.WriteLine("Selected: " + keypair.Key.ToString());
                }
             }
             else
             {
-                properties.SelectedObject = null;
+                //properties.SelectedObject = null;
             }
         }
 		

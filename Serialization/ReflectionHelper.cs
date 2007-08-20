@@ -12,65 +12,43 @@ namespace LunarEclipse.Serialization
 {	
     internal static class ReflectionHelper
     {
+		// This is a list of all 'attached' properties
 		private static List<PropertyData> attachedProperties;
+		
+		// This dictionary stores a list of all dependencyproperties exposed by a DependencyObject
+		// and is keyed by the System.Type of the DependencyObject.
+		// i.e. allProperties[typeof(System.Windows.Controls.Canvas)] will return a list of all dependency properties
+		// exposed by Canvas.
 		private static Dictionary<Type, List<PropertyData>> allProperties;
+		
+		// This dictionary is keyed by the 'fully' qualified name of the dependency property
+		// i.e. the string "Canvas.LeftProperty" is paired with the DependencyProperty 'Canvas.LeftProperty' etc
 		private static Dictionary<string, DependencyProperty> propertyByName;
 		
+		// This dictionary contains all the PropertyData objects except it is keyed by DependencyProperty
+		private static Dictionary<DependencyProperty, PropertyData> propertyDataByProperty;
+		
 		static ReflectionHelper()
-        {
+		{
 			allProperties = new Dictionary<Type, List<PropertyData>>();
 			attachedProperties = new List<PropertyData>();
 			propertyByName = new Dictionary<string, DependencyProperty>();
+			
 			SetUpList();
-        }
-		
-		private static void SetUpList()
-		{
-			DependencyObject instance = null;
-			Assembly current = Assembly.GetAssembly(typeof(DependencyProperty));
-			Type[] types = current.GetTypes();
-			
-			// For every type in the assembly, check to see if it is instantiable and it
-			// has dependency properties. If both conditions are true, instantiate it and 
-			// grab all it's dependency properties into our list.
-			foreach(Type type in types)
-			{
-				if(type.IsGenericTypeDefinition || type.IsAbstract || !type.IsPublic)
-					continue;
-				
-				// If i can't instantiate the object, that doesn't matter.
-				try { instance = Activator.CreateInstance(type) as DependencyObject; }
-				catch { instance = null; }
-
-				if(instance == null)
-					continue;
-				
-				// Add any attached properties into a special list so all types can get access to it
-				List<PropertyData> fields = FindFields(instance);
-				foreach(PropertyData property in fields)
-					if(property.Attached && !attachedProperties.Contains(property))
-						attachedProperties.Add(property);
-				
-				allProperties.Add(type, fields);
-			}
-			
-			foreach(List<PropertyData> list in allProperties.Values)
-				foreach(PropertyData propData in list)
-				{
-					string name = propData.DeclaringType.Name + '.' + Serializer.CleanName(propData.PropertyInfo.Name);
-					if(!propertyByName.ContainsKey(name))
-						propertyByName.Add(name, propData.Property);
-				}
-					
-				
 		}
 		
-        public static List<PropertyData> GetProps(DependencyObject item)
+		public static PropertyData GetData(DependencyProperty property)
 		{
-			return GetProps(item, true);
+			return propertyDataByProperty[property];
 		}
 		
-		public static List<PropertyData> GetProps(DependencyObject item, bool withAttached)
+		public static List<PropertyData> GetProperties(DependencyObject item)
+		{
+			return GetProperties(item, true);
+		}
+		
+		
+		public static List<PropertyData> GetProperties(DependencyObject item, bool withAttached)
 		{
 			List<PropertyData> result;
 			Type t = item.GetType();
@@ -93,41 +71,13 @@ namespace LunarEclipse.Serialization
 			return result;
 		}
 		
-		private static List<PropertyData> FindFields(DependencyObject item)
-        {
-			Type baseType = item.GetType();
-			Type current = baseType;
-			List<PropertyData> fields = new List<PropertyData>();
-			
-            // We get all the DependencyProperty fields in the current type
-			// and it's parent type, and keep going up the tree until
-			// we reach the top of the inheritence tree
-			while(current != null)
-			{
-                FieldInfo[] currentFields = current.GetFields();
-				foreach(FieldInfo field in currentFields)
-				{
-					if(!field.FieldType.Equals(typeof(DependencyProperty)))
-						continue;
-					
-					// NOTE: My definition of an 'attached' property is a DependencyProperty
-					// which has no normal CLR Property (with a get/set) to expose it.
-					DependencyProperty property = (DependencyProperty)field.GetValue(item);
-					bool attached = current.GetProperty(Serializer.CleanName(field.Name)) == null;
-					fields.Add(new PropertyData(baseType, current, property, field, attached));
-				}
-				current = current.BaseType;
-			}
-			
-			return fields;
-		}
 
 		public static string GetFullPath(DependencyObject target, DependencyProperty property)
 		{
 			StringBuilder result = new StringBuilder(64);
 			
 			Type targetType = target.GetType();
-			List<PropertyData> properties = ReflectionHelper.GetProps(target, true);
+			List<PropertyData> properties = ReflectionHelper.GetProperties(target, true);
 			
 			if(SpecialCase(target, property, result))
 				return result.ToString();
@@ -184,7 +134,77 @@ namespace LunarEclipse.Serialization
 
 			target = null;
 			property = null;
+				}
+		
+		
+				private static void SetUpList()
+		{
+			DependencyObject instance = null;
+			Assembly current = Assembly.GetAssembly(typeof(DependencyProperty));
+			Type[] types = current.GetTypes();
+			
+			// For every type in the assembly, check to see if it is instantiable and it
+			// has dependency properties. If both conditions are true, instantiate it and 
+			// grab all it's dependency properties into our list.
+			foreach(Type type in types)
+			{
+				if(type.IsGenericTypeDefinition || type.IsAbstract || !type.IsPublic)
+					continue;
+				
+				// If i can't instantiate the object, that doesn't matter.
+				try { instance = Activator.CreateInstance(type) as DependencyObject; }
+				catch { instance = null; }
+
+				if(instance == null)
+					continue;
+				
+				// Add any attached properties into a special list so all types can get access to it
+				List<PropertyData> fields = FindFields(instance);
+				foreach(PropertyData property in fields)
+					if(property.Attached && !attachedProperties.Contains(property))
+						attachedProperties.Add(property);
+				
+				allProperties.Add(type, fields);
+			}
+			
+			foreach(List<PropertyData> list in allProperties.Values)
+				foreach(PropertyData propData in list)
+				{
+					string name = propData.DeclaringType.Name + '.' + Serializer.CleanName(propData.PropertyInfo.Name);
+					if(!propertyByName.ContainsKey(name))
+						propertyByName.Add(name, propData.Property);
+				}
 		}
+		
+		private static List<PropertyData> FindFields(DependencyObject item)
+        {
+			Type baseType = item.GetType();
+			Type current = baseType;
+			List<PropertyData> fields = new List<PropertyData>();
+			
+            // We get all the DependencyProperty fields in the current type
+			// and it's parent type, and keep going up the tree until
+			// we reach the top of the inheritence tree
+			while(current != null)
+			{
+                FieldInfo[] currentFields = current.GetFields();
+				foreach(FieldInfo field in currentFields)
+				{
+					if(!field.FieldType.Equals(typeof(DependencyProperty)))
+						continue;
+					
+					// NOTE: My definition of an 'attached' property is a DependencyProperty
+					// which has no normal CLR Property (with a get/set) to expose it.
+					DependencyProperty property = (DependencyProperty)field.GetValue(item);
+					bool attached = current.GetProperty(Serializer.CleanName(field.Name)) == null;
+					fields.Add(new PropertyData(baseType, current, property, field, attached));
+				}
+				current = current.BaseType;
+			}
+			
+			return fields;
+		}
+		
 		private static DependencyObject GetFromIndex(string s, DependencyObject o)
 		{
 			s = s.Substring(1, s.Length - 2);

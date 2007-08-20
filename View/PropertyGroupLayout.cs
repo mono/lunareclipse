@@ -15,33 +15,27 @@ using LunarEclipse.Serialization;
 
 namespace LunarEclipse {
 	public class PropertyGroupLayout : PropertyGroup {
-		enum PropType {
-			Double,
-			Integer
-		}
+
 		
-		struct PropInfo {
-			public string Name;
-			public PropType Type;
-			public bool Attached;
-			public bool CanAuto;
+
+		
+		static PropertyInfo [] info = GeneratePropertyInfo();
+		
+		static PropertyInfo [] GeneratePropertyInfo()
+		{
+			// name, type, attached, can auto
+			PropertyInfo info = null;
+			List<PropertyInfo> props = new List<PropertyInfo>();
 			
-			public PropInfo (string name, PropType type, bool attached, bool canAuto)
-			{
-				Name = name;
-				Type = type;
-				Attached = attached;
-				CanAuto = canAuto;
-			}
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(Canvas.WidthProperty), PropertyType.Double, false, true));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(Canvas.HeightProperty), PropertyType.Double, false, true));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(Canvas.LeftProperty), PropertyType.Double, true, false));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(Canvas.TopProperty), PropertyType.Double, true, false));
+			props.Add(new PropertyInfo(ReflectionHelper.GetData(Canvas.ZIndexProperty), PropertyType.Integer, false, false));
+			
+			return props.ToArray();
 		}
 		
-		static PropInfo [] info = new PropInfo [5] {
-			new PropInfo ("WidthProperty",  PropType.Double,  false, true),
-			new PropInfo ("HeightProperty", PropType.Double,  false, true),
-			new PropInfo ("LeftProperty",   PropType.Double,  true,  false),
-			new PropInfo ("TopProperty",    PropType.Double,  true,  false),
-			new PropInfo ("ZIndexProperty", PropType.Integer, false, false),
-		};
 		
 		DependencyObject item;
 		Hashtable propTable;
@@ -149,11 +143,7 @@ namespace LunarEclipse {
 			
 			Properties = table;*/
 		}
-		
-		public override bool HasProperties {
-			get { return item != null; }
-		}
-		
+
 		public override SelectedBorder SelectedObject {
 			set {
 				propTable = null;

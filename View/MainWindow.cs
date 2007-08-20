@@ -23,7 +23,6 @@ namespace LunarEclipse.View
         Box mainContainer;
         MoonlightController controller;
         TextBuffer buffer = new Gtk.TextBuffer(new TextTagTable());
-		IPropertyGroup properties;
         Button undo;
         Button redo;
         Notebook book;
@@ -54,11 +53,11 @@ namespace LunarEclipse.View
 			vbox.ShowAll();
     		mainContainer.Add (vbox);
 			
-			Widget propertyPane = new Properties ();
-			propertyPane.Show ();
-    		mainContainer.Add (propertyPane);
+			//Widget propertyPane = new Properties ();
+			//propertyPane.Show ();
+    		//mainContainer.Add (propertyPane);
             
-			properties = (IPropertyGroup) propertyPane;
+			//properties = (IPropertyGroup) propertyPane;
 			
             TextView view = new Gtk.TextView(buffer);
 			view.Show ();
@@ -78,7 +77,7 @@ namespace LunarEclipse.View
 			book.Show ();
 			Add (book);
 			
-            controller = new MoonlightController (moonlight, timeline, properties);
+            controller = new MoonlightController (moonlight, timeline);
             HookEvents(true);
             Show ();
     	}
