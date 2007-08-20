@@ -267,10 +267,11 @@ namespace LunarEclipse.Model
 			// Do a standard move of the selected shapes
 			if(border.Handle == null)
 			{
-				border.Child.SetValue<double>(Canvas.LeftProperty, oldLeft + offset.X);
+				
+				Toolbox.ChangeProperty(border.Child, Canvas.LeftProperty, oldLeft + offset.X);
 				RaiseEvent(ChangedLeft, border.Child, Canvas.LeftProperty, oldLeft, oldLeft + offset.X);
 				
-				border.Child.SetValue<double>(Canvas.TopProperty, oldTop + offset.Y);
+				Toolbox.ChangeProperty(border.Child, Canvas.TopProperty, oldTop + offset.Y);
 				RaiseEvent(ChangedTop, border.Child, Canvas.TopProperty, oldTop, oldTop + offset.Y);
 			}
 			
@@ -414,22 +415,22 @@ namespace LunarEclipse.Model
 			// If the values changed, then fire the corresponding events
 			if(oldLeft != newLeft)
 			{
-				b.Child.SetValue<object>(Canvas.LeftProperty, newLeft);
+				Toolbox.ChangeProperty(b.Child, Canvas.LeftProperty, newLeft);
 				RaiseEvent(ChangedLeft, b.Child, Canvas.LeftProperty, oldLeft, newLeft);
 			}
 			if(oldTop != newTop)
 			{
-				b.Child.SetValue<object>(Canvas.TopProperty, newTop);
+				Toolbox.ChangeProperty(b.Child, Canvas.TopProperty, newTop);
 				RaiseEvent(ChangedTop, b.Child, Canvas.TopProperty, oldTop, newTop);
 			}
 			if(oldWidth != newWidth)
 			{
-				b.Child.SetValue<object>(Canvas.WidthProperty, newWidth);
+				Toolbox.ChangeProperty(b.Child, Canvas.WidthProperty, newWidth);
 				RaiseEvent(ChangedWidth, b.Child, Canvas.WidthProperty, oldWidth, newWidth);
 			}
 			if(oldHeight != newHeight)
 			{
-				b.Child.SetValue<object>(Canvas.HeightProperty, newHeight);
+				Toolbox.ChangeProperty(b.Child, Canvas.HeightProperty, newHeight);
 				RaiseEvent(ChangedHeight, b.Child, Canvas.HeightProperty, oldHeight, newHeight);
 			}
 		}

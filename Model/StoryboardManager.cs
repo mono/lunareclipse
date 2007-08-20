@@ -247,9 +247,9 @@ namespace LunarEclipse.Model
 			
 			// There was no pre-existing timeline, so create a new one
 			animation = new DoubleAnimationUsingKeyFrames();
-			animation.SetValue<string>(Storyboard.NameProperty, NameGenerator.GetName(controller.Canvas, animation));
-			animation.SetValue<object>(Storyboard.TargetNameProperty, target.Name);
-			animation.SetValue<object>(Storyboard.TargetPropertyProperty, ReflectionHelper.GetFullPath(target, property));
+			Toolbox.ChangeProperty(animation, Storyboard.NameProperty, NameGenerator.GetName(controller.Canvas, animation));
+			Toolbox.ChangeProperty(animation, Storyboard.TargetNameProperty, target.Name);
+			Toolbox.ChangeProperty(animation, Storyboard.TargetPropertyProperty, ReflectionHelper.GetFullPath(target, property));
 			Current.Children.Add(animation);
 			return animation;
 		}

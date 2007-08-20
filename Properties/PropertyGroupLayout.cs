@@ -11,7 +11,6 @@ using System.Windows.Controls;
 using Gtk;
 using LunarEclipse.Model;
 using LunarEclipse.Serialization;
-using PropertyPairList = System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<System.Type, System.Reflection.FieldInfo>>;
 
 
 namespace LunarEclipse {

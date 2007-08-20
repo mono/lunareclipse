@@ -41,7 +41,7 @@ namespace LunarEclipse.Controls
 			: base()
 		{
 			ellipse = (Ellipse)InitializeFromXaml("<Ellipse Name=\"Ellipse\"/>");
-			ellipse.Fill = new SolidColorBrush(Colors.Green);
+			Toolbox.ChangeProperty(ellipse, Ellipse.FillProperty, new SolidColorBrush(Colors.Green)); 
 			this.time = time;
 			this.timeline = timeline;
 		}
