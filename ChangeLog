@@ -1,5 +1,12 @@
 2007-08-21  Alan McGovern <amcgovern@novell.com> 
 
+	* Properties/PropertyManager.cs: Hooking into the Selected and deselected
+	  events so that the propertypane appears and disappears correctly. More
+	  properties are editable now. All property changes correctly update the
+	  selection pane (if there is one).
+
+2007-08-21  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/SelectionChangedEventArgs.cs: I have no idea what the 'Selected'
 	  property was supposed to be for. Removed it, it's useless.
 
