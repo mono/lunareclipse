@@ -5,6 +5,7 @@
 //
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows;
@@ -16,7 +17,7 @@ namespace LunarEclipse
 		private bool attached;
 		private Type baseType;
 		private Type declaringType;
-		private string name;
+		private string shortName;
 		private DependencyProperty property;
 		private FieldInfo propertyInfo;
 
@@ -36,9 +37,9 @@ namespace LunarEclipse
 			get { return declaringType; }
 		}
 		
-		public string Name
+		public string ShortName
 		{
-			get { return name; }
+			get { return shortName; }
 		}
 		
 		public DependencyProperty Property
@@ -60,7 +61,7 @@ namespace LunarEclipse
 			this.property = property;
 			this.propertyInfo = propertyInfo;
 			
-			this.name = LunarEclipse.Serialization.Serializer.CleanName(propertyInfo.Name);
+			this.shortName = LunarEclipse.Serialization.Serializer.CleanName(propertyInfo.Name);
 		}
 		
 		
@@ -74,7 +75,5 @@ namespace LunarEclipse
 		{
 			return property.GetHashCode();
 		}
-
-
 	}
 }

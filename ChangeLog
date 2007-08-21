@@ -1,3 +1,14 @@
+2007-08-21  Alan McGovern <amcgovern@novell.com> 
+
+	* LunarEclipse.mdp, View/PropertyGroupBrushes.cs,
+	  View/PropertyGroupLayout.cs, View/PropertyGroupAppearance.cs,
+	  Properties/PropertyInfo.cs, Properties/PropertyGroup.cs,
+	  Properties/PropertyGroupAppearance.cs, Serialization/PropertyData.cs,
+	  Serialization/Serializer.cs, Serialization/ReflectionHelper.cs: Using
+	  the 'ShortName' property instead of constantly using Toolbox.CleanName
+	  to 'fix' the names of Properties. More refactoring for the Property
+	  stuff
+
 2007-08-20  Alan McGovern <amcgovern@novell.com> 
 
 	* Model/StoryboardManager.cs, Controller/MoonlightController.cs,

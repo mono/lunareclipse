@@ -14,7 +14,7 @@ using PropertyPairList = System.Collections.Generic.List<System.Collections.Gene
 
 namespace LunarEclipse
 {
-    public class PropertyGroupBrushes : PropertyGroup
+    public class PropertyGroupBrushes
     {
         private Button active;
         
@@ -24,7 +24,7 @@ namespace LunarEclipse
         private Button backgroundButton;
         private ColorSelection colorPicker;
         
-        public PropertyGroupBrushes () : base ("Colors")
+        public PropertyGroupBrushes ()
         {
             VBox box = new VBox();
             
@@ -68,12 +68,13 @@ namespace LunarEclipse
             box.Show ();
         }
         
-        public override SelectedBorder SelectedObject {
+        public SelectedBorder SelectedObject {
             set 
             {
-                base.SelectedObject = value;
+                SelectedObject = value;
                 SetProperties(value);
             }
+			get { return null;}
         }
 #warning FIX THIS
         private void SetProperties(SelectedBorder border)

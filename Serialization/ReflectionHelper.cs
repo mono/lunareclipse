@@ -93,7 +93,7 @@ namespace LunarEclipse.Serialization
 				else
 					result.Append(targetType.Name);
 				result.Append('.');
-				result.Append(Serializer.CleanName(properties[i].PropertyInfo.Name));
+				result.Append(properties[i].ShortName);
 				result.Append(')');
 				break;
 			}
@@ -170,7 +170,7 @@ namespace LunarEclipse.Serialization
 			foreach(List<PropertyData> list in allProperties.Values)
 				foreach(PropertyData propData in list)
 				{
-					string name = propData.DeclaringType.Name + '.' + Serializer.CleanName(propData.PropertyInfo.Name);
+					string name = propData.DeclaringType.Name + '.' + propData.ShortName;
 					if(!propertyByName.ContainsKey(name))
 						propertyByName.Add(name, propData.Property);
 				}

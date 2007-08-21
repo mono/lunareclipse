@@ -55,7 +55,7 @@ namespace LunarEclipse.Serialization
 			else
 				name = propertyData.BaseType.Name;
 			
-			name += '.' + CleanName(propertyData.PropertyInfo.Name);
+			name += '.' + propertyData.ShortName;
 			writer.WriteStartElement(name);
 			writer.WriteStartElement(value.GetType().Name);
 			
@@ -105,7 +105,7 @@ namespace LunarEclipse.Serialization
 
                 if(!(value is DependencyObject) && (value != null) && !IsDefaultValue(item, dependencyProperty, value))
                 {
-                    string name = CleanName(prop.PropertyInfo.Name);
+                    string name = prop.ShortName;
 					if(prop.Attached)
                         name = prop.DeclaringType.Name + "." + name;
                     writer.WriteAttributeString(name, value.ToString());
@@ -130,7 +130,7 @@ namespace LunarEclipse.Serialization
 				}
 				else if(!IsDefaultValue(item, prop.Property, value))
                 {
-                    writer.WriteStartElement(baseType.Name + "." + CleanName(prop.PropertyInfo.Name));
+                    writer.WriteStartElement(baseType.Name + "." + prop.ShortName);
                     Serialize((DependencyObject)value, writer);
                     writer.WriteEndElement();
                 }

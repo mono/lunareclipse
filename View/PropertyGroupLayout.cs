@@ -14,34 +14,14 @@ using LunarEclipse.Serialization;
 
 
 namespace LunarEclipse {
-	public class PropertyGroupLayout : PropertyGroup {
+	public class PropertyGroupLayout {
 
-		
-
-		
-		static PropertyInfo [] info = GeneratePropertyInfo();
-		
-		static PropertyInfo [] GeneratePropertyInfo()
-		{
-			// name, type, attached, can auto
-			PropertyInfo info = null;
-			List<PropertyInfo> props = new List<PropertyInfo>();
-			
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(Canvas.WidthProperty), PropertyType.Double, false, true));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(Canvas.HeightProperty), PropertyType.Double, false, true));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(Canvas.LeftProperty), PropertyType.Double, true, false));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(Canvas.TopProperty), PropertyType.Double, true, false));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(Canvas.ZIndexProperty), PropertyType.Integer, false, false));
-			
-			return props.ToArray();
-		}
-		
 		
 		DependencyObject item;
 		Hashtable propTable;
 		Hashtable spinTable;
 		
-		public PropertyGroupLayout () : base ("Layout")
+		public PropertyGroupLayout ()
 		{
 		}
 #warning Fix This
@@ -144,7 +124,7 @@ namespace LunarEclipse {
 			Properties = table;*/
 		}
 
-		public override SelectedBorder SelectedObject {
+		public SelectedBorder SelectedObject {
 			set {
 				propTable = null;
 				spinTable = null;

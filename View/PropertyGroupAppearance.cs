@@ -16,7 +16,7 @@ using LunarEclipse.Controller;
 using LunarEclipse.Serialization;
 
 namespace LunarEclipse {
-	public class PropertyGroupAppearance : PropertyGroup {
+	public class PropertyGroupAppearance {
 
 		
 		static string [] stretchEnums = Enum.GetNames(typeof(System.Windows.Media.Stretch));
@@ -24,41 +24,19 @@ namespace LunarEclipse {
 		static string [] penLineJoinEnums = Enum.GetNames(typeof(System.Windows.Media.PenLineJoin));
 		static string [] visibilityEnums = Enum.GetNames(typeof(System.Windows.Visibility));
 		
-		static PropertyInfo [] info = GeneratePropertyInfo();
+		static PropertyInfo [] info;
 		
-		static PropertyInfo [] GeneratePropertyInfo()
-		{
-			List<PropertyInfo> props = new List<PropertyInfo>();
 
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(Rectangle.OpacityProperty), PropertyType.Percent));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(Rectangle.VisibilityProperty), PropertyType.Visibility));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(Rectangle.RadiusXProperty), PropertyType.Double));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(Rectangle.RadiusYProperty), PropertyType.Double));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(Rectangle.StrokeThicknessProperty), PropertyType.Integer));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.DataProperty), PropertyType.Data));
-
-			// extended properties
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StretchProperty), PropertyType.Stretch, false, true));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StrokeDashArrayProperty), PropertyType.DashArray, false, true));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StrokeDashCapProperty), PropertyType.PenLineCap, false, true));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StrokeDashOffsetProperty), PropertyType.Integer, false, true));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StrokeStartLineCapProperty), PropertyType.PenLineCap, false, true));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StrokeEndLineCapProperty), PropertyType.PenLineCap, false, true));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StrokeLineJoinProperty), PropertyType.PenLineJoin, false, true));
-			props.Add(new PropertyInfo(ReflectionHelper.GetData(System.Windows.Shapes.Path.StrokeMiterLimitProperty), PropertyType.Integer, false, true));
-			
-			return props.ToArray();
-		}
 		
 		DependencyObject item;
 		bool hasProps = false;
 		Hashtable propTable;
 		
-		public PropertyGroupAppearance () : base ("Appearance")
+		public PropertyGroupAppearance ()
 		{
 			
 		}
-#warning FIX THIS
+
 		void SetDependencyObject (SelectedBorder item)
 		{/*
 			uint rows = 0, erows = 0, i;
@@ -207,7 +185,7 @@ namespace LunarEclipse {
 			Properties = properties;*/
 		}
 		
-		public override SelectedBorder SelectedObject {
+		public SelectedBorder SelectedObject {
 			set {
 				propTable = null;
 				SetDependencyObject (value);

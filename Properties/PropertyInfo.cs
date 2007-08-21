@@ -39,7 +39,7 @@ namespace LunarEclipse
 		
 		public string Name 
 		{
-			get { return propertyData.Name; }
+			get { return propertyData.ShortName; }
 		}
 
 		public PropertyData PropertyData
