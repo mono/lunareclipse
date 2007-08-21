@@ -12,6 +12,9 @@ namespace LunarEclipse
 {
 	public abstract class PropertyGroup
 	{
+		public event EventHandler<EventArgs> BeforePropertiesUpdated;
+		public event EventHandler<EventArgs> PropertiesUpdated;
+		
 		private string name;
 		private List<PropertyInfo> properties;
 		private SelectedBorder selectedObject;
@@ -35,7 +38,12 @@ namespace LunarEclipse
 		public virtual SelectedBorder SelectedObject
 		{
 			get { return selectedObject; }
-			set { selectedObject = value; }
+			set
+			{
+				Toolbox.RaiseEvent<EventArgs>(BeforePropertiesUpdated, this, EventArgs.Empty);
+				selectedObject = value; 
+				Toolbox.RaiseEvent<EventArgs>(PropertiesUpdated, this, EventArgs.Empty);
+			}
 		}
 	}
 }
