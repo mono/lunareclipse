@@ -14,11 +14,6 @@ namespace LunarEclipse.Model
 		private SelectedBorder selectedBorder;
 		private Visual item;
 		
-		public bool Selected
-		{
-			get { return selectedBorder != null; }
-		}
-		
 		public SelectedBorder SelectedBorder
 		{
 			get { return selectedBorder; }
