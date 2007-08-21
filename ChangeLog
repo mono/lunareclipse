@@ -1,5 +1,13 @@
 2007-08-21  Alan McGovern <amcgovern@novell.com> 
 
+	* Controller/MoonlightController.cs, LunarEclipse.mdp, View/MainWindow.cs,
+	  Properties/PropertyManager.cs, Properties/PropertyGroup.cs,
+	  Serialization/ReflectionHelper.cs: Finally getting the property changing
+	  stuff back into a usable state: Properties are now displayed in the
+	  property pane again.
+
+2007-08-21  Alan McGovern <amcgovern@novell.com> 
+
 	* LunarEclipse.mdp, View/PropertyGroupBrushes.cs,
 	  View/PropertyGroupLayout.cs, View/PropertyGroupAppearance.cs,
 	  Properties/PropertyInfo.cs, Properties/PropertyGroup.cs,

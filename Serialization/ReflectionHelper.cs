@@ -25,7 +25,8 @@ namespace LunarEclipse.Serialization
 		// i.e. the string "Canvas.LeftProperty" is paired with the DependencyProperty 'Canvas.LeftProperty' etc
 		private static Dictionary<string, DependencyProperty> propertyByName;
 		
-		// This dictionary contains all the PropertyData objects except it is keyed by DependencyProperty
+		// This dictionary contains all the PropertyData objects except it is 
+		// keyed by DependencyProperty
 		private static Dictionary<DependencyProperty, PropertyData> propertyDataByProperty;
 		
 		static ReflectionHelper()
@@ -33,7 +34,7 @@ namespace LunarEclipse.Serialization
 			allProperties = new Dictionary<Type, List<PropertyData>>();
 			attachedProperties = new List<PropertyData>();
 			propertyByName = new Dictionary<string, DependencyProperty>();
-			
+			propertyDataByProperty = new Dictionary<DependencyProperty, PropertyData>();
 			SetUpList();
 		}
 		
@@ -137,7 +138,7 @@ namespace LunarEclipse.Serialization
 				}
 		
 		
-				private static void SetUpList()
+		private static void SetUpList()
 		{
 			DependencyObject instance = null;
 			Assembly current = Assembly.GetAssembly(typeof(DependencyProperty));
@@ -154,7 +155,7 @@ namespace LunarEclipse.Serialization
 				// If i can't instantiate the object, that doesn't matter.
 				try { instance = Activator.CreateInstance(type) as DependencyObject; }
 				catch { instance = null; }
-
+				
 				if(instance == null)
 					continue;
 				
@@ -173,11 +174,14 @@ namespace LunarEclipse.Serialization
 					string name = propData.DeclaringType.Name + '.' + propData.ShortName;
 					if(!propertyByName.ContainsKey(name))
 						propertyByName.Add(name, propData.Property);
+				
+					if(!propertyDataByProperty.ContainsKey(propData.Property))
+						propertyDataByProperty.Add(propData.Property, propData);
 				}
 		}
 		
 		private static List<PropertyData> FindFields(DependencyObject item)
-        {
+		{
 			Type baseType = item.GetType();
 			Type current = baseType;
 			List<PropertyData> fields = new List<PropertyData>();

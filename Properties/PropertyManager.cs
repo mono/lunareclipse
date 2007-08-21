@@ -8,10 +8,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 
+using LunarEclipse.Controller;
 using LunarEclipse.Model;
 using LunarEclipse.Serialization;
 
-namespace LunarEclipse
+namespace LunarEclipse.Model
 {
 	public class PropertyManager
 	{
@@ -21,6 +22,7 @@ namespace LunarEclipse
 		private string name;
 		private List<PropertyInfo> properties;
 		private SelectedBorder selectedObject;
+		private Selector selector;
 		private static Dictionary<DependencyProperty, PropertyInfo> info;
 		
 		
@@ -46,6 +48,24 @@ namespace LunarEclipse
 			}
 		}
 
+		public PropertyManager(MoonlightController controller)
+		{
+			properties = new List<PropertyInfo>();
+			controller.BeforeDrawChanged += delegate {
+				Console.WriteLine("Hooking out");
+				selector = controller.Current as Selector;
+				if(selector != null)
+					selector.ItemSelected -= ItemSelected;
+				
+			};
+			controller.DrawChanged += delegate {
+				Console.WriteLine("Hooking in");
+				selector = controller.Current as Selector;
+				if(selector != null)
+					selector.ItemSelected += ItemSelected;
+			};
+		}
+		
 		static PropertyManager()
 		{
 			info = new Dictionary<DependencyProperty, PropertyInfo>();
@@ -72,18 +92,34 @@ namespace LunarEclipse
 			info.Add(Canvas.TopProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.TopProperty), PropertyType.Double, true, false));
 			info.Add(Canvas.ZIndexProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.ZIndexProperty), PropertyType.Integer, false, false));
 		}
+		private void ItemSelected(object sender, SelectionChangedEventArgs e)
+		{
+			if(selector.SelectedObjects.Count != 1)
+			{
+				SelectedObject = null; 
+				return;
+			}
+			
+			if(selector.SelectedObjects.Count == 1 && e.Selected)
+				SelectedObject = e.SelectedBorder;
+		}
 		
 		private void UpdateProperties()
 		{
-			PropertyInfo item = null;
+			PropertyInfo item;
 			properties.Clear();
+			
+			if(this.selectedObject == null)
+				return;
+			
 			List<PropertyData> props = ReflectionHelper.GetProperties(this.selectedObject.Child);
 			foreach(PropertyData data in props)
 				if(info.TryGetValue(data.Property, out item))
 					properties.Add(item);
 			else
 				Console.WriteLine("Item not usuable: {0}", data.ShortName);
-				
+			
+			Console.WriteLine("WAHEY: {0}", properties.Count);
 		}
 	}
 }

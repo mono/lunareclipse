@@ -36,6 +36,7 @@ namespace LunarEclipse.Controller
 		bool active;
 		private DrawBase current;
         private GtkSilver moonlight;
+		private PropertyManager propertyManager;
         private Serializer serializer;
 		private StoryboardManager storyboardManager;
 		private AnimationTimeline timeline;
@@ -58,6 +59,11 @@ namespace LunarEclipse.Controller
 				Toolbox.RaiseEvent<DrawChangeEventArgs>(DrawChanged, this, new DrawChangeEventArgs(current));
             }
         }
+		
+		public PropertyManager PropertyManager
+		{
+			get { return propertyManager; }
+		}
 		
 		public StoryboardManager StoryboardManager
 		{
@@ -92,6 +98,7 @@ namespace LunarEclipse.Controller
             moonlight.Canvas.MouseLeftButtonDown += new MouseEventHandler(MouseLeftDown);
             moonlight.Canvas.MouseMove += new MouseEventHandler(MouseMove);
             moonlight.Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseLeftUp);
+			propertyManager = new PropertyManager(this);
             serializer = new Serializer();
 			storyboardManager = new StoryboardManager(this);
 			storyboardManager.Add(new Storyboard());

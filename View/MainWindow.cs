@@ -28,6 +28,7 @@ namespace LunarEclipse.View
         Notebook book;
 		AnimationTimeline timeline;
 		Box animationWidgets;
+		VBox propertyPane;
 		
 		public MainWindow (): base (Gtk.WindowType.Toplevel)
     	{
@@ -53,11 +54,9 @@ namespace LunarEclipse.View
 			vbox.ShowAll();
     		mainContainer.Add (vbox);
 			
-			//Widget propertyPane = new Properties ();
-			//propertyPane.Show ();
-    		//mainContainer.Add (propertyPane);
-            
-			//properties = (IPropertyGroup) propertyPane;
+			propertyPane = new VBox ();
+			propertyPane.ShowAll ();
+    		mainContainer.Add (propertyPane);
 			
             TextView view = new Gtk.TextView(buffer);
 			view.Show ();
@@ -133,12 +132,31 @@ namespace LunarEclipse.View
 						this.undo.Sensitive = ((UndoEngine)sender).UndoCount != 0;
 					};
 				
+				controller.PropertyManager.PropertiesUpdated += delegate {
+					UpdateProperties();
+				};
+				
 			}
 			else
 			{
 				//FIXME Unhook events ;)
 			}
         }
+		
+		private void UpdateProperties()
+		{
+			propertyPane.FreezeChildNotify();
+			
+		    Widget[] widgets = (Widget[])propertyPane.Children.Clone();
+			foreach(Widget widget in widgets)
+				propertyPane.Remove(widget);
+			
+			foreach(PropertyInfo info in this.controller.PropertyManager.Properties)
+				propertyPane.PackEnd(new Label(info.PropertyData.ShortName));
+			
+			propertyPane.ThawChildNotify();
+			propertyPane.ShowAll();
+		}
 		
 		private VBox InitialiseWidgets()
 		{
