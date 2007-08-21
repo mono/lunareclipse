@@ -1,5 +1,9 @@
 2007-08-21  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/Draw/Selector.cs: Now firing the ItemDeselected event.
+
+2007-08-21  Alan McGovern <amcgovern@novell.com> 
+
 	* Controller/MoonlightController.cs, LunarEclipse.mdp, View/MainWindow.cs,
 	  Properties/PropertyManager.cs, Properties/PropertyGroup.cs,
 	  Serialization/ReflectionHelper.cs: Finally getting the property changing

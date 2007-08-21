@@ -111,6 +111,7 @@ namespace LunarEclipse.Model
 			controller.Canvas.Children.Remove(b);
 			// Remove the selection from the list of currently selected items
 			this.selectedObjects.Remove(s);
+			Toolbox.RaiseEvent<SelectionChangedEventArgs>(ItemDeselected, controller, new SelectionChangedEventArgs(s, b));
 		}
 		
 		private void DeselectAll()
