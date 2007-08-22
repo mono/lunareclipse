@@ -1,5 +1,9 @@
 2007-08-22  Alan McGovern <amcgovern@novell.com> 
 
+	* Properties/PropertyType.cs: Added new enums
+
+2007-08-22  Alan McGovern <amcgovern@novell.com> 
+
 	* Properties/PropertyManager.cs: Rejigged events: Now only a single event
 	  which fires when the list of properties is updated
 

@@ -10,14 +10,17 @@ namespace LunarEclipse
 {
 	public enum PropertyType
 	{
+		Unknown,
 		Data,
 		Double,
 		Integer,
 		Percent,
 		Stretch,
+		String,
 		DashArray,
 		PenLineCap,
 		PenLineJoin,
 		Visibility,
+		Point
 	}
 }
