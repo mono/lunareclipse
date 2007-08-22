@@ -86,8 +86,9 @@ namespace LunarEclipse.Model
 			info.Add(Rectangle.RadiusXProperty, new PropertyInfo(ReflectionHelper.GetData(Rectangle.RadiusXProperty), PropertyType.Double));
 			info.Add(Rectangle.RadiusYProperty, new PropertyInfo(ReflectionHelper.GetData(Rectangle.RadiusYProperty), PropertyType.Double));
 			info.Add(Rectangle.StrokeThicknessProperty, new PropertyInfo(ReflectionHelper.GetData(Rectangle.StrokeThicknessProperty), PropertyType.Double));
+			info.Add(Rectangle.NameProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.NameProperty), PropertyType.String));
 			info.Add(Path.DataProperty, new PropertyInfo(ReflectionHelper.GetData(Path.DataProperty), PropertyType.Data));
-
+			
 			// extended properties
 			info.Add(Path.StretchProperty, new PropertyInfo(ReflectionHelper.GetData(Path.StretchProperty), PropertyType.Stretch, false, true));
 			info.Add(Path.StrokeDashArrayProperty, new PropertyInfo(ReflectionHelper.GetData(Path.StrokeDashArrayProperty), PropertyType.DashArray, false, true));

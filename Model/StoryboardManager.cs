@@ -158,6 +158,14 @@ namespace LunarEclipse.Model
 			DependencyObject target = null;
 			DependencyProperty property = null;
 			LinearDoubleKeyFrame keyframe = null;
+
+			if(e.Property == DependencyObject.NameProperty)
+			{
+				foreach(Timeline l in this.Current.Children)
+					if(l.GetValue(Storyboard.TargetNameProperty).Equals(e.OldValue))
+						l.SetValue<object>(Storyboard.TargetNameProperty, e.NewValue);
+				return;
+			}
 			
 			if(!Recording || Current == null)
 				return;

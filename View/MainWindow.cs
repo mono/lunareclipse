@@ -160,11 +160,16 @@ namespace LunarEclipse.View
 			{
 				if(((Label)box.Children[0]).Text == data.ShortName)
 				{
-					if(box.Children[1] is SpinButton)
-						((SpinButton)box.Children[1]).Value = Convert.ToDouble(e.NewValue);
+					Widget widget = box.Children[1];
+					if(widget is SpinButton)
+						((SpinButton)widget).Value = Convert.ToDouble(e.NewValue);
 					
-					else if(box.Children[1] is ComboBox)
-						((ComboBox)box.Children[1]).Active = Convert.ToInt32(e.NewValue);
+					else if(widget is ComboBox)
+						((ComboBox)widget).Active = Convert.ToInt32(e.NewValue);
+					
+					else if(widget is Entry)
+						((Entry)widget).Text = Convert.ToString(e.NewValue);
+					
 					else
 						Console.WriteLine("Couldn't Update");
 				}
@@ -247,6 +252,14 @@ namespace LunarEclipse.View
 			
 			case PropertyType.Stretch:
 				b.PackEnd(CreateEnumPropertyWidget(o, info, typeof(Stretch)));
+				break;
+				
+			case PropertyType.String:
+				Entry entry = new Entry(o.GetValue(info.PropertyData.Property).ToString());
+				entry.Changed += delegate (object sender, EventArgs e) {
+					Toolbox.ChangeProperty(o, info.PropertyData.Property, ((Entry)sender).Text);
+				};
+				b.PackEnd(entry);
 				break;
 				
 			case PropertyType.DashArray:

@@ -1,5 +1,11 @@
 2007-08-22  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/StoryboardManager.cs, View/MainWindow.cs,
+	  Properties/PropertyManager.cs: Added the ability to change the
+	  NameProperty -> All storyboards correctly update
+
+2007-08-22  Alan McGovern <amcgovern@novell.com> 
+
 	* Properties/PropertyType.cs: Added new enums
 
 2007-08-22  Alan McGovern <amcgovern@novell.com> 
