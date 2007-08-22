@@ -8,8 +8,9 @@ using System;
 using System.Xml;
 using System.Text;
 using System.IO;
-using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using Gtk;
 
 using LunarEclipse.Controls;
@@ -152,10 +153,105 @@ namespace LunarEclipse.View
 				propertyPane.Remove(widget);
 			
 			foreach(PropertyInfo info in this.controller.PropertyManager.Properties)
-				propertyPane.PackEnd(new Label(info.PropertyData.ShortName));
+				propertyPane.PackEnd(CreatePropertyWidget(controller.PropertyManager.SelectedObject.Child, info));
 			
 			propertyPane.ThawChildNotify();
 			propertyPane.ShowAll();
+		}
+		
+		private Widget CreatePropertyWidget(DependencyObject o, PropertyInfo info)
+		{
+			HBox b = new HBox(true, 0);
+			Adjustment adj = null;
+			SpinButton spin = null;
+			Label l  = new Label(info.PropertyData.ShortName);
+			l.SetAlignment(0.0f, 0.5f);
+			b.PackStart(l);
+			
+			switch(info.Type)
+			{
+				
+			case PropertyType.Double:
+			case PropertyType.Integer:
+				adj = new Adjustment (0.0, 0.0, Int32.MaxValue, 1.0, 10.0, 100.0);
+				spin = new SpinButton (adj, 1.0, 0);
+				spin.SetRange (0.0, (double) Int32.MaxValue);
+				spin.Numeric = true;
+				if(info.Type == PropertyType.Integer)
+				{
+					spin.Value = (int)o.GetValue(info.PropertyData.Property);
+					spin.ValueChanged += delegate (object sender, EventArgs e) {
+						Toolbox.ChangeProperty(o, info.PropertyData.Property, spin.ValueAsInt);
+					};
+				}
+				else
+				{
+					spin.Value = (double)o.GetValue(info.PropertyData.Property);
+					spin.ValueChanged += delegate (object sender, EventArgs e) {
+						Toolbox.ChangeProperty(o, info.PropertyData.Property, spin.Value);
+					};
+				}
+				b.PackEnd(spin);
+				break;
+			
+			case PropertyType.Percent:
+				adj = new Adjustment (0.0, 0.0, 1.0, 0.01, 0.1, 1.0);
+				spin = new SpinButton (adj, 0.01, 2);
+				spin.Numeric = true;
+				spin.SetRange (0.0, 1.0);
+				spin.Value = (double)o.GetValue(info.PropertyData.Property);
+				spin.ValueChanged += delegate (object sender, EventArgs e) {
+					Toolbox.ChangeProperty(o, info.PropertyData.Property, spin.Value);
+				};
+				b.PackEnd(spin);
+				break;
+				
+			case PropertyType.PenLineCap:
+				b.PackEnd(CreateEnumPropertyWidget(o, info, typeof(PenLineCap)));
+				break;
+				
+			case PropertyType.PenLineJoin:
+				b.PackEnd(CreateEnumPropertyWidget(o, info, typeof(PenLineJoin)));
+				break;
+				
+			case PropertyType.Visibility:
+				b.PackEnd(CreateEnumPropertyWidget(o, info, typeof(Visibility)));
+				break;
+			
+			case PropertyType.Stretch:
+				b.PackEnd(CreateEnumPropertyWidget(o, info, typeof(Stretch)));
+				break;
+				
+			case PropertyType.DashArray:
+			case PropertyType.Data:
+				b.PackEnd(new Entry());
+				break;
+				
+			default:
+				b.PackEnd(new Label(string.Format("Unsupported: {0}", info.Type)));
+				break;
+			}
+			
+			return b;
+		}
+		
+		private Widget CreateEnumPropertyWidget(DependencyObject o, PropertyInfo info, Type type)
+		{
+			string[] names = Enum.GetNames(type);
+			int[] values = (int[])Enum.GetValues(type);
+			int value = (int)o.GetValue(info.PropertyData.Property);
+			
+			ComboBox b = new ComboBox(names);
+			
+			for(int i=0; i < values.Length; i++)
+				if(values[i] == value)
+					b.Active = i;
+			
+			b.Changed += delegate (object sender, EventArgs e) {
+				Toolbox.ChangeProperty(o, info.PropertyData.Property, Enum.Parse(type, b.ActiveText));
+			};
+			
+			return b;
 		}
 		
 		private VBox InitialiseWidgets()

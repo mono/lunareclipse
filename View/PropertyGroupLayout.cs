@@ -80,21 +80,7 @@ namespace LunarEclipse {
 				Widget label = new Label (propName);
 				label.Show ();
 				
-				Adjustment adj = new Adjustment (0.0, 0.0, Int32.MaxValue, 1.0, 10.0, 100.0);
-				Widget widget = new SpinButton (adj, 1.0, 0);
-				((SpinButton) widget).SetRange (0.0, (double) Int32.MaxValue);
-				((SpinButton) widget).Numeric = true;
-				
-				if (value != null) {
-					switch (value.GetType ().Name) {
-					case "Double":
-						((SpinButton) widget).Value = (double) value;
-						break;
-					case "Int32":
-						((SpinButton) widget).Value = (int) value;
-						break;
-					}
-				}
+
 
 				((SpinButton) widget).ValueChanged += new EventHandler(OnIntegerChanged);
 				

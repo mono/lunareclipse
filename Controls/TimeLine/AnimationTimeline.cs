@@ -124,7 +124,7 @@ namespace LunarEclipse.Controls
 				divisionMarkers[currentMarker++].Left = -200;
 			
 			while(currentTextblock < divisionTextblocks.Count)
-				Toolbox.ChangeProperty(divisionTextblocks[currentTextblock++], System.Windows.Controls.Canvas.LeftProperty, -200);
+				divisionTextblocks[currentTextblock++].SetValue<object>(System.Windows.Controls.Canvas.LeftProperty, -200);
 			
 			// Make sure that the position marker is placed correctly on
 			// the canvas
@@ -146,9 +146,9 @@ namespace LunarEclipse.Controls
 			
 			block.Text = marker.Time.ToString();
 			block.Text = block.Text.Substring(block.Text.IndexOf(':') + 1);
-			Toolbox.ChangeProperty(block, System.Windows.Controls.Canvas.LeftProperty, marker.Left - block.ActualWidth / 2.0);
-			Toolbox.ChangeProperty(block, System.Windows.Controls.Canvas.TopProperty, Height - block.ActualHeight);
-			Toolbox.ChangeProperty(block, TextBlock.ForegroundProperty, new SolidColorBrush(Colors.White));
+			block.SetValue<double>(System.Windows.Controls.Canvas.LeftProperty, marker.Left - block.ActualWidth / 2.0);
+			block.SetValue<double>(System.Windows.Controls.Canvas.TopProperty, Height - block.ActualHeight);
+			block.SetValue<Brush>(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.White));
 		}
 		
 		private void MouseDown(object sender, MouseEventArgs e)
@@ -235,7 +235,7 @@ namespace LunarEclipse.Controls
 			marker.Time = time;
 			marker.Width = 15;
 			marker.Height = 15;
-			Toolbox.ChangeProperty(marker, System.Windows.Controls.Canvas.TopProperty, (this.Height - 15.0) / 2.0);
+			marker.SetValue<double>(System.Windows.Controls.Canvas.TopProperty, (this.Height - 15.0) / 2.0);
 			marker.MouseLeftButtonDown += delegate (object sender, MouseEventArgs e) {
 				this.clickedItem = (IMarker)sender;
 			};

@@ -23,6 +23,9 @@ namespace LunarEclipse.Serialization
 		
 		// This dictionary is keyed by the 'fully' qualified name of the dependency property
 		// i.e. the string "Canvas.LeftProperty" is paired with the DependencyProperty 'Canvas.LeftProperty' etc
+		// Note, the properties are stored by both the type the DependencyProperty is declared in
+		// and the Type it is accessible from i.e. 'UIElement.Visibility' and 'Rectangle.Visibility'
+		// both point towards the same thing
 		private static Dictionary<string, DependencyProperty> propertyByName;
 		
 		// This dictionary contains all the PropertyData objects except it is 
@@ -75,11 +78,17 @@ namespace LunarEclipse.Serialization
 
 		public static string GetFullPath(DependencyObject target, DependencyProperty property)
 		{
+			if(target == null)
+				throw new ArgumentNullException("target");
+			
+			if(property == null)
+				throw new ArgumentNullException("property");
+			
 			StringBuilder result = new StringBuilder(64);
 			
 			Type targetType = target.GetType();
 			List<PropertyData> properties = ReflectionHelper.GetProperties(target, true);
-			
+			Console.WriteLine("Target: {0}->{1}", target.GetType().Name, properties.Count); 
 			if(SpecialCase(target, property, result))
 				return result.ToString();
 			
@@ -104,6 +113,12 @@ namespace LunarEclipse.Serialization
 
 		public static void Resolve(string propertyPath, DependencyObject original, out DependencyObject target, out DependencyProperty property)
 		{
+			if(string.IsNullOrEmpty(propertyPath))
+				throw new ArgumentException("propertyPath cannot be null or empty");
+			
+			if(original == null)
+				throw new ArgumentNullException("original");
+			
 			// Initially we assume that the final object we will be applying the property to is the same as
 			// the original object
 			target = original;
@@ -119,6 +134,7 @@ namespace LunarEclipse.Serialization
 				// Get the property that is targeted by this string
 				string[] parts = matches[i].Value.Split(')');
 				string propertyName = parts[0].Substring(1, parts[0].Length - 1);
+				Console.WriteLine("Finding: {0}", propertyName);
 				property = ReflectionHelper.propertyByName[propertyName];
 
 				// When this condition is true, we know we have found the target object and the property
@@ -133,9 +149,10 @@ namespace LunarEclipse.Serialization
 					target = GetFromIndex(parts[1], target);
 			}
 
+			Console.WriteLine("Couldn't resolve");
 			target = null;
 			property = null;
-				}
+		}
 		
 		
 		private static void SetUpList()
@@ -172,6 +189,10 @@ namespace LunarEclipse.Serialization
 				foreach(PropertyData propData in list)
 				{
 					string name = propData.DeclaringType.Name + '.' + propData.ShortName;
+					if(!propertyByName.ContainsKey(name))
+						propertyByName.Add(name, propData.Property);
+					
+					name = propData.BaseType.Name + '.' + propData.ShortName;
 					if(!propertyByName.ContainsKey(name))
 						propertyByName.Add(name, propData.Property);
 				

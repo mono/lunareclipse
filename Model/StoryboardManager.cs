@@ -128,12 +128,8 @@ namespace LunarEclipse.Model
 		{
 			if(hook)
 			{
-				s.ChangedHeight += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
-				s.ChangedHeight += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
-				s.ChangedLeft += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
-				s.ChangedRotation += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
-				s.ChangedTop += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
-				s.ChangedWidth += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
+				Toolbox.PropertyChanged += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
+				
 				s.MouseDown += delegate {
 					Stop();
 				};
@@ -145,12 +141,7 @@ namespace LunarEclipse.Model
 			}
 			else
 			{
-				s.ChangedHeight -= new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
-				s.ChangedHeight -= new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
-				s.ChangedLeft -= new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
-				s.ChangedRotation -= new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
-				s.ChangedTop -= new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
-				s.ChangedWidth -= new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
+				Toolbox.PropertyChanged -= new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
 				s.MouseDown -= delegate {
 					Stop();
 				};
@@ -174,8 +165,13 @@ namespace LunarEclipse.Model
 			// Sometimes the dependency object we're changing the property of is not
 			// the object passed in. We are actually changing one of it's children. In this
 			// case we need to resolve down to that child and use it instead
-
+			
+			Console.WriteLine("Changing: {0} Property: {1} Value: {2}->{3}", e.Target.Name,
+			                  ReflectionHelper.GetData(e.Property).ShortName,
+			                  e.OldValue, e.NewValue);
+			
 			string path = ReflectionHelper.GetFullPath(e.Target, e.Property);
+			Console.WriteLine("Path: {0}", path);
 			ReflectionHelper.Resolve(path, e.Target, out target, out property);
 			if(string.IsNullOrEmpty(target.Name))
 				target.SetValue<string>(DependencyObject.NameProperty, NameGenerator.GetName(this.controller.Canvas, target));
@@ -190,7 +186,7 @@ namespace LunarEclipse.Model
 			{
 				LinearDoubleKeyFrame kf = new LinearDoubleKeyFrame();
 				kf.KeyTime = TimeSpan.Zero;
-				kf.Value = (double)(target == e.Target ? e.OldValue : target.GetValue(property));
+				kf.Value = Convert.ToDouble(target == e.Target ? e.OldValue : target.GetValue(property));
 				timeline.KeyFrames.Add(kf);
 			}
 			
@@ -204,13 +200,13 @@ namespace LunarEclipse.Model
 			if(keyframe == null)
 			{
 				keyframe = new LinearDoubleKeyFrame();
-				keyframe.Value = (double)(target == e.Target ? e.OldValue : target.GetValue(property));
+				keyframe.Value = Convert.ToDouble(target == e.Target ? e.OldValue : target.GetValue(property));
 				keyframe.KeyTime = controller.Timeline.CurrentPosition;
 				timeline.KeyFrames.Add(keyframe);
 				controller.Timeline.AddKeyframe(timeline, keyframe.KeyTime.TimeSpan);
 			}
 			
-			double difference = (double)e.NewValue - (double)e.OldValue;
+			double difference = Convert.ToDouble(e.NewValue) - Convert.ToDouble(e.OldValue);
 			keyframe.Value += difference;
 			undos.Add(new UndoPropertyChange(e.Target, e.Property, e.OldValue, e.NewValue));
 			//e.Target.SetValue<object>(e.Property, e.OldValue);
@@ -245,9 +241,9 @@ namespace LunarEclipse.Model
 			
 			// There was no pre-existing timeline, so create a new one
 			animation = new DoubleAnimationUsingKeyFrames();
-			Toolbox.ChangeProperty(animation, Storyboard.NameProperty, NameGenerator.GetName(controller.Canvas, animation));
-			Toolbox.ChangeProperty(animation, Storyboard.TargetNameProperty, target.Name);
-			Toolbox.ChangeProperty(animation, Storyboard.TargetPropertyProperty, ReflectionHelper.GetFullPath(target, property));
+			animation.SetValue<string>(Storyboard.NameProperty, NameGenerator.GetName(controller.Canvas, animation));
+			animation.SetValue<string>(Storyboard.TargetNameProperty, target.Name);
+			animation.SetValue<string>(Storyboard.TargetPropertyProperty, ReflectionHelper.GetFullPath(target, property));
 			Current.Children.Add(animation);
 			return animation;
 		}

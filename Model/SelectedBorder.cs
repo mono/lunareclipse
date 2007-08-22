@@ -109,7 +109,7 @@ namespace LunarEclipse.Model
                 
                 child = value;
                 
-                Toolbox.ChangeProperty(this, ZIndexProperty, int.MaxValue);
+                SetValue<double>(ZIndexProperty, int.MaxValue);
                 if(!updating)
                 {
                     updating = true;
@@ -120,15 +120,15 @@ namespace LunarEclipse.Model
 
                 if(TransformGroup == null)
 				{
-					Toolbox.ChangeProperty(child, RenderTransformOriginProperty, new Point(0.5, 0.5));
+					child.SetValue<Point>(RenderTransformOriginProperty, new Point(0.5, 0.5));
 					TransformGroup = new TransformGroup();
                     TransformGroup.Children.Add(new ScaleTransform());
 					TransformGroup.Children.Add(new SkewTransform());
 					TransformGroup.Children.Add(new RotateTransform());
 					TransformGroup.Children.Add(new TranslateTransform());
 				}
-				Toolbox.ChangeProperty(this, RenderTransformProperty, TransformGroup);
-				Toolbox.ChangeProperty(this, RenderTransformOriginProperty, Child.GetValue(RenderTransformOriginProperty));
+				SetValue<TransformGroup>(RenderTransformProperty, TransformGroup);
+				SetValue<object>(RenderTransformOriginProperty, Child.GetValue(RenderTransformOriginProperty));
             }
         }
             
@@ -159,8 +159,8 @@ namespace LunarEclipse.Model
             // First set the position of the selection canvas
             Top = (childTop - BorderWidth);
             Left = (childLeft - BorderWidth);
-            Toolbox.ChangeProperty(this, WidthProperty, childWidth + BorderWidth * 2);
-			Toolbox.ChangeProperty(this, HeightProperty, childHeight + BorderWidth * 2);
+            SetValue<double>(WidthProperty, childWidth + BorderWidth * 2);
+			SetValue<double>(HeightProperty, childHeight + BorderWidth * 2);
 
             DrawHandles(((VisualCollection)base.GetValue(ChildrenProperty)).Count == 0);
         }

@@ -1,3 +1,12 @@
+2007-08-22  Alan McGovern <amcgovern@novell.com> 
+
+	* Model/StoryboardManager.cs, Model/SelectedBorder.cs,
+	  Controls/TimeLine/KeyframeMarker.cs,
+	  Controls/TimeLine/AnimationTimeline.cs, View/MainWindow.cs,
+	  View/PropertyGroupLayout.cs, Serialization/ReflectionHelper.cs: Removed
+	  calls to Toolbox.ChangeProperty for properties that shouldn't announce
+	  their change globally. Reimplemented the Property Changing code.
+
 2007-08-21  Alan McGovern <amcgovern@novell.com> 
 
 	* Properties/PropertyManager.cs: Hooking into the Selected and deselected
