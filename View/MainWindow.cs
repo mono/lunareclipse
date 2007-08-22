@@ -134,12 +134,10 @@ namespace LunarEclipse.View
 					};
 				
 				controller.PropertyManager.SelectionChanged += delegate {
-					Console.WriteLine("Selection changed");
 					GeneratePropertyWidgets();
 				};
 				
 				Toolbox.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e) {
-					Console.WriteLine("Property changed");
 					UpdatePropertyWidget(e);
 				};
 				

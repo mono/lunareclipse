@@ -134,6 +134,7 @@ namespace LunarEclipse.Model
 					Stop();
 				};
 				s.MouseUp += delegate {
+					Console.WriteLine("Undoing: {0}", undos.Count);
 					undos.Undo();
 					undos.Clear();
 					Seek(controller.Timeline.CurrentPosition);
@@ -211,7 +212,6 @@ namespace LunarEclipse.Model
 			double difference = Convert.ToDouble(e.NewValue) - Convert.ToDouble(e.OldValue);
 			keyframe.Value += difference;
 			undos.Add(new UndoPropertyChange(e.Target, e.Property, e.OldValue, e.NewValue, true));
-			//e.Target.SetValue<object>(e.Property, e.OldValue);
 		}
 		
 		public void Remove(Storyboard storyboard)
