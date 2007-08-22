@@ -1,5 +1,10 @@
 2007-08-22  Alan McGovern <amcgovern@novell.com> 
 
+	* Properties/PropertyManager.cs: Rejigged events: Now only a single event
+	  which fires when the list of properties is updated
+
+2007-08-22  Alan McGovern <amcgovern@novell.com> 
+
 	* Serialization/ReflectionHelper.cs: Cosmetic
 
 2007-08-22  Alan McGovern <amcgovern@novell.com> 

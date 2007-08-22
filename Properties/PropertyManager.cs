@@ -16,8 +16,7 @@ namespace LunarEclipse.Model
 {
 	public class PropertyManager
 	{
-		public event EventHandler<EventArgs> BeforePropertiesUpdated;
-		public event EventHandler<EventArgs> PropertiesUpdated;
+		public event EventHandler<EventArgs> SelectionChanged;
 		
 		private string name;
 		private List<PropertyInfo> properties;
@@ -41,16 +40,16 @@ namespace LunarEclipse.Model
 			get { return selectedObject; }
 			set
 			{
-				Toolbox.RaiseEvent<EventArgs>(BeforePropertiesUpdated, this, EventArgs.Empty);
 				selectedObject = value;
 				UpdateProperties();
-				Toolbox.RaiseEvent<EventArgs>(PropertiesUpdated, this, EventArgs.Empty);
+				Toolbox.RaiseEvent<EventArgs>(SelectionChanged, this, EventArgs.Empty);
 			}
 		}
 
 		public PropertyManager(MoonlightController controller)
 		{
 			properties = new List<PropertyInfo>();
+			
 			controller.BeforeDrawChanged += delegate {
 				selector = controller.Current as Selector;
 				if(selector == null)
@@ -59,6 +58,7 @@ namespace LunarEclipse.Model
 				selector.ItemSelected -= ItemSelectionChanged;
 				selector.ItemDeselected -= ItemSelectionChanged;
 			};
+			
 			controller.DrawChanged += delegate {
 				selector = controller.Current as Selector;
 				if(selector == null)
@@ -67,6 +67,7 @@ namespace LunarEclipse.Model
 				selector.ItemSelected += ItemSelectionChanged;
 				selector.ItemDeselected +=ItemSelectionChanged;
 			};
+			
 		}
 		private void ItemSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -74,6 +75,7 @@ namespace LunarEclipse.Model
 				SelectedObject = null; 
 			else
 				SelectedObject = e.SelectedBorder;
+			Toolbox.RaiseEvent<EventArgs>(SelectionChanged, this, EventArgs.Empty);
 		}
 		
 		static PropertyManager()
