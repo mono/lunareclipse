@@ -25,6 +25,6 @@ namespace LunarEclipse.Controller
 		}
 		
 		public abstract void Undo();
-        public abstract void Redo();
-    }
+		public abstract void Redo();
+	}
 }
