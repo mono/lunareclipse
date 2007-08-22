@@ -88,7 +88,7 @@ namespace LunarEclipse.Serialization
 			
 			Type targetType = target.GetType();
 			List<PropertyData> properties = ReflectionHelper.GetProperties(target, true);
-			Console.WriteLine("Target: {0}->{1}", target.GetType().Name, properties.Count); 
+			
 			if(SpecialCase(target, property, result))
 				return result.ToString();
 			
@@ -134,7 +134,6 @@ namespace LunarEclipse.Serialization
 				// Get the property that is targeted by this string
 				string[] parts = matches[i].Value.Split(')');
 				string propertyName = parts[0].Substring(1, parts[0].Length - 1);
-				Console.WriteLine("Finding: {0}", propertyName);
 				property = ReflectionHelper.propertyByName[propertyName];
 
 				// When this condition is true, we know we have found the target object and the property
