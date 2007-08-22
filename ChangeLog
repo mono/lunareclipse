@@ -1,5 +1,10 @@
 2007-08-22  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/StoryboardManager.cs: removed excess writelines and made the undos
+	  silent
+
+2007-08-22  Alan McGovern <amcgovern@novell.com> 
+
 	* Controller/UndoActions/UndoPropertyChange.cs: Added the ability to change
 	  the property 'silently' rather than always firing the global property
 	  changed event.

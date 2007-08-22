@@ -165,13 +165,7 @@ namespace LunarEclipse.Model
 			// Sometimes the dependency object we're changing the property of is not
 			// the object passed in. We are actually changing one of it's children. In this
 			// case we need to resolve down to that child and use it instead
-			
-			Console.WriteLine("Changing: {0} Property: {1} Value: {2}->{3}", e.Target.Name,
-			                  ReflectionHelper.GetData(e.Property).ShortName,
-			                  e.OldValue, e.NewValue);
-			
 			string path = ReflectionHelper.GetFullPath(e.Target, e.Property);
-			Console.WriteLine("Path: {0}", path);
 			ReflectionHelper.Resolve(path, e.Target, out target, out property);
 			if(string.IsNullOrEmpty(target.Name))
 				target.SetValue<string>(DependencyObject.NameProperty, NameGenerator.GetName(this.controller.Canvas, target));
@@ -208,7 +202,7 @@ namespace LunarEclipse.Model
 			
 			double difference = Convert.ToDouble(e.NewValue) - Convert.ToDouble(e.OldValue);
 			keyframe.Value += difference;
-			undos.Add(new UndoPropertyChange(e.Target, e.Property, e.OldValue, e.NewValue));
+			undos.Add(new UndoPropertyChange(e.Target, e.Property, e.OldValue, e.NewValue, true));
 			//e.Target.SetValue<object>(e.Property, e.OldValue);
 		}
 		
