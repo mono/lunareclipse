@@ -1,5 +1,10 @@
 2007-08-22  Alan McGovern <amcgovern@novell.com> 
 
+	* Controller/UndoActions/UndoPropertyChange.cs: Fixed a buglet in undoing
+	  properties silently which was breaking animations
+
+2007-08-22  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/StoryboardManager.cs, View/MainWindow.cs,
 	  Properties/PropertyManager.cs: Added the ability to change the
 	  NameProperty -> All storyboards correctly update
