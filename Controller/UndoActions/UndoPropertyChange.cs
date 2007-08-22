@@ -15,6 +15,7 @@ namespace LunarEclipse.Controller
         private DependencyProperty property;
         private object oldvalue;
         private object newvalue;
+		private bool silent;
 		
 		public object OldValue
 		{
@@ -31,24 +32,42 @@ namespace LunarEclipse.Controller
 		{
 			get { return property; }
 		}
+
+		public bool Silent
+		{
+			get { return silent; }
+		}
         
         public UndoPropertyChange(DependencyObject item, DependencyProperty property, object oldvalue, object newvalue)
+			: this(item, property, oldvalue, newvalue, false)
+		{
+			
+        }
+		
+		public UndoPropertyChange(DependencyObject item, DependencyProperty property, object oldvalue, object newvalue, bool silent)
 			:base(item)
 		{
             this.property = property;
             this.oldvalue = oldvalue;
             this.newvalue = newvalue;
+			this.silent = silent;
         }
         
         public override void Redo ()
         {
-			Toolbox.ChangeProperty(Target, property, newvalue);
+			if(silent)
+				Target.SetValue<object>(property, newvalue);
+			else
+				Toolbox.ChangeProperty(Target, property, newvalue);
         }
 
         
         public override void Undo ()
         {
-			Toolbox.ChangeProperty(Target, property, oldvalue);
+			if(silent)
+				Target.SetValue<object>(property, newvalue);
+			else
+				Toolbox.ChangeProperty(Target, property, oldvalue);
         }
     }
 }
