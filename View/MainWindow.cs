@@ -133,8 +133,14 @@ namespace LunarEclipse.View
 						this.undo.Sensitive = ((UndoEngine)sender).UndoCount != 0;
 					};
 				
-				controller.PropertyManager.PropertiesUpdated += delegate {
-					UpdateProperties();
+				controller.PropertyManager.SelectionChanged += delegate {
+					Console.WriteLine("Selection changed");
+					GeneratePropertyWidgets();
+				};
+				
+				Toolbox.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e) {
+					Console.WriteLine("Property changed");
+					UpdatePropertyWidget(e);
 				};
 				
 			}
@@ -144,7 +150,28 @@ namespace LunarEclipse.View
 			}
         }
 		
-		private void UpdateProperties()
+		private void UpdatePropertyWidget(PropertyChangedEventArgs e)
+		{
+			if(e.Target != controller.PropertyManager.SelectedObject.Child)
+				return;
+			
+			PropertyData data = LunarEclipse.Serialization.ReflectionHelper.GetData(e.Property);
+			foreach(HBox box in propertyPane.Children)
+			{
+				if(((Label)box.Children[0]).Text == data.ShortName)
+				{
+					if(box.Children[1] is SpinButton)
+						((SpinButton)box.Children[1]).Value = Convert.ToDouble(e.NewValue);
+					
+					else if(box.Children[1] is ComboBox)
+						((ComboBox)box.Children[1]).Active = Convert.ToInt32(e.NewValue);
+					else
+						Console.WriteLine("Couldn't Update");
+				}
+			}
+		}
+		
+		private void GeneratePropertyWidgets()
 		{
 			propertyPane.FreezeChildNotify();
 			
