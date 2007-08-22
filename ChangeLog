@@ -1,5 +1,9 @@
 2007-08-22  Alan McGovern <amcgovern@novell.com> 
 
+	* Controller/UndoActions/UndoGroup.cs: Cosmetic
+
+2007-08-22  Alan McGovern <amcgovern@novell.com> 
+
 	* Controller/UndoActions/UndoActionBase.cs: Cosmetic
 
 2007-08-22  Alan McGovern <amcgovern@novell.com> 

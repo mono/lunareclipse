@@ -14,14 +14,13 @@ namespace LunarEclipse.Controller
 	{
 		private List<UndoActionBase> undos;
 		
-		
 		public int Count
 		{
 			get { return undos.Count; }
 		}
 		
 		public UndoGroup()
-			:base(null)
+			: base(null)
 		{
 			undos = new List<UndoActionBase>();
 		}
