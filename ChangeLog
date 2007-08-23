@@ -1,5 +1,12 @@
 2007-08-23  Alan McGovern <amcgovern@novell.com> 
 
+	* Controller/UndoActions/UndoGroup.cs: I need the explicit implementation
+	  too.
+	* Model/StoryboardManager.cs: Fixed the remaining buglets due to special
+	  casing of Canvas.Left/Canvas.Top
+
+2007-08-23  Alan McGovern <amcgovern@novell.com> 
+
 	
 
 2007-08-23  Alan McGovern <amcgovern@novell.com> 

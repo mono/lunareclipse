@@ -36,7 +36,7 @@ namespace LunarEclipse.Model
 		private Storyboard current;               // The currently active storyboard
 		private bool recording;                   // True if we are currently recording
 		private List<Storyboard> storyboards;     // The list of storyboards that are declared
-		private UndoGroup undos;
+		//private UndoGroup undos;
 
 #endregion Member Variables
 		
@@ -73,7 +73,7 @@ namespace LunarEclipse.Model
 			controller.DrawChanged += new EventHandler<DrawChangeEventArgs>(AfterDrawChange);
 			controller.Timeline.CurrentPositionChanged += new EventHandler(TimeChanged);
 			controller.Timeline.KeyframeMoved += new EventHandler<LunarEclipse.Controls.KeyframeEventArgs>(KeyframeMoved);
-			undos = new UndoGroup();
+			//undos = new UndoGroup();
 			LoadFromResources(controller.Canvas);
 		}
 		
@@ -135,7 +135,7 @@ namespace LunarEclipse.Model
 					Stop();
 				};
 				s.MouseUp += delegate {
-					Console.WriteLine("Undoing: {0}", undos.Count);
+					//Console.WriteLine("Undoing: {0}", undos.Count);
 					//undos.Undo();
 //					foreach(UndoActionBase a in undos)
 //						if(a is UndoPropertyChange)
@@ -148,7 +148,7 @@ namespace LunarEclipse.Model
 //							if(c.Silent && s.SelectedObjects.TryGetValue((Visual)c.Target, out b))
 //							   b.ResizeBorder();
 //						}
-					undos.Clear();
+					//undos.Clear();
 					Seek(controller.Timeline.CurrentPosition);
 				};
 			}
@@ -159,8 +159,8 @@ namespace LunarEclipse.Model
 					Stop();
 				};
 				s.MouseUp -= delegate {
-					undos.Undo();
-					undos.Clear();
+					//undos.Undo();
+					//undos.Clear();
 					Seek(controller.Timeline.CurrentPosition);
 				};
 			}
@@ -225,8 +225,8 @@ namespace LunarEclipse.Model
 			}
 			
 			double difference = Convert.ToDouble(e.NewValue) - Convert.ToDouble(e.OldValue);
-			keyframe.Value += difference;
-			undos.Add(new UndoPropertyChange(e.Target, e.Property, e.OldValue, e.NewValue, true));
+			keyframe.Value = Convert.ToDouble(e.NewValue);
+			//undos.Add(new UndoPropertyChange(e.Target, e.Property, e.OldValue, e.NewValue, true));
 		}
 		
 		public void Remove(Storyboard storyboard)
