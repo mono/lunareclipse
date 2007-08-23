@@ -247,6 +247,9 @@ namespace LunarEclipse.Serialization
 		
 		private static bool SpecialCase(DependencyObject target, DependencyProperty property, StringBuilder sb)
 		{
+			// Special casing is a bitch. Recording animations becomes really hard if i use this.
+			// It's going to require a lot more thought to get right
+			return false;
 			if(property == Canvas.LeftProperty)
 				sb.Append("(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)");
 			else if(property == Canvas.TopProperty)

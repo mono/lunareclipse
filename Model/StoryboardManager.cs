@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.Windows.Media;
 using LunarEclipse.Controls;
 using LunarEclipse.Controller;
 using LunarEclipse.Serialization;
@@ -51,7 +52,7 @@ namespace LunarEclipse.Model
 					throw new ArgumentException("The storyboard does not belong to this manager");
 
 				current = value;
-				RaiseEvent<StoryboardEventArgs>(CurrentChanged, new StoryboardEventArgs(value));
+				Toolbox.RaiseEvent<StoryboardEventArgs>(CurrentChanged, this, new StoryboardEventArgs(value));
 			}
 		}
 		
@@ -83,7 +84,7 @@ namespace LunarEclipse.Model
 			
 			storyboards.Add(storyboard);
 			controller.Canvas.Resources.Add(storyboard);
-			RaiseEvent<StoryboardEventArgs>(StoryboardAdded, new StoryboardEventArgs(storyboard));
+			Toolbox.RaiseEvent<StoryboardEventArgs>(StoryboardAdded, this, new StoryboardEventArgs(storyboard));
 			
 			if(Current == null)
 				Current = storyboard;
@@ -107,7 +108,7 @@ namespace LunarEclipse.Model
 					Current = b;
 			}
 			
-			RaiseEvent<EventArgs>(Loaded, EventArgs.Empty);
+			Toolbox.RaiseEvent<EventArgs>(Loaded, this, EventArgs.Empty);
 		}
 		
 		private void BeforeDrawChange(object sender, DrawChangeEventArgs e)
@@ -135,7 +136,18 @@ namespace LunarEclipse.Model
 				};
 				s.MouseUp += delegate {
 					Console.WriteLine("Undoing: {0}", undos.Count);
-					undos.Undo();
+					//undos.Undo();
+//					foreach(UndoActionBase a in undos)
+//						if(a is UndoPropertyChange)
+//						{
+//							SelectedBorder b = null;
+//							UndoPropertyChange c = (UndoPropertyChange)a;
+//							if(!(c.Target is Visual))
+//								continue;
+//							
+//							if(c.Silent && s.SelectedObjects.TryGetValue((Visual)c.Target, out b))
+//							   b.ResizeBorder();
+//						}
 					undos.Clear();
 					Seek(controller.Timeline.CurrentPosition);
 				};
@@ -160,6 +172,8 @@ namespace LunarEclipse.Model
 			DependencyProperty property = null;
 			LinearDoubleKeyFrame keyframe = null;
 
+			// If the name of something changed, then we need to update references to that item
+			// in all our storyboards and update them accordingly
 			if(e.Property == DependencyObject.NameProperty)
 			{
 				foreach(Timeline l in this.Current.Children)
@@ -168,6 +182,7 @@ namespace LunarEclipse.Model
 				return;
 			}
 			
+			// If recording is disabled or there is no active storyboard
 			if(!Recording || Current == null)
 				return;
 
@@ -221,7 +236,7 @@ namespace LunarEclipse.Model
 			
 			storyboards.Remove(storyboard);
 			controller.Canvas.Resources.Remove(storyboard);
-			RaiseEvent<StoryboardEventArgs>(StoryboardRemoved, new StoryboardEventArgs(storyboard));
+			Toolbox.RaiseEvent<StoryboardEventArgs>(StoryboardRemoved, this, new StoryboardEventArgs(storyboard));
 		}
 		
 		private DoubleAnimationUsingKeyFrames GetTimeline(DependencyObject target, DependencyProperty property)
@@ -291,12 +306,6 @@ namespace LunarEclipse.Model
 		{
 			if(Current != null)
 				Current.Stop();
-		}
-		
-		private void RaiseEvent<T>(EventHandler<T> e, T args) where T : EventArgs
-		{
-			if(e != null)
-				e(this, args);
 		}
 	}
 }

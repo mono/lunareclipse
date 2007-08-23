@@ -1,5 +1,14 @@
 2007-08-23  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/StoryboardManager.cs, Serialization/ReflectionHelper.cs: Removed the
+	  special casing for Canvas.Left and Canvas.Top for animations. A better
+	  approach would be to massage all Timelines before they are
+	  run/serialised rather than doing on-the-fly re-routing
+	* Controller/UndoActions/UndoGroup.cs: Added ienumerable so you can
+	  enumerate all the undos in the group
+
+2007-08-23  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/SelectedBorder.cs: Refactored the CreateCircle and SetCircle
 	  methods. No more redundant creation of brushes
 	* Properties/PropertyType.cs: Added point 
