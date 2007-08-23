@@ -104,6 +104,11 @@ namespace LunarEclipse.Model
 			info.Add(Canvas.LeftProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.LeftProperty), PropertyType.Double, true, false));
 			info.Add(Canvas.TopProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.TopProperty), PropertyType.Double, true, false));
 			info.Add(Canvas.ZIndexProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.ZIndexProperty), PropertyType.Integer, false, false));
+			
+			info.Add(UIElement.RenderTransformOriginProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.RenderTransformOriginProperty), PropertyType.Point));
+			info.Add(Shape.FillProperty, new PropertyInfo(ReflectionHelper.GetData(Shape.FillProperty), PropertyType.Brush));
+			info.Add(Shape.StrokeProperty, new PropertyInfo(ReflectionHelper.GetData(Shape.StrokeProperty), PropertyType.Brush));
+			info.Add(Canvas.BackgroundProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.BackgroundProperty), PropertyType.Brush));
 		}
 		
 		private void UpdateProperties()

@@ -265,11 +265,69 @@ namespace LunarEclipse.View
 				b.PackEnd(new Entry());
 				break;
 				
+			case PropertyType.Point:
+				b.PackEnd(CreatePointPropertyWidget(o, info));
+				break;
+				
+			case PropertyType.Brush:
+				b.PackEnd(CreateBrushPropertyWidget(o, info));
+				break;
+				
 			default:
 				b.PackEnd(new Label(string.Format("Unsupported: {0}", info.Type)));
 				break;
 			}
 			
+			return b;
+		}
+		
+		private Widget CreateBrushPropertyWidget(DependencyObject o, PropertyInfo info)
+		{
+			Entry e = new Entry();
+			e.Changed += delegate {
+				uint val;
+				if(!uint.TryParse(e.Text, System.Globalization.NumberStyles.HexNumber, null, out val))
+					val = 0x555555;
+				
+				Color c = Color.FromArgb((byte)(val>>24), (byte)(val>>16), (byte)(val>>8), (byte)val);
+				Console.WriteLine(c.ToString());
+				o.SetValue<Brush>(info.PropertyData.Property, new SolidColorBrush(c));
+			};
+			return e;
+		}
+		
+		private Widget CreatePointPropertyWidget(DependencyObject o, PropertyInfo info)
+		{
+			VBox b = new VBox(true, 0);
+			HBox h = new HBox(true, 0);
+			h.Add(new Label("X"));
+			Adjustment adj = new Adjustment (0.0, 0, 1, 0.01, 0.1, 1.0);
+			Point p = (Point)o.GetValue(info.PropertyData.Property);
+			
+			SpinButton spinner = new SpinButton(adj, 1.0, 2);
+			spinner.Numeric = true;
+			spinner.Value = p.X;
+			spinner.Changed += delegate(object sender, EventArgs e) {
+				Point point = (Point)o.GetValue(info.PropertyData.Property);
+				point.X = ((SpinButton)sender).Value;
+				o.SetValue<Point>(info.PropertyData.Property, point);
+			};
+			h.Add(spinner);
+			b.Add(h);
+			
+			h = new HBox(true, 0);
+			h.Add(new Label("Y"));
+			adj = new Adjustment (0.0, 0, 1, 0.01, 0.1, 1.0);
+			spinner = new SpinButton(adj, 1.0, 2);
+			spinner.Numeric = true;
+			spinner.Value = p.Y;
+			spinner.Changed += delegate (object sender, EventArgs e) {
+				Point point = (Point)o.GetValue(info.PropertyData.Property);
+				point.Y = ((SpinButton)sender).Value;
+				o.SetValue<Point>(info.PropertyData.Property, point);
+			};
+			h.Add(spinner);
+			b.Add(h);
 			return b;
 		}
 		
