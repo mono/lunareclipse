@@ -76,14 +76,9 @@ namespace LunarEclipse.Controller
 			return false;
 		}
 
-		System.Collections.IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
 		public System.Collections.Generic.IEnumerator<UndoActionBase> GetEnumerator ()
 		{
-				for(int i=0; i < undos.Count; i++)
-				yield return undos[i];
+			return undos.GetEnumerator();
 		}
 
 	}

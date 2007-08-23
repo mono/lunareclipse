@@ -1,5 +1,9 @@
 2007-08-23  Alan McGovern <amcgovern@novell.com> 
 
+	
+
+2007-08-23  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/StoryboardManager.cs, Serialization/ReflectionHelper.cs: Removed the
 	  special casing for Canvas.Left and Canvas.Top for animations. A better
 	  approach would be to massage all Timelines before they are
