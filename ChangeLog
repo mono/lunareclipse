@@ -1,3 +1,7 @@
+2007-08-23  Alan McGovern <amcgovern@novell.com> 
+
+	* View/MainWindow.cs: Fixed null ref issue when nothing was selected
+
 2007-08-22  Alan McGovern <amcgovern@novell.com> 
 
 	

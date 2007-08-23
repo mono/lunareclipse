@@ -150,7 +150,7 @@ namespace LunarEclipse.View
 		
 		private void UpdatePropertyWidget(PropertyChangedEventArgs e)
 		{
-			if(e.Target != controller.PropertyManager.SelectedObject.Child)
+			if(controller.PropertyManager.SelectedObject == null || e.Target != controller.PropertyManager.SelectedObject.Child)
 				return;
 			
 			PropertyData data = LunarEclipse.Serialization.ReflectionHelper.GetData(e.Property);
