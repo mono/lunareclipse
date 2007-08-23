@@ -21,6 +21,7 @@ namespace LunarEclipse
 		PenLineCap,
 		PenLineJoin,
 		Visibility,
-		Point
+		Point,
+		Brush
 	}
 }

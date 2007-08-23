@@ -1,5 +1,11 @@
 2007-08-23  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/SelectedBorder.cs: Refactored the CreateCircle and SetCircle
+	  methods. No more redundant creation of brushes
+	* Properties/PropertyType.cs: Added point 
+
+2007-08-23  Alan McGovern <amcgovern@novell.com> 
+
 	* View/MainWindow.cs: Fixed null ref issue when nothing was selected
 
 2007-08-22  Alan McGovern <amcgovern@novell.com> 
