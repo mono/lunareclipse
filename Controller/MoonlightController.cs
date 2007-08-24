@@ -170,13 +170,21 @@ namespace LunarEclipse.Controller
         }
 		
 		
-        public string SerializeCanvas()
+		public string SerializeCanvas()
         {
-			////if(Current != null)
-			//	Current.Cleanup();
-			
-			return serializer.Serialize(this.moonlight.Canvas);
-        }
+			try
+			{
+				if(Current != null)
+					Current.Cleanup();
+				
+				return serializer.Serialize(this.moonlight.Canvas);
+			}
+			finally
+			{
+				if(Current != null)
+					Current.Prepare();
+			}
+		}
 		
 		public void Undo()
         {

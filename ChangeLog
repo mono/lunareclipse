@@ -1,3 +1,13 @@
+2007-08-24  Alan McGovern <amcgovern@novell.com> 
+
+	* Model/Draw/Selector.cs: Using the toolbox global event so alerts are
+	  passed out for changing the angle
+	* Controller/MoonlightController.cs: Cleaning up before serializing so
+	  non-silverlight types don't get serialised
+	* Controls/TimeLine/AnimationTimeline.cs: Added ability to modify existing
+	  keyframe. Fixed check for duplicate keyframes
+	* View/MainWindow.cs: Fixed vbox packing
+
 2007-08-23  Alan McGovern <amcgovern@novell.com> 
 
 	* View/MainWindow.cs, Properties/PropertyManager.cs: Added handling for

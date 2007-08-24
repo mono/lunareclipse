@@ -211,7 +211,12 @@ namespace LunarEclipse.Controls
 			bool moved = !startLocation.Equals(e.GetPosition(Canvas));
 			if(!moved)
 			{
-				marker.Time = startTime.Add(TimeSpan.FromSeconds(startLocation.X / AnimationTimeline.PixelsPerDivision));
+				// If we clicked on a keyframe, we set the current position equal to the keyframes time.
+				// Otherwise place the position marker at the point of clicking
+				if(clickedItem is KeyframeMarker)
+					marker.Time = clickedItem.Time;
+				else
+					marker.Time = startTime.Add(TimeSpan.FromSeconds(startLocation.X / AnimationTimeline.PixelsPerDivision));
 				RaiseCurrentPositionChanged();
 				
 				PlaceMarker(marker, null);
@@ -229,9 +234,11 @@ namespace LunarEclipse.Controls
 			// If we already have a marker at the same time for the same timeline, 
 			// do not add another keyframe marker
 			foreach(KeyframeMarker m in keyframeMarkers)
-				if(timeline.Name == m.Timeline.Name && m.Time.Equals(marker.Time))
+			{
+				Console.WriteLine("timeline: {0}, Time: {1}", m.Timeline.Name, m.Time);
+				if(m.Time.Equals(marker.Time))
 					return;
-			
+			}
 			marker.Time = time;
 			marker.Width = 15;
 			marker.Height = 15;

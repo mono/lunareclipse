@@ -46,9 +46,9 @@ namespace LunarEclipse.View
     		mainContainer = new HBox ();
 			Widget toolbox = InitialiseWidgets ();
 			toolbox.ShowAll ();
-			mainContainer.Add (toolbox);
+			mainContainer.PackStart (toolbox, false, false, 0);
 			animationWidgets = InitialiseAnimationWidgets();
-			mainContainer.Add(animationWidgets);
+			mainContainer.PackStart(animationWidgets, false, false, 0);
 			VBox vbox = new VBox();
 			vbox.PackStart(moonlight);
 			vbox.PackEnd(timeline);
@@ -180,11 +180,20 @@ namespace LunarEclipse.View
 			
 		    Widget[] widgets = (Widget[])propertyPane.Children.Clone();
 			foreach(Widget widget in widgets)
-				propertyPane.Remove(widget);
+				widget.Destroy();
 			
 			foreach(PropertyInfo info in this.controller.PropertyManager.Properties)
 				propertyPane.PackEnd(CreatePropertyWidget(controller.PropertyManager.SelectedObject.Child, info));
 			
+			if(propertyPane.Children.Length == 0)
+			{
+//				HBox h = new HBox(true, 0);
+//				Label l = new Label("No object selected...");
+//				h.PackStart(l, true, true, 0);
+//				l = new Label("...");
+//				h.PackStart(l, true, true, 0);
+//				propertyPane.Add(h);
+			}
 			propertyPane.ThawChildNotify();
 			propertyPane.ShowAll();
 		}
@@ -429,7 +438,7 @@ namespace LunarEclipse.View
     	        controller.Clear();
     	    };
     	    widgets.Add(b);
-            
+			
             return widgets;
         }
     	
