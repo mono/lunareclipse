@@ -36,7 +36,7 @@ namespace LunarEclipse.Model
 		private Storyboard current;               // The currently active storyboard
 		private bool recording;                   // True if we are currently recording
 		private List<Storyboard> storyboards;     // The list of storyboards that are declared
-		//private UndoGroup undos;
+		private UndoGroup initialValues;
 
 #endregion Member Variables
 		
@@ -73,7 +73,7 @@ namespace LunarEclipse.Model
 			controller.DrawChanged += new EventHandler<DrawChangeEventArgs>(AfterDrawChange);
 			controller.Timeline.CurrentPositionChanged += new EventHandler(TimeChanged);
 			controller.Timeline.KeyframeMoved += new EventHandler<LunarEclipse.Controls.KeyframeEventArgs>(KeyframeMoved);
-			//undos = new UndoGroup();
+			initialValues = new UndoGroup();
 			LoadFromResources(controller.Canvas);
 		}
 		
@@ -202,10 +202,12 @@ namespace LunarEclipse.Model
 			// a time other than 0:00, things will move correctly.
 			if(timeline.KeyFrames.Count == 0)
 			{
+				TimeSpan previous = controller.Timeline.GetKeyframeBefore(controller.Timeline.CurrentPosition);
 				LinearDoubleKeyFrame kf = new LinearDoubleKeyFrame();
-				kf.KeyTime = TimeSpan.Zero;
+				kf.KeyTime = previous;
 				kf.Value = Convert.ToDouble(target == e.Target ? e.OldValue : target.GetValue(property));
 				timeline.KeyFrames.Add(kf);
+				initialValues.Add(new UndoPropertyChange(target, property, kf.Value, kf.Value, true));
 			}
 			
 			// For each of the keyframes, if any of them have exactly the same time
@@ -282,6 +284,7 @@ namespace LunarEclipse.Model
 		
 		public void Play()
 		{
+			initialValues.Undo();
 			if(Current != null)
 				Current.Begin();
 		}
@@ -293,6 +296,7 @@ namespace LunarEclipse.Model
 		
 		public void Seek(TimeSpan time)
 		{
+			initialValues.Undo();
 			if(Current == null)
 				return;
 			

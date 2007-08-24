@@ -203,6 +203,16 @@ namespace LunarEclipse.Controls
 			PlaceDivisions();
 		}
 		
+		public TimeSpan GetKeyframeBefore(TimeSpan span)
+		{
+			TimeSpan prev = TimeSpan.Zero;
+			for(int i=0; i < this.keyframeMarkers.Count; i++)
+				if(keyframeMarkers[i].Time > prev && keyframeMarkers[i].Time < span)
+					prev = keyframeMarkers[i].Time;
+			
+			return prev;
+		}
+		
 		private void MouseUp(object sender, MouseEventArgs e)
 		{
 			if(!started)
@@ -234,11 +244,9 @@ namespace LunarEclipse.Controls
 			// If we already have a marker at the same time for the same timeline, 
 			// do not add another keyframe marker
 			foreach(KeyframeMarker m in keyframeMarkers)
-			{
-				Console.WriteLine("timeline: {0}, Time: {1}", m.Timeline.Name, m.Time);
 				if(m.Time.Equals(marker.Time))
 					return;
-			}
+			
 			marker.Time = time;
 			marker.Width = 15;
 			marker.Height = 15;

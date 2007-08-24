@@ -1,5 +1,13 @@
 2007-08-24  Alan McGovern <amcgovern@novell.com> 
 
+	* Model/StoryboardManager.cs: Resetting the shapes to their original values
+	  before replaying the animation
+	* Controls/TimeLine/AnimationTimeline.cs: Update for logic behind adding a
+	  keyframe to a property which hasn't been previously animated to have a
+	  more logical affect
+
+2007-08-24  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/Draw/Selector.cs: Using the toolbox global event so alerts are
 	  passed out for changing the angle
 	* Controller/MoonlightController.cs: Cleaning up before serializing so
