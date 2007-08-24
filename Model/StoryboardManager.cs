@@ -171,6 +171,7 @@ namespace LunarEclipse.Model
 			DependencyObject target = null;
 			DependencyProperty property = null;
 			LinearDoubleKeyFrame keyframe = null;
+			LinearDoubleKeyFrame previouskf = null;
 
 			// If the name of something changed, then we need to update references to that item
 			// in all our storyboards and update them accordingly
@@ -197,12 +198,14 @@ namespace LunarEclipse.Model
 			// Get a timeline: either an existing one or a new one
 			DoubleAnimationUsingKeyFrames timeline = GetTimeline(target, property);
 			
+			// Get the time of the keyframe previous to where the cursor is on the timeline.
+			TimeSpan previous = controller.Timeline.GetKeyframeBefore(controller.Timeline.CurrentPosition);
+			
 			// If this is a new timeline, we should add in a keyframe at 00:00 recording 
 			// the initial value of the property. This way if the 'first' keyframe is at
 			// a time other than 0:00, things will move correctly.
 			if(timeline.KeyFrames.Count == 0)
 			{
-				TimeSpan previous = controller.Timeline.GetKeyframeBefore(controller.Timeline.CurrentPosition);
 				LinearDoubleKeyFrame kf = new LinearDoubleKeyFrame();
 				kf.KeyTime = previous;
 				kf.Value = Convert.ToDouble(target == e.Target ? e.OldValue : target.GetValue(property));
@@ -215,6 +218,8 @@ namespace LunarEclipse.Model
 			foreach(LinearDoubleKeyFrame kf in timeline.KeyFrames)
 				if(kf.KeyTime == controller.Timeline.CurrentPosition)
 					keyframe = kf;
+				else if(kf.KeyTime == previous)
+					previouskf = kf;
 			
 			// Otherwise we just create a new keyframe for this time
 			if(keyframe == null)
@@ -223,6 +228,14 @@ namespace LunarEclipse.Model
 				keyframe.Value = Convert.ToDouble(target == e.Target ? e.OldValue : target.GetValue(property));
 				keyframe.KeyTime = controller.Timeline.CurrentPosition;
 				timeline.KeyFrames.Add(keyframe);
+				controller.Timeline.AddKeyframe(timeline, keyframe.KeyTime.TimeSpan);
+			}
+			if(previouskf == null)
+			{
+				previouskf = new LinearDoubleKeyFrame();
+				previouskf.Value = Convert.ToDouble(target == e.Target ? e.OldValue : target.GetValue(property));
+				previouskf.KeyTime = previous;
+				timeline.KeyFrames.Add(previouskf);
 				controller.Timeline.AddKeyframe(timeline, keyframe.KeyTime.TimeSpan);
 			}
 			
