@@ -1,5 +1,9 @@
 2007-08-24  Alan McGovern <amcgovern@novell.com> 
 
+	* Serialization/PropertyData.cs: Added some comments
+
+2007-08-24  Alan McGovern <amcgovern@novell.com> 
+
 	* Model/StoryboardManager.cs: Fixed logic for changing a property which
 	  hasn't been changed before. It now correctly starts changing after the
 	  previous keyframe

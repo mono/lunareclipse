@@ -27,26 +27,45 @@ namespace LunarEclipse
 			get { return attached; }
 		}
 		
+		/// <value>
+		/// This is the type that the DependencyProperty is accessible from.
+		/// i.e. Rectangle.NameProperty
+		/// </value>
 		public Type BaseType
 		{
 			get { return baseType; } 
 		}
 		
+		/// <value>
+		/// This is the type that the DependencyProperty is declared in.
+		/// i.e. DependencyObject.NameProperty
+		/// </value>
 		public Type DeclaringType
 		{
 			get { return declaringType; }
 		}
 		
+		/// <value>
+		/// The trimmed name of the property. i.e. 'NameProperty' has 'Name' as it's shortname.
+		/// </value>
 		public string ShortName
 		{
 			get { return shortName; }
 		}
 		
+		
+		/// <value>
+		/// The actual dependency property
+		/// </value>
 		public DependencyProperty Property
 		{
 			get { return property; }
 		}
 		
+		
+		/// <value>
+		/// The fieldinfo related to this dependency property
+		/// </value>
 		public FieldInfo PropertyInfo
 		{
 			get { return propertyInfo; }
