@@ -96,6 +96,7 @@ namespace LunarEclipse.Model
 		
 		private void ClickedOnVisual(object sender, MouseEventArgs e)
 		{
+			Console.WriteLine("Just clicked on: {0]", ((DependencyObject)sender).Name);
 			if(sender is SelectedBorder)
 				this.clickedOnShape = ((SelectedBorder)sender).Child;
 			else
@@ -104,6 +105,7 @@ namespace LunarEclipse.Model
 		
 		private void Deselect(Visual s)
 		{
+			Console.WriteLine("Deselecting: {0}", s.Name);
 			SelectedBorder b = this.selectedObjects[s];
 			b.MouseLeftButtonDown -= new MouseEventHandler(ClickedOnVisual);   
 			
@@ -220,10 +222,13 @@ namespace LunarEclipse.Model
 			
 			base.MouseMove(e);
 			
+			Console.WriteLine("Mouse moved");
 			if(clickedOnShape != null)
 			{
+				Console.WriteLine("We clicked on something");
 				if(!shapeAdded)
 				{
+					Console.WriteLine("We're Adding it");
 					shapeAdded = true;
 					if(!selectedObjects.ContainsKey(clickedOnShape))
 					{
@@ -232,8 +237,12 @@ namespace LunarEclipse.Model
 					}
 				}
 				
+
 				foreach(KeyValuePair<Visual, SelectedBorder> keypair in selectedObjects)
+				{
+					Console.WriteLine("We're about to move: {0}", keypair.Key.Name);
 					MoveShape(keypair.Key, mousePoint, e);
+				}
 				
 				Width = 0;
 				Height = 0;
@@ -335,6 +344,7 @@ namespace LunarEclipse.Model
 					if(e == null)
 						continue;
 					
+					Console.WriteLine("Hooking into: {0}", e.Name);
 					e.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
 				}
 			}
