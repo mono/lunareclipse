@@ -62,9 +62,18 @@ namespace LunarEclipse.View
             TextView view = new Gtk.TextView(buffer);
 			view.Show ();
 			
+			Gtk.Button save_as = new Gtk.Button (Gtk.Stock.SaveAs);
+			save_as.Clicked += HandleSaveasClicked;
+			save_as.Show ();
+			
             Gtk.ScrolledWindow scrolled = new ScrolledWindow();
-            scrolled.Add(view);
+            scrolled.Add (view);
             
+			Gtk.VBox box = new Gtk.VBox ();
+			box.PackStart (save_as, false, false, 0);
+			box.PackStart (scrolled, true, true, 0);
+			box.Show ();
+			                
 			book = new Notebook();
 			Widget label = new Label("Canvas");
 			mainContainer.Show ();
@@ -73,7 +82,7 @@ namespace LunarEclipse.View
 			label = new Label ("Xaml");
 			scrolled.Show ();
 			label.Show ();
-            book.AppendPage (scrolled, label);
+            book.AppendPage (box, label);
 			book.Show ();
 			Add (book);
 			
@@ -447,5 +456,22 @@ namespace LunarEclipse.View
     		Application.Quit ();
     		a.RetVal = true;
     	}
+		private void HandleSaveasClicked (object sender, EventArgs e)
+		{
+			Gtk.FileChooserDialog fc= new Gtk.FileChooserDialog("Choose the save location",
+			                                                    this,
+			                                                    FileChooserAction.Open,
+			                                                    "Cancel",ResponseType.Cancel,
+			                                                    "Save",ResponseType.Accept);
+
+			if (fc.Run() == (int)ResponseType.Accept) 
+			{
+				System.IO.FileStream fs = System.IO.File.OpenWrite (fc.Filename);
+				StreamWriter stream = new StreamWriter (fs);
+				stream.Write (buffer.Text);
+				fs.Close();
+			}
+			fc.Destroy();
+		}
     }
 }

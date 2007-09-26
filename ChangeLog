@@ -1,3 +1,7 @@
+2007-09-26  Stephane Delcroix <stephane@delcroix.org>
+
+	* View/MainWidows.cs: Adds a "Save As" button for the generated xaml.
+
 2007-08-29   <> 
 
 	
