@@ -44,9 +44,12 @@ namespace LunarEclipse.View
 			moonlight.Show ();
 			timeline = new AnimationTimeline(800, 70);
     		mainContainer = new HBox ();
+			Gtk.VBox leftpane = new VBox ();
 			Widget toolbox = InitialiseWidgets ();
 			toolbox.ShowAll ();
-			mainContainer.PackStart (toolbox, false, false, 0);
+			leftpane.PackStart (toolbox, false, false, 0);
+			leftpane.ShowAll ();
+			mainContainer.PackStart (leftpane, false, false, 0);
 			animationWidgets = InitialiseAnimationWidgets();
 			mainContainer.PackStart(animationWidgets, false, false, 0);
 			VBox vbox = new VBox();
@@ -57,7 +60,7 @@ namespace LunarEclipse.View
 			
 			propertyPane = new VBox ();
 			propertyPane.ShowAll ();
-    		mainContainer.Add (propertyPane);
+    		leftpane.PackStart (propertyPane, true, true, 0);
 			
             TextView view = new Gtk.TextView(buffer);
 			view.Show ();
@@ -65,15 +68,11 @@ namespace LunarEclipse.View
 			Gtk.Button save_as = new Gtk.Button (Gtk.Stock.SaveAs);
 			save_as.Clicked += HandleSaveasClicked;
 			save_as.Show ();
+			leftpane.PackEnd (save_as, false, false, 0);
 			
             Gtk.ScrolledWindow scrolled = new ScrolledWindow();
             scrolled.Add (view);
             
-			Gtk.VBox box = new Gtk.VBox ();
-			box.PackStart (save_as, false, false, 0);
-			box.PackStart (scrolled, true, true, 0);
-			box.Show ();
-			                
 			book = new Notebook();
 			Widget label = new Label("Canvas");
 			mainContainer.Show ();
@@ -82,14 +81,14 @@ namespace LunarEclipse.View
 			label = new Label ("Xaml");
 			scrolled.Show ();
 			label.Show ();
-            book.AppendPage (box, label);
+            book.AppendPage (scrolled, label);
 			book.Show ();
 			Add (book);
 			
             controller = new MoonlightController (moonlight, timeline);
             HookEvents(true);
             Show ();
-    	}
+	}
 
 		private Box InitialiseAnimationWidgets()
 		{
@@ -368,9 +367,9 @@ namespace LunarEclipse.View
 			return b;
 		}
 		
-		private VBox InitialiseWidgets()
+		private Table InitialiseWidgets()
 		{
-			VBox widgets = new VBox();
+			Table toolbox = new Table (4, 3, true);
 			Button b;
 			
 			b = new Button("Selection");
@@ -378,77 +377,79 @@ namespace LunarEclipse.View
                 controller.Current = new SelectionDraw(this.controller);
 				Console.WriteLine("Draw is" + controller.Current.GetType().Name.ToString());
 			};
-			widgets.Add(b);
+			toolbox.Attach (b, 0, 1, 0, 1);
 			
 			b = new Button("Circle");
 			b.Clicked += delegate {
 				controller.Current = new CircleDraw();
 				Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };
-			widgets.Add(b);
+			toolbox.Attach (b, 1, 2, 0, 1);
 			
             b = new Button("Ellipse");
     	    b.Clicked += delegate {
     	        controller.Current = new EllipseDraw();
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };
-    	    widgets.Add(b);
+	    toolbox.Attach (b, 2, 3, 0, 1);
             
     	    b = new Button("Line");
     	    b.Clicked += delegate {
     	        controller.Current = new LineDraw();
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };
-    	    widgets.Add(b);
+	    toolbox.Attach (b, 0, 1, 1, 2);
     	    
     	    b = new Button("Pen");
     	    b.Clicked += delegate {
     	        controller.Current = new PenDraw();
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };
-    	    widgets.Add(b);
+	    toolbox.Attach (b, 1, 2, 1, 2);
     	    
     	    b = new Button("Rectangle");
     	    b.Clicked += delegate {
     	        controller.Current = new RectangleDraw();
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };
-    	    widgets.Add(b);
+	    toolbox.Attach (b, 2, 3, 1, 2);
     	    
     	    b = new Button("Square");
     	    b.Clicked += delegate {
     	        controller.Current = new SquareDraw();
     	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
     	    };    	    
-    	    widgets.Add(b);
+	    toolbox.Attach (b, 0, 1, 2, 3);
 			
-			b = new Button("Record");
-			b.Clicked += delegate (object sender, EventArgs e) {
+			Button record = new Button ();
+			record.Image = new Gtk.Image ("gtk-media-record", IconSize.Button);
+			record.Clicked += delegate (object sender, EventArgs e) {
 				controller.StoryboardManager.Recording = !controller.StoryboardManager.Recording;
 				animationWidgets.Visible = controller.StoryboardManager.Recording;
-				((Button)sender).Label = animationWidgets.Visible ? "Stop Recording" : "Record";
+//				((Button)sender).Label = animationWidgets.Visible ? "Stop Recording" : "Record";
+				record.Image = animationWidgets.Visible ? new Gtk.Image ("gtk-media-stop", IconSize.Button) : new Gtk.Image ("gtk-media-record", IconSize.Button);
 			};
-			widgets.Add(b);
+	    toolbox.Attach (record, 1, 2, 2, 3);
 			
-            undo = new Button("Undo");
+            undo = new Button(Stock.Undo);
             undo.Sensitive = false;
             undo.Clicked += delegate {
                 controller.Undo(); 
             };
-            widgets.Add(undo);
+	    toolbox.Attach (undo, 0, 1, 3, 4);
             
-            redo = new Button("Redo");
+            redo = new Button(Stock.Redo);
             redo.Sensitive = false;
             redo.Clicked += delegate { controller.UndoEngine.Redo(); };
-            widgets.Add(redo);
+	    toolbox.Attach (redo, 1, 2, 3, 4);
     	    
-    	    b = new Button("Clear");
+    	    b = new Button(Stock.Clear);
     	    b.Clicked += delegate {
     	        controller.Clear();
     	    };
-    	    widgets.Add(b);
+	    toolbox.Attach (b, 2, 3, 3, 4);
 			
-            return widgets;
+            return toolbox;
         }
     	
     	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -466,10 +467,11 @@ namespace LunarEclipse.View
 
 			if (fc.Run() == (int)ResponseType.Accept) 
 			{
-				System.IO.FileStream fs = System.IO.File.OpenWrite (fc.Filename);
+				string xaml = this.controller.SerializeCanvas ();
+				System.IO.FileStream fs = new FileStream (fc.Filename, FileMode.OpenOrCreate, FileAccess.Write);
 				StreamWriter stream = new StreamWriter (fs);
-				stream.Write (buffer.Text);
-				fs.Close();
+				stream.Write (xaml);
+				stream.Close();
 			}
 			fc.Destroy();
 		}
