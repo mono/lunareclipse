@@ -17,6 +17,7 @@ using LunarEclipse.Serialization;
 using LunarEclipse.View;
 using LunarEclipse.Model;
 using LunarEclipse.Controls;
+using Gtk.Moonlight;
 
 namespace LunarEclipse.Controller
 {

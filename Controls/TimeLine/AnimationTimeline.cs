@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using LunarEclipse.View;
+using Gtk.Moonlight;
 
 
 namespace LunarEclipse.Controls
@@ -63,7 +64,7 @@ namespace LunarEclipse.Controls
 			Canvas.Children.Add(marker);
 			Canvas.Background = new SolidColorBrush(Colors.Black);
 			
-			int divisions = (int)Math.Ceiling(Width / PixelsPerDivision) * 4;
+			int divisions = (int)Math.Ceiling(Allocation.Width / PixelsPerDivision) * 4;
 			for(int i=0; i <= divisions * 4; i++)
 			{
 				divisionMarkers.Add(new TimelineMarker(0, TimeSpan.Zero));
@@ -85,12 +86,12 @@ namespace LunarEclipse.Controls
 			// This is a hack so i can figure out what 'height' the textblocks are going to be
 			// so i can perform my layout magic
 			TextBlock b = new TextBlock(); b.Text = "3";
-			double height = Height - b.ActualHeight;
+			double height = Allocation.Height - b.ActualHeight;
 			
 			// Calculate the next 'division' that we need to draw. It can be either
 			// at 250ms, 500ms, 750ms, or 0/1000 ms. This rounds up to the nearest 250.
 			long currentTime = (((long)startTime.TotalMilliseconds + 125) / 250) * 250;
-			long endTime = (long)startTime.TotalMilliseconds + (long)(Width / PixelsPerDivision) * 1000;
+			long endTime = (long)startTime.TotalMilliseconds + (long)(Allocation.Width / PixelsPerDivision) * 1000;
 
 			int currentMarker = 0;
 			int currentTextblock = 0;
@@ -147,7 +148,7 @@ namespace LunarEclipse.Controls
 			block.Text = marker.Time.ToString();
 			block.Text = block.Text.Substring(block.Text.IndexOf(':') + 1);
 			block.SetValue<double>(System.Windows.Controls.Canvas.LeftProperty, marker.Left - block.ActualWidth / 2.0);
-			block.SetValue<double>(System.Windows.Controls.Canvas.TopProperty, Height - block.ActualHeight);
+			block.SetValue<double>(System.Windows.Controls.Canvas.TopProperty, Allocation.Height - block.ActualHeight);
 			block.SetValue<Brush>(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.White));
 		}
 		
@@ -250,7 +251,7 @@ namespace LunarEclipse.Controls
 			marker.Time = time;
 			marker.Width = 15;
 			marker.Height = 15;
-			marker.SetValue<double>(System.Windows.Controls.Canvas.TopProperty, (this.Height - 15.0) / 2.0);
+			marker.SetValue<double>(System.Windows.Controls.Canvas.TopProperty, (this.Allocation.Height - 15.0) / 2.0);
 			marker.MouseLeftButtonDown += delegate (object sender, MouseEventArgs e) {
 				this.clickedItem = (IMarker)sender;
 			};

@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace LunarEclipse.View
 {
-    public class GtkSilver : DrawingArea {
+    public class GtkSilverX : DrawingArea {
     	[DllImport ("moon")]
     	extern static IntPtr surface_new (int w, int h);
 
@@ -48,7 +48,7 @@ namespace LunarEclipse.View
                         
                              
                     
-    	public GtkSilver (int w, int h)
+    	public GtkSilverX (int w, int h)
     	{
 			width = w;
 			height = h;

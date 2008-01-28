@@ -16,6 +16,7 @@ using Gtk;
 using LunarEclipse.Controls;
 using LunarEclipse.Controller;
 using LunarEclipse.Model;
+using Gtk.Moonlight;
 
 namespace LunarEclipse.View
 {
@@ -39,9 +40,12 @@ namespace LunarEclipse.View
             c.Width = 800;
             c.Height = 600;
 
+			Console.WriteLine ("Moonlight created");
     		GtkSilver moonlight = new GtkSilver(800, 600);
             moonlight.Attach(c);
 			moonlight.Show ();
+			
+			Console.WriteLine ("Animation");
 			timeline = new AnimationTimeline(800, 70);
     		mainContainer = new HBox ();
 			Gtk.VBox leftpane = new VBox ();
