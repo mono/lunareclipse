@@ -344,6 +344,11 @@ namespace LunarEclipse.Model
 					if(e == null)
 						continue;
 					
+					if (e.GetValue (Shape.FillProperty) == null)
+						e.SetValue (Shape.FillProperty, new SolidColorBrush(Colors.Transparent));
+					if (e.GetValue (Shape.StrokeProperty) == null)
+						e.SetValue (Shape.StrokeProperty, new SolidColorBrush(Colors.Transparent));
+					
 					Console.WriteLine("Hooking into: {0}", e.Name);
 					e.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
 				}
