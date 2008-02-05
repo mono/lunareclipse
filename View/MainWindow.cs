@@ -39,7 +39,8 @@ namespace LunarEclipse.View
             Canvas c = new Canvas();
             c.Width = 800;
             c.Height = 600;
-
+			c.Background = new SolidColorBrush(Colors.White);
+			
 			Console.WriteLine ("Moonlight created");
     		GtkSilver moonlight = new GtkSilver(800, 600);
             moonlight.Attach(c);
