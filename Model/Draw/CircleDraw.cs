@@ -21,24 +21,14 @@ namespace LunarEclipse.Model
         
         internal override void MouseMove (MouseEventArgs e)
         {
-            Point end = e.GetPosition(Panel);
-            double width = end.X - (double)Element.GetValue(Canvas.LeftProperty);
-            double height = end.Y - (double)Element.GetValue(Canvas.TopProperty);
-
-            if(Math.Abs(width) > Math.Abs(height))
-            {
-                Width = width;
-                if(Math.Sign(width) != Math.Sign(height))
-                    width = -width;
-                Height = width;
-            }
-            else
-            {
-                Height = height;
-                if(Math.Sign(width) != Math.Sign(height))
-                    height = -height;
-                Width = height;
-            }
+			base.MouseMove(e);
+            double max = Math.Max(Math.Abs(actualWidth), Math.Abs(actualHeight));
+			
+			Width = max;
+			Height = max;
+			
+			Left = (actualWidth < 0) ? actualLeft - max : actualLeft;
+			Top = (actualHeight < 0) ? actualTop - max : actualTop;
         }
     }
 }
