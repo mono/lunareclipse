@@ -29,6 +29,11 @@ namespace LunarEclipse.Model
         private Visual element;
         private Panel panel;
         private Point position;
+		
+		protected double actualTop;
+		protected double actualLeft;
+		protected double actualWidth;
+		protected double actualHeight;
         
 #endregion Fields
         
@@ -107,8 +112,8 @@ namespace LunarEclipse.Model
             Top = top;
 			Toolbox.RaiseEvent<EventArgs>(MouseUp, Panel, EventArgs.Empty);
         }
-		
 
+		
         internal virtual void DrawStart(Panel panel, MouseEventArgs point)
         {
 			Toolbox.RaiseEvent<EventArgs>(MouseDown, Panel, EventArgs.Empty);
@@ -120,6 +125,11 @@ namespace LunarEclipse.Model
             position = point.GetPosition(panel);
             Left = position.X;
             Top = position.Y;
+			
+			actualTop = Top;
+			actualLeft = Left;
+			actualHeight = Height;
+			actualWidth = Width;
         }
         
 		
@@ -163,7 +173,6 @@ namespace LunarEclipse.Model
             }
 		}
 		
-		
 		internal virtual void MouseMove(MouseEventArgs e)
         {
             Point end = e.GetPosition(panel);
@@ -171,8 +180,30 @@ namespace LunarEclipse.Model
             double y = end.Y - position.Y;
             
             position = end;
-            Width += x;
-            Height += y;
+            actualWidth += x;
+            actualHeight += y;
+			
+			if (actualWidth < 0)
+			{
+				Left = actualLeft + actualWidth;
+				Width = -actualWidth;
+			}
+			else
+			{
+				Left = actualLeft;
+				Width = actualWidth;
+			}
+			
+			if (actualHeight < 0)
+			{
+				Top = actualTop + actualHeight;
+				Height = -actualHeight;
+			}
+			else
+			{
+				Top = actualTop;
+				Height = actualHeight;
+			}
         }
 		
 		
@@ -181,6 +212,10 @@ namespace LunarEclipse.Model
 			// By default, nothing has to be 'prepared'
         }
 		
+		public override string ToString()
+		{
+			return string.Format("Top: {0} Left: {1} Height: {2} Width: {3}", Top, Left, Height, Width);
+		}
 #endregion Methods
     }
 }
