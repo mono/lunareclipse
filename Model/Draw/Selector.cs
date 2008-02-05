@@ -96,7 +96,7 @@ namespace LunarEclipse.Model
 		
 		private void ClickedOnVisual(object sender, MouseEventArgs e)
 		{
-			Console.WriteLine("Just clicked on: {0]", ((DependencyObject)sender).Name);
+			Console.WriteLine("Just clicked on: {0}", ((DependencyObject)sender).Name);
 			if(sender is SelectedBorder)
 				this.clickedOnShape = ((SelectedBorder)sender).Child;
 			else
