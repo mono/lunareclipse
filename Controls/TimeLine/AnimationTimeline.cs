@@ -64,15 +64,15 @@ namespace LunarEclipse.Controls
 			Canvas.Children.Add(marker);
 			Canvas.Background = new SolidColorBrush(Colors.Black);
 			
-			int divisions = (int)Math.Ceiling(Allocation.Width / PixelsPerDivision) * 4;
-			for(int i=0; i <= divisions * 4; i++)
+			int divisions = (int)Math.Ceiling (width / PixelsPerDivision) * 4;
+			for(int i=0; i <= (divisions + 1) * 4; i++)
 			{
 				divisionMarkers.Add(new TimelineMarker(0, TimeSpan.Zero));
 				Canvas.Children.Add((Visual)divisionMarkers[i]);
 			}
 			
 			divisions /= 4;
-			for(int i=0; i <= divisions; i++)
+			for(int i=0; i <= divisions + 1; i++)
 			{
 				divisionTextblocks.Add(new TextBlock());
 				Canvas.Children.Add(divisionTextblocks[i]);
@@ -208,9 +208,10 @@ namespace LunarEclipse.Controls
 		{
 			TimeSpan prev = TimeSpan.Zero;
 			for(int i=0; i < this.keyframeMarkers.Count; i++)
-				if(keyframeMarkers[i].Time > prev && keyframeMarkers[i].Time < span)
+				if(keyframeMarkers[i].Time >= prev && keyframeMarkers[i].Time <= span)
 					prev = keyframeMarkers[i].Time;
 			
+			Console.WriteLine("Previous one is: {0}", prev);
 			return prev;
 		}
 		
@@ -246,8 +247,11 @@ namespace LunarEclipse.Controls
 			// do not add another keyframe marker
 			foreach(KeyframeMarker m in keyframeMarkers)
 				if(m.Time.Equals(marker.Time))
+				{
+					Console.WriteLine("Already found: {0}", marker.Time);
 					return;
-			
+				}
+			Console.WriteLine("Adding to timeline: {0}", time);
 			marker.Time = time;
 			marker.Width = 15;
 			marker.Height = 15;

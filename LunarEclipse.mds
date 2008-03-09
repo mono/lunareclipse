@@ -11,6 +11,6 @@
     <Execute type="None" entry="LunarEclipse" />
   </StartMode>
   <Entries>
-    <Entry filename="./LunarEclipse.mdp" />
+    <Entry filename="LunarEclipse.mdp" />
   </Entries>
 </Combine>

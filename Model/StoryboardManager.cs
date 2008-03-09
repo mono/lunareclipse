@@ -206,6 +206,7 @@ namespace LunarEclipse.Model
 			// a time other than 0:00, things will move correctly.
 			if(timeline.KeyFrames.Count == 0)
 			{
+				Console.WriteLine ("There were no keyframes");
 				LinearDoubleKeyFrame kf = new LinearDoubleKeyFrame();
 				kf.KeyTime = previous;
 				kf.Value = Convert.ToDouble(target == e.Target ? e.OldValue : target.GetValue(property));
@@ -215,32 +216,41 @@ namespace LunarEclipse.Model
 			
 			// For each of the keyframes, if any of them have exactly the same time
 			// as the current time, we select that keyframe and update it's value
+			Console.WriteLine("Checking for: {0}", previous);
 			foreach(LinearDoubleKeyFrame kf in timeline.KeyFrames)
-				if(kf.KeyTime == controller.Timeline.CurrentPosition)
+			{
+				Console.WriteLine("We have a : {0}", kf.KeyTime.TimeSpan);
+				if(kf.KeyTime.TimeSpan.Ticks == controller.Timeline.CurrentPosition.Ticks)
 					keyframe = kf;
-				else if(kf.KeyTime == previous)
+				if(kf.KeyTime.TimeSpan.Ticks == previous.Ticks)
 					previouskf = kf;
-			
+			}
 			// Otherwise we just create a new keyframe for this time
 			if(keyframe == null)
 			{
+				Console.WriteLine("There was no existing keyframe 'kf'");
 				keyframe = new LinearDoubleKeyFrame();
 				keyframe.Value = Convert.ToDouble(target == e.Target ? e.OldValue : target.GetValue(property));
 				keyframe.KeyTime = controller.Timeline.CurrentPosition;
+				Console.WriteLine("Creating keyframe at: {0}", keyframe.KeyTime);
 				timeline.KeyFrames.Add(keyframe);
 				controller.Timeline.AddKeyframe(timeline, keyframe.KeyTime.TimeSpan);
 			}
-			if(previouskf == null)
+			if(previouskf == null && keyframe.KeyTime.TimeSpan.Ticks != controller.Timeline.CurrentPosition.Ticks)
 			{
+				Console.WriteLine ("There was no existing previous keyframe 'previouskf'");
 				previouskf = new LinearDoubleKeyFrame();
 				previouskf.Value = Convert.ToDouble(target == e.Target ? e.OldValue : target.GetValue(property));
+				Console.WriteLine("Creating keyframe at: {0}", previouskf.Value);
 				previouskf.KeyTime = previous;
 				timeline.KeyFrames.Add(previouskf);
 				controller.Timeline.AddKeyframe(timeline, keyframe.KeyTime.TimeSpan);
 			}
 			
+			
 			double difference = Convert.ToDouble(e.NewValue) - Convert.ToDouble(e.OldValue);
 			keyframe.Value = Convert.ToDouble(e.NewValue);
+			Console.WriteLine ("New value is: {0}", keyframe.Value);
 			//undos.Add(new UndoPropertyChange(e.Target, e.Property, e.OldValue, e.NewValue, true));
 		}
 		
@@ -268,9 +278,10 @@ namespace LunarEclipse.Model
 				if(!ReflectionHelper.GetFullPath(target, property).Equals(t.GetValue(Storyboard.TargetPropertyProperty)))
 					continue;
 				
+				Console.WriteLine("Found existing timeline");
 				return (DoubleAnimationUsingKeyFrames)t;
 			}
-			
+			Console.WriteLine("Creating new timeline");
 			// There was no pre-existing timeline, so create a new one
 			animation = new DoubleAnimationUsingKeyFrames();
 			animation.SetValue<string>(Storyboard.NameProperty, NameGenerator.GetName(controller.Canvas, animation));
@@ -285,19 +296,24 @@ namespace LunarEclipse.Model
 			foreach(DoubleAnimationUsingKeyFrames timeline in Current.Children)
 				foreach(LinearDoubleKeyFrame kf in timeline.KeyFrames)
 					if(kf.KeyTime == e.OldTime)
+				{
+					Console.WriteLine("Moved keyframe: {0} to {1}", e.OldTime, e.Marker.Time);
 						kf.KeyTime = e.Marker.Time;
+				}
 		}
 		
 		
 		
 		private void TimeChanged(object sender, EventArgs e)
 		{
+			Console.WriteLine("Seeking to: {0}", controller.Timeline.CurrentPosition);
 			Seek(controller.Timeline.CurrentPosition);
 		}
 		
 		public void Play()
 		{
 			initialValues.Undo();
+			Console.WriteLine("Current is null? {0}", current == null);
 			if(Current != null)
 				Current.Begin();
 		}
@@ -321,6 +337,7 @@ namespace LunarEclipse.Model
 		
 		public void Stop()
 		{
+			Console.WriteLine("Current is null? {0}", current == null);
 			if(Current != null)
 				Current.Stop();
 		}
