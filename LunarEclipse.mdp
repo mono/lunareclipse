@@ -73,6 +73,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="gtksilver, Version=0.0.0.0, Culture=neutral, PublicKeyToken=976ad8f3443f9a4d" />
     <ProjectReference type="Gac" localcopy="True" refto="agmono, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Gac" localcopy="True" refto="agclr, Version=0.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Windows, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
   </References>
   <DeploymentInformation target="" script="" strategy="File">
     <excludeFiles />
