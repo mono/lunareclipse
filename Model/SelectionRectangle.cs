@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using Gtk.Moonlight;
 
 namespace LunarEclipse.Model
 {
@@ -19,7 +20,9 @@ namespace LunarEclipse.Model
         public SelectionRectangle()
             :base()
         {
-			rect = (Rectangle)InitializeFromXaml("<Rectangle Name=\"Rect\" />");
+			// FIXME: Find a proper way to do this.
+			GtkSilver silver = new GtkSilver(); 
+			rect = (Rectangle)silver.InitializeFromXaml("<Rectangle Name=\"Rect\" />", this);
 			
             rect.Opacity = 0.33;
             rect.Fill = new SolidColorBrush(Colors.Blue);

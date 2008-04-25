@@ -9,6 +9,7 @@ using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows;
+using Gtk.Moonlight;
 
 namespace LunarEclipse.Controls
 {
@@ -35,10 +36,10 @@ namespace LunarEclipse.Controls
 			set { SetValue<double>(Canvas.LeftProperty, value);}
 		}
 		
-		public PositionMarker(TimeSpan time, double width, double height)
+		public PositionMarker(GtkSilver parent, TimeSpan time, double width, double height)
 			: base()
 		{
-			ellipse = (Ellipse)InitializeFromXaml("<Ellipse Name=\"Ellipse\" />");
+			ellipse = (Ellipse)parent.InitializeFromXaml("<Ellipse Name=\"Ellipse\" />", this);
 			this.time = time;
 			Height = height;
 			Width = width;

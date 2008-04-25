@@ -9,6 +9,7 @@ using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows;
+using Gtk.Moonlight;
 
 namespace LunarEclipse.Controls
 {
@@ -31,9 +32,9 @@ namespace LunarEclipse.Controls
 			set { SetValue<double>(Canvas.LeftProperty, value);}
 		}
 		
-		public TimelineMarker(double height, TimeSpan time) : base()
+		public TimelineMarker(GtkSilver parent, double height, TimeSpan time) : base()
 		{
-			rectangle = (Rectangle)InitializeFromXaml("<Rectangle Name=\"Rect\" />");
+			rectangle = (Rectangle) parent.InitializeFromXaml("<Rectangle Name=\"Rect\" />", this);
 			this.time = time;
 			Height = height;
 			Width = TimelineMarker.MarkerWidth;

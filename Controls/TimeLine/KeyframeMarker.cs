@@ -10,6 +10,7 @@ using System.Windows.Shapes;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using Gtk.Moonlight;
 
 namespace LunarEclipse.Controls
 {
@@ -37,10 +38,10 @@ namespace LunarEclipse.Controls
 			get { return timeline; }
 		}
 		
-		public KeyframeMarker(Timeline timeline, TimeSpan time)
+		public KeyframeMarker(GtkSilver parent, Timeline timeline, TimeSpan time)
 			: base()
 		{
-			ellipse = (Ellipse)InitializeFromXaml("<Ellipse Name=\"Ellipse\"/>");
+			ellipse = (Ellipse) parent.InitializeFromXaml("<Ellipse Name=\"Ellipse\"/>", this);
 			ellipse.SetValue<Brush>(Ellipse.FillProperty, new SolidColorBrush(Colors.Green)); 
 			this.time = time;
 			this.timeline = timeline;

@@ -48,7 +48,7 @@ namespace LunarEclipse.Controls
 			c.Height = height;
 			Attach(c);
 			
-			marker = new PositionMarker(TimeSpan.Zero, 0, 0);
+			marker = new PositionMarker(this, TimeSpan.Zero, 0, 0);
 			marker.ZIndex = 1;
 			divisionMarkers = new List<IMarker>();
 			divisionTextblocks = new List<TextBlock>();
@@ -67,7 +67,7 @@ namespace LunarEclipse.Controls
 			int divisions = (int)Math.Ceiling (width / PixelsPerDivision) * 4;
 			for(int i=0; i <= (divisions + 1) * 4; i++)
 			{
-				divisionMarkers.Add(new TimelineMarker(0, TimeSpan.Zero));
+				divisionMarkers.Add(new TimelineMarker(this, 0, TimeSpan.Zero));
 				Canvas.Children.Add((Visual)divisionMarkers[i]);
 			}
 			
@@ -241,7 +241,7 @@ namespace LunarEclipse.Controls
 		
 		public void AddKeyframe(Timeline timeline, TimeSpan time)
 		{
-			KeyframeMarker marker = new KeyframeMarker(timeline, time);
+			KeyframeMarker marker = new KeyframeMarker(this, timeline, time);
 
 			// If we already have a marker at the same time for the same timeline, 
 			// do not add another keyframe marker
