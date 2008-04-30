@@ -459,7 +459,7 @@ namespace LunarEclipse.View
     	
     	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
     	{
-    		Application.Quit ();
+    		Gtk.Application.Quit ();
     		a.RetVal = true;
     	}
 		private void HandleSaveasClicked (object sender, EventArgs e)

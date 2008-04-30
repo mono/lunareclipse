@@ -21,10 +21,10 @@ namespace LunarEclipse
 		public static void Main (string[] args)
 		{
 		    System.Diagnostics.Debug.Listeners.Add(new ConsoleTraceListener());
-		    Application.Init ();
+		    Gtk.Application.Init ();
 			MainWindow win = new MainWindow ();
 			win.Show ();
-			Application.Run ();
+			Gtk.Application.Run ();
 		}
 	}
 }
