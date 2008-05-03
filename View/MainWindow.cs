@@ -65,7 +65,11 @@ namespace LunarEclipse.View
 			
 			propertyPane = new VBox ();
 			propertyPane.ShowAll ();
-    		leftpane.PackStart (propertyPane, true, true, 0);
+			
+			ScrolledWindow propertyScroll = new ScrolledWindow();
+			propertyScroll.AddWithViewport(propertyPane);
+			propertyScroll.ShowAll();
+    		leftpane.PackStart (propertyScroll, true, true, 0);
 			
             TextView view = new Gtk.TextView(buffer);
 			view.Show ();

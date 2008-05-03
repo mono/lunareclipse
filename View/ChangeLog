@@ -1,3 +1,7 @@
+2008-05-03  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MainWindow.cs: propertyPane is put inside a ScrolledWindow
+
 2008-04-30  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MainWindow.cs, Main.cs: Using Gtk.Application instead of Application to
