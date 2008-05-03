@@ -12,6 +12,7 @@ using System.Windows.Controls;
 
 namespace LunarEclipse.Model
 {
+	// TODO: Orginize this class
     public class SelectedBorder : System.Windows.Controls.Canvas
     {
         private Visual handle;
@@ -96,7 +97,8 @@ namespace LunarEclipse.Model
 			set	{ child.SetValue<TransformGroup>(RenderTransformProperty, value); }
         }
         
-        public Visual Child
+		// NOTE: is this property needed ? (look the exceptions)
+		public Visual Child
         {
             get { return child; }
             set 
@@ -110,6 +112,8 @@ namespace LunarEclipse.Model
                 child = value;
                 
                 SetValue<double>(ZIndexProperty, int.MaxValue);
+				
+				// NOTE: Why is updated for?
                 if(!updating)
                 {
                     updating = true;
@@ -180,7 +184,7 @@ namespace LunarEclipse.Model
         
         private void DrawHandles(bool firstDraw)
         {
-            VisualCollection Children = (VisualCollection)base.GetValue(ChildrenProperty);
+			VisualCollection Children = (VisualCollection)base.GetValue(ChildrenProperty);
             
             double left = 0;
             double top = 0;
@@ -227,7 +231,7 @@ namespace LunarEclipse.Model
 			}
 			
 			// Top left rotate handle
-			SetCircle(rotate1, new Point(left, top));
+			SetCircle(rotate1, new Point(left, top-100));
 			// Top centre stretch handle
 			SetCircle(height1, new Point(midX - HandleRadius, top));
 			// Top right rotate handle
@@ -288,6 +292,7 @@ namespace LunarEclipse.Model
 			line.X2 = end.X;    line.Y2 = end.Y;
 		}
 		
+		// NOTE: Circle should be usend instead of shape as argument.
 		private void SetCircle(Shape shape, Point start)
 		{
 			Ellipse circle = (Ellipse)shape;
