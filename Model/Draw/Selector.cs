@@ -459,8 +459,7 @@ namespace LunarEclipse.Model
 			if(string.IsNullOrEmpty(s.Name))
 				s.SetValue<string>(Visual.NameProperty, NameGenerator.GetName(Panel, s));
 			
-			SelectedBorder border = new SelectedBorder(s);
-			controller.Canvas.Children.Add(border);
+			SelectedBorder border = new SelectedBorder(s, controller.Canvas);
 			selectedObjects.Add(s, border);
 			border.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
 			Toolbox.RaiseEvent<SelectionChangedEventArgs>(ItemSelected, controller, new SelectionChangedEventArgs(s, border));

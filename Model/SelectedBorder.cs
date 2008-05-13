@@ -148,8 +148,9 @@ namespace LunarEclipse.Model
             set { base.SetValue<double>(TopProperty, value); }
         }
 
-		public SelectedBorder(Visual child)
+		public SelectedBorder(Visual child, Canvas parent)
 		{
+			parent.Children.Add(this);
 			Child = child;
 		}
 		
@@ -231,7 +232,7 @@ namespace LunarEclipse.Model
 			}
 			
 			// Top left rotate handle
-			SetCircle(rotate1, new Point(left, top-100));
+			SetCircle(rotate1, new Point(left, top));
 			// Top centre stretch handle
 			SetCircle(height1, new Point(midX - HandleRadius, top));
 			// Top right rotate handle
