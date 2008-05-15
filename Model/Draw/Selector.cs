@@ -61,7 +61,7 @@ namespace LunarEclipse.Model
 #region Constructor
 		
 		public Selector(MoonlightController controller)
-			: base(new SelectionRectangle())
+			: base(new Rectangle())
 		{
 			this.controller = controller;
 			this.selectedObjects = new Dictionary<Visual, SelectedBorder>();
