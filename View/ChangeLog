@@ -1,3 +1,7 @@
+2008-05-15  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MainWindow.cs: Added SizeAllocated event handler to timeline
+
 2008-05-03  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MainWindow.cs: propertyPane is put inside a ScrolledWindow

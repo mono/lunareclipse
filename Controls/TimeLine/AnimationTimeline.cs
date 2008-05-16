@@ -81,6 +81,11 @@ namespace LunarEclipse.Controls
 			PlaceDivisions();
 		}
 		
+		public void UpdateSize()
+		{
+			this.PlaceDivisions();
+		}
+		
 		private void PlaceDivisions()
 		{
 			// This is a hack so i can figure out what 'height' the textblocks are going to be

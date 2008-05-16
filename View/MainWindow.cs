@@ -48,6 +48,9 @@ namespace LunarEclipse.View
 			
 			Console.WriteLine ("Animation");
 			timeline = new AnimationTimeline(800, 70);
+			timeline.SizeAllocated += delegate {
+				timeline.UpdateSize();
+			};
     		mainContainer = new HBox ();
 			Gtk.VBox leftpane = new VBox ();
 			Widget toolbox = InitialiseWidgets ();
@@ -61,7 +64,7 @@ namespace LunarEclipse.View
 			vbox.PackStart(moonlight);
 			vbox.PackEnd(timeline);
 			vbox.ShowAll();
-    		mainContainer.Add (vbox);
+			mainContainer.Add (vbox);
 			
 			propertyPane = new VBox ();
 			propertyPane.ShowAll ();
@@ -96,7 +99,7 @@ namespace LunarEclipse.View
 			
             controller = new MoonlightController (moonlight, timeline);
             HookEvents(true);
-            Show ();
+            ShowAll ();
 	}
 
 		private Box InitialiseAnimationWidgets()

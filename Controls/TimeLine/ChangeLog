@@ -1,3 +1,7 @@
+2008-05-15  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* AnimationTimeline.cs: Added public UpdateSize method.
+
 2008-04-25  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	
