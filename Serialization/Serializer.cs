@@ -88,7 +88,7 @@ namespace LunarEclipse.Serialization
             Type baseType = item.GetType();
 			
 			if(string.IsNullOrEmpty(item.Name))
-				item.SetValue<string>(DependencyObject.NameProperty, NameGenerator.GetName(this.canvas, item));
+				item.SetValue(DependencyObject.NameProperty, NameGenerator.GetName(this.canvas, item));
             
             // Gets all the dependency properties for this item type
             // and any relevant attached properties.

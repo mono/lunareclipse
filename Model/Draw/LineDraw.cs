@@ -25,7 +25,7 @@ namespace LunarEclipse.Model
         internal override void Prepare ()
         {
             base.Prepare();
-            Element.SetValue<object>(Shape.FillProperty, new SolidColorBrush(Colors.Red));
+            Element.SetValue(Shape.FillProperty, new SolidColorBrush(Colors.Red));
         }
 
         internal override void DrawStart (Panel panel, MouseEventArgs e)
@@ -34,8 +34,8 @@ namespace LunarEclipse.Model
             Line l = Element as Line;
             l.X1 = (l.X2 = Position.X);
             l.Y1 = (l.Y2 = Position.Y);
-            l.SetValue<double>(Canvas.TopProperty, 0);
-            l.SetValue<double>(Canvas.LeftProperty, 0);
+            l.SetValue(Canvas.TopProperty, 0);
+            l.SetValue(Canvas.LeftProperty, 0);
         }
         
         internal override void MouseMove (MouseEventArgs end)

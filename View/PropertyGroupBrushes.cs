@@ -56,11 +56,11 @@ namespace LunarEclipse
 	                             (byte)(current.Blue * (255.0 / ushort.MaxValue))));
                 
 				if(active == fillButton)
-                    SelectedObject.Child.SetValue<Brush>(Shape.FillProperty, brush);
+                    SelectedObject.Child.SetValue(Shape.FillProperty, brush);
                 else if(active == backgroundButton)
-                    SelectedObject.Child.SetValue<Brush>(Canvas.BackgroundProperty, brush);
+                    SelectedObject.Child.SetValue(Canvas.BackgroundProperty, brush);
                 else if(active == strokeButton)
-                    SelectedObject.Child.SetValue<Brush>(Shape.StrokeProperty, brush);
+                    SelectedObject.Child.SetValue(Shape.StrokeProperty, brush);
             };
 			
 			colorPicker.Show ();

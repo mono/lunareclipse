@@ -94,7 +94,7 @@ namespace LunarEclipse.Model
         public TransformGroup TransformGroup
         {
 			get { return (TransformGroup)child.GetValue(RenderTransformProperty); }
-			set	{ child.SetValue<TransformGroup>(RenderTransformProperty, value); }
+			set	{ child.SetValue(RenderTransformProperty, value); }
         }
         
 		// NOTE: is this property needed ? (look the exceptions)
@@ -111,7 +111,7 @@ namespace LunarEclipse.Model
                 
                 child = value;
                 
-                SetValue<double>(ZIndexProperty, int.MaxValue);
+                SetValue(ZIndexProperty, int.MaxValue);
 				
 				// NOTE: Why is updated for?
                 if(!updating)
@@ -124,15 +124,15 @@ namespace LunarEclipse.Model
 
                 if(TransformGroup == null)
 				{
-					child.SetValue<Point>(RenderTransformOriginProperty, new Point(0.5, 0.5));
+					child.SetValue(RenderTransformOriginProperty, new Point(0.5, 0.5));
 					TransformGroup = new TransformGroup();
                     TransformGroup.Children.Add(new ScaleTransform());
 					TransformGroup.Children.Add(new SkewTransform());
 					TransformGroup.Children.Add(new RotateTransform());
 					TransformGroup.Children.Add(new TranslateTransform());
 				}
-				SetValue<TransformGroup>(RenderTransformProperty, TransformGroup);
-				SetValue<object>(RenderTransformOriginProperty, Child.GetValue(RenderTransformOriginProperty));
+				SetValue(RenderTransformProperty, TransformGroup);
+				SetValue(RenderTransformOriginProperty, Child.GetValue(RenderTransformOriginProperty));
             }
         }
             
@@ -140,12 +140,12 @@ namespace LunarEclipse.Model
         public double Left
         {
             get { return (double)base.GetValue(LeftProperty); }
-            set { base.SetValue<double>(LeftProperty, value); }
+            set { base.SetValue(LeftProperty, value); }
         }
         public double Top
         {
             get { return (double)base.GetValue(TopProperty); }
-            set { base.SetValue<double>(TopProperty, value); }
+            set { base.SetValue(TopProperty, value); }
         }
 
 		public SelectedBorder(Visual child, Canvas parent)
@@ -164,8 +164,8 @@ namespace LunarEclipse.Model
             // First set the position of the selection canvas
             Top = (childTop - BorderWidth);
             Left = (childLeft - BorderWidth);
-            SetValue<double>(WidthProperty, childWidth + BorderWidth * 2);
-			SetValue<double>(HeightProperty, childHeight + BorderWidth * 2);
+            SetValue(WidthProperty, childWidth + BorderWidth * 2);
+			SetValue(HeightProperty, childHeight + BorderWidth * 2);
 
             DrawHandles(((VisualCollection)base.GetValue(ChildrenProperty)).Count == 0);
         }
@@ -297,8 +297,8 @@ namespace LunarEclipse.Model
 		private void SetCircle(Shape shape, Point start)
 		{
 			Ellipse circle = (Ellipse)shape;
-			circle.SetValue<double>(TopProperty, start.Y);
-			circle.SetValue<double>(LeftProperty, start.X);
+			circle.SetValue(TopProperty, start.Y);
+			circle.SetValue(LeftProperty, start.X);
 		}
     }
 }

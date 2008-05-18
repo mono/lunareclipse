@@ -179,7 +179,7 @@ namespace LunarEclipse.Model
 			{
 				foreach(Timeline l in this.Current.Children)
 					if(l.GetValue(Storyboard.TargetNameProperty).Equals(e.OldValue))
-						l.SetValue<object>(Storyboard.TargetNameProperty, e.NewValue);
+						l.SetValue(Storyboard.TargetNameProperty, e.NewValue);
 				return;
 			}
 			
@@ -193,7 +193,7 @@ namespace LunarEclipse.Model
 			string path = ReflectionHelper.GetFullPath(e.Target, e.Property);
 			ReflectionHelper.Resolve(path, e.Target, out target, out property);
 			if(string.IsNullOrEmpty(target.Name))
-				target.SetValue<string>(DependencyObject.NameProperty, NameGenerator.GetName(this.controller.Canvas, target));
+				target.SetValue(DependencyObject.NameProperty, NameGenerator.GetName(this.controller.Canvas, target));
 			
 			// Get a timeline: either an existing one or a new one
 			DoubleAnimationUsingKeyFrames timeline = GetTimeline(target, property);
@@ -284,9 +284,9 @@ namespace LunarEclipse.Model
 			Console.WriteLine("Creating new timeline");
 			// There was no pre-existing timeline, so create a new one
 			animation = new DoubleAnimationUsingKeyFrames();
-			animation.SetValue<string>(Storyboard.NameProperty, NameGenerator.GetName(controller.Canvas, animation));
-			animation.SetValue<string>(Storyboard.TargetNameProperty, target.Name);
-			animation.SetValue<string>(Storyboard.TargetPropertyProperty, ReflectionHelper.GetFullPath(target, property));
+			animation.SetValue(Storyboard.NameProperty, NameGenerator.GetName(controller.Canvas, animation));
+			animation.SetValue(Storyboard.TargetNameProperty, target.Name);
+			animation.SetValue(Storyboard.TargetPropertyProperty, ReflectionHelper.GetFullPath(target, property));
 			Current.Children.Add(animation);
 			return animation;
 		}

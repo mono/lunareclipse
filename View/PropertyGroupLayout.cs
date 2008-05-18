@@ -125,10 +125,10 @@ namespace LunarEclipse {
 			SpinButton spin = (SpinButton) o;
 			
 			if (((Entry) spin).Text == "Auto") {
-				((SelectedBorder)item).Child.SetValue<double> (prop, 0.0);
+				((SelectedBorder)item).Child.SetValue (prop, 0.0);
 			} else {
 				double v = spin.Value;
-				((SelectedBorder)item).Child.SetValue<double> (prop, v);
+				((SelectedBorder)item).Child.SetValue (prop, v);
                 ((SelectedBorder)item).ResizeBorder();
                 Console.WriteLine("Changed other integer: {0:0}", v);
 			}

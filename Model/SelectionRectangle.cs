@@ -29,15 +29,15 @@ namespace LunarEclipse.Model
             rect.Stroke = new SolidColorBrush(Colors.Green);
             rect.StrokeDashArray = new double[] {5, 5 };
             rect.StrokeThickness = 2;
-            rect.SetValue<int>(ZIndexProperty, int.MaxValue);
+            rect.SetValue(ZIndexProperty, int.MaxValue);
         }
 		
-		public override void SetValue<T> (DependencyProperty property, T obj)
+		public override void SetValue (DependencyProperty property, object obj)
 		{
 			if(property == Shape.WidthProperty || property == Shape.HeightProperty)
-				rect.SetValue<T>(property, obj);
+				rect.SetValue(property, obj);
 			
-			base.SetValue<T>(property, obj);
+			base.SetValue(property, obj);
 		}
 
     }

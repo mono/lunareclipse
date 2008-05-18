@@ -218,8 +218,9 @@ namespace LunarEclipse.Model
 		{
 			List<Visual> clickedShapes = GetSelectedObjects(e);
 			Point mousePoint = e.GetPosition(Panel);
-			mousePoint.Offset(-Position.X, -Position.Y);
-			
+			mousePoint.X -= Position.X;
+			mousePoint.Y -= Position.Y;
+						
 			base.MouseMove(e);
 			
 			Console.WriteLine("Mouse moved");
@@ -457,7 +458,7 @@ namespace LunarEclipse.Model
 			// when selecting an item for animations or selecting it to change it's properties
 			// in the property pane, it always has a valid name
 			if(string.IsNullOrEmpty(s.Name))
-				s.SetValue<string>(Visual.NameProperty, NameGenerator.GetName(Panel, s));
+				s.SetValue(Visual.NameProperty, NameGenerator.GetName(Panel, s));
 			
 			SelectedBorder border = new SelectedBorder(s, controller.Canvas);
 			selectedObjects.Add(s, border);

@@ -21,7 +21,7 @@ namespace LunarEclipse.Controls
 		public int ZIndex
 		{
 			get { return (int)GetValue(Shape.ZIndexProperty); }
-			set { SetValue<int>(Shape.ZIndexProperty, value); }
+			set { SetValue(Shape.ZIndexProperty, value); }
 		}
 		
 		public TimeSpan Time
@@ -33,7 +33,7 @@ namespace LunarEclipse.Controls
 		public double Left
 		{
 			get { return (double)GetValue(Canvas.LeftProperty); }
-			set { SetValue<double>(Canvas.LeftProperty, value);}
+			set { SetValue(Canvas.LeftProperty, value);}
 		}
 		
 		public PositionMarker(GtkSilver parent, TimeSpan time, double width, double height)
@@ -43,15 +43,15 @@ namespace LunarEclipse.Controls
 			this.time = time;
 			Height = height;
 			Width = width;
-			ellipse.SetValue<object>(Shape.FillProperty, new SolidColorBrush(Colors.Yellow));
+			ellipse.SetValue(Shape.FillProperty, new SolidColorBrush(Colors.Yellow));
 		}
 		
-		public override void SetValue<T> (DependencyProperty property, T obj)
+		public override void SetValue (DependencyProperty property, object obj)
 		{
 			if(property == Shape.WidthProperty || property == Shape.HeightProperty)
-				ellipse.SetValue<T>(property, obj);
+				ellipse.SetValue(property, obj);
 			
-			base.SetValue<T>(property, obj);
+			base.SetValue(property, obj);
 		}
 
 	}

@@ -24,7 +24,7 @@ namespace LunarEclipse.Controls
 		public double Left
 		{
 			get { return (double)GetValue(Canvas.LeftProperty); }
-			set { SetValue<double>(Canvas.LeftProperty, value); }
+			set { SetValue(Canvas.LeftProperty, value); }
 		}
 		
 		public TimeSpan Time
@@ -42,17 +42,17 @@ namespace LunarEclipse.Controls
 			: base()
 		{
 			ellipse = (Ellipse) parent.InitializeFromXaml("<Ellipse Name=\"Ellipse\"/>", this);
-			ellipse.SetValue<Brush>(Ellipse.FillProperty, new SolidColorBrush(Colors.Green)); 
+			ellipse.SetValue(Ellipse.FillProperty, new SolidColorBrush(Colors.Green)); 
 			this.time = time;
 			this.timeline = timeline;
 		}
 		
-		public override void SetValue<T> (DependencyProperty property, T obj)
+		public override void SetValue (DependencyProperty property, object obj)
 		{
 			if(property == Shape.WidthProperty || property == Shape.HeightProperty)
-				ellipse.SetValue<T>(property, obj);
+				ellipse.SetValue(property, obj);
 			
-			base.SetValue<T>(property, obj);
+			base.SetValue(property, obj);
 		}
 	}
 }

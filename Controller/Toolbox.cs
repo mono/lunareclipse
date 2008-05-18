@@ -18,7 +18,7 @@ namespace LunarEclipse
 		public static void ChangeProperty(DependencyObject target, DependencyProperty property, object value)
 		{
 			PropertyChangedEventArgs e = new PropertyChangedEventArgs(target, property, target.GetValue(property), value);
-			target.SetValue<object>(property, value);
+			target.SetValue(property, value);
 			RaiseEvent<PropertyChangedEventArgs>(PropertyChanged, null, e);
 		}
 		

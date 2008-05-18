@@ -1,3 +1,10 @@
+2008-05-17  Manuel Ceron <ceronman@unicauca.edu.co> 
+
+	* PenDraw.cs, Selector.cs, LineDraw.cs, DrawBase.cs: Changed all refereces
+	  to SetValue<T>, now using the non parametrized method SetValue() because
+	  the generic version was removed from Moonlight. Removed References to
+	  System.Windows.Offset()
+
 2008-05-15  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* Selector.cs: Using Rectangle instead SelectionRectangle. Now the selection

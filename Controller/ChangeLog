@@ -1,0 +1,6 @@
+2008-05-17  Manuel Ceron <ceronman@unicauca.edu.co> 
+
+	* Toolbox.cs: Changed all refereces to SetValue<T>, now using the non
+	  parametrized method SetValue() because the generic version was removed
+	  from Moonlight. Removed References to System.Windows.Offset()
+

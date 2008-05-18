@@ -29,7 +29,7 @@ namespace LunarEclipse.Controls
 		public double Left
 		{
 			get { return (double)GetValue(Canvas.LeftProperty); }
-			set { SetValue<double>(Canvas.LeftProperty, value);}
+			set { SetValue(Canvas.LeftProperty, value);}
 		}
 		
 		public TimelineMarker(GtkSilver parent, double height, TimeSpan time) : base()
@@ -39,16 +39,16 @@ namespace LunarEclipse.Controls
 			Height = height;
 			Width = TimelineMarker.MarkerWidth;
 			
-			rectangle.SetValue<object>(Shape.StrokeProperty, new SolidColorBrush(Colors.White));
-			rectangle.SetValue<object>(Shape.FillProperty, new SolidColorBrush(Colors.White));
+			rectangle.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.White));
+			rectangle.SetValue(Shape.FillProperty, new SolidColorBrush(Colors.White));
 		}
 		
-		public override void SetValue<T> (DependencyProperty property, T obj)
+		public override void SetValue (DependencyProperty property, object obj)
 		{
 			if(property == Shape.WidthProperty || property == Shape.HeightProperty)
-				rectangle.SetValue<T>(property, obj);
+				rectangle.SetValue(property, obj);
 			
-			base.SetValue<T>(property, obj);
+			base.SetValue(property, obj);
 		}
 	}
 }

@@ -50,7 +50,8 @@ namespace LunarEclipse
             Point end = e.GetPosition(Panel);
             double top = (double)Element.GetValue(Canvas.TopProperty);
             double left = (double)Element.GetValue(Canvas.LeftProperty);
-            end.Offset(-left, -top);
+			end.X -= left;
+			end.Y -= top;
             LineSegment seg = new LineSegment();
             seg.Point = end;
             figure.Segments.Add(seg);

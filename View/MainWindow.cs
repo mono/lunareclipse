@@ -320,7 +320,7 @@ namespace LunarEclipse.View
 				
 				Color c = Color.FromArgb((byte)(val>>24), (byte)(val>>16), (byte)(val>>8), (byte)val);
 				Console.WriteLine(c.ToString());
-				o.SetValue<Brush>(info.PropertyData.Property, new SolidColorBrush(c));
+				o.SetValue(info.PropertyData.Property, new SolidColorBrush(c));
 			};
 			return e;
 		}
@@ -339,7 +339,7 @@ namespace LunarEclipse.View
 			spinner.Changed += delegate(object sender, EventArgs e) {
 				Point point = (Point)o.GetValue(info.PropertyData.Property);
 				point.X = ((SpinButton)sender).Value;
-				o.SetValue<Point>(info.PropertyData.Property, point);
+				o.SetValue(info.PropertyData.Property, point);
 			};
 			h.Add(spinner);
 			b.Add(h);
@@ -353,7 +353,7 @@ namespace LunarEclipse.View
 			spinner.Changed += delegate (object sender, EventArgs e) {
 				Point point = (Point)o.GetValue(info.PropertyData.Property);
 				point.Y = ((SpinButton)sender).Value;
-				o.SetValue<Point>(info.PropertyData.Property, point);
+				o.SetValue(info.PropertyData.Property, point);
 			};
 			h.Add(spinner);
 			b.Add(h);

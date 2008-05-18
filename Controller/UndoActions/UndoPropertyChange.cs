@@ -56,7 +56,7 @@ namespace LunarEclipse.Controller
         public override void Redo ()
         {
 			if(silent)
-				Target.SetValue<object>(property, newvalue);
+				Target.SetValue(property, newvalue);
 			else
 				Toolbox.ChangeProperty(Target, property, newvalue);
         }
@@ -65,7 +65,7 @@ namespace LunarEclipse.Controller
         public override void Undo ()
         {
 			if(silent)
-				Target.SetValue<object>(property, oldvalue);
+				Target.SetValue(property, oldvalue);
 			else
 				Toolbox.ChangeProperty(Target, property, oldvalue);
         }

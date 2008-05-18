@@ -64,25 +64,25 @@ namespace LunarEclipse.Model
         protected double Left
         {
             get { return (double)Element.GetValue(Canvas.LeftProperty); }
-            set { Element.SetValue<double>(Canvas.LeftProperty, value); }
+            set { Element.SetValue(Canvas.LeftProperty, value); }
         }
         
         protected double Top
         {
             get { return (double)Element.GetValue(Canvas.TopProperty); }
-            set { Element.SetValue<double>(Canvas.TopProperty, value); }
+            set { Element.SetValue(Canvas.TopProperty, value); }
         }
 
 		public double Width
 		{
 			get { return (double)Element.GetValue(Shape.WidthProperty); }
-			set { Element.SetValue<double>(Shape.WidthProperty, value); }
+			set { Element.SetValue(Shape.WidthProperty, value); }
 		}
 		
 		public double Height
 		{
 			get { return (double)Element.GetValue(Shape.HeightProperty); }
-			set { Element.SetValue<double>(Shape.HeightProperty, value); }
+			set { Element.SetValue(Shape.HeightProperty, value); }
 		}
 		
 #endregion Properties
@@ -120,7 +120,7 @@ namespace LunarEclipse.Model
 			this.panel = panel;
 			
 			element = (Visual)Activator.CreateInstance(Element.GetType());
-            element.SetValue<object>(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
+            element.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
 			panel.Children.Add(Element);
             position = point.GetPosition(panel);
             Left = position.X;
