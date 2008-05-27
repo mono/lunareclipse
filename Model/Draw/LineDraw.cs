@@ -45,5 +45,10 @@ namespace LunarEclipse.Model
             l.X2 = p.X;
             l.Y2 = p.Y;
         }
+		
+		internal override void DrawEnd (MouseEventArgs point)
+		{
+		}
+
     }
 }

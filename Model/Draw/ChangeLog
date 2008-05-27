@@ -1,3 +1,7 @@
+2008-05-26  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	
+
 2008-05-17  Manuel Ceron <ceronman@unicauca.edu.co> 
 
 	* PenDraw.cs, Selector.cs, LineDraw.cs, DrawBase.cs: Changed all refereces
