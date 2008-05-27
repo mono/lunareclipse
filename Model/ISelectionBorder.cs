@@ -27,10 +27,10 @@
 
 using System.Windows.Media;
 
-namespace LunarEclipse
-{
-	public interface ISelectionBorder
-	{
+namespace LunarEclipse {
+	
+	public interface ISelectionBorder {
+		
 		Visual Child { get; }
 		Visual Handle { get; }
 	}

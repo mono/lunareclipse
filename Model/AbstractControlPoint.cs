@@ -1,4 +1,4 @@
-// AbstractSelectionBorder.cs
+// AbstractControlPoint.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -26,27 +26,17 @@
 //
 
 using System.Windows.Controls;
-using System.Windows.Media;
+using Gtk.Moonlight;
 
-namespace LunarEclipse {
+namespace LunarEclipse {	
 	
-	public class AbstractSelectionBorder: Canvas, ISelectionBorder {
+	public class AbstractControlPoint: Control, IControlPoint {
 		
-		public AbstractSelectionBorder()
+		public AbstractControlPoint(GtkSilver s)
 		{
+			silver = s;
 		}
 		
-		public Visual Child {
-			get { return child; }
-			set { child = value; }
-		}
-		
-		public Visual Handle {
-			get { return handle; }
-			set { handle = value; } 
-		}
-		
-		private Visual child;
-		private Visual handle;
+		private GtkSilver silver;
 	}
 }

@@ -1,5 +1,10 @@
 2008-05-27  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* ResizeControlPoint.cs, AbstractControlPoint.cs, IControlPoint.cs,
+	  TopLeftResizeControlPoint.cs: Preparing new ControlPoint System
+
+2008-05-27  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* LineSelectionBorder.cs, ISelectionBorder.cs,
 	  AbstractSelectionBorder.cs, RectangleSelectionBorder.cs: Preparing
 	  new Selection system.

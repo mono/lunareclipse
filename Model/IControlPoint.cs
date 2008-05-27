@@ -1,4 +1,4 @@
-// AbstractSelectionBorder.cs
+// IControlPoint.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -25,28 +25,11 @@
 //
 //
 
-using System.Windows.Controls;
-using System.Windows.Media;
+using System;
 
 namespace LunarEclipse {
 	
-	public class AbstractSelectionBorder: Canvas, ISelectionBorder {
+	public interface IControlPoint {
 		
-		public AbstractSelectionBorder()
-		{
-		}
-		
-		public Visual Child {
-			get { return child; }
-			set { child = value; }
-		}
-		
-		public Visual Handle {
-			get { return handle; }
-			set { handle = value; } 
-		}
-		
-		private Visual child;
-		private Visual handle;
 	}
 }
