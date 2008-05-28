@@ -1,5 +1,12 @@
 2008-05-27  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* ResizeControlPoint.cs: Overriden Mouse{Start, Stop, Step}
+	* AbstractControlPoint.cs: Added Mouse{Start, End, Step} methods. Added
+	  Element Property. Added Top, Left, Width and Height Properties
+	* TopLeftResizeControlPoint.cs: Added element
+
+2008-05-27  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* ResizeControlPoint.cs, AbstractControlPoint.cs, IControlPoint.cs,
 	  TopLeftResizeControlPoint.cs: Preparing new ControlPoint System
 

@@ -25,14 +25,73 @@
 //
 //
 
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Controls;
 using Gtk.Moonlight;
 
-namespace LunarEclipse {	
+namespace LunarEclipse.Model {	
 	
 	public class ResizeControlPoint: AbstractControlPoint {
 		
-		public ResizeControlPoint(GtkSilver silver): base(silver)
+		public ResizeControlPoint(GtkSilver silver, UIElement element): base(silver, element)
 		{
+			Width = DefaultWidth;
+			Height = DefaultHeight;
 		}
+		
+		public override string GetXaml ()
+		{
+			return "<Rectangle Fill=\"#FFFF0000\" Stroke=\"#FF000000\" />";
+		}
+		
+		protected override void MouseStart (object sender, MouseEventArgs args)
+		{
+			base.MouseStart (sender, args);
+			lastPoint = args.GetPosition(null);
+			drag = true;
+			
+		}
+		
+		protected override void MouseStep (object sender, MouseEventArgs args)
+		{
+			base.MouseStep (sender, args);
+			if (!drag)
+				return;
+			Point currentPoint = args.GetPosition(null);
+			Point offset = new Point(0.0, 0.0);
+			offset.X = currentPoint.X - lastPoint.X;
+			offset.Y = currentPoint.Y - lastPoint.Y;
+			
+			System.Console.WriteLine(offset);
+			
+			Left += offset.X;
+			Top += offset.Y;
+			
+			MoveElement(offset);
+			
+			lastPoint = currentPoint;
+		}
+		
+		protected override void MouseEnd (object sender, MouseEventArgs args)
+		{
+			base.MouseEnd (sender, args);
+			drag = false;
+		}
+
+		private void MoveElement(Point offset)
+		{
+			double left = (double) Element.GetValue(Canvas.LeftProperty);
+			double top = (double) Element.GetValue(Canvas.TopProperty);
+			
+			Element.SetValue(Canvas.LeftProperty, left + offset.X);
+			Element.SetValue(Canvas.TopProperty, top + offset.Y);
+		}
+		
+		public const double DefaultWidth = 10.0;
+		public const double DefaultHeight = 10.0;
+		
+		private Point lastPoint;
+		private bool drag = false;
 	}
 }

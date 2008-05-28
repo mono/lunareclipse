@@ -25,18 +25,70 @@
 //
 //
 
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Input;
 using Gtk.Moonlight;
 
-namespace LunarEclipse {	
+namespace LunarEclipse.Model {	
 	
-	public class AbstractControlPoint: Control, IControlPoint {
+	public abstract class AbstractControlPoint: Control, IControlPoint {
 		
-		public AbstractControlPoint(GtkSilver s)
+		public AbstractControlPoint(GtkSilver s, UIElement e)
 		{
 			silver = s;
+			element = e;
+			inner = s.InitializeFromXaml(GetXaml(), this);
+			
+			MouseLeftButtonDown += MouseStart;
+			MouseLeftButtonUp += MouseEnd;
+			MouseMove += MouseStep;
 		}
 		
+		public abstract string GetXaml();
+		
+		public double Left {
+			get { return (double) inner.GetValue(Canvas.LeftProperty); }
+			set { inner.SetValue(Canvas.LeftProperty, value); }
+		}
+		
+		public double Top {
+			get { return (double) inner.GetValue(Canvas.TopProperty); }
+			set { inner.SetValue(Canvas.TopProperty, value); }
+		}
+		
+		public double Width {
+			get { return (double) inner.GetValue(Control.WidthProperty); }
+			set { inner.SetValue(Control.WidthProperty, value); }
+		}
+		
+		public double Height {
+			get { return (double) inner.GetValue(Control.HeightProperty); }
+			set { inner.SetValue(Control.HeightProperty, value); }
+		}
+		
+		protected UIElement Element {
+			get { return element; }
+		}
+		
+		protected virtual void MouseStart(object sender, MouseEventArgs args)
+		{
+			CaptureMouse();
+		}
+		
+		protected virtual void MouseEnd(object sender, MouseEventArgs args)
+		{
+			ReleaseMouseCapture();
+		}
+		
+		protected virtual void MouseStep(object sender, MouseEventArgs args)
+		{
+			System.Console.WriteLine("Mouse Step");
+		}
+			
 		private GtkSilver silver;
+		private FrameworkElement inner;
+		private UIElement element;
 	}
 }

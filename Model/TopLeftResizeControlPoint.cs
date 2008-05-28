@@ -25,13 +25,14 @@
 //
 //
 
+using System.Windows;
 using Gtk.Moonlight;
 
-namespace LunarEclipse {
+namespace LunarEclipse.Model {
 	
 	public class TopLeftResizeControlPoint: ResizeControlPoint
 	{
-		public TopLeftResizeControlPoint(GtkSilver silver): base(silver)
+		public TopLeftResizeControlPoint(GtkSilver silver, UIElement element): base(silver, element)
 		{
 		}
 	}

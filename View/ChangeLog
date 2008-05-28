@@ -1,3 +1,7 @@
+2008-05-27  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MainWindow.cs: Added some tests for the new ControlPoint System
+
 2008-05-17  Manuel Ceron <ceronman@unicauca.edu.co> 
 
 	* MainWindow.cs, PropertyGroupBrushes.cs, PropertyGroupLayout.cs: Changed
