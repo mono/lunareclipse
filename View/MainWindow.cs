@@ -69,21 +69,19 @@ namespace LunarEclipse.View
             moonlight.Attach(c);
 			moonlight.Show ();
 			
-			System.Windows.Shapes.Ellipse circulo = new System.Windows.Shapes.Ellipse();
-			circulo.Width = 100.0;
-			circulo.Height = 200.0;
-			circulo.Fill = new SolidColorBrush(Colors.White);
-			circulo.Stroke = new SolidColorBrush(Colors.Blue);
-			
-			c.Children.Add(circulo);
-			
-			ResizeControlPoint cp = new ResizeControlPoint(moonlight, circulo);
-			cp.Top = 100.0;
-			cp.Left = 200.0;
-//			cp.Width = 100.0;
-//			cp.Height = 20.0;
-			
-			c.Children.Add(cp);
+//			System.Windows.Shapes.Ellipse circulo = new System.Windows.Shapes.Ellipse();
+//			circulo.Width = 100.0;
+//			circulo.Height = 200.0;
+//			circulo.Fill = new SolidColorBrush(Colors.White);
+//			circulo.Stroke = new SolidColorBrush(Colors.Blue);
+//			
+//			c.Children.Add(circulo);
+//			
+//			ResizeControlPoint cp = new ResizeControlPoint(moonlight, circulo);
+//			cp.Top = 100.0;
+//			cp.Left = 200.0;
+//			
+//			c.Children.Add(cp);
 			
 			Console.WriteLine ("Animation");
 			timeline = new AnimationTimeline(800, 70);

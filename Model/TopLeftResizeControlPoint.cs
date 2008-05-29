@@ -32,7 +32,7 @@ namespace LunarEclipse.Model {
 	
 	public class TopLeftResizeControlPoint: ResizeControlPoint
 	{
-		public TopLeftResizeControlPoint(GtkSilver silver, UIElement element): base(silver, element)
+		public TopLeftResizeControlPoint(GtkSilver silver, ISelectionBorder border): base(silver, border)
 		{
 		}
 	}

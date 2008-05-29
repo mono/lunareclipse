@@ -35,10 +35,10 @@ namespace LunarEclipse.Model {
 	
 	public abstract class AbstractControlPoint: Control, IControlPoint {
 		
-		public AbstractControlPoint(GtkSilver s, UIElement e)
+		public AbstractControlPoint(GtkSilver s, ISelectionBorder border)
 		{
 			silver = s;
-			element = e;
+			border = border;
 			inner = s.InitializeFromXaml(GetXaml(), this);
 			
 			MouseLeftButtonDown += MouseStart;
@@ -68,8 +68,12 @@ namespace LunarEclipse.Model {
 			set { inner.SetValue(Canvas.HeightProperty, value); }
 		}
 		
-		protected UIElement Element {
-			get { return element; }
+		protected ISelectionBorder Border {
+			get { return border; }
+		}
+		
+		protected Visual Element {
+			get { return Border.Child; }
 		}
 		
 		protected virtual void MouseStart(object sender, MouseEventArgs args)
@@ -89,6 +93,6 @@ namespace LunarEclipse.Model {
 			
 		private GtkSilver silver;
 		private FrameworkElement inner;
-		private UIElement element;
+		private ISelectionBorder border;
 	}
 }

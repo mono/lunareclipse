@@ -28,12 +28,13 @@
 using System;
 using System.Windows.Media;
 
-namespace LunarEclipse {	
+namespace LunarEclipse.Model {	
 	
 	public class ResizeSelectionBorder: AbstractSelectionBorder {
 		
 		public ResizeSelectionBorder(Visual child): base (child)
 		{
+			//Handles.Add(new ResizeControlPoint(silver, this))
 		}
 	}
 }

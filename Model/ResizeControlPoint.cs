@@ -34,7 +34,7 @@ namespace LunarEclipse.Model {
 	
 	public class ResizeControlPoint: AbstractControlPoint {
 		
-		public ResizeControlPoint(GtkSilver silver, UIElement element): base(silver, element)
+		public ResizeControlPoint(GtkSilver silver, ISelectionBorder border): base(silver, border)
 		{
 			Width = DefaultWidth;
 			Height = DefaultHeight;

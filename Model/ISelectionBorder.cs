@@ -27,7 +27,7 @@
 
 using System.Windows.Media;
 
-namespace LunarEclipse {
+namespace LunarEclipse.Model {
 	
 	public interface ISelectionBorder {
 		

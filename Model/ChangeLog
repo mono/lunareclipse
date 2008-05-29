@@ -1,5 +1,13 @@
 2008-05-28  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* ResizeControlPoint.cs, AbstractControlPoint.cs,
+	  TopLeftResizeControlPoint.cs: Using ISelectionBorder as argument
+	  for ctor instead of UIElement
+	* ISelectionBorder.cs, ResizeSelectionBorder.cs,
+	  AbstractSelectionBorder.cs: Namespace changed to LunarEclipse.Model
+
+2008-05-28  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* AbstractControlPoint.cs: Changed properties for Width and Height from
 	  Control to Canvas
 	* LineSelectionBorder.cs, ISelectionBorder.cs,

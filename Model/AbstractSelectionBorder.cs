@@ -29,7 +29,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace LunarEclipse {
+namespace LunarEclipse.Model {
 	
 	public class AbstractSelectionBorder: Canvas, ISelectionBorder {
 		
