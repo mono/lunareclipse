@@ -63,8 +63,6 @@ namespace LunarEclipse.Model {
 			offset.X = currentPoint.X - lastPoint.X;
 			offset.Y = currentPoint.Y - lastPoint.Y;
 			
-			System.Console.WriteLine(offset);
-			
 			Left += offset.X;
 			Top += offset.Y;
 			

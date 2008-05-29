@@ -88,7 +88,6 @@ namespace LunarEclipse.Model {
 		
 		protected virtual void MouseStep(object sender, MouseEventArgs args)
 		{
-			System.Console.WriteLine("Mouse Step");
 		}
 			
 		private GtkSilver silver;

@@ -1,3 +1,9 @@
+2008-05-29  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* ResizeControlPoint.cs, AbstractControlPoint.cs: Removed some
+	  uneccessary WriteLines
+	* ResizeSelectionBorder.cs: Refactored a bit
+
 2008-05-28  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* ResizeControlPoint.cs: Now MoveElement() Update the border

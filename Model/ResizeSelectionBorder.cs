@@ -28,6 +28,7 @@
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Input;
 using Gtk.Moonlight;
 
 namespace LunarEclipse.Model {	
@@ -36,13 +37,16 @@ namespace LunarEclipse.Model {
 		
 		public ResizeSelectionBorder(GtkSilver silver, Visual child): base (silver, child)
 		{
+			//TODO: Probabley duplicate code from AbstractControlPoint
+					
 			Handles.Add(new ResizeControlPoint(silver, this));
-			frame = CreateFrame();
+			CreateFrame();
+			Update();
 		}
 		
 		public override void Update ()
 		{
-			SnapFrame();
+			SnapToChild();
 		}
 
 		
@@ -56,25 +60,26 @@ namespace LunarEclipse.Model {
 			return new Rect(left, top, width, height);
 		}
 		
-		private Rectangle CreateFrame()
+		private void CreateFrame()
 		{
-			Rectangle r = new Rectangle();
-			r.StrokeThickness = DefaultStrokeThickness;
-			r.Stroke = new SolidColorBrush(DefaultStrokeColor);
-			
-			return r;
+			frame = new Rectangle();
+			frame.StrokeThickness = DefaultStrokeThickness;
+			frame.Stroke = new SolidColorBrush(DefaultStrokeColor);
 		}
 		
-		private void SnapFrame()
+		private void SnapToChild()
 		{
-			Rect bounds = GetChildBounds();
-			
-			
+			Rect r = GetChildBounds();
 			//TODO: Candidate for Helper
-			frame.SetValue(TopProperty, bounds.Top);
-			frame.SetValue(LeftProperty, bounds.Left);
-			frame.Width = bounds.Width;
-			frame.Height = bounds.Height;
+			frame.SetValue(TopProperty, r.Top);
+			frame.SetValue(LeftProperty, r.Left);
+			frame.Width = r.Width;
+			frame.Height = r.Height;
+			
+			SetValue(TopProperty, r.Top);
+			SetValue(LeftProperty, r.Left);
+			SetValue(WidthProperty, r.Width);
+			SetValue(HeightProperty, r.Height);
 		}
 		
 		//TODO: This should be private in the future because of bug 386468
@@ -85,10 +90,10 @@ namespace LunarEclipse.Model {
 			foreach (IControlPoint cp in Handles)
 				Children.Add((Visual)cp);			
 		}
-
-		public const double DefaultStrokeThickness = 1;
+		
+		public const double DefaultStrokeThickness = 4;
 		public Color DefaultStrokeColor = Colors.Black;
-			
+
 		private Rectangle frame;
 	}
 }

@@ -78,9 +78,14 @@ namespace LunarEclipse.View
 			c.Children.Add(circulo);
 			
 			ResizeSelectionBorder border = new ResizeSelectionBorder(moonlight, circulo);
-			border.AddFrame();
+			//border.Background = new SolidColorBrush(Colors.Yellow);
+			border.SetValue(Canvas.ZIndexProperty, int.MaxValue);
+			border.Background = new SolidColorBrush(Colors.Transparent);
+			border.MouseMove += delegate {
+				System.Console.WriteLine("Hola");
+			};
 			c.Children.Add(border);
-			
+			border.AddFrame();
 			
 //			ResizeControlPoint cp = new ResizeControlPoint(moonlight, circulo);
 //			cp.Top = 100.0;
