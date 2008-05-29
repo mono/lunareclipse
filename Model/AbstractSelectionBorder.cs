@@ -28,12 +28,13 @@
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Gtk.Moonlight;
 
 namespace LunarEclipse.Model {
 	
-	public class AbstractSelectionBorder: Canvas, ISelectionBorder {
+	public abstract class AbstractSelectionBorder: Canvas, ISelectionBorder {
 		
-		public AbstractSelectionBorder(Visual c)
+		public AbstractSelectionBorder(GtkSilver silver, Visual c)
 		{
 			child = c;
 			handles = new List<IControlPoint>();
@@ -47,6 +48,8 @@ namespace LunarEclipse.Model {
 		{
 			get { return handles; }
 		}
+		
+		public abstract void Update();
 		
 		private Visual child;
 		private List<IControlPoint> handles;

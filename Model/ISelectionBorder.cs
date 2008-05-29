@@ -32,5 +32,6 @@ namespace LunarEclipse.Model {
 	public interface ISelectionBorder {
 		
 		Visual Child { get; }
+		void Update();
 	}
 }

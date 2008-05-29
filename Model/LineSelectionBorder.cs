@@ -28,14 +28,19 @@
 using System.Collections.Generic;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using Gtk.Moonlight;
 
 namespace LunarEclipse.Model {
 	
 	public class LineSelectionBorder: AbstractSelectionBorder {
 		
-		public LineSelectionBorder(Visual child): base(child)
+		public LineSelectionBorder(GtkSilver silver, Visual child): base(silver, child)
 		{
 			nodes = new List<Shape>();
+		}
+		
+		public override void Update()
+		{
 		}
 		
 		private List<Shape> nodes;

@@ -1,5 +1,18 @@
 2008-05-28  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* ResizeControlPoint.cs: Now MoveElement() Update the border
+	* AbstractControlPoint.cs: Border ctor argument renamed to b
+	* ISelectionBorder.cs: Added Update()
+	* ResizeSelectionBorder.cs: Added Update(), GetChildBounds(),
+	  CreateFrame(), SnapFrame() and AddFrame() Methods. Added GtkSilver
+	  as ctor parameter
+	* AbstractSelectionBorder.cs: Added Update(). GtkSilver argument added
+	  to ctor
+	* LineSelectionBorder.cs: Added Update(). Added GtkSilver parameter to
+	  ctor
+
+2008-05-28  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* ResizeControlPoint.cs, AbstractControlPoint.cs,
 	  TopLeftResizeControlPoint.cs: Using ISelectionBorder as argument
 	  for ctor instead of UIElement

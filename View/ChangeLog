@@ -2,6 +2,10 @@
 
 	
 
+2008-05-28  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	
+
 2008-05-27  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MainWindow.cs: Added some tests for the new ControlPoint System

@@ -35,10 +35,10 @@ namespace LunarEclipse.Model {
 	
 	public abstract class AbstractControlPoint: Control, IControlPoint {
 		
-		public AbstractControlPoint(GtkSilver s, ISelectionBorder border)
+		public AbstractControlPoint(GtkSilver s, ISelectionBorder b)
 		{
 			silver = s;
-			border = border;
+			border = b;
 			inner = s.InitializeFromXaml(GetXaml(), this);
 			
 			MouseLeftButtonDown += MouseStart;

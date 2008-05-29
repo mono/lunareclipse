@@ -25,16 +25,70 @@
 //
 //
 
-using System;
+using System.Windows;
 using System.Windows.Media;
+using System.Windows.Shapes;
+using Gtk.Moonlight;
 
 namespace LunarEclipse.Model {	
 	
 	public class ResizeSelectionBorder: AbstractSelectionBorder {
 		
-		public ResizeSelectionBorder(Visual child): base (child)
+		public ResizeSelectionBorder(GtkSilver silver, Visual child): base (silver, child)
 		{
-			//Handles.Add(new ResizeControlPoint(silver, this))
+			Handles.Add(new ResizeControlPoint(silver, this));
+			frame = CreateFrame();
 		}
+		
+		public override void Update ()
+		{
+			SnapFrame();
+		}
+
+		
+		private Rect GetChildBounds()
+		{
+			double top = (double) Child.GetValue(TopProperty);
+			double left = (double) Child.GetValue(LeftProperty);
+			double width = (double) Child.GetValue(WidthProperty);
+			double height = (double) Child.GetValue(HeightProperty);
+			
+			return new Rect(left, top, width, height);
+		}
+		
+		private Rectangle CreateFrame()
+		{
+			Rectangle r = new Rectangle();
+			r.StrokeThickness = DefaultStrokeThickness;
+			r.Stroke = new SolidColorBrush(DefaultStrokeColor);
+			
+			return r;
+		}
+		
+		private void SnapFrame()
+		{
+			Rect bounds = GetChildBounds();
+			
+			
+			//TODO: Candidate for Helper
+			frame.SetValue(TopProperty, bounds.Top);
+			frame.SetValue(LeftProperty, bounds.Left);
+			frame.Width = bounds.Width;
+			frame.Height = bounds.Height;
+		}
+		
+		//TODO: This should be private in the future because of bug 386468
+		public void AddFrame()
+		{
+			Update();
+			Children.Add(frame);
+			foreach (IControlPoint cp in Handles)
+				Children.Add((Visual)cp);			
+		}
+
+		public const double DefaultStrokeThickness = 1;
+		public Color DefaultStrokeColor = Colors.Black;
+			
+		private Rectangle frame;
 	}
 }

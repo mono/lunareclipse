@@ -86,6 +86,8 @@ namespace LunarEclipse.Model {
 			
 			Element.SetValue(Canvas.LeftProperty, left + offset.X);
 			Element.SetValue(Canvas.TopProperty, top + offset.Y);
+			
+			Border.Update();
 		}
 		
 		public const double DefaultWidth = 10.0;
