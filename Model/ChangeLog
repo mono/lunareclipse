@@ -1,5 +1,10 @@
 2008-05-29  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* SelectionMarkHandle.cs, AbstractHandle.cs, IHandleGroup.cs,
+	  ResizeHandleGroup.cs, AbstractHandleGroup.cs, IHandle.cs: Added
+
+2008-05-29  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* ResizeControlPoint.cs, AbstractControlPoint.cs: Removed some
 	  uneccessary WriteLines
 	* ResizeSelectionBorder.cs: Refactored a bit

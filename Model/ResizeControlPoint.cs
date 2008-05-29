@@ -42,7 +42,7 @@ namespace LunarEclipse.Model {
 		
 		public override string GetXaml ()
 		{
-			return "<Rectangle Fill=\"#FFFF0000\" Stroke=\"#FF000000\" />";
+			return "<Rectangle Fill=\"#00FFFFFF\" Stroke=\"#FF000000\" />";
 		}
 		
 		protected override void MouseStart (object sender, MouseEventArgs args)

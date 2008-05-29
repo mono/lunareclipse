@@ -72,26 +72,18 @@ namespace LunarEclipse.View
 			System.Windows.Shapes.Ellipse circulo = new System.Windows.Shapes.Ellipse();
 			circulo.Width = 100.0;
 			circulo.Height = 200.0;
+			circulo.SetValue(Canvas.TopProperty, 50.0);
+			circulo.SetValue(Canvas.LeftProperty, 50.0);
 			circulo.Fill = new SolidColorBrush(Colors.White);
 			circulo.Stroke = new SolidColorBrush(Colors.Blue);
-			
 			c.Children.Add(circulo);
 			
-			ResizeSelectionBorder border = new ResizeSelectionBorder(moonlight, circulo);
-			//border.Background = new SolidColorBrush(Colors.Yellow);
-			border.SetValue(Canvas.ZIndexProperty, int.MaxValue);
-			border.Background = new SolidColorBrush(Colors.Transparent);
-			border.MouseMove += delegate {
-				System.Console.WriteLine("Hola");
-			};
-			c.Children.Add(border);
-			border.AddFrame();
+			ResizeHandleGroup hg = new ResizeHandleGroup(moonlight, circulo);
 			
-//			ResizeControlPoint cp = new ResizeControlPoint(moonlight, circulo);
-//			cp.Top = 100.0;
-//			cp.Left = 200.0;
-//			
-//			c.Children.Add(cp);
+			foreach (IHandle handle in hg.HandlesEnumerator)
+				System.Console.WriteLine(handle.CanvasAllocation);
+			
+			hg.AddToCanvas(c);
 			
 			Console.WriteLine ("Animation");
 			timeline = new AnimationTimeline(800, 70);

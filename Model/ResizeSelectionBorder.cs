@@ -37,8 +37,15 @@ namespace LunarEclipse.Model {
 		
 		public ResizeSelectionBorder(GtkSilver silver, Visual child): base (silver, child)
 		{
-			//TODO: Probabley duplicate code from AbstractControlPoint
-					
+			SetValue(ZIndexProperty, int.MaxValue);
+			Background = new SolidColorBrush(Colors.Transparent);
+			
+			
+			//TODO: Probably duplicated code from AbstractControlPoint
+			MouseLeftButtonDown += MouseStart;
+			MouseLeftButtonUp += MouseEnd;
+			MouseMove += MouseStep;
+			
 			Handles.Add(new ResizeControlPoint(silver, this));
 			CreateFrame();
 			Update();
@@ -89,6 +96,21 @@ namespace LunarEclipse.Model {
 			Children.Add(frame);
 			foreach (IControlPoint cp in Handles)
 				Children.Add((Visual)cp);			
+		}
+		
+		//TODO: Probably duplicated code from AbstractControlPoint
+		protected virtual void MouseStart(object sender, MouseEventArgs args)
+		{
+			CaptureMouse();
+		}
+		
+		protected virtual void MouseEnd(object sender, MouseEventArgs args)
+		{
+			ReleaseMouseCapture();
+		}
+		
+		protected virtual void MouseStep(object sender, MouseEventArgs args)
+		{
 		}
 		
 		public const double DefaultStrokeThickness = 4;
