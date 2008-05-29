@@ -1,3 +1,13 @@
+2008-05-28  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* AbstractControlPoint.cs: Changed properties for Width and Height from
+	  Control to Canvas
+	* LineSelectionBorder.cs, ISelectionBorder.cs,
+	  AbstractSelectionBorder.cs: Added Child parameter
+	* ResizeSelectionBorder.cs: Added new SelectionBorder class
+	* RectangleSelectionBorder.cs: Removed, not neccessary,
+	  ResizeSelectionBorder will be used instead
+
 2008-05-27  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* ResizeControlPoint.cs: Overriden Mouse{Start, Stop, Step}

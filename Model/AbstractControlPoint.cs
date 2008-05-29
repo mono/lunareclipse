@@ -59,13 +59,13 @@ namespace LunarEclipse.Model {
 		}
 		
 		public double Width {
-			get { return (double) inner.GetValue(Control.WidthProperty); }
-			set { inner.SetValue(Control.WidthProperty, value); }
+			get { return (double) inner.GetValue(Canvas.WidthProperty); }
+			set { inner.SetValue(Canvas.WidthProperty, value); }
 		}
 		
 		public double Height {
-			get { return (double) inner.GetValue(Control.HeightProperty); }
-			set { inner.SetValue(Control.HeightProperty, value); }
+			get { return (double) inner.GetValue(Canvas.HeightProperty); }
+			set { inner.SetValue(Canvas.HeightProperty, value); }
 		}
 		
 		protected UIElement Element {

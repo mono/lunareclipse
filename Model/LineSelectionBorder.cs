@@ -27,12 +27,13 @@
 
 using System.Collections.Generic;
 using System.Windows.Shapes;
+using System.Windows.Media;
 
 namespace LunarEclipse.Model {
 	
 	public class LineSelectionBorder: AbstractSelectionBorder {
 		
-		public LineSelectionBorder()
+		public LineSelectionBorder(Visual child): base(child)
 		{
 			nodes = new List<Shape>();
 		}

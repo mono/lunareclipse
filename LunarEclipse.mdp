@@ -65,11 +65,11 @@
     <File name="Model/LineSelectionBorder.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/AbstractSelectionBorder.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/ISelectionBorder.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/RectangleSelectionBorder.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/IControlPoint.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/AbstractControlPoint.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/ResizeControlPoint.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/TopLeftResizeControlPoint.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/ResizeSelectionBorder.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="False" refto="atk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

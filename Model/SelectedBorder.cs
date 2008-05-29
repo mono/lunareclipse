@@ -54,6 +54,8 @@ namespace LunarEclipse.Model
         private Shape rotate3;
         private Shape rotate4;
         private Shape[] lines;
+
+#region Handles
         
         public Visual Handle
         {
@@ -93,6 +95,7 @@ namespace LunarEclipse.Model
         {
             get { return this.rotate4; }
         }
+#endregion
         
 		public ScaleTransform Scale
 		{

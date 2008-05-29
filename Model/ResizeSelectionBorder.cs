@@ -1,4 +1,4 @@
-// RectangleSelectionBorder.cs
+// ResizeSelectionBorder.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -26,12 +26,13 @@
 //
 
 using System;
+using System.Windows.Media;
 
-namespace LunarEclipse { 
+namespace LunarEclipse {	
 	
-	public class RectangleSelectionBorder: AbstractSelectionBorder {
+	public class ResizeSelectionBorder: AbstractSelectionBorder {
 		
-		public RectangleSelectionBorder()
+		public ResizeSelectionBorder(Visual child): base (child)
 		{
 		}
 	}

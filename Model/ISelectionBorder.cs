@@ -32,6 +32,5 @@ namespace LunarEclipse {
 	public interface ISelectionBorder {
 		
 		Visual Child { get; }
-		Visual Handle { get; }
 	}
 }

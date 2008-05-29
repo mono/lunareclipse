@@ -25,6 +25,7 @@
 //
 //
 
+using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -32,21 +33,22 @@ namespace LunarEclipse {
 	
 	public class AbstractSelectionBorder: Canvas, ISelectionBorder {
 		
-		public AbstractSelectionBorder()
+		public AbstractSelectionBorder(Visual c)
 		{
+			child = c;
+			handles = new List<IControlPoint>();
 		}
 		
 		public Visual Child {
 			get { return child; }
-			set { child = value; }
 		}
 		
-		public Visual Handle {
-			get { return handle; }
-			set { handle = value; } 
+		public List<IControlPoint> Handles
+		{
+			get { return handles; }
 		}
 		
 		private Visual child;
-		private Visual handle;
+		private List<IControlPoint> handles;
 	}
 }
