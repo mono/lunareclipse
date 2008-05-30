@@ -326,19 +326,14 @@ namespace LunarEclipse.Model
 				// Formula: angle = atan( (Slope2 - Slope1 ) / (1 + slope2 * slope1) )
 				double slope1 = (mouseStart.Y - center.Y) / (mouseStart.X - center.X);
 				double slope2 = (Position.Y - center.Y) / (Position.X - center.X);
-				double difference = Math.Atan((slope2 - slope1) / ( 1 + slope1 * slope2));
+				double difference = Math.Atan2((slope2 - slope1), ( 1 + slope1 * slope2));
 				
-				// Sometimes the angle will hit infinity, so in those cases
-				// don't apply the change and wait for the next mouse move which
-				// will give a proper angle
-				if(!double.IsNaN(difference))
-				{
-					Toolbox.ChangeProperty(border.Rotate, RotateTransform.AngleProperty, (double)border.Rotate.GetValue(RotateTransform.AngleProperty) + Toolbox.RadiansToDegrees(difference));
-					RaiseEvent(ChangedRotation, border.Rotate,
-							   RotateTransform.AngleProperty, 
-							   border.Rotate.Angle, 
-							   border.Rotate.Angle + Toolbox.RadiansToDegrees(difference));
-				}
+				Toolbox.ChangeProperty(border.Rotate, RotateTransform.AngleProperty, (double)border.Rotate.GetValue(RotateTransform.AngleProperty) + Toolbox.RadiansToDegrees(difference));
+				RaiseEvent(ChangedRotation, border.Rotate,
+						   RotateTransform.AngleProperty, 
+						   border.Rotate.Angle, 
+						   border.Rotate.Angle + Toolbox.RadiansToDegrees(difference));
+
 			}
 			
 			else

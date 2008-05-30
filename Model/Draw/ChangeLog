@@ -1,3 +1,7 @@
+2008-05-30  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* Selector.cs: Changed Atan for Atan2 to avoid NaN problems
+
 2008-05-26  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	
