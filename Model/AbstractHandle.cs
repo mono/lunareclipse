@@ -81,21 +81,24 @@ namespace LunarEclipse.Model {
 			Rect r = CanvasAllocation;
 			r.X += dx;
 			r.Y += dy;
+			CanvasAllocation = r;
 		}
 		
 		public virtual void MouseStart(object sender, MouseEventArgs args)
 		{
 			CaptureMouse();
+			LastClick = args.GetPosition(null);
+			Dragging = true;
 		}
 		
 		public virtual void MouseEnd(object sender, MouseEventArgs args)
 		{
 			ReleaseMouseCapture();
+			Dragging = false;
 		}
 		
 		public virtual void MouseStep(object sender, MouseEventArgs args)
 		{
-			System.Console.WriteLine("Moving...");
 		}
 		
 		public virtual void Update()
@@ -124,13 +127,37 @@ namespace LunarEclipse.Model {
 			get { return Group.Child; }
 		}
 		
-		protected GtkSilver Silver{
+		protected GtkSilver Silver {
 			get { return silver; }
 			set { silver = value; }
+		}
+		
+		protected Point LastClick {
+			get { return last_click; }
+			set { last_click = value; }
+		}
+
+		protected bool Dragging {
+			get { return dragging; }
+			set { dragging = value; }
+		}
+		
+		protected Point CalculateOffset(Point current)
+		{
+			Point offset = new Point(0.0, 0.0);
+			
+			offset.X = current.X - LastClick.X;
+			offset.Y = current.Y - LastClick.Y;
+			
+			LastClick = current;
+			
+			return offset;
 		}
 		
 		private IHandleGroup group;
 		private GtkSilver silver;
 		private FrameworkElement inner;
+		private Point last_click;
+		private bool dragging = false;
 	}
 }

@@ -87,7 +87,7 @@ namespace LunarEclipse.View
 			line.Stroke = new SolidColorBrush(Colors.Blue);
 			c.Children.Add(line);
 			
-			ResizeHandleGroup hg = new ResizeHandleGroup(moonlight, line);
+			LineHandleGroup hg = new LineHandleGroup(moonlight, line);
 			hg.AddToCanvas(c);
 			
 			Console.WriteLine ("Animation");

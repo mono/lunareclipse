@@ -1,5 +1,14 @@
 2008-05-30  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* AbstractHandle.cs: Added LastClick Dragging and CalculateOffset()
+	  Mouse{Start,Step,End} Methods updated
+	* LineHandleGroup.cs: Added HandleGroup for Shapes.Line
+	* StartLineHandle.cs, EndLineHandle.cs, LineHandle.cs: Added Handles
+	  for Shapes.Line
+	* TopLeftResizeControlPoint.cs: Removed not needed any more.
+
+2008-05-30  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* ResizeControlPoint.cs, AbstractControlPoint.cs,
 	  LineSelectionBorder.cs, ISelectionBorder.cs, IControlPoint.cs,
 	  ResizeSelectionBorder.cs, AbstractSelectionBorder.cs: Eliminated

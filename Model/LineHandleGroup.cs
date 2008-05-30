@@ -1,4 +1,4 @@
-// TopLeftResizeControlPoint.cs
+// LineHandleGroup.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -25,15 +25,23 @@
 //
 //
 
-using System.Windows;
+using System;
+using System.Windows.Shapes;
+using System.Windows.Media;
 using Gtk.Moonlight;
 
-namespace LunarEclipse.Model {
-	
-	public class TopLeftResizeControlPoint: ResizeControlPoint
-	{
-		public TopLeftResizeControlPoint(GtkSilver silver, ISelectionBorder border): base(silver, border)
+namespace LunarEclipse.Model { 
+		
+	public class LineHandleGroup: AbstractHandleGroup {
+		
+		public LineHandleGroup(GtkSilver silver, Visual child):
+			base(child)
 		{
+			if (!(child is Line))  {
+				throw new ArgumentException("Child must be Line");
+			}
+			Handles.Add(new StartLineHandle(silver, this));
+			Handles.Add(new EndLineHandle(silver, this));
 		}
 	}
 }
