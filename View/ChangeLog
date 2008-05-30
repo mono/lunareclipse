@@ -1,3 +1,7 @@
+2008-05-30  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MainWindow.cs: Added Line test
+
 2008-05-29  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MainWindow.cs: Added Tests
