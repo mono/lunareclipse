@@ -163,8 +163,8 @@ namespace LunarEclipse.Model
 			{
 				if(this.clickedOnShape != null)
 				{
-					if(!e.Ctrl && !e.Shift)
-						this.DeselectAll();
+//					if(!e.Ctrl && !e.Shift)
+//						this.DeselectAll();
 					
 					if(!this.selectedObjects.ContainsKey(this.clickedOnShape))
 						Select(this.clickedOnShape);

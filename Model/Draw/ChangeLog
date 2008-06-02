@@ -1,3 +1,8 @@
+2008-06-01  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* Selector.cs: Removed Old Modifier Keys style. Wating for new style to
+	  be implemented in Moonlight
+
 2008-05-30  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* Selector.cs: Changed Atan for Atan2 to avoid NaN problems

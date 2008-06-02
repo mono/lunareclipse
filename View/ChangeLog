@@ -1,3 +1,7 @@
+2008-06-01  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MainWindow.cs: Temporary commented test
+
 2008-05-30  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MainWindow.cs: Added LineHandleGroup Test
