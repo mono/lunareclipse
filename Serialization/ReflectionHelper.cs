@@ -224,8 +224,12 @@ namespace LunarEclipse.Serialization
 					if(!propertyByName.ContainsKey(name))
 						propertyByName.Add(name, propData.Property);
 				
-					if(!propertyDataByProperty.ContainsKey(propData.Property))
+					if(!propertyDataByProperty.ContainsKey(propData.Property)) {
+					    if (propData.Property == null) {
+						    continue;
+					    }
 						propertyDataByProperty.Add(propData.Property, propData);
+				    }
 				}
 		}
 		

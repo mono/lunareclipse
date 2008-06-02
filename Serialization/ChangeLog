@@ -1,3 +1,7 @@
+2008-06-01  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* ReflectionHelper.cs: Fixed bug with null pased to Dictionary.Add
+
 2008-05-17  Manuel Ceron <ceronman@unicauca.edu.co> 
 
 	* Serializer.cs: Changed all refereces to SetValue<T>, now using the non
