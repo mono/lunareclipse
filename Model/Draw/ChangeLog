@@ -1,3 +1,8 @@
+2008-06-03  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* Selector.cs: CleanUp. OnPropertyChanged used instead of anonymous
+	  methods.
+
 2008-06-01  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* Selector.cs: Removed Old Modifier Keys style. Wating for new style to

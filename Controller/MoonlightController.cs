@@ -72,6 +72,10 @@ namespace LunarEclipse.Controller
 		{
 			get { return this.moonlight.Canvas; }
 		}
+		
+		internal GtkSilver GtkSilver {
+			get { return this.moonlight; }
+		}
         
     	public DrawBase Current
         {

@@ -1,3 +1,7 @@
+2008-06-03  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MoonlightController.cs: Added GtkSilver Method
+
 2008-05-17  Manuel Ceron <ceronman@unicauca.edu.co> 
 
 	* Toolbox.cs: Changed all refereces to SetValue<T>, now using the non

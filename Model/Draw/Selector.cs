@@ -98,12 +98,7 @@ namespace LunarEclipse.Model
 		internal override void Cleanup ()
 		{
 			base.Cleanup();
-			Toolbox.PropertyChanged -= delegate (object sender, PropertyChangedEventArgs e) {
-				SelectedBorder b;
-				Visual v = e.Target as Visual;
-				if(v != null && selectedObjects.TryGetValue(v, out b))
-					b.ResizeBorder();
-			};
+			Toolbox.PropertyChanged -= OnPropertyChanged;
 			Visual[] shapes = new Visual[selectedObjects.Count];
 			selectedObjects.Keys.CopyTo(shapes, 0);
 			foreach(Visual s in shapes)
@@ -342,18 +337,20 @@ namespace LunarEclipse.Model
 			}
 		}
 		
+		private void OnPropertyChanged(object sender, PropertyChangedEventArgs e) {
+			SelectedBorder b;
+			Visual v = e.Target as Visual;
+			if(v != null && selectedObjects.TryGetValue(v, out b))
+				b.ResizeBorder();
+		}
+		
 		internal override void Prepare ()
 		{
 			base.Prepare();
 			
 			if(!prepared)
 			{
-				Toolbox.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e) {
-					SelectedBorder b;
-					Visual v = e.Target as Visual;
-					if(v != null && selectedObjects.TryGetValue(v, out b))
-						b.ResizeBorder();
-				};
+				Toolbox.PropertyChanged += OnPropertyChanged;
 				
 				prepared = true;
 				foreach(Visual v in this.controller.Canvas.Children)
@@ -470,18 +467,24 @@ namespace LunarEclipse.Model
 			}
 		}
 		
-		private void Select(Visual s)
+		private void Select(Visual shape)
 		{
 			// When selecting an item, we make sure it has a valid name. This means that
 			// when selecting an item for animations or selecting it to change it's properties
 			// in the property pane, it always has a valid name
-			if(string.IsNullOrEmpty(s.Name))
-				s.SetValue(Visual.NameProperty, NameGenerator.GetName(Panel, s));
+			if(string.IsNullOrEmpty(shape.Name))
+				shape.SetValue(Visual.NameProperty, NameGenerator.GetName(Panel, shape));
 			
-			SelectedBorder border = new SelectedBorder(s, controller.Canvas);
-			selectedObjects.Add(s, border);
+			if (shape is Line) {
+				LineHandleGroup group = new LineHandleGroup(controller.GtkSilver, shape as Line);
+				group.AddToCanvas(controller.Canvas);
+				return;
+			}
+			
+			SelectedBorder border = new SelectedBorder(shape, controller.Canvas);
+			selectedObjects.Add(shape, border);
 			border.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
-			Toolbox.RaiseEvent<SelectionChangedEventArgs>(ItemSelected, controller, new SelectionChangedEventArgs(s, border));
+			Toolbox.RaiseEvent<SelectionChangedEventArgs>(ItemSelected, controller, new SelectionChangedEventArgs(shape, border));
 		}
 		
 #endregion Private/Internal Methods
