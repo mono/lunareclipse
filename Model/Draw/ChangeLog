@@ -1,3 +1,11 @@
+2008-06-05  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* EllipseCreationTool.cs, SquareCreationTool.cs,
+	  RectangleCreationTool.cs, ProportionalShapeCreationTool.cs,
+	  LineCreationTool.cs: Added
+	* ShapeCreationTool.cs: Added NormalizeShape method.
+	* CircleCreationTool.cs: No iherits from ProportionalShapeCreationTool
+
 2008-06-04  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* Selector.cs: Start of refactoring. Various things broken

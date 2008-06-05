@@ -1,4 +1,4 @@
-// CircleCreationTool.cs
+// LineCreationTool.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -25,25 +25,37 @@
 //
 //
 
+using System;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {	
 	
-	public class CircleCreationTool: ProportionalShapeCreationTool	{
+	public class LineCreationTool: ShapeCreationTool {
 		
-		public CircleCreationTool(MoonlightController controller):
+		public LineCreationTool(MoonlightController controller):
 			base(controller)
 		{
 		}
 		
 		protected override Shape CreateShape ()
 		{
-			Shape shape = new Ellipse();
+			Shape shape = new Line();
 			shape.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
 			
 			return shape;
 		}
+		
+		protected override void UpdateShape ()
+		{
+			Line line = (Line) CreatedShape;
+			
+			line.X1 = ShapeStart.X;
+			line.Y1 = ShapeStart.Y;
+			line.X2 = ShapeEnd.X;
+			line.Y2 = ShapeEnd.Y;
+		}
+
 	}
 }

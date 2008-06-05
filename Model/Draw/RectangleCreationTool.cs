@@ -1,4 +1,4 @@
-// CircleCreationTool.cs
+// RectangleCreationTool.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -29,18 +29,18 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
-namespace LunarEclipse.Model {	
+namespace LunarEclipse.Model {
 	
-	public class CircleCreationTool: ProportionalShapeCreationTool	{
+	public class RectangleCreationTool: ShapeCreationTool {
 		
-		public CircleCreationTool(MoonlightController controller):
+		public RectangleCreationTool(MoonlightController controller):
 			base(controller)
 		{
 		}
 		
 		protected override Shape CreateShape ()
 		{
-			Shape shape = new Ellipse();
+			Shape shape = new Rectangle();
 			shape.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
 			
 			return shape;

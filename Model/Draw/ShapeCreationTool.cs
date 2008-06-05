@@ -45,7 +45,6 @@ namespace LunarEclipse.Model {
 			base.MouseDown (ev);
 			
 			CreatedShape = CreateShape();
-			
 			Controller.Canvas.Children.Add(CreatedShape);
 			
 			Point position = ev.GetPosition(Controller.Canvas);
@@ -61,8 +60,8 @@ namespace LunarEclipse.Model {
 			base.MouseMove (ev);
 			
 			Point position = ev.GetPosition(Controller.Canvas);
-			
 			ShapeEnd = position;
+			UpdateShape();
 		}
 
 		
@@ -70,21 +69,32 @@ namespace LunarEclipse.Model {
 		
 		protected virtual void UpdateShape() 
 		{
-			double x = ShapeStart.X;
-			double y = ShapeStart.Y;
-			double width = ShapeEnd.X - ShapeStart.X;
-			double height = ShapeEnd.Y - ShapeStart.Y;
+			double x, y, width, height;
 			
-			if (width < 0)
-				x = ShapeEnd.X;
-			
-			if (height < 0)
-				y = ShapeEnd.Y;
+			NormalizeShape(out x, out y, out width, out height);
 			
 			CreatedShape.SetValue(Canvas.LeftProperty, x);
 			CreatedShape.SetValue(Canvas.TopProperty, y);
 			CreatedShape.SetValue(Shape.WidthProperty, width);
 			CreatedShape.SetValue(Shape.HeightProperty, height);
+		}
+		
+		protected virtual void NormalizeShape(out double x, out double y, out double width, out double height)
+		{
+			x = ShapeStart.X;
+			y = ShapeStart.Y;
+			width = ShapeEnd.X - ShapeStart.X;
+			height = ShapeEnd.Y - ShapeStart.Y;
+			
+			if (width < 0) {
+				x = ShapeEnd.X;
+				width = -width;
+			}
+			
+			if (height < 0) {
+				y = ShapeEnd.Y;
+				height = -height;
+			}
 		}
 		
 		protected Shape CreatedShape {

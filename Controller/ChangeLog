@@ -1,3 +1,7 @@
+2008-06-05  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MoonlightController.cs: Partially Changed DrawBase for ITool
+
 2008-06-03  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MoonlightController.cs: Added GtkSilver Method

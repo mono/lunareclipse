@@ -1,4 +1,4 @@
-// CircleCreationTool.cs
+// ProportionalShapeCreationTool.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -25,25 +25,35 @@
 //
 //
 
-using System.Windows.Media;
-using System.Windows.Shapes;
+using System;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {	
 	
-	public class CircleCreationTool: ProportionalShapeCreationTool	{
+	public abstract class ProportionalShapeCreationTool: ShapeCreationTool {
 		
-		public CircleCreationTool(MoonlightController controller):
+		public ProportionalShapeCreationTool(MoonlightController controller):
 			base(controller)
 		{
 		}
 		
-		protected override Shape CreateShape ()
+		protected override void NormalizeShape (out double x, out double y, out double width, out double height)
 		{
-			Shape shape = new Ellipse();
-			shape.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
+			x = ShapeStart.X;
+			y = ShapeStart.Y;
+			width = ShapeEnd.X - ShapeStart.X;
+			height = ShapeEnd.Y - ShapeStart.Y;
 			
-			return shape;
+			double size = Math.Max(Math.Abs(width), Math.Abs(height));
+			
+			if (width < 0)
+				x = ShapeStart.X - size;
+			
+			if (height < 0)
+				y = ShapeStart.Y - size;
+
+			width = size;
+			height = size;
 		}
 	}
 }

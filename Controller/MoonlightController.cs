@@ -65,6 +65,7 @@ namespace LunarEclipse.Controller
 		private StoryboardManager storyboardManager;
 		private AnimationTimeline timeline;
 		private UndoEngine undo;
+		private ITool current_tool;
 
 #endregion Member Variables
         
@@ -77,6 +78,12 @@ namespace LunarEclipse.Controller
 			get { return this.moonlight; }
 		}
         
+		public ITool CurrentTool
+		{
+			get { return current_tool; }
+			set { current_tool = value; }
+		}
+		
     	public DrawBase Current
         {
             get { return this.current; }
@@ -154,7 +161,8 @@ namespace LunarEclipse.Controller
             
             active = true;
             this.Canvas.CaptureMouse();
-            current.DrawStart(this.moonlight.Canvas, e);
+            //current.DrawStart(this.moonlight.Canvas, e);
+			CurrentTool.MouseDown(e);
             
 			Console.WriteLine("Current: {0}", current.ToString());
             if(current.CanUndo)
@@ -166,7 +174,8 @@ namespace LunarEclipse.Controller
             if(!active)
                 return;
 
-            current.MouseMove(e);
+            //current.MouseMove(e);
+			CurrentTool.MouseMove(e);
         }
         
         private void MouseLeftUp(object sender, MouseEventArgs e)
@@ -175,26 +184,10 @@ namespace LunarEclipse.Controller
             if(!active)
                 return;
 
-            current.DrawEnd(e);
+            //current.DrawEnd(e);
+			CurrentTool.MouseUp(e);
             active = false;
             this.Canvas.ReleaseMouseCapture();
-            
-			if (!(current is SelectionDraw))
-                return;
-            
-			SelectionDraw selection = (SelectionDraw) current;
-			if (selection.SelectedObjects.Count == 1)
-            {
-               foreach(KeyValuePair<Visual, SelectedBorder> keypair in selection.SelectedObjects)
-               {
-                   //properties.SelectedObject = keypair.Value;
-                   Console.WriteLine("Selected: " + keypair.Key.ToString());
-               }
-            }
-            else
-            {
-                //properties.SelectedObject = null;
-            }
         }
 		
 		

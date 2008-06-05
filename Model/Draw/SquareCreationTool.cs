@@ -1,4 +1,4 @@
-// CircleCreationTool.cs
+// SquareCreationTool.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -31,16 +31,16 @@ using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {	
 	
-	public class CircleCreationTool: ProportionalShapeCreationTool	{
+	public class SquareCreationTool: ProportionalShapeCreationTool {
 		
-		public CircleCreationTool(MoonlightController controller):
+		public SquareCreationTool(MoonlightController controller):
 			base(controller)
 		{
 		}
 		
 		protected override Shape CreateShape ()
 		{
-			Shape shape = new Ellipse();
+			Shape shape = new Rectangle();
 			shape.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
 			
 			return shape;

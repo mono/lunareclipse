@@ -437,22 +437,22 @@ namespace LunarEclipse.View
 			
 			b = new Button("Circle");
 			b.Clicked += delegate {
-				controller.Current = new CircleDraw();
-				Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
+				//controller.Current = new CircleDraw();
+				controller.CurrentTool = new CircleCreationTool(controller);
     	    };
 			toolbox.Attach (b, 1, 2, 0, 1);
 			
             b = new Button("Ellipse");
     	    b.Clicked += delegate {
-    	        controller.Current = new EllipseDraw();
-    	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
+    	        //controller.Current = new EllipseDraw();
+				controller.CurrentTool = new EllipseCreationTool(controller);
     	    };
 	    toolbox.Attach (b, 2, 3, 0, 1);
             
     	    b = new Button("Line");
     	    b.Clicked += delegate {
-    	        controller.Current = new LineDraw();
-    	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
+    	        //controller.Current = new LineDraw();
+				controller.CurrentTool = new LineCreationTool(controller);
     	    };
 	    toolbox.Attach (b, 0, 1, 1, 2);
     	    
@@ -465,15 +465,15 @@ namespace LunarEclipse.View
     	    
     	    b = new Button("Rectangle");
     	    b.Clicked += delegate {
-    	        controller.Current = new RectangleDraw();
-    	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
+    	        //controller.Current = new RectangleDraw();
+				controller.CurrentTool = new RectangleCreationTool(controller);
     	    };
 	    toolbox.Attach (b, 2, 3, 1, 2);
     	    
     	    b = new Button("Square");
     	    b.Clicked += delegate {
-    	        controller.Current = new SquareDraw();
-    	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
+    	       //controller.Current = new SquareDraw();
+				controller.CurrentTool = new SquareCreationTool(controller);
     	    };    	    
 	    toolbox.Attach (b, 0, 1, 2, 3);
 			

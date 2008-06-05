@@ -1,4 +1,4 @@
-// CircleCreationTool.cs
+// EllipseCreationTool.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -29,11 +29,11 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
-namespace LunarEclipse.Model {	
+namespace LunarEclipse.Model {
 	
-	public class CircleCreationTool: ProportionalShapeCreationTool	{
+	public class EllipseCreationTool: ShapeCreationTool {
 		
-		public CircleCreationTool(MoonlightController controller):
+		public EllipseCreationTool(MoonlightController controller):
 			base(controller)
 		{
 		}
