@@ -1,3 +1,7 @@
+2008-06-04  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MainWindow.cs: Removed Test
+
 2008-06-03  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MainWindow.cs: Added Test Again

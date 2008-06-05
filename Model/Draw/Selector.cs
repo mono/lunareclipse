@@ -58,9 +58,10 @@ namespace LunarEclipse.Model
 		
 		private MoonlightController controller;
 		private Point mouseStart;
-		private Visual clickedOnShape;
+		private Visual clicked_shape;
 		private bool prepared;
 		private Dictionary<Visual, SelectedBorder> selectedObjects;
+		private Dictionary<Visual, IHandleGroup> handle_groups;
 		private bool shapeAdded;
 		
 #endregion Member Variables
@@ -88,6 +89,7 @@ namespace LunarEclipse.Model
 		{
 			this.controller = controller;
 			this.selectedObjects = new Dictionary<Visual, SelectedBorder>();
+			handle_groups = new Dictionary<Visual,IHandleGroup>();
 		}
 		
 #endregion Constructor
@@ -98,7 +100,9 @@ namespace LunarEclipse.Model
 		internal override void Cleanup ()
 		{
 			base.Cleanup();
+			
 			Toolbox.PropertyChanged -= OnPropertyChanged;
+			
 			Visual[] shapes = new Visual[selectedObjects.Count];
 			selectedObjects.Keys.CopyTo(shapes, 0);
 			foreach(Visual s in shapes)
@@ -108,44 +112,49 @@ namespace LunarEclipse.Model
 			{
 				UIElement e = v as UIElement;
 				if(e != null)
-					e.MouseLeftButtonDown -= new MouseEventHandler(ClickedOnVisual);
+					e.MouseLeftButtonDown -= new MouseEventHandler(OnShapeClicked);
 			}
 		}
 		
-		private void ClickedOnVisual(object sender, MouseEventArgs e)
+		private void OnShapeClicked(object sender, MouseEventArgs e)
 		{
 			Console.WriteLine("Just clicked on: {0}", ((DependencyObject)sender).Name);
 			if(sender is SelectedBorder)
-				this.clickedOnShape = ((SelectedBorder)sender).Child;
+				this.clicked_shape = ((SelectedBorder)sender).Child;
 			else
-				this.clickedOnShape = (Visual)sender;
+				this.clicked_shape = (Visual)sender;
 		}
 		
 		private void Deselect(Visual s)
 		{
-			Console.WriteLine("Deselecting: {0}", s.Name);
-			SelectedBorder b = this.selectedObjects[s];
-			b.MouseLeftButtonDown -= new MouseEventHandler(ClickedOnVisual);   
+			IHandleGroup group = handle_groups[s];
+			controller.Canvas.Children.Remove(group as Visual);
+			handle_groups.Remove(s);
 			
-			// Remove the border from the canvas
-			controller.Canvas.Children.Remove(b);
-			// Remove the selection from the list of currently selected items
-			this.selectedObjects.Remove(s);
-			Toolbox.RaiseEvent<SelectionChangedEventArgs>(ItemDeselected, controller, new SelectionChangedEventArgs(s, b));
+//			SelectedBorder b = this.selectedObjects[s];
+//			b.MouseLeftButtonDown -= new MouseEventHandler(OnShapeClicked);   
+//			
+//			controller.Canvas.Children.Remove(b);
+//			this.selectedObjects.Remove(s);
+//			Toolbox.RaiseEvent<SelectionChangedEventArgs>(ItemDeselected, controller, new SelectionChangedEventArgs(s, b));
 		}
 		
 		private void DeselectAll()
 		{
-			Visual[] shapes = new Visual[selectedObjects.Count];
-			selectedObjects.Keys.CopyTo(shapes, 0);
-			foreach(Visual s in shapes)
-				Deselect(s);
+//			Visual[] shapes = new Visual[selectedObjects.Count];
+//			selectedObjects.Keys.CopyTo(shapes, 0);
+//			foreach(Visual s in shapes)
+//				Deselect(s);
+			
+			foreach (IHandleGroup group in handle_groups.Values)
+				group.RemoveFromCanvas(controller.Canvas);
+			handle_groups.Clear();
 		}
 		
 		internal override void DrawEnd (MouseEventArgs e)
 		{
-			base.DrawEnd(e);
-			Panel.Children.Remove(Element);
+			//base.DrawEnd(e);
+			//Panel.Children.Remove(Element);
 			
 			bool mouseMoved = !mouseStart.Equals(Position);
 			shapeAdded = false;
@@ -156,15 +165,15 @@ namespace LunarEclipse.Model
 			// everything
 			if(!mouseMoved)
 			{
-				if(this.clickedOnShape != null)
+				if(this.clicked_shape != null)
 				{
 //					if(!e.Ctrl && !e.Shift)
 //						this.DeselectAll();
 					
-					if(!this.selectedObjects.ContainsKey(this.clickedOnShape))
-						Select(this.clickedOnShape);
+					if(!this.selectedObjects.ContainsKey(this.clicked_shape))
+						Select(this.clicked_shape);
 					else
-						Deselect(this.clickedOnShape);
+						Deselect(this.clicked_shape);
 				}
 				else
 				{
@@ -179,15 +188,15 @@ namespace LunarEclipse.Model
 				keypair.Value.Handle = null;
 			
 			// Reset the clicked on shape = null
-			clickedOnShape = null;
+			clicked_shape = null;
 		}
 		
 		internal override void DrawStart (Panel panel, MouseEventArgs e)
 		{
-			base.DrawStart(panel, e);
-			mouseStart = Position;
-			if(clickedOnShape == null)
-				return;
+//			base.DrawStart(panel, e);
+//			mouseStart = Position;
+//			if(clicked_shape == null)
+//				return;
 		}
 		
 		private List<Visual> GetSelectedObjects(MouseEventArgs e)
@@ -234,57 +243,57 @@ namespace LunarEclipse.Model
 		
 		internal override void MouseMove (MouseEventArgs e)
 		{
-			List<Visual> clickedShapes = GetSelectedObjects(e);
-			Point mousePoint = e.GetPosition(Panel);
-			mousePoint.X -= Position.X;
-			mousePoint.Y -= Position.Y;
-						
-			base.MouseMove(e);
-			
-			Console.WriteLine("Mouse moved");
-			if(clickedOnShape != null)
-			{
-				Console.WriteLine("We clicked on something");
-				if(!shapeAdded)
-				{
-					Console.WriteLine("We're Adding it");
-					shapeAdded = true;
-					if(!selectedObjects.ContainsKey(clickedOnShape))
-					{
-						DeselectAll();
-						Select(clickedOnShape);
-					}
-				}
-				
-
-				foreach(KeyValuePair<Visual, SelectedBorder> keypair in selectedObjects)
-				{
-					Console.WriteLine("We're about to move: {0}", keypair.Key.Name);
-					MoveShape(keypair.Key, mousePoint, e);
-				}
-				
-				Width = 0;
-				Height = 0;
-			}
-			else
-			{
-				// Make sure that everything is selected that is currently
-				// highlighted by the selection rectangle
-				foreach(Visual s in clickedShapes)
-					if(!selectedObjects.ContainsKey(s))
-						Select(s);
-				
-				// If the user is not holding ctrl or shift, deselect everything
-				// that was previously selected but is *not* currently in the list
-				// of selected objects
-				List<Visual> deselectList = new List<Visual>();
-				foreach(Visual v in this.selectedObjects.Keys)   
-					if(!clickedShapes.Contains(v))
-						deselectList.Add(v);
-				
-				foreach(Visual v in deselectList)
-					Deselect(v);
-			}
+//			List<Visual> clickedShapes = GetSelectedObjects(e);
+//			Point mousePoint = e.GetPosition(Panel);
+//			mousePoint.X -= Position.X;
+//			mousePoint.Y -= Position.Y;
+//						
+//			base.MouseMove(e);
+//			
+//			Console.WriteLine("Mouse moved");
+//			if(clicked_shape != null)
+//			{
+//				Console.WriteLine("We clicked on something");
+//				if(!shapeAdded)
+//				{
+//					Console.WriteLine("We're Adding it");
+//					shapeAdded = true;
+//					if(!selectedObjects.ContainsKey(clicked_shape))
+//					{
+//						DeselectAll();
+//						Select(clicked_shape);
+//					}
+//				}
+//				
+//
+//				foreach(KeyValuePair<Visual, SelectedBorder> keypair in selectedObjects)
+//				{
+//					Console.WriteLine("We're about to move: {0}", keypair.Key.Name);
+//					MoveShape(keypair.Key, mousePoint, e);
+//				}
+//				
+//				Width = 0;
+//				Height = 0;
+//			}
+//			else
+//			{
+//				// Make sure that everything is selected that is currently
+//				// highlighted by the selection rectangle
+//				foreach(Visual s in clickedShapes)
+//					if(!selectedObjects.ContainsKey(s))
+//						Select(s);
+//				
+//				// If the user is not holding ctrl or shift, deselect everything
+//				// that was previously selected but is *not* currently in the list
+//				// of selected objects
+//				List<Visual> deselectList = new List<Visual>();
+//				foreach(Visual v in this.selectedObjects.Keys)   
+//					if(!clickedShapes.Contains(v))
+//						deselectList.Add(v);
+//				
+//				foreach(Visual v in deselectList)
+//					Deselect(v);
+//			}
 		}
 		
 		private void MoveShape(Visual s, Point offset, MouseEventArgs e)
@@ -347,26 +356,14 @@ namespace LunarEclipse.Model
 		internal override void Prepare ()
 		{
 			base.Prepare();
-			
-			if(!prepared)
-			{
-				Toolbox.PropertyChanged += OnPropertyChanged;
+
+			Toolbox.PropertyChanged += OnPropertyChanged;
+			foreach(Visual v in this.controller.Canvas.Children) {
+				UIElement e = v as UIElement;
 				
-				prepared = true;
-				foreach(Visual v in this.controller.Canvas.Children)
-				{
-					UIElement e = v as UIElement;
-					
-					if(e == null)
-						continue;
-					
-					if (e.GetValue (Shape.FillProperty) == null)
-						e.SetValue (Shape.FillProperty, new SolidColorBrush(Colors.Transparent));
-					if (e.GetValue (Shape.StrokeProperty) == null)
-						e.SetValue (Shape.StrokeProperty, new SolidColorBrush(Colors.Transparent));
-					
-					Console.WriteLine("Hooking into: {0}", e.Name);
-					e.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
+				if(e != null) {
+					e.MouseLeftButtonDown += OnShapeClicked;
+					e.Cursor = Cursors.Hand;
 				}
 			}
 		}
@@ -466,7 +463,7 @@ namespace LunarEclipse.Model
 				RaiseEvent(ChangedHeight, b.Child, Canvas.HeightProperty, oldHeight, newHeight);
 			}
 		}
-		
+			
 		private void Select(Visual shape)
 		{
 			// When selecting an item, we make sure it has a valid name. This means that
@@ -478,13 +475,15 @@ namespace LunarEclipse.Model
 			if (shape is Line) {
 				LineHandleGroup group = new LineHandleGroup(controller.GtkSilver, shape as Line);
 				group.AddToCanvas(controller.Canvas);
+				handle_groups.Add(shape, group);
+				
 				return;
 			}
 			
-			SelectedBorder border = new SelectedBorder(shape, controller.Canvas);
-			selectedObjects.Add(shape, border);
-			border.MouseLeftButtonDown += new MouseEventHandler(ClickedOnVisual);
-			Toolbox.RaiseEvent<SelectionChangedEventArgs>(ItemSelected, controller, new SelectionChangedEventArgs(shape, border));
+//			SelectedBorder border = new SelectedBorder(shape, controller.Canvas);
+//			selectedObjects.Add(shape, border);
+//			border.MouseLeftButtonDown += new MouseEventHandler(OnShapeClicked);
+//			Toolbox.RaiseEvent<SelectionChangedEventArgs>(ItemSelected, controller, new SelectionChangedEventArgs(shape, border));
 		}
 		
 #endregion Private/Internal Methods

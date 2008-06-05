@@ -78,17 +78,17 @@ namespace LunarEclipse.View
 //			circulo.Stroke = new SolidColorBrush(Colors.Blue);
 //			c.Children.Add(circulo);
 			
-			System.Windows.Shapes.Line line = new System.Windows.Shapes.Line();
-			
-			line.X1 = 50;
-			line.Y1 = 50;
-			line.X2 = 200;
-			line.Y2 = 100;
-			line.Stroke = new SolidColorBrush(Colors.Blue);
-			c.Children.Add(line);
-			
-			LineHandleGroup hg = new LineHandleGroup(moonlight, line);
-			hg.AddToCanvas(c);
+//			System.Windows.Shapes.Line line = new System.Windows.Shapes.Line();
+//			
+//			line.X1 = 50;
+//			line.Y1 = 50;
+//			line.X2 = 200;
+//			line.Y2 = 100;
+//			line.Stroke = new SolidColorBrush(Colors.Blue);
+//			c.Children.Add(line);
+//			
+//			LineHandleGroup hg = new LineHandleGroup(moonlight, line);
+//			hg.AddToCanvas(c);
 			
 			Console.WriteLine ("Animation");
 			timeline = new AnimationTimeline(800, 70);
