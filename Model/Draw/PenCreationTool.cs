@@ -1,8 +1,10 @@
 // PenCreationTool.cs
 //
 // Author:
+//   Alan McGovern <alan.mcgovern@gmail.com>
 //   Manuel Cerón <ceronman@unicauca.edu.co>
 //
+// Copyright (c) 2007 Alan McGovern.
 // Copyright (c) 2008 Manuel Cerón.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy

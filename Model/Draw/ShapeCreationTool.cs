@@ -61,6 +61,9 @@ namespace LunarEclipse.Model {
 		{
 			base.MouseMove (ev);
 			
+			if (!Dragging)
+				return;
+			
 			Point position = ev.GetPosition(Controller.Canvas);
 			ShapeEnd = position;
 			UpdateShape();

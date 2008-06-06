@@ -1,3 +1,7 @@
+2008-06-06  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MainWindow.cs: Added selection and default tool
+
 2008-06-05  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MainWindow.cs: Added support for PenCreationTool

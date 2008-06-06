@@ -1,8 +1,10 @@
-// AbstractTool.cs
+// SelectionTool.cs
 //
 // Author:
+//   Alan McGovern <alan.mcgovern@gmail.com>
 //   Manuel Cerón <ceronman@unicauca.edu.co>
 //
+// Copyright (c) 2007 Alan McGovern.
 // Copyright (c) 2008 Manuel Cerón.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,69 +27,60 @@
 //
 //
 
+using System;
+using System.Windows;
 using System.Windows.Input;
+using LunarEclipse;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {	
 	
-	public abstract class AbstractTool: ITool {
-
-		public AbstractTool(MoonlightController controller)
-		{
-			Controller = controller;
-		}
-
-		public virtual void MouseDown (MouseEventArgs ev)
-		{
-			Dragging = true;
-		}
+	public class SelectionTool: AbstractTool {
 		
-		public virtual void MouseUp (MouseEventArgs ev)
-		{
-			Dragging = false;
-		}
-		
-		public virtual void MouseMove (MouseEventArgs ev)
+		public SelectionTool(MoonlightController controller):
+			base (controller)
 		{
 		}
 		
-		public virtual void MouseDrag (MouseEventArgs ev)
+		public override void Activate()
 		{
+			base.Activate();
+			
+			foreach (UIElement element in Controller.Canvas.Children) {
+				if (!Selectable(element))
+					continue;
+				element.MouseLeftButtonDown += OnElementClicked;
+				element.Cursor = Cursors.Hand;
+			}
 		}
 		
-		public virtual void KeyDown (KeyEventArgs ev)
+		public override void MouseMove (MouseEventArgs ev)
 		{
-		}
-		
-		public virtual void KeyUp (KeyEventArgs ev)
-		{
-		}
-		
-		public virtual void Activate ()
-		{
-		}
-		
-		public virtual void Deactivate ()
-		{
+			System.Console.WriteLine("Moving");
 		}
 
-		public bool Activated { 
-			get { return activated; }
-			protected set { activated = value; }
+		
+		protected UIElement ClickedElement {
+			get {
+				return clicked_element;
+			}
+			
+			set {
+				clicked_element = value;
+			}
 		}
 		
-		public MoonlightController Controller {
-			get { return controller; }
-			protected set { controller = value; }
+		private bool Selectable(UIElement element)
+		{
+			return ( (element != null) &&
+			        !(element is IHandle) );
 		}
-
-		protected bool Dragging {
-			get { return dragging; }
-			set { dragging = value; }
+		
+		private void OnElementClicked(object sender, MouseEventArgs e)
+		{
+			ClickedElement = (UIElement) sender;
 		}
-	
-		private bool activated;
-		private MoonlightController controller;
-		private bool dragging = false;
+				
+		private UIElement clicked_element;
 	}
 }

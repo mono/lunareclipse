@@ -142,6 +142,7 @@ namespace LunarEclipse.View
 			Add (book);
 			
             controller = new MoonlightController (moonlight, timeline);
+			controller.CurrentTool = new SelectionTool(controller);
             HookEvents(true);
             ShowAll ();
 	}
@@ -430,8 +431,8 @@ namespace LunarEclipse.View
 			
 			b = new Button("Selection");
 			b.Clicked += delegate {
-                controller.Current = new SelectionDraw(this.controller);
-				Console.WriteLine("Draw is" + controller.Current.GetType().Name.ToString());
+                //controller.Current = new SelectionDraw(this.controller);
+				controller.CurrentTool = new SelectionTool(controller);
 			};
 			toolbox.Attach (b, 0, 1, 0, 1);
 			

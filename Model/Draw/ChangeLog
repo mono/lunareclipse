@@ -1,5 +1,12 @@
 2008-06-06  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* SelectionTool.cs: Added. Partial support for selection.
+	* ShapeCreationTool.cs: Added support for Dragging
+	* AbstractTool.cs: Added Dragging flag
+	* PenCreationTool.cs: Credits updated
+
+2008-06-06  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* EllipseCreationTool.cs, ShapeCreationTool.cs, SquareCreationTool.cs,
 	  CircleCreationTool.cs, RectangleCreationTool.cs,
 	  PenCreationTool.cs, LineCreationTool.cs: Added SetupShapeProperties

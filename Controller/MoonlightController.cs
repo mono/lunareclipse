@@ -81,7 +81,13 @@ namespace LunarEclipse.Controller
 		public ITool CurrentTool
 		{
 			get { return current_tool; }
-			set { current_tool = value; }
+			set {
+				if (current_tool != null)
+					current_tool.Deactivate();
+				current_tool = value;
+				if (current_tool != null)
+					current_tool.Activate();
+			}
 		}
 		
     	public DrawBase Current
@@ -155,38 +161,20 @@ namespace LunarEclipse.Controller
         
         private void MouseLeftDown(object sender, MouseEventArgs e)
         {
-           Console.WriteLine("Mouse down");
-            if(current == null || active)
-                return;
-            
-            active = true;
             this.Canvas.CaptureMouse();
             //current.DrawStart(this.moonlight.Canvas, e);
 			CurrentTool.MouseDown(e);
-            
-			Console.WriteLine("Current: {0}", current.ToString());
-            if(current.CanUndo)
-                undo.PushUndo(new UndoAddObject(moonlight.Canvas.Children, current.Element));
         }
         
         private void MouseMove(object sender, MouseEventArgs e)
         {
-            if(!active)
-                return;
-
             //current.MouseMove(e);
 			CurrentTool.MouseMove(e);
         }
         
         private void MouseLeftUp(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("Mouse up");
-            if(!active)
-                return;
-
-            //current.DrawEnd(e);
 			CurrentTool.MouseUp(e);
-            active = false;
             this.Canvas.ReleaseMouseCapture();
         }
 		
