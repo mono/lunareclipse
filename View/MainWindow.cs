@@ -458,8 +458,8 @@ namespace LunarEclipse.View
     	    
     	    b = new Button("Pen");
     	    b.Clicked += delegate {
-    	        controller.Current = new PenDraw();
-    	        Console.WriteLine("Draw is: " + controller.Current.GetType().Name);
+    	        //controller.Current = new PenDraw();
+				controller.CurrentTool = new PenCreationTool(controller);
     	    };
 	    toolbox.Attach (b, 1, 2, 1, 2);
     	    
