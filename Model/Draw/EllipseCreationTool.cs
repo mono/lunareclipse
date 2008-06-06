@@ -25,7 +25,6 @@
 //
 //
 
-using System.Windows.Media;
 using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
@@ -40,10 +39,7 @@ namespace LunarEclipse.Model {
 		
 		protected override Shape CreateShape ()
 		{
-			Shape shape = new Ellipse();
-			shape.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
-			
-			return shape;
+			return new Ellipse();
 		}
 	}
 }

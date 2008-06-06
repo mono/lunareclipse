@@ -27,6 +27,7 @@
 
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Controls;
 using LunarEclipse.Controller;
@@ -45,6 +46,7 @@ namespace LunarEclipse.Model {
 			base.MouseDown (ev);
 			
 			CreatedShape = CreateShape();
+			SetupShapeProperties();
 			Controller.Canvas.Children.Add(CreatedShape);
 			
 			Point position = ev.GetPosition(Controller.Canvas);
@@ -95,6 +97,11 @@ namespace LunarEclipse.Model {
 				y = ShapeEnd.Y;
 				height = -height;
 			}
+		}
+		
+		protected virtual void SetupShapeProperties()
+		{
+			CreatedShape.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
 		}
 		
 		protected Shape CreatedShape {

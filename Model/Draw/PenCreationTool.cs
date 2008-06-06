@@ -48,8 +48,6 @@ namespace LunarEclipse.Model {
 			geometry.Figures.Add(figure);
 			figure.Segments = new PathSegmentCollection();
 			
-			path.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
-			
 			return path;
 		}
 		

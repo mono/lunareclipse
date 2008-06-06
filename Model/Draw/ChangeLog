@@ -1,3 +1,10 @@
+2008-06-06  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* EllipseCreationTool.cs, ShapeCreationTool.cs, SquareCreationTool.cs,
+	  CircleCreationTool.cs, RectangleCreationTool.cs,
+	  PenCreationTool.cs, LineCreationTool.cs: Added SetupShapeProperties
+	  support
+
 2008-06-05  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* PenCreationTool.cs: Added
