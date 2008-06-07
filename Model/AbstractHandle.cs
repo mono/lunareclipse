@@ -45,7 +45,7 @@ namespace LunarEclipse.Model {
 			MouseLeftButtonUp += MouseEnd;
 			MouseMove += MouseStep;
 			
-			Update();
+			UpdateLocation();
 		}
 		
 		public IHandleGroup Group {
@@ -100,7 +100,7 @@ namespace LunarEclipse.Model {
 		{
 		}
 		
-		public virtual void Update()
+		public virtual void UpdateLocation()
 		{
 			Rect r = CalculateElementBounds();
 			CanvasAllocation = r;

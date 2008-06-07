@@ -54,12 +54,21 @@ namespace LunarEclipse.Model {
 			}
 		}
 		
-		public override void MouseMove (MouseEventArgs ev)
+		public override void MouseDown (MouseEventArgs ev)
 		{
-			System.Console.WriteLine("Moving");
+			base.MouseDown (ev);
+			
+			if (ClickedElement != null)
+				Controller.Selection.Add(ClickedElement);
+		}
+		
+		public override void MouseUp (MouseEventArgs ev)
+		{
+			base.MouseUp (ev);
+			
+			ClickedElement = null;
 		}
 
-		
 		protected UIElement ClickedElement {
 			get {
 				return clicked_element;

@@ -38,7 +38,7 @@ namespace LunarEclipse.Model {
 		void MouseStart(object sender, MouseEventArgs args);
 		void MouseEnd(object sender, MouseEventArgs args);
 		void MouseStep(object sender, MouseEventArgs args);
-		void Update();
+		void UpdateLocation();
 		void Move(double dx, double dy);
 	}
 }

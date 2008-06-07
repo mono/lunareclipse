@@ -1,3 +1,8 @@
+2008-06-07  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* AbstractHandle.cs, IHandleGroup.cs, AbstractHandleGroup.cs,
+	  LineHandle.cs, IHandle.cs: Update Renamed to UpdateLocation
+
 2008-06-06  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* SelectionMarkHandle.cs, AbstractHandle.cs, LineHandleGroup.cs,

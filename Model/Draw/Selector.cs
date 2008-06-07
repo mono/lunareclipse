@@ -147,7 +147,7 @@ namespace LunarEclipse.Model
 //				Deselect(s);
 			
 			foreach (IHandleGroup group in handle_groups.Values)
-				group.RemoveFromCanvas(controller.Canvas);
+				group.RemoveFromCanvas();
 			handle_groups.Clear();
 		}
 		
@@ -468,7 +468,7 @@ namespace LunarEclipse.Model
 		{
 			if (shape is Line) {
 				LineHandleGroup group = new LineHandleGroup(controller, shape as Line);
-				group.AddToCanvas(controller.Canvas);
+				group.AddToCanvas();
 				handle_groups.Add(shape, group);
 				
 				return;

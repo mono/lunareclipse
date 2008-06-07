@@ -41,7 +41,7 @@ namespace LunarEclipse.Model {
 		{
 		}
 		
-		public override void Update ()
+		public override void UpdateLocation ()
 		{
 			Point position = LinePoint;
 			CanvasAllocation = new Rect(position.X - DefaultRadius,
@@ -66,7 +66,7 @@ namespace LunarEclipse.Model {
 			
 			LinePoint = newpoint;
 			
-			Update();
+			UpdateLocation();
 		}
 		
 		protected Line LineElement {

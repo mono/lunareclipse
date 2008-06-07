@@ -35,7 +35,7 @@ namespace LunarEclipse.Model {
 		
 		UIElement Child { get; }
 		IEnumerable<IHandle> HandlesEnumerator { get; }
-		void AddToCanvas(Canvas c);
-		void RemoveFromCanvas(Canvas c);
+		void AddToCanvas();
+		void RemoveFromCanvas();
 	}
 }

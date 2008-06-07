@@ -1,3 +1,9 @@
+2008-06-07  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* ISelection.cs: Added
+	* MoonlightController.cs: Adde Selecton property
+	* Selection.cs: Renamed to StandardSelection
+
 2008-06-06  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* Selection.cs: Added. Will be used to control Selection

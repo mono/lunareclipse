@@ -1,4 +1,4 @@
-// Selection.cs
+// ISelection.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -25,24 +25,14 @@
 //
 //
 
-using System.Collections.Generic;
 using System.Windows;
-using LunarEclipse.Model;
 
 namespace LunarEclipse.Controller {	
 	
-	public class Selection {
+	public interface ISelection {
 		
-		public Selection()
-		{
-			handle_groups = new Dictionary<UIElement, IHandleGroup>();
-		}
-		
-		public void Select(UIElement element)
-		{
-			
-		}
-		
-		private Dictionary<UIElement, IHandleGroup> handle_groups;
+		void Add(UIElement element);
+		void Remove(UIElement element);
+		void Clear();
 	}
 }

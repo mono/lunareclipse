@@ -66,6 +66,7 @@ namespace LunarEclipse.Controller
 		private AnimationTimeline timeline;
 		private UndoEngine undo;
 		private ITool current_tool;
+		private ISelection selection;
 
 #endregion Member Variables
         
@@ -121,6 +122,11 @@ namespace LunarEclipse.Controller
             get { return undo; }
         }
 
+        public ISelection Selection {
+        	get { return selection; }
+			protected set { selection = value; }
+        }
+
     	
         public MoonlightController(GtkSilver moonlight, AnimationTimeline timeline)
         {
@@ -144,6 +150,7 @@ namespace LunarEclipse.Controller
 			storyboardManager = new StoryboardManager(this);
 			storyboardManager.Add(new Storyboard());
             undo = new UndoEngine();
+			Selection = new StandardSelection(this);
         }
         
 		

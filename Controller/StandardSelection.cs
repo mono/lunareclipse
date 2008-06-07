@@ -1,4 +1,4 @@
-// AbstractHandleGroup.cs
+// Selection.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -27,57 +27,62 @@
 
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using LunarEclipse.Controller;
+using System.Windows.Shapes;
+using LunarEclipse.Model;
 
-namespace LunarEclipse.Model {
+namespace LunarEclipse.Controller {	
 	
-	public class AbstractHandleGroup: IHandleGroup {
+	public class StandardSelection: ISelection {
 		
-		public AbstractHandleGroup(MoonlightController controller, UIElement child)
+		public StandardSelection(MoonlightController controller)
 		{
-			Child = child;
 			Controller = controller;
-			handles = new List<IHandle>();
+			HandleGroups = new Dictionary<UIElement, IHandleGroup>();
 		}
 		
-		public UIElement Child {
-			get { return child; }
-			protected set { child = value; }
-		}
-		
-		public IEnumerable<IHandle> HandlesEnumerator {
-			get {
-				foreach (IHandle handle in handles)
-					yield return handle;
+		public void Add(UIElement element)
+		{
+			if (!HandleGroups.ContainsKey(element) ) {
+				IHandleGroup group = FindHandleGroup(element);
+				HandleGroups.Add(element, group);
+				if (group != null)
+					group.AddToCanvas();
 			}
 		}
 		
-		public void AddToCanvas()
+		public void Remove(UIElement element)
 		{
-			foreach (IHandle handle in HandlesEnumerator)
-				Controller.Canvas.Children.Add(handle as UIElement);
+			IHandleGroup group = HandleGroups[element];
+			HandleGroups.Remove(element);
+			group.RemoveFromCanvas();
 		}
 		
-		public void RemoveFromCanvas()
+		public void Clear()
 		{
-			foreach (IHandle handle in HandlesEnumerator)
-				Controller.Canvas.Children.Remove(handle as UIElement);
+			foreach (IHandleGroup group in HandleGroups.Values)
+				group.RemoveFromCanvas();
+			
+			HandleGroups.Clear();
 		}
 		
-		protected List<IHandle> Handles
-		{
-			get { return handles; }
-			set { handles = value; }
+		protected Dictionary<UIElement, IHandleGroup> HandleGroups {
+			get { return handle_groups; }
+			set { handle_groups = value; }
 		}
 
 		protected MoonlightController Controller {
 			get { return controller; }
 			set { controller = value; }
 		}
+				
+		private IHandleGroup FindHandleGroup(UIElement element)
+		{
+			if (element is Line)
+				return new LineHandleGroup(Controller, element);
+			return null;
+		}
 		
-		private UIElement child;
 		private MoonlightController controller;
-		List<IHandle> handles;
+		private Dictionary<UIElement, IHandleGroup> handle_groups;		
 	}
 }
