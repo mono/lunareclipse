@@ -28,7 +28,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shapes;
-using Gtk.Moonlight;
+using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 	
@@ -36,8 +36,8 @@ namespace LunarEclipse.Model {
 		
 		public const double DefaultRadius = 4.0;
 		
-		public LineHandle(GtkSilver silver, IHandleGroup group):
-			base(silver, group)
+		public LineHandle(MoonlightController controller, IHandleGroup group):
+			base(controller, group)
 		{
 		}
 		

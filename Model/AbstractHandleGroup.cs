@@ -26,20 +26,22 @@
 //
 
 using System.Collections.Generic;
-using System.Windows.Media;
+using System.Windows;
 using System.Windows.Controls;
+using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 	
 	public class AbstractHandleGroup: IHandleGroup {
 		
-		public AbstractHandleGroup(Visual child)
+		public AbstractHandleGroup(MoonlightController controller, UIElement child)
 		{
 			Child = child;
+			Controller = controller;
 			handles = new List<IHandle>();
 		}
 		
-		public Visual Child {
+		public UIElement Child {
 			get { return child; }
 			protected set { child = value; }
 		}
@@ -54,13 +56,13 @@ namespace LunarEclipse.Model {
 		public void AddToCanvas(Canvas c )
 		{
 			foreach (IHandle handle in HandlesEnumerator)
-				c.Children.Add(handle as Visual);
+				c.Children.Add(handle as UIElement);
 		}
 		
 		public void RemoveFromCanvas(Canvas c)
 		{
 			foreach (IHandle handle in HandlesEnumerator)
-				c.Children.Remove(handle as Visual);
+				c.Children.Remove(handle as UIElement);
 		}
 		
 		protected List<IHandle> Handles
@@ -68,8 +70,14 @@ namespace LunarEclipse.Model {
 			get { return handles; }
 			set { handles = value; }
 		}
+
+		protected MoonlightController Controller {
+			get { return controller; }
+			set { controller = value; }
+		}
 		
-		private Visual child;
+		private UIElement child;
+		private MoonlightController controller;
 		List<IHandle> handles;
 	}
 }

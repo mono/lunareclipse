@@ -1,3 +1,10 @@
+2008-06-06  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* SelectionMarkHandle.cs, AbstractHandle.cs, LineHandleGroup.cs,
+	  IHandleGroup.cs, StartLineHandle.cs, ResizeHandleGroup.cs,
+	  EndLineHandle.cs, AbstractHandleGroup.cs, LineHandle.cs: No takes
+	  MoonligthController as parameter instead of GtkSilver
+
 2008-05-30  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* AbstractHandle.cs: Added LastClick Dragging and CalculateOffset()

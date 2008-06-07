@@ -1,4 +1,4 @@
-// SelectionMarkHandle.cs
+// Selection.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -25,21 +25,24 @@
 //
 //
 
-using Gtk.Moonlight;
+using System.Collections.Generic;
+using System.Windows;
+using LunarEclipse.Model;
 
-namespace LunarEclipse.Model {	
+namespace LunarEclipse.Controller {	
 	
-	public class SelectionMarkHandle: AbstractHandle {
+	public class Selection {
 		
-		public SelectionMarkHandle(GtkSilver silver, IHandleGroup group):
-			base(silver, group)
+		public Selection()
 		{
+			handle_groups = new Dictionary<UIElement, IHandleGroup>();
 		}
 		
-		protected override string GetXaml ()
+		public void Select(UIElement element)
 		{
-			return "<Rectangle Fill=\"#00FFFFFF\" Stroke=\"#FF999999\" StrokeDashArray=\"8, 4\"/>";
+			
 		}
-
+		
+		private Dictionary<UIElement, IHandleGroup> handle_groups;
 	}
 }

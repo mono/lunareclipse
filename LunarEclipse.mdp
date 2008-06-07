@@ -66,7 +66,6 @@
     <File name="Model/IHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/AbstractHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/AbstractHandleGroup.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/SelectionMarkHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/ResizeHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/LineHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/StartLineHandle.cs" subtype="Code" buildaction="Compile" />
@@ -83,6 +82,7 @@
     <File name="Model/Draw/LineCreationTool.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Draw/PenCreationTool.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Draw/SelectionTool.cs" subtype="Code" buildaction="Compile" />
+    <File name="Controller/Selection.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="False" refto="atk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

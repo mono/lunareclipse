@@ -26,22 +26,22 @@
 //
 
 using System;
+using System.Windows;
 using System.Windows.Shapes;
-using System.Windows.Media;
-using Gtk.Moonlight;
+using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model { 
 		
 	public class LineHandleGroup: AbstractHandleGroup {
 		
-		public LineHandleGroup(GtkSilver silver, Visual child):
-			base(child)
+		public LineHandleGroup(MoonlightController controller, UIElement child):
+			base(controller, child)
 		{
 			if (!(child is Line))  {
 				throw new ArgumentException("Child must be Line");
 			}
-			Handles.Add(new StartLineHandle(silver, this));
-			Handles.Add(new EndLineHandle(silver, this));
+			Handles.Add(new StartLineHandle(Controller, this));
+			Handles.Add(new EndLineHandle(Controller, this));
 		}
 	}
 }

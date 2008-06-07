@@ -25,17 +25,16 @@
 //
 //
 
-using System.Windows.Media;
-using Gtk.Moonlight;
+using System.Windows;
+using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 
 	public class ResizeHandleGroup: AbstractHandleGroup {
 		
-		public ResizeHandleGroup(GtkSilver silver, Visual child):
-			base(child)
+		public ResizeHandleGroup(MoonlightController controller, UIElement child):
+			base(controller, child)
 		{
-			Handles.Add(new SelectionMarkHandle(silver, this));
 		}
 	}
 }

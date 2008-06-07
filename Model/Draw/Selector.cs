@@ -466,14 +466,8 @@ namespace LunarEclipse.Model
 			
 		private void Select(Visual shape)
 		{
-			// When selecting an item, we make sure it has a valid name. This means that
-			// when selecting an item for animations or selecting it to change it's properties
-			// in the property pane, it always has a valid name
-			if(string.IsNullOrEmpty(shape.Name))
-				shape.SetValue(Visual.NameProperty, NameGenerator.GetName(Panel, shape));
-			
 			if (shape is Line) {
-				LineHandleGroup group = new LineHandleGroup(controller.GtkSilver, shape as Line);
+				LineHandleGroup group = new LineHandleGroup(controller, shape as Line);
 				group.AddToCanvas(controller.Canvas);
 				handle_groups.Add(shape, group);
 				

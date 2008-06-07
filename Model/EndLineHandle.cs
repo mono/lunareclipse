@@ -26,14 +26,14 @@
 //
 
 using System.Windows;
-using Gtk.Moonlight;
+using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 	
 	public class EndLineHandle: LineHandle {
 		
-		public EndLineHandle(GtkSilver silver, IHandleGroup group):
-			base(silver, group)
+		public EndLineHandle(MoonlightController controller, IHandleGroup group):
+			base(controller, group)
 		{
 		}
 		

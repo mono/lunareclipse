@@ -26,14 +26,14 @@
 //
 
 using System.Collections.Generic;
-using System.Windows.Media;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace LunarEclipse.Model {
 	
 	public interface IHandleGroup {
 		
-		Visual Child { get; }
+		UIElement Child { get; }
 		IEnumerable<IHandle> HandlesEnumerator { get; }
 		void AddToCanvas(Canvas c);
 		void RemoveFromCanvas(Canvas c);

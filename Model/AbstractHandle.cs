@@ -29,18 +29,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Input;
-using Gtk.Moonlight;
+using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 	
 	public abstract class AbstractHandle: Control, IHandle{
 		
-		public AbstractHandle(GtkSilver silver, IHandleGroup group)
+		public AbstractHandle(MoonlightController controller, IHandleGroup group)
 		{
 			Group = group;
-			Silver = silver;
 			
-			inner = silver.InitializeFromXaml(GetXaml(), this);
+			inner = controller.GtkSilver.InitializeFromXaml(GetXaml(), this);
 			
 			MouseLeftButtonDown += MouseStart;
 			MouseLeftButtonUp += MouseEnd;
@@ -127,11 +126,6 @@ namespace LunarEclipse.Model {
 			get { return Group.Child; }
 		}
 		
-		protected GtkSilver Silver {
-			get { return silver; }
-			set { silver = value; }
-		}
-		
 		protected Point LastClick {
 			get { return last_click; }
 			set { last_click = value; }
@@ -155,7 +149,6 @@ namespace LunarEclipse.Model {
 		}
 		
 		private IHandleGroup group;
-		private GtkSilver silver;
 		private FrameworkElement inner;
 		private Point last_click;
 		private bool dragging = false;

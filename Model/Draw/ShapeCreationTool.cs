@@ -105,6 +105,8 @@ namespace LunarEclipse.Model {
 		protected virtual void SetupShapeProperties()
 		{
 			CreatedShape.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
+			CreatedShape.SetValue(Visual.NameProperty, 
+			                      NameGenerator.GetName(Controller.Canvas, CreatedShape));
 		}
 		
 		protected Shape CreatedShape {

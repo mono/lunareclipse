@@ -1,5 +1,9 @@
 2008-06-06  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* Selection.cs: Added. Will be used to control Selection
+
+2008-06-06  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* MoonlightController.cs: CurrentTool Updated. Removed old code from
 	  Mouse{Down,Move,Up}
 

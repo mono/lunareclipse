@@ -1,5 +1,10 @@
 2008-06-06  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* Selector.cs, ShapeCreationTool.cs: No takes MoonligthController as
+	  parameter instead of GtkSilver
+
+2008-06-06  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* SelectionTool.cs: Added. Partial support for selection.
 	* ShapeCreationTool.cs: Added support for Dragging
 	* AbstractTool.cs: Added Dragging flag
