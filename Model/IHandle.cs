@@ -25,12 +25,17 @@
 //
 //
 
+using System;
 using System.Windows;
 using System.Windows.Input;
 
 namespace LunarEclipse.Model {
 	
 	public interface IHandle {
+		
+		event MouseEventHandler MouseLeftButtonDown;
+		event MouseEventHandler MouseLeftButtonUp;
+		event MouseEventHandler MouseMove;
 		
 		IHandleGroup Group { get; }
 		Rect CanvasAllocation { get; set; }

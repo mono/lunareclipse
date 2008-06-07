@@ -25,14 +25,18 @@
 //
 //
 
+using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Controls;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 	
 	public class AbstractHandleGroup: IHandleGroup {
+		
+		public event MouseEventHandler HandleMouseDown;
 		
 		public AbstractHandleGroup(MoonlightController controller, UIElement child)
 		{
@@ -55,14 +59,29 @@ namespace LunarEclipse.Model {
 		
 		public void AddToCanvas()
 		{
-			foreach (IHandle handle in HandlesEnumerator)
+			foreach (IHandle handle in Handles) {
 				Controller.Canvas.Children.Add(handle as UIElement);
+				handle.MouseLeftButtonDown += OnHandleMouseDown;
+			}
 		}
 		
 		public void RemoveFromCanvas()
 		{
-			foreach (IHandle handle in HandlesEnumerator)
+			foreach (IHandle handle in Handles) {
 				Controller.Canvas.Children.Remove(handle as UIElement);
+				handle.MouseLeftButtonDown -= OnHandleMouseDown;
+			}
+		}
+		
+		protected void AddHande(IHandle handle)
+		{
+			Handles.Add(handle);
+		}
+		
+		protected void OnHandleMouseDown(object sender, MouseEventArgs args)
+		{
+			if (HandleMouseDown != null)
+				HandleMouseDown(sender, args);
 		}
 		
 		protected List<IHandle> Handles

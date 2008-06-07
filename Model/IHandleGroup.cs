@@ -25,13 +25,17 @@
 //
 //
 
+using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Controls;
 
 namespace LunarEclipse.Model {
 	
 	public interface IHandleGroup {
+		
+		event MouseEventHandler HandleMouseDown;
 		
 		UIElement Child { get; }
 		IEnumerable<IHandle> HandlesEnumerator { get; }

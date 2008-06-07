@@ -1,5 +1,13 @@
 2008-06-07  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* AbstractHandle.cs, IHandle.cs: Added MouseLeftButton{Up,Down},
+	  MouseMove events
+	* IHandleGroup.cs: Added HandleMouseDown event
+	* AbstractHandleGroup.cs: Added HandleMouseDown event,
+	  OnHandleMouseDown
+
+2008-06-07  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* AbstractHandle.cs, IHandleGroup.cs, AbstractHandleGroup.cs,
 	  LineHandle.cs, IHandle.cs: Update Renamed to UpdateLocation
 

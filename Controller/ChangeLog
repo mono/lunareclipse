@@ -1,5 +1,10 @@
 2008-06-07  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* ISelection.cs: Added HandleMouseDown event
+	* StandardSelection.cs: Added HandleMouseDown event, OnHandleMouseDown
+
+2008-06-07  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* ISelection.cs: Added
 	* MoonlightController.cs: Adde Selecton property
 	* Selection.cs: Renamed to StandardSelection

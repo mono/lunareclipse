@@ -52,31 +52,56 @@ namespace LunarEclipse.Model {
 				element.MouseLeftButtonDown += OnElementClicked;
 				element.Cursor = Cursors.Hand;
 			}
+			
+			Controller.Selection.HandleMouseDown += OnHandleMouseDown;
 		}
+		
+		public override void Deactivate ()
+		{
+			base.Deactivate ();
+			
+			foreach (UIElement element in Controller.Canvas.Children) {
+				if (!Selectable(element))
+					continue;
+				element.MouseLeftButtonDown -= OnElementClicked;
+				element.Cursor = Cursors.Default;
+			}
+			
+			Controller.Selection.HandleMouseDown -= OnHandleMouseDown;	
+		}
+
 		
 		public override void MouseDown (MouseEventArgs ev)
 		{
 			base.MouseDown (ev);
 			
-			if (ClickedElement != null)
-				Controller.Selection.Add(ClickedElement);
+			if (clicked_element != null) {
+				Controller.Selection.Add(clicked_element);
+				action_flag = true;
+			}
+			
+			if (clicked_handle != null) {
+				System.Console.WriteLine("*****Handle");
+				action_flag = true;
+			}
 		}
 		
 		public override void MouseUp (MouseEventArgs ev)
 		{
 			base.MouseUp (ev);
 			
-			ClickedElement = null;
+			clicked_element = null;
+			clicked_handle = null;
+			
+			if (!action_flag)
+				Controller.Selection.Clear();
+			
+			action_flag = false;
 		}
 
-		protected UIElement ClickedElement {
-			get {
-				return clicked_element;
-			}
-			
-			set {
-				clicked_element = value;
-			}
+		protected void OnHandleMouseDown(object sender, MouseEventArgs args)
+		{
+			clicked_handle = sender as IHandle;
 		}
 		
 		private bool Selectable(UIElement element)
@@ -87,9 +112,11 @@ namespace LunarEclipse.Model {
 		
 		private void OnElementClicked(object sender, MouseEventArgs e)
 		{
-			ClickedElement = (UIElement) sender;
+			clicked_element = sender as UIElement;
 		}
 				
 		private UIElement clicked_element;
+		private IHandle clicked_handle;
+		private bool action_flag = false;
 	}
 }

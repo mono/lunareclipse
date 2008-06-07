@@ -1,5 +1,9 @@
 2008-06-07  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* SelectionTool.cs: Added support for detecting Clicks on Handles
+
+2008-06-07  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* SelectionTool.cs: Added MouseDown and MouseUp methods
 
 2008-06-06  Manuel Cerón <ceronman@unicauca.edu.co> 

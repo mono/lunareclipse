@@ -27,12 +27,15 @@
 
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Shapes;
 using LunarEclipse.Model;
 
 namespace LunarEclipse.Controller {	
 	
 	public class StandardSelection: ISelection {
+		
+		public event MouseEventHandler HandleMouseDown;
 		
 		public StandardSelection(MoonlightController controller)
 		{
@@ -45,8 +48,10 @@ namespace LunarEclipse.Controller {
 			if (!HandleGroups.ContainsKey(element) ) {
 				IHandleGroup group = FindHandleGroup(element);
 				HandleGroups.Add(element, group);
-				if (group != null)
-					group.AddToCanvas();
+				if (group == null)
+					return;
+				group.AddToCanvas();
+				group.HandleMouseDown += OnHandleMouseDown;
 			}
 		}
 		
@@ -54,7 +59,10 @@ namespace LunarEclipse.Controller {
 		{
 			IHandleGroup group = HandleGroups[element];
 			HandleGroups.Remove(element);
+			if (group == null)
+				return;
 			group.RemoveFromCanvas();
+			group.HandleMouseDown -= OnHandleMouseDown;
 		}
 		
 		public void Clear()
@@ -73,6 +81,12 @@ namespace LunarEclipse.Controller {
 		protected MoonlightController Controller {
 			get { return controller; }
 			set { controller = value; }
+		}
+		
+		protected void OnHandleMouseDown(object sender, MouseEventArgs args)
+		{
+			if (HandleMouseDown != null)
+				HandleMouseDown(sender, args);
 		}
 				
 		private IHandleGroup FindHandleGroup(UIElement element)

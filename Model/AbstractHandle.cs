@@ -33,9 +33,10 @@ using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 	
-	public abstract class AbstractHandle: Control, IHandle{
+	public abstract class AbstractHandle: Control, IHandle {
 		
-		public AbstractHandle(MoonlightController controller, IHandleGroup group)
+		public AbstractHandle(MoonlightController controller, IHandleGroup group):
+			base()
 		{
 			Group = group;
 			

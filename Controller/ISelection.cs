@@ -26,10 +26,13 @@
 //
 
 using System.Windows;
+using System.Windows.Input;
 
 namespace LunarEclipse.Controller {	
 	
 	public interface ISelection {
+		
+		event MouseEventHandler HandleMouseDown;
 		
 		void Add(UIElement element);
 		void Remove(UIElement element);
