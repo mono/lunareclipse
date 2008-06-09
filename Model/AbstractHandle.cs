@@ -45,8 +45,6 @@ namespace LunarEclipse.Model {
 			MouseLeftButtonDown += MouseStart;
 			MouseLeftButtonUp += MouseEnd;
 			MouseMove += MouseStep;
-			
-			UpdateLocation();
 		}
 		
 		public IHandleGroup Group {

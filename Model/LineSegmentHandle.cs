@@ -1,4 +1,4 @@
-// LineHandleGroup.cs
+// LineSegmentHandle.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -27,23 +27,31 @@
 
 using System;
 using System.Windows;
-using System.Windows.Shapes;
+using System.Windows.Media;
 using LunarEclipse.Controller;
 
-namespace LunarEclipse.Model { 
+namespace LunarEclipse.Model {
+	
+	public class LineSegmentHandle: LineHandle {
 		
-	public class LineHandleGroup: AbstractHandleGroup {
-		
-		public LineHandleGroup(MoonlightController controller, Line child):
-			base(controller, child)
+		public LineSegmentHandle(MoonlightController controller, IHandleGroup group, LineSegment seg):
+			base(controller, group)
 		{
-			if (!(child is Line))  {
-				throw new ArgumentException("Child must be Line");
-			}
-			AddHandle(new StartLineHandle(Controller, this));
-			AddHandle(new EndLineHandle(Controller, this));
+			if (seg == null)
+				throw new ArgumentNullException("seg");
 			
-			UpdateHandles();
+			segment = seg;
 		}
+		
+		protected override Point LinePoint {
+			get {
+				return segment.Point;
+			}
+			set { 
+				segment.Point = value;
+			}
+		}
+		
+		private LineSegment segment;
 	}
 }

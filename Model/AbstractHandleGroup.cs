@@ -40,6 +40,12 @@ namespace LunarEclipse.Model {
 		
 		public AbstractHandleGroup(MoonlightController controller, UIElement child)
 		{
+			if (child == null)
+				throw new ArgumentNullException("child");
+			
+			if (controller == null)
+				throw new ArgumentNullException("controller");
+			
 			Child = child;
 			Controller = controller;
 			handles = new List<IHandle>();
@@ -73,7 +79,13 @@ namespace LunarEclipse.Model {
 			}
 		}
 		
-		protected void AddHande(IHandle handle)
+		protected void UpdateHandles()
+		{
+			foreach(IHandle handle in Handles)
+				handle.UpdateLocation();
+		}
+		
+		protected void AddHandle(IHandle handle)
 		{
 			Handles.Add(handle);
 		}

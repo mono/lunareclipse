@@ -92,7 +92,9 @@ namespace LunarEclipse.Controller {
 		private IHandleGroup FindHandleGroup(UIElement element)
 		{
 			if (element is Line)
-				return new LineHandleGroup(Controller, element);
+				return new LineHandleGroup(Controller, element as Line);
+			if (element is Path)
+				return new PathHandleGroup(Controller, element as Path);
 			return null;
 		}
 		

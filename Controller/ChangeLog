@@ -1,3 +1,8 @@
+2008-06-08  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* StandardSelection.cs: Addes support for PathHandleGroup in
+	  FindHandleGroup()
+
 2008-06-07  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* ISelection.cs: Added HandleMouseDown event

@@ -1,4 +1,4 @@
-// LineHandleGroup.cs
+// PathHandleGroup.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -25,23 +25,28 @@
 //
 //
 
-using System;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
-namespace LunarEclipse.Model { 
+namespace LunarEclipse.Model {	
+	
+	public class PathHandleGroup: AbstractHandleGroup {
 		
-	public class LineHandleGroup: AbstractHandleGroup {
-		
-		public LineHandleGroup(MoonlightController controller, Line child):
+		public PathHandleGroup(MoonlightController controller, Path child):
 			base(controller, child)
 		{
-			if (!(child is Line))  {
-				throw new ArgumentException("Child must be Line");
+			PathGeometry geometry = child.Data as PathGeometry;
+			
+			if (geometry == null)
+				return;
+			
+			foreach (PathFigure fig in geometry.Figures) {
+				foreach (LineSegment segment in fig.Segments) {
+					AddHandle(new LineSegmentHandle(Controller, this, segment) );
+				}
 			}
-			AddHandle(new StartLineHandle(Controller, this));
-			AddHandle(new EndLineHandle(Controller, this));
 			
 			UpdateHandles();
 		}

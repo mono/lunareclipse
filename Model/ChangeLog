@@ -1,3 +1,9 @@
+2008-06-08  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* AbstractHandle.cs, LineHandleGroup.cs: Cosmetic changes
+	* LineSegmentHandle.cs, PathHandleGroup.cs: Added
+	* AbstractHandleGroup.cs: Added UpdateHandles()
+
 2008-06-07  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* AbstractHandle.cs, IHandle.cs: Added MouseLeftButton{Up,Down},
