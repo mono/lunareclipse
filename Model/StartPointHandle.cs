@@ -1,4 +1,4 @@
-// PathHandleGroup.cs
+// StartPointHandle.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -25,31 +25,34 @@
 //
 //
 
+using System;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
-namespace LunarEclipse.Model {	
+namespace LunarEclipse.Model {
 	
-	public class PathHandleGroup: AbstractHandleGroup {
+	public class StartPointHandle: LineHandle {
 		
-		public PathHandleGroup(MoonlightController controller, Path child):
-			base(controller, child)
+		public StartPointHandle(MoonlightController controller, IHandleGroup group, PathFigure pathFigure):
+			base(controller, group)
 		{
-			PathGeometry geometry = child.Data as PathGeometry;
+			if (pathFigure == null)
+				throw new ArgumentNullException("PathFigure");
 			
-			if (geometry == null)
-				return;
-			
-			foreach (PathFigure fig in geometry.Figures) {
-				foreach (LineSegment segment in fig.Segments) {
-					AddHandle(new LineSegmentHandle(Controller, this, segment) );
-				}
-				AddHandle(new StartPointHandle(Controller, this, fig) );
-			}
-			
-			UpdateHandles();
+			path_figure = pathFigure;
 		}
+		
+		protected override string GetXaml ()
+		{
+			return "<Rectangle Fill=\"#99FF0000\" Stroke=\"#FF000000\"/>";
+		}
+		
+		protected override Point LinePoint {
+			get { return path_figure.StartPoint; }
+			set { path_figure.StartPoint = value; }
+		}
+		
+		private PathFigure path_figure;
 	}
 }

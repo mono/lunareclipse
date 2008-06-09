@@ -44,12 +44,8 @@ namespace LunarEclipse.Model {
 		}
 		
 		protected override Point LinePoint {
-			get {
-				return segment.Point;
-			}
-			set { 
-				segment.Point = value;
-			}
+			get { return segment.Point; }
+			set { segment.Point = value; }
 		}
 		
 		private LineSegment segment;
