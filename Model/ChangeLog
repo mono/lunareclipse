@@ -1,5 +1,11 @@
 2008-06-08  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* AbstractHandle.cs, LineHandle.cs: Update() removed
+	* TransformHandle.cs: Added
+	* RotateHandle.cs: Cosmetic Changes
+
+2008-06-08  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	
 
 2008-06-08  Manuel Cerón <ceronman@unicauca.edu.co> 

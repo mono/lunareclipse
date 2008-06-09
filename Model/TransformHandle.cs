@@ -1,4 +1,4 @@
-// LineHandle.cs
+// TrasnformHandle.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -26,45 +26,47 @@
 //
 
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Shapes;
+using System.Windows.Media;
 using LunarEclipse.Controller;
 
-namespace LunarEclipse.Model {
+namespace LunarEclipse.Model {	
 	
-	public abstract class LineHandle: AbstractHandle	{
+	enum Transform {
+		Rotate,
+		Translate,
+		Skew,
+		Scale
+	}
+	
+	public abstract class TransformHandle: AbstractHandle {
 		
-		public LineHandle(MoonlightController controller, IHandleGroup group):
+		public TransformHandle(MoonlightController controller, IHandleGroup group):
 			base(controller, group)
 		{
 		}
 		
-		public override void MouseStep (object sender, MouseEventArgs args)
-		{
-			base.MouseStep (sender, args);
-			
-			if (!Dragging)
-				return;
-			
-			Point offset = CalculateOffset(args.GetPosition(null));			
-			
-			Point newpoint = Location;
-			
-			newpoint.X += offset.X;
-			newpoint.Y += offset.Y;
-			
-			Location = newpoint;
-			
-			Update();
+		protected Point TransformOrigin {
+			get {
+				return (Point) Element.GetValue(RenderTransformOriginProperty);
+			}
 		}
 		
-		protected Line LineElement {
-			get { return Element as Line; }
+		protected RotateTransform Rotation {
+			get { return (RotateTransform) Transformations.Children[(int) Transform.Rotate]; }
 		}
 		
-		protected override string GetXaml ()
-		{
-			return "<Rectangle Fill=\"#99FFFF00\" Stroke=\"#FF000000\"/>";
+		protected TransformGroup Transformations {
+			get {
+				TransformGroup group = (TransformGroup) Element.GetValue(RenderTransformProperty);
+				
+				if (group == null) {
+					group = new TransformGroup();
+					group.Children.Add(new RotateTransform());
+					Element.SetValue(RenderTransformProperty, group);
+				}
+				
+				return group;
+			}
 		}
 	}
 }

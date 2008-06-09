@@ -84,10 +84,13 @@ namespace LunarEclipse.Model {
 		{
 		}
 		
-		public virtual void Update()
+		public virtual void Update ()
 		{
-			Rect r = CalculateElementBounds();
-			CanvasAllocation = r;
+			Point position = Location;
+			CanvasAllocation = new Rect(position.X - DefaultRadius,
+			                            position.Y - DefaultRadius,
+			                            DefaultRadius * 2,
+			                            DefaultRadius * 2);
 		}
 			
 		protected Rect CanvasAllocation {

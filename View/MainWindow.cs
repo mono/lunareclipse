@@ -80,7 +80,8 @@ namespace LunarEclipse.View
 //			line.StrokeThickness = 100;
 //			//line.Opacity = 0.2;
 //			c.Children.Add(line);
-
+//			
+//			System.Console.WriteLine("######### {0}", (TransformGroup)line.GetValue(UIElement.RenderTransformProperty) == null);
 			
 			Console.WriteLine ("Animation");
 			timeline = new AnimationTimeline(800, 70);

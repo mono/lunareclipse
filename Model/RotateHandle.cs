@@ -26,24 +26,27 @@
 //
 
 using System.Windows;
+using System.Windows.Input;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model
 {
-	public abstract class RotateHandle: AbstractHandle	{
+	public abstract class RotateHandle: TransformHandle	{
 		
 		public RotateHandle(MoonlightController controller, IHandleGroup group):
 			base(controller, group)
 		{
 		}
 		
-		public override void Update ()
+		public override void MouseStep (object sender, MouseEventArgs args)
 		{
-			Point position = Location;
-			CanvasAllocation = new Rect(position.X - DefaultRadius,
-			                            position.Y - DefaultRadius,
-			                            DefaultRadius * 2,
-			                            DefaultRadius * 2);
+			base.MouseStep (sender, args);
+			
+			if (!Dragging)
+				return;
+			
+			Point center = TransformOrigin;
 		}
+
 	}
 }
