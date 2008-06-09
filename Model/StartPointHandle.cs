@@ -43,14 +43,14 @@ namespace LunarEclipse.Model {
 			path_figure = pathFigure;
 		}
 		
+		public override Point Location {
+			get { return path_figure.StartPoint; }
+			set { path_figure.StartPoint = value; }
+		}
+		
 		protected override string GetXaml ()
 		{
 			return "<Rectangle Fill=\"#99FF0000\" Stroke=\"#FF000000\"/>";
-		}
-		
-		protected override Point LinePoint {
-			get { return path_figure.StartPoint; }
-			set { path_figure.StartPoint = value; }
 		}
 		
 		private PathFigure path_figure;

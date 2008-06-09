@@ -34,16 +34,14 @@ namespace LunarEclipse.Model {
 	
 	public abstract class LineHandle: AbstractHandle	{
 		
-		public const double DefaultRadius = 4.0;
-		
 		public LineHandle(MoonlightController controller, IHandleGroup group):
 			base(controller, group)
 		{
 		}
 		
-		public override void UpdateLocation ()
+		public override void Update ()
 		{
-			Point position = LinePoint;
+			Point position = Location;
 			CanvasAllocation = new Rect(position.X - DefaultRadius,
 			                            position.Y - DefaultRadius,
 			                            DefaultRadius * 2,
@@ -59,14 +57,14 @@ namespace LunarEclipse.Model {
 			
 			Point offset = CalculateOffset(args.GetPosition(null));			
 			
-			Point newpoint = LinePoint;
+			Point newpoint = Location;
 			
 			newpoint.X += offset.X;
 			newpoint.Y += offset.Y;
 			
-			LinePoint = newpoint;
+			Location = newpoint;
 			
-			UpdateLocation();
+			Update();
 		}
 		
 		protected Line LineElement {
@@ -76,11 +74,6 @@ namespace LunarEclipse.Model {
 		protected override string GetXaml ()
 		{
 			return "<Rectangle Fill=\"#99FFFF00\" Stroke=\"#FF000000\"/>";
-		}
-
-		protected abstract Point LinePoint {
-			get;
-			set;
 		}
 	}
 }

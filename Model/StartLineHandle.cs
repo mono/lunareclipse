@@ -37,7 +37,7 @@ namespace LunarEclipse.Model {
 		{
 		}
 		
-		protected override Point LinePoint {
+		public override Point Location {
 			get {
 				return new Point(LineElement.X1, LineElement.Y1);
 			}

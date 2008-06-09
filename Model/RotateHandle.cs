@@ -1,4 +1,4 @@
-// EndLineHandle.cs
+// RotateHandle.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -28,23 +28,22 @@
 using System.Windows;
 using LunarEclipse.Controller;
 
-namespace LunarEclipse.Model {
-	
-	public class EndLineHandle: LineHandle {
+namespace LunarEclipse.Model
+{
+	public abstract class RotateHandle: AbstractHandle	{
 		
-		public EndLineHandle(MoonlightController controller, IHandleGroup group):
+		public RotateHandle(MoonlightController controller, IHandleGroup group):
 			base(controller, group)
 		{
 		}
 		
-		public override Point Location {
-			get {
-				return new Point(LineElement.X2, LineElement.Y2);
-			}
-			set { 
-				LineElement.X2 = value.X;
-				LineElement.Y2 = value.Y;
-			}
+		public override void Update ()
+		{
+			Point position = Location;
+			CanvasAllocation = new Rect(position.X - DefaultRadius,
+			                            position.Y - DefaultRadius,
+			                            DefaultRadius * 2,
+			                            DefaultRadius * 2);
 		}
 	}
 }

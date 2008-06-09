@@ -43,7 +43,7 @@ namespace LunarEclipse.Model {
 			segment = seg;
 		}
 		
-		protected override Point LinePoint {
+		public override Point Location {
 			get { return segment.Point; }
 			set { segment.Point = value; }
 		}

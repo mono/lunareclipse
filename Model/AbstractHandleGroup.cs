@@ -82,7 +82,7 @@ namespace LunarEclipse.Model {
 		protected void UpdateHandles()
 		{
 			foreach(IHandle handle in Handles)
-				handle.UpdateLocation();
+				handle.Update();
 		}
 		
 		protected void AddHandle(IHandle handle)

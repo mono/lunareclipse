@@ -35,6 +35,8 @@ namespace LunarEclipse.Model {
 	
 	public abstract class AbstractHandle: Control, IHandle {
 		
+		public const double DefaultRadius = 5.0;
+		
 		public AbstractHandle(MoonlightController controller, IHandleGroup group):
 			base()
 		{
@@ -52,26 +54,9 @@ namespace LunarEclipse.Model {
 			protected set { group = value; }
 		}
 		
-		public Rect CanvasAllocation {
-			get {
-				double left = (double) GetValue(Canvas.LeftProperty);
-				double top = (double) GetValue(Canvas.TopProperty);
-				double width = (double) GetValue(Canvas.WidthProperty);
-				double height = (double) GetValue(Canvas.HeightProperty);
-				
-				return new Rect(left, top, width, height);
-			}
-			set {
-				SetValue(Canvas.TopProperty, value.Top);
-				SetValue(Canvas.LeftProperty, value.Left);
-				SetValue(Canvas.WidthProperty, value.Width);
-				SetValue(Canvas.HeightProperty, value.Height);
-				
-				inner.SetValue(Canvas.TopProperty, 0);
-				inner.SetValue(Canvas.LeftProperty, 0);
-				inner.SetValue(Canvas.WidthProperty, value.Width);
-				inner.SetValue(Canvas.HeightProperty, value.Height);
-			}
+		public abstract Point Location {
+			get;
+			set;
 		}
 		
 		public virtual void Move(double dx, double dy)
@@ -99,10 +84,32 @@ namespace LunarEclipse.Model {
 		{
 		}
 		
-		public virtual void UpdateLocation()
+		public virtual void Update()
 		{
 			Rect r = CalculateElementBounds();
 			CanvasAllocation = r;
+		}
+			
+		protected Rect CanvasAllocation {
+			get {
+				double left = (double) GetValue(Canvas.LeftProperty);
+				double top = (double) GetValue(Canvas.TopProperty);
+				double width = (double) GetValue(Canvas.WidthProperty);
+				double height = (double) GetValue(Canvas.HeightProperty);
+				
+				return new Rect(left, top, width, height);
+			}
+			set {
+				SetValue(Canvas.TopProperty, value.Top);
+				SetValue(Canvas.LeftProperty, value.Left);
+				SetValue(Canvas.WidthProperty, value.Width);
+				SetValue(Canvas.HeightProperty, value.Height);
+				
+				inner.SetValue(Canvas.TopProperty, 0);
+				inner.SetValue(Canvas.LeftProperty, 0);
+				inner.SetValue(Canvas.WidthProperty, value.Width);
+				inner.SetValue(Canvas.HeightProperty, value.Height);
+			}
 		}
 			
 		// TODO: Candidate for Helper

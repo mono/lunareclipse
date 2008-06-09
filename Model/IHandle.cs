@@ -38,12 +38,12 @@ namespace LunarEclipse.Model {
 		event MouseEventHandler MouseMove;
 		
 		IHandleGroup Group { get; }
-		Rect CanvasAllocation { get; set; }
+		Point Location { get; set; }
 		
 		void MouseStart(object sender, MouseEventArgs args);
 		void MouseEnd(object sender, MouseEventArgs args);
 		void MouseStep(object sender, MouseEventArgs args);
-		void UpdateLocation();
+		void Update();
 		void Move(double dx, double dy);
 	}
 }

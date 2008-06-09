@@ -1,5 +1,9 @@
 2008-06-08  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	
+
+2008-06-08  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* StartPointHandle.cs: Added
 	* PathHandleGroup.cs: Added support for StartPointHandle
 	* LineSegmentHandle.cs: Cosmetic changes

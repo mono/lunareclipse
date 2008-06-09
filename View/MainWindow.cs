@@ -69,26 +69,18 @@ namespace LunarEclipse.View
             moonlight.Attach(c);
 			moonlight.Show ();
 			
-//			System.Windows.Shapes.Ellipse circulo = new System.Windows.Shapes.Ellipse();
-//			circulo.Width = 100.0;
-//			circulo.Height = 200.0;
-//			circulo.SetValue(Canvas.TopProperty, 50.0);
-//			circulo.SetValue(Canvas.LeftProperty, 50.0);
-//			circulo.Fill = new SolidColorBrush(Colors.White);
-//			circulo.Stroke = new SolidColorBrush(Colors.Blue);
-//			c.Children.Add(circulo);
 			
 //			System.Windows.Shapes.Line line = new System.Windows.Shapes.Line();
 //			
 //			line.X1 = 50;
 //			line.Y1 = 50;
-//			line.X2 = 200;
-//			line.Y2 = 100;
+//			line.X2 = 500;
+//			line.Y2 = 500;
 //			line.Stroke = new SolidColorBrush(Colors.Blue);
+//			line.StrokeThickness = 100;
+//			//line.Opacity = 0.2;
 //			c.Children.Add(line);
-//			
-//			LineHandleGroup hg = new LineHandleGroup(moonlight, line);
-//			hg.AddToCanvas(c);
+
 			
 			Console.WriteLine ("Animation");
 			timeline = new AnimationTimeline(800, 70);

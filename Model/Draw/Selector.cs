@@ -243,57 +243,57 @@ namespace LunarEclipse.Model
 		
 		internal override void MouseMove (MouseEventArgs e)
 		{
-//			List<Visual> clickedShapes = GetSelectedObjects(e);
-//			Point mousePoint = e.GetPosition(Panel);
-//			mousePoint.X -= Position.X;
-//			mousePoint.Y -= Position.Y;
-//						
-//			base.MouseMove(e);
-//			
-//			Console.WriteLine("Mouse moved");
-//			if(clicked_shape != null)
-//			{
-//				Console.WriteLine("We clicked on something");
-//				if(!shapeAdded)
-//				{
-//					Console.WriteLine("We're Adding it");
-//					shapeAdded = true;
-//					if(!selectedObjects.ContainsKey(clicked_shape))
-//					{
-//						DeselectAll();
-//						Select(clicked_shape);
-//					}
-//				}
-//				
-//
-//				foreach(KeyValuePair<Visual, SelectedBorder> keypair in selectedObjects)
-//				{
-//					Console.WriteLine("We're about to move: {0}", keypair.Key.Name);
-//					MoveShape(keypair.Key, mousePoint, e);
-//				}
-//				
-//				Width = 0;
-//				Height = 0;
-//			}
-//			else
-//			{
-//				// Make sure that everything is selected that is currently
-//				// highlighted by the selection rectangle
-//				foreach(Visual s in clickedShapes)
-//					if(!selectedObjects.ContainsKey(s))
-//						Select(s);
-//				
-//				// If the user is not holding ctrl or shift, deselect everything
-//				// that was previously selected but is *not* currently in the list
-//				// of selected objects
-//				List<Visual> deselectList = new List<Visual>();
-//				foreach(Visual v in this.selectedObjects.Keys)   
-//					if(!clickedShapes.Contains(v))
-//						deselectList.Add(v);
-//				
-//				foreach(Visual v in deselectList)
-//					Deselect(v);
-//			}
+			List<Visual> clickedShapes = GetSelectedObjects(e);
+			Point mousePoint = e.GetPosition(Panel);
+			mousePoint.X -= Position.X;
+			mousePoint.Y -= Position.Y;
+						
+			base.MouseMove(e);
+			
+			Console.WriteLine("Mouse moved");
+			if(clicked_shape != null)
+			{
+				Console.WriteLine("We clicked on something");
+				if(!shapeAdded)
+				{
+					Console.WriteLine("We're Adding it");
+					shapeAdded = true;
+					if(!selectedObjects.ContainsKey(clicked_shape))
+					{
+						DeselectAll();
+						Select(clicked_shape);
+					}
+				}
+				
+
+				foreach(KeyValuePair<Visual, SelectedBorder> keypair in selectedObjects)
+				{
+					Console.WriteLine("We're about to move: {0}", keypair.Key.Name);
+					MoveShape(keypair.Key, mousePoint, e);
+				}
+				
+				Width = 0;
+				Height = 0;
+			}
+			else
+			{
+				// Make sure that everything is selected that is currently
+				// highlighted by the selection rectangle
+				foreach(Visual s in clickedShapes)
+					if(!selectedObjects.ContainsKey(s))
+						Select(s);
+				
+				// If the user is not holding ctrl or shift, deselect everything
+				// that was previously selected but is *not* currently in the list
+				// of selected objects
+				List<Visual> deselectList = new List<Visual>();
+				foreach(Visual v in this.selectedObjects.Keys)   
+					if(!clickedShapes.Contains(v))
+						deselectList.Add(v);
+				
+				foreach(Visual v in deselectList)
+					Deselect(v);
+			}
 		}
 		
 		private void MoveShape(Visual s, Point offset, MouseEventArgs e)
