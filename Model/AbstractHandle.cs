@@ -128,11 +128,22 @@ namespace LunarEclipse.Model {
 		
 		protected virtual string GetXaml()
 		{
-			return "<Rectangle />";
+			return "<Rectangle Fill=\"#00FFFFFF\" Stroke=\"#FF000000\"/>";
 		}
 		
-		protected Visual Element {
+		protected UIElement Element {
 			get { return Group.Child; }
+		}
+		
+		protected Rect ElementBounds {
+			get {
+				double top = (double) Element.GetValue(Canvas.TopProperty);
+				double left = (double) Element.GetValue(Canvas.LeftProperty);
+				double width = (double) Element.GetValue(Canvas.WidthProperty);
+				double height = (double) Element.GetValue(Canvas.HeightProperty);
+				
+				return new Rect(left, top, width, height);
+			}
 		}
 		
 		protected Point LastClick {
@@ -143,6 +154,11 @@ namespace LunarEclipse.Model {
 		protected bool Dragging {
 			get { return dragging; }
 			set { dragging = value; }
+		}
+
+		protected FrameworkElement Inner {
+			get { return inner; }
+			set { inner = value; }
 		}
 		
 		protected Point CalculateOffset(Point current)

@@ -1,3 +1,11 @@
+2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* AbstractHandle.cs: Added Inner and ElementBounds
+	* LineHandleGroup.cs: Cosmetic
+	* TransformHandle.cs: Renamed some Methods
+	* RotateHandleGroup.cs, BottomRightRotateHandle.cs: Added
+	* RotateHandle.cs: Added GetXaml(), Update(). Improved MouseStep
+
 2008-06-08  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* AbstractHandle.cs, LineHandle.cs: Update() removed

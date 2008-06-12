@@ -1,4 +1,4 @@
-// LineHandleGroup.cs
+// BottomRightRotateHandle.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -25,22 +25,26 @@
 //
 //
 
-using System;
 using System.Windows;
-using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
-namespace LunarEclipse.Model { 
+namespace LunarEclipse.Model {	
+	
+	public class BottomRightRotateHandle: RotateHandle{
 		
-	public class LineHandleGroup: AbstractHandleGroup {
-		
-		public LineHandleGroup(MoonlightController controller, Line child):
-			base(controller, child)
+		public BottomRightRotateHandle(MoonlightController controller, IHandleGroup group):
+			base(controller, group)
 		{
-			AddHandle(new StartLineHandle(Controller, this));
-			AddHandle(new EndLineHandle(Controller, this));
-			
-			UpdateHandles();
 		}
+		
+		public override Point Location {
+			get { 
+				Rect r = ElementBounds;
+				return new Point(r.X + r.Width,
+								 r.Y + r.Height);
+			}
+			set {}
+		}
+
 	}
 }

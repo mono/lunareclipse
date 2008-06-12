@@ -89,6 +89,8 @@
     <File name="Model/StartPointHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/RotateHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/TransformHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/BottomRightRotateHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/RotateHandleGroup.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="False" refto="atk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

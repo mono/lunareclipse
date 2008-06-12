@@ -1,4 +1,4 @@
-// LineHandleGroup.cs
+// RotateHandleGroup.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -25,20 +25,18 @@
 //
 //
 
-using System;
 using System.Windows;
 using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
-namespace LunarEclipse.Model { 
+namespace LunarEclipse.Model {	
+	
+	public class RotateHandleGroup: AbstractHandleGroup {
 		
-	public class LineHandleGroup: AbstractHandleGroup {
-		
-		public LineHandleGroup(MoonlightController controller, Line child):
+		public RotateHandleGroup(MoonlightController controller, UIElement child):
 			base(controller, child)
 		{
-			AddHandle(new StartLineHandle(Controller, this));
-			AddHandle(new EndLineHandle(Controller, this));
+			AddHandle(new BottomRightRotateHandle(controller, this) );
 			
 			UpdateHandles();
 		}

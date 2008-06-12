@@ -45,17 +45,26 @@ namespace LunarEclipse.Model {
 		{
 		}
 		
-		protected Point TransformOrigin {
+		protected Point ElementTransformOrigin {
 			get {
 				return (Point) Element.GetValue(RenderTransformOriginProperty);
 			}
 		}
 		
-		protected RotateTransform Rotation {
-			get { return (RotateTransform) Transformations.Children[(int) Transform.Rotate]; }
+		protected Point ElementTransformCenter {
+			get {
+				Rect bounds = ElementBounds;
+				Point origin = ElementTransformOrigin;
+				return new Point(bounds.X + bounds.Width * origin.X,
+								 bounds.Y + bounds.Height * origin.Y);
+			}
 		}
 		
-		protected TransformGroup Transformations {
+		protected RotateTransform ElementRotation {
+			get { return (RotateTransform) ElementTransformGroup.Children[(int) Transform.Rotate]; }
+		}
+		
+		protected TransformGroup ElementTransformGroup {
 			get {
 				TransformGroup group = (TransformGroup) Element.GetValue(RenderTransformProperty);
 				
