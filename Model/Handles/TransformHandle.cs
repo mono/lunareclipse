@@ -40,10 +40,17 @@ namespace LunarEclipse.Model {
 	
 	public abstract class TransformHandle: AbstractHandle {
 		
-		public TransformHandle(MoonlightController controller, IHandleGroup group):
+		public TransformHandle(MoonlightController controller, IHandleGroup group, ILocator locator):
 			base(controller, group)
 		{
+			Locator = locator;
 		}
+		
+		public override Point Location {
+			get { return locator.Locate(); }
+			set {  }
+		}
+
 		
 		protected Point ElementTransformOrigin {
 			get {
@@ -77,5 +84,12 @@ namespace LunarEclipse.Model {
 				return group;
 			}
 		}
+
+		protected ILocator Locator {
+			get { return locator; }
+			set { locator = value; }
+		}
+		
+		private ILocator locator;
 	}
 }

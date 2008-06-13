@@ -67,7 +67,6 @@
     <File name="Model/Handles" subtype="Directory" buildaction="Compile" />
     <File name="Model/Locators" subtype="Directory" buildaction="Compile" />
     <File name="Model/Handles/AbstractHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Handles/BottomRightRotateHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/EndLineHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/IHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/LineHandle.cs" subtype="Code" buildaction="Compile" />

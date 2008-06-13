@@ -36,7 +36,10 @@ namespace LunarEclipse.Model {
 		public RotateHandleGroup(MoonlightController controller, UIElement child):
 			base(controller, child)
 		{
-			AddHandle(new BottomRightRotateHandle(controller, this) );
+			AddHandle(new RotateHandle(controller, this, new RelativeLocator(child, 0.0, 0.0)));
+			AddHandle(new RotateHandle(controller, this, new RelativeLocator(child, 1.0, 0.0)));
+			AddHandle(new RotateHandle(controller, this, new RelativeLocator(child, 0.0, 1.0)));
+			AddHandle(new RotateHandle(controller, this, new RelativeLocator(child, 1.0, 1.0)));
 			
 			UpdateHandles();
 		}

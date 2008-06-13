@@ -1,0 +1,7 @@
+2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* RotateHandleGroup.cs: Added Four Handles
+	* TransformHandle.cs: Adapted to use Locators
+	* BottomRightRotateHandle.cs: Deleted
+	* RotateHandle.cs: Addapted to use Locators
+

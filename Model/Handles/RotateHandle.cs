@@ -34,10 +34,10 @@ using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model
 {
-	public abstract class RotateHandle: TransformHandle	{
+	public class RotateHandle: TransformHandle	{
 		
-		public RotateHandle(MoonlightController controller, IHandleGroup group):
-			base(controller, group)
+		public RotateHandle(MoonlightController controller, IHandleGroup group, ILocator locator):
+			base(controller, group, locator)
 		{
 			TransformGroup transforms = new TransformGroup();
 			Inner.SetValue(RenderTransformProperty, transforms);
