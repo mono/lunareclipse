@@ -4,7 +4,8 @@
 //	 Alan McGovern <alan.mcgovern@gmail.com>
 //   Manuel Cerón <ceronman@unicauca.edu.co>
 //
-// Copyright (c) 2008 Manuel Cerón.
+// Copyright (c) 2008 Alan McGover
+// Copyrigth (c) 2008 Manuel Cerón.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -91,7 +92,7 @@ namespace LunarEclipse.Model
 		
 		protected override string GetXaml ()
 		{
-			return "<Rectangle Fill=\"#99FFFF00\" Stroke=\"#FF000000\"/>";
+			return "<Ellipse Fill=\"#99FFFF00\" Stroke=\"#FF000000\"/>";
 		}
 
 		private RotateTransform rotation;

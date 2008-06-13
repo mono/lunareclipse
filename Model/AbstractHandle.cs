@@ -115,17 +115,6 @@ namespace LunarEclipse.Model {
 			}
 		}
 			
-		// TODO: Candidate for Helper
-		protected Rect CalculateElementBounds()
-		{
-			double top = (double) Element.GetValue(Canvas.TopProperty);
-			double left = (double) Element.GetValue(Canvas.LeftProperty);
-			double width = (double) Element.GetValue(Canvas.WidthProperty);
-			double height = (double) Element.GetValue(Canvas.HeightProperty);
-			
-			return new Rect(left, top, width, height);
-		}
-		
 		protected virtual string GetXaml()
 		{
 			return "<Rectangle Fill=\"#00FFFFFF\" Stroke=\"#FF000000\"/>";

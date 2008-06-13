@@ -91,6 +91,11 @@
     <File name="Model/TransformHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/BottomRightRotateHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/RotateHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles" subtype="Directory" buildaction="Compile" />
+    <File name="ILocator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Locators" subtype="Directory" buildaction="Compile" />
+    <File name="Model/AbstractLocator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/RelativeLocator.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="False" refto="atk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
