@@ -62,15 +62,6 @@
     <File name="View/PropertyGroupLayout.cs" subtype="Code" buildaction="Compile" />
     <File name="View/PropertyGroupAppearance.cs" subtype="Code" buildaction="Compile" />
     <File name="Controller/MoonlightController.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/IHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/IHandleGroup.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/AbstractHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/AbstractHandleGroup.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/ResizeHandleGroup.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/LineHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/StartLineHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/EndLineHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/LineHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Draw/ITool.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Draw/AbstractTool.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Draw/ShapeCreationTool.cs" subtype="Code" buildaction="Compile" />
@@ -84,18 +75,28 @@
     <File name="Model/Draw/SelectionTool.cs" subtype="Code" buildaction="Compile" />
     <File name="Controller/StandardSelection.cs" subtype="Code" buildaction="Compile" />
     <File name="Controller/ISelection.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/LineSegmentHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/PathHandleGroup.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/StartPointHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/RotateHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/TransformHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/BottomRightRotateHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/RotateHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles" subtype="Directory" buildaction="Compile" />
-    <File name="ILocator.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Locators" subtype="Directory" buildaction="Compile" />
-    <File name="Model/AbstractLocator.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/RelativeLocator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/AbstractHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/BottomRightRotateHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/EndLineHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/IHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/LineHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/LineSegmentHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/PathHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/RotateHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/TransformHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/StartLineHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/StartPointHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Locators/AbstractLocator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Locators/RelativeLocator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Locators/ILocator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/IHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/LineHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/AbstractHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/ResizeHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/RotateHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Tools" subtype="Directory" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="False" refto="atk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
