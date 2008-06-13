@@ -47,6 +47,8 @@ namespace LunarEclipse.Model {
 		{
 			base.Activate();
 			
+			Controller.Selection.Show();
+			
 			foreach (UIElement element in Controller.Canvas.Children) {
 				if (!Selectable(element))
 					continue;
@@ -60,6 +62,8 @@ namespace LunarEclipse.Model {
 		public override void Deactivate ()
 		{
 			base.Deactivate ();
+			
+			Controller.Selection.Hide();
 			
 			foreach (UIElement element in Controller.Canvas.Children) {
 				if (!Selectable(element))
@@ -79,6 +83,7 @@ namespace LunarEclipse.Model {
 			last_click = ev.GetPosition(null);
 			
 			if (clicked_element != null) {
+				Controller.Selection.Clear();
 				Controller.Selection.Add(clicked_element);
 				action_flag = true;
 			}

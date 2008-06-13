@@ -65,11 +65,21 @@ namespace LunarEclipse.Model {
 			group.HandleMouseDown -= OnHandleMouseDown;
 		}
 		
-		public void Clear()
+		public void Hide()
 		{
 			foreach (IHandleGroup group in HandleGroups.Values)
 				group.RemoveFromCanvas();
-			
+		}
+		
+		public void Show()
+		{
+			foreach (IHandleGroup group in HandleGroups.Values)
+				group.AddToCanvas();
+		}
+		
+		public void Clear()
+		{
+			Hide();
 			HandleGroups.Clear();
 		}
 		

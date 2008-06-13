@@ -37,6 +37,8 @@ namespace LunarEclipse.Model {
 		
 		void Add(UIElement element);
 		void Remove(UIElement element);
+		void Hide();
+		void Show();
 		void Clear();
 		IEnumerable<UIElement> Elements {get;}
 	}

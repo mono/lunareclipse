@@ -1,5 +1,9 @@
 2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* ISelection.cs, StandardSelection.cs: Added Hide() and Show() Methods
+
+2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* ISelection.cs, StandardSelection.cs: Moved to Model
 
 2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
