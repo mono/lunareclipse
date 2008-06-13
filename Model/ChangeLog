@@ -4,6 +4,10 @@
 
 2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	
+
+2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* AbstractHandle.cs: CalculateElementBounds() Removed
 	* RelativeLocator.cs, Locators, AbstractLocator.cs, Handles: Added
 	* RotateHandle.cs: Changed GetXaml()
