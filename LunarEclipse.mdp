@@ -62,17 +62,6 @@
     <File name="View/PropertyGroupLayout.cs" subtype="Code" buildaction="Compile" />
     <File name="View/PropertyGroupAppearance.cs" subtype="Code" buildaction="Compile" />
     <File name="Controller/MoonlightController.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/ITool.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/AbstractTool.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/ShapeCreationTool.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/CircleCreationTool.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/ProportionalShapeCreationTool.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/EllipseCreationTool.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/RectangleCreationTool.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/SquareCreationTool.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/LineCreationTool.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/PenCreationTool.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/SelectionTool.cs" subtype="Code" buildaction="Compile" />
     <File name="Controller/StandardSelection.cs" subtype="Code" buildaction="Compile" />
     <File name="Controller/ISelection.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles" subtype="Directory" buildaction="Compile" />
@@ -97,6 +86,17 @@
     <File name="Model/Handles/ResizeHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/RotateHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Tools" subtype="Directory" buildaction="Compile" />
+    <File name="Model/Tools/AbstractTool.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Tools/CircleCreationTool.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Tools/EllipseCreationTool.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Tools/ITool.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Tools/LineCreationTool.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Tools/PenCreationTool.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Tools/ProportionalShapeCreationTool.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Tools/RectangleCreationTool.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Tools/SelectionTool.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Tools/ShapeCreationTool.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Tools/SquareCreationTool.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="False" refto="atk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
