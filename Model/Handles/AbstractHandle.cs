@@ -87,6 +87,8 @@ namespace LunarEclipse.Model {
 		public virtual void Update ()
 		{
 			Point position = Location;
+			position.X += (double) Element.GetValue(Canvas.LeftProperty);
+			position.Y += (double) Element.GetValue(Canvas.TopProperty);
 			CanvasAllocation = new Rect(position.X - DefaultRadius,
 			                            position.Y - DefaultRadius,
 			                            DefaultRadius * 2,

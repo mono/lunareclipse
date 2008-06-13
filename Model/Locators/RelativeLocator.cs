@@ -41,7 +41,7 @@ namespace LunarEclipse.Model {
 		public override Point Locate ()
 		{
 			Rect r = ElementBounds;
-			return new Point(r.X + r.Width * deltax, r.Y + r.Height * deltay);
+			return new Point(r.Width * deltax, r.Height * deltay);
 		}
 
 		

@@ -1,5 +1,9 @@
 2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* AbstractHandle.cs: Changed Update
+
+2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* AbstractHandleGroup.cs: Added ToolBox.PropertyChanged Listener
 	* RotateHandle.cs: Changed the way Rotation was performed
 
