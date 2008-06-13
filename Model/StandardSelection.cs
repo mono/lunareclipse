@@ -90,6 +90,10 @@ namespace LunarEclipse.Model {
 			}
 		}
 		
+		public bool Contains(UIElement element) {
+			return HandleGroups.ContainsKey(element);
+		}
+		
 		protected Dictionary<UIElement, IHandleGroup> HandleGroups {
 			get { return handle_groups; }
 			set { handle_groups = value; }

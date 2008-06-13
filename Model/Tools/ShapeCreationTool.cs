@@ -91,15 +91,7 @@ namespace LunarEclipse.Model {
 			width = ShapeEnd.X - ShapeStart.X;
 			height = ShapeEnd.Y - ShapeStart.Y;
 			
-			if (width < 0) {
-				x = ShapeEnd.X;
-				width = -width;
-			}
-			
-			if (height < 0) {
-				y = ShapeEnd.Y;
-				height = -height;
-			}
+			Toolbox.NormalizeRect(ref x, ref y, ref width, ref height);
 		}
 		
 		protected virtual void SetupShapeProperties()

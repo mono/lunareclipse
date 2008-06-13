@@ -77,8 +77,6 @@ namespace LunarEclipse.Model
 			rotation.CenterY = center.Y - allocation.Y;
 			
 			rotation.Angle = ElementRotation.Angle;
-			
-			System.Console.WriteLine("----- {2}, {0}, {1}", rotation.CenterX, rotation.CenterY, rotation.Angle);
 		}
 
 		

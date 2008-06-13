@@ -1,3 +1,7 @@
+2008-06-13  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* StandardSelection.cs, ISelection.cs: Added Contains()
+
 2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* ISelection.cs, StandardSelection.cs: Added Hide() and Show() Methods

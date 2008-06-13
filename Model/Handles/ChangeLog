@@ -1,3 +1,7 @@
+2008-06-13  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* RotateHandle.cs: Cosmetic
+
 2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* AbstractHandle.cs: Changed Update

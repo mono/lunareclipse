@@ -40,6 +40,7 @@ namespace LunarEclipse.Model {
 		void Hide();
 		void Show();
 		void Clear();
+		bool Contains(UIElement element);
 		IEnumerable<UIElement> Elements {get;}
 	}
 }

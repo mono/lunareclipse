@@ -28,10 +28,12 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using LunarEclipse;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {	
@@ -41,6 +43,12 @@ namespace LunarEclipse.Model {
 		public SelectionTool(MoonlightController controller):
 			base (controller)
 		{
+			SelectionRect = new Rectangle();
+			SelectionRect.Opacity = 0.2;
+            SelectionRect.Fill = new SolidColorBrush(Colors.Blue);
+            SelectionRect.Stroke = new SolidColorBrush(Colors.Black);
+            SelectionRect.StrokeThickness = 1.0;
+            SelectionRect.SetValue(UIElement.ZIndexProperty, int.MaxValue);
 		}
 		
 		public override void Activate()
@@ -83,15 +91,17 @@ namespace LunarEclipse.Model {
 			last_click = ev.GetPosition(null);
 			
 			if (clicked_element != null) {
-				Controller.Selection.Clear();
-				Controller.Selection.Add(clicked_element);
-				action_flag = true;
+				if (!Controller.Selection.Contains(clicked_element) ){
+					Controller.Selection.Clear();
+					Controller.Selection.Add(clicked_element);
+				}
+				return;
 			}
 			
-			if (clicked_handle != null) {
-				System.Console.WriteLine("*****Handle");
-				action_flag = true;
-			}
+			if (clicked_handle != null)
+				return;
+			
+			StartSelection(ev.GetPosition(null));
 		}
 		
 		public override void MouseMove (MouseEventArgs ev)
@@ -110,7 +120,10 @@ namespace LunarEclipse.Model {
 					MoveElement(element, offset);
 				}
 				last_click = current;
+				return;
 			}
+			
+			MoveSelection(ev.GetPosition(null));
 		}
 
 		
@@ -118,13 +131,26 @@ namespace LunarEclipse.Model {
 		{
 			base.MouseUp (ev);
 			
+			if (clicked_element == null && clicked_handle == null)
+				EndSelection();
+			
 			clicked_element = null;
 			clicked_handle = null;
-			
-			if (!action_flag)
-				Controller.Selection.Clear();
-			
-			action_flag = false;
+		}
+		
+		protected Rectangle SelectionRect {
+			get { return selection_rect; }
+			set { selection_rect = value; }
+		}
+
+		protected Point SelectionStart {
+			get { return selection_start; }
+			set { selection_start = value; }
+		}
+
+		protected Point SelectionEnd {
+			get { return selection_end; }
+			set { selection_end = value; }
 		}
 
 		protected void OnHandleMouseDown(object sender, MouseEventArgs args)
@@ -135,7 +161,8 @@ namespace LunarEclipse.Model {
 		private bool Selectable(UIElement element)
 		{
 			return ( (element != null) &&
-			        !(element is IHandle) );
+			        !(element is IHandle) &&
+			        element != SelectionRect);
 		}
 		
 		private void OnElementClicked(object sender, MouseEventArgs e)
@@ -154,10 +181,70 @@ namespace LunarEclipse.Model {
 			Toolbox.ChangeProperty(element, Canvas.TopProperty, top);
 			Toolbox.ChangeProperty(element, Canvas.LeftProperty, left);
 		}
+		
+		private void UpdateSelectionRect()
+		{
+			double x = SelectionStart.X;
+			double y = SelectionStart.Y;
+			double width = SelectionEnd.X - SelectionStart.X;
+			double height = SelectionEnd.Y - SelectionStart.Y;
+			
+			Toolbox.NormalizeRect(ref x, ref y, ref width, ref height);
+			
+			SelectionRect.SetValue(Canvas.LeftProperty, x);
+			SelectionRect.SetValue(Canvas.TopProperty, y);
+			SelectionRect.SetValue(Canvas.WidthProperty, width);
+			SelectionRect.SetValue(Canvas.HeightProperty, height);
+		}
+		
+		private void StartSelection(Point start)
+		{
+			SelectionStart = start;
+			SelectionEnd = start;
+			UpdateSelectionRect();
+			Controller.Canvas.Children.Add(SelectionRect);
+		}
+		
+		private void MoveSelection(Point end)
+		{
+			SelectionEnd = end;
+			UpdateSelectionRect();
+		}
+		
+		private void EndSelection()
+		{
+			Controller.Canvas.Children.Remove(SelectionRect);
+			
+			double x = (double)SelectionRect.GetValue(Canvas.LeftProperty);
+			double y = (double)SelectionRect.GetValue(Canvas.TopProperty);
+			double width = (double)SelectionRect.GetValue(Canvas.WidthProperty);
+			double height = (double)SelectionRect.GetValue(Canvas.HeightProperty);
+			
+			List<UIElement> selectedElements = new List<UIElement>();
+			foreach (UIElement element in Controller.Canvas.Children) {
+				double ex = (double)element.GetValue(Canvas.LeftProperty);
+				double ey = (double)element.GetValue(Canvas.TopProperty);
+				double ewidth = (double)element.GetValue(Canvas.WidthProperty);
+				double eheight = (double)element.GetValue(Canvas.HeightProperty);
 				
+				if (ex > x && ex + ewidth < x+width &&
+				    ey > y && ey + eheight < y+height) {
+					if (Selectable(element))
+						selectedElements.Add(element);
+				}
+			}
+			
+			Controller.Selection.Clear();
+			
+			foreach (UIElement element in selectedElements)
+				Controller.Selection.Add(element);
+		}
+		
 		private UIElement clicked_element;
 		private IHandle clicked_handle;
-		private bool action_flag = false;
 		private Point last_click;
+		private Rectangle selection_rect;
+		private Point selection_start;
+		private Point selection_end;
 	}
 }

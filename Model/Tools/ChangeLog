@@ -1,3 +1,8 @@
+2008-06-13  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* SelectionTool.cs: Added support for selection rect
+	* ShapeCreationTool.cs: Using Toolbox.NormailzeRect
+
 2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* SelectionTool.cs: Show selection on Activate() Hide on Deactivate

@@ -55,6 +55,19 @@ namespace LunarEclipse
 			return (angle / Math.PI) * 180.0;
 		}
 		
+		public static void NormalizeRect(ref double x, ref double y, ref double width, ref double height)
+		{
+			if (width < 0) {
+				width = -width;
+				x -= width;
+			}
+			
+			if (height < 0) {
+				height = -height;
+				y -= height;
+			}
+		}
+		
 		internal static void RaiseEvent<T>(EventHandler<T> e, object sender, T args) where T : EventArgs
 		{
 			if(e != null)
