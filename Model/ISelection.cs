@@ -25,10 +25,11 @@
 //
 //
 
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 
-namespace LunarEclipse.Controller {	
+namespace LunarEclipse.Model {	
 	
 	public interface ISelection {
 		
@@ -37,5 +38,6 @@ namespace LunarEclipse.Controller {
 		void Add(UIElement element);
 		void Remove(UIElement element);
 		void Clear();
+		IEnumerable<UIElement> Elements {get;}
 	}
 }

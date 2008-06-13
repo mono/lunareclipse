@@ -77,11 +77,9 @@ namespace LunarEclipse.View
 //			line.X2 = 500;
 //			line.Y2 = 500;
 //			line.Stroke = new SolidColorBrush(Colors.Blue);
-//			line.StrokeThickness = 100;
-//			//line.Opacity = 0.2;
+//			line.StrokeThickness = 1.0;
 //			c.Children.Add(line);
-//			
-//			System.Console.WriteLine("######### {0}", (TransformGroup)line.GetValue(UIElement.RenderTransformProperty) == null);
+
 			
 			Console.WriteLine ("Animation");
 			timeline = new AnimationTimeline(800, 70);

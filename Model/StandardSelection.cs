@@ -29,9 +29,9 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shapes;
-using LunarEclipse.Model;
+using LunarEclipse.Controller;
 
-namespace LunarEclipse.Controller {	
+namespace LunarEclipse.Model {	
 	
 	public class StandardSelection: ISelection {
 		
@@ -71,6 +71,13 @@ namespace LunarEclipse.Controller {
 				group.RemoveFromCanvas();
 			
 			HandleGroups.Clear();
+		}
+		
+		public IEnumerable<UIElement> Elements {
+			get {
+				foreach (UIElement element in HandleGroups.Keys)
+					yield return element;
+			}
 		}
 		
 		protected Dictionary<UIElement, IHandleGroup> HandleGroups {

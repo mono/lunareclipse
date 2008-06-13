@@ -29,6 +29,7 @@
 
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using LunarEclipse;
 using LunarEclipse.Controller;
@@ -75,6 +76,8 @@ namespace LunarEclipse.Model {
 		{
 			base.MouseDown (ev);
 			
+			last_click = ev.GetPosition(null);
+			
 			if (clicked_element != null) {
 				Controller.Selection.Add(clicked_element);
 				action_flag = true;
@@ -85,6 +88,26 @@ namespace LunarEclipse.Model {
 				action_flag = true;
 			}
 		}
+		
+		public override void MouseMove (MouseEventArgs ev)
+		{
+			base.MouseMove (ev);
+			
+			if (!Dragging)
+				return;
+			
+			if (clicked_element != null) {
+				Point offset = new Point(0.0, 0.0);
+				Point current = ev.GetPosition(null);
+				offset.X = current.X - last_click.X;
+				offset.Y = current.Y - last_click.Y;
+				foreach (UIElement element in Controller.Selection.Elements) {
+					MoveElement(element, offset);
+				}
+				last_click = current;
+			}
+		}
+
 		
 		public override void MouseUp (MouseEventArgs ev)
 		{
@@ -114,9 +137,22 @@ namespace LunarEclipse.Model {
 		{
 			clicked_element = sender as UIElement;
 		}
+		
+		private void MoveElement(UIElement element, Point offset)
+		{
+			double top = (double) element.GetValue(Canvas.TopProperty);
+			double left = (double) element.GetValue(Canvas.LeftProperty);
+			
+			left += offset.X;
+			top += offset.Y;
+			
+			Toolbox.ChangeProperty(element, Canvas.TopProperty, top);
+			Toolbox.ChangeProperty(element, Canvas.LeftProperty, left);
+		}
 				
 		private UIElement clicked_element;
 		private IHandle clicked_handle;
 		private bool action_flag = false;
+		private Point last_click;
 	}
 }
