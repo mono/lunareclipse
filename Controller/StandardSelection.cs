@@ -95,9 +95,7 @@ namespace LunarEclipse.Controller {
 				return new LineHandleGroup(Controller, element as Line);
 			if (element is Path)
 				return new PathHandleGroup(Controller, element as Path);
-			if (element is Rectangle)
-				return new RotateHandleGroup(Controller, element as Rectangle);
-			return null;
+			return new RotateHandleGroup(Controller, element);
 		}
 		
 		private MoonlightController controller;

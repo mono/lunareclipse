@@ -1,5 +1,10 @@
 2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* AbstractHandleGroup.cs: Added ToolBox.PropertyChanged Listener
+	* RotateHandle.cs: Changed the way Rotation was performed
+
+2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* RotateHandleGroup.cs: Added Four Handles
 	* TransformHandle.cs: Adapted to use Locators
 	* BottomRightRotateHandle.cs: Deleted

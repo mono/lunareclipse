@@ -1,5 +1,10 @@
 2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* StandardSelection.cs: RotateHandleGroup is the default HandleGroup
+	  for now
+
+2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* StandardSelection.cs: Added support for RotateHandleGroup
 
 2008-06-08  Manuel Cerón <ceronman@unicauca.edu.co> 

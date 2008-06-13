@@ -69,6 +69,7 @@ namespace LunarEclipse.Model {
 				Controller.Canvas.Children.Add(handle as UIElement);
 				handle.MouseLeftButtonDown += OnHandleMouseDown;
 			}
+			Toolbox.PropertyChanged += OnPropertyChanged;
 		}
 		
 		public void RemoveFromCanvas()
@@ -77,6 +78,12 @@ namespace LunarEclipse.Model {
 				Controller.Canvas.Children.Remove(handle as UIElement);
 				handle.MouseLeftButtonDown -= OnHandleMouseDown;
 			}
+			Toolbox.PropertyChanged -= OnPropertyChanged;
+		}
+		
+		protected virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			UpdateHandles();
 		}
 		
 		protected void UpdateHandles()

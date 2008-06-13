@@ -59,17 +59,9 @@ namespace LunarEclipse.Model
 			double alpha = Math.Atan2(position.Y - center.Y, position.X - center.X);
 			double beta = Math.Atan2(LastClick.Y - center.Y, LastClick.X - center.X);
 			
-			double difference = alpha - beta;
+			double angle = ElementRotation.Angle + Toolbox.RadiansToDegrees(alpha - beta);
 			
-			if (Double.IsNaN(difference)) {
-				difference = 0.0;
-				System.Console.WriteLine("IS NaN");
-				System.Console.WriteLine(LastClick.X - center.X);
-				System.Console.WriteLine(position.X - center.X);
-//				double supererror = 1.0 / 0.0;
-			}
-			
-			ElementRotation.Angle += Toolbox.RadiansToDegrees(difference);
+			Toolbox.ChangeProperty(ElementRotation, RotateTransform.AngleProperty, angle);
 			Update();
 			
 			LastClick = position;			
