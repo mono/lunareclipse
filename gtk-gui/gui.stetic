@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stetic-interface>
+  <configuration>
+    <target-gtk-version>2.12.2</target-gtk-version>
+  </configuration>
+  <import>
+    <widget-library name="gtksilver, Version=0.0.0.0, Culture=neutral, PublicKeyToken=976ad8f3443f9a4d" />
+  </import>
+</stetic-interface>
