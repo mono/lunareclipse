@@ -1,3 +1,11 @@
+2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* gtk-gui/LunarEclipse.MainWindow2.cs, Icons/circle-tool.png,
+	  Icons/rectangle-tool.png, Icons/selection-tool.png,
+	  Icons/line-tool.png, Icons/icons.svg, Icons/path-tool.png,
+	  Icons/ellipse-tool.png, Icons/square-tool.png: Icon Added
+	* Icons: Icons Added 
+
 2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	

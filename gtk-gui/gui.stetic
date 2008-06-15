@@ -1,9 +1,455 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <stetic-interface>
   <configuration>
+    <images-root-path>..</images-root-path>
     <target-gtk-version>2.12.2</target-gtk-version>
   </configuration>
   <import>
     <widget-library name="gtksilver, Version=0.0.0.0, Culture=neutral, PublicKeyToken=976ad8f3443f9a4d" />
   </import>
+  <icon-factory>
+    <icon-set id="circle-tool">
+      <source>
+        <property name="Image">file:./Icons/circle-tool.png</property>
+      </source>
+    </icon-set>
+    <icon-set id="ellipse-tool">
+      <source>
+        <property name="Image">file:./Icons/ellipse-tool.png</property>
+      </source>
+    </icon-set>
+    <icon-set id="line-tool">
+      <source>
+        <property name="Image">file:./Icons/line-tool.png</property>
+      </source>
+    </icon-set>
+    <icon-set id="path-tool">
+      <source>
+        <property name="Image">file:./Icons/path-tool.png</property>
+      </source>
+    </icon-set>
+    <icon-set id="rectangle-tool">
+      <source>
+        <property name="Image">file:./Icons/rectangle-tool.png</property>
+      </source>
+    </icon-set>
+    <icon-set id="selection-tool">
+      <source>
+        <property name="Image">file:./Icons/selection-tool.png</property>
+      </source>
+    </icon-set>
+    <icon-set id="square-tool">
+      <source>
+        <property name="Image">file:./Icons/square-tool.png</property>
+      </source>
+    </icon-set>
+  </icon-factory>
+  <widget class="Gtk.Window" id="LunarEclipse.MainWindow2" design-size="595 461">
+    <action-group name="Default">
+      <action id="FileAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_File</property>
+        <property name="ShortLabel" translatable="yes">_File</property>
+      </action>
+      <action id="AbrirAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Abrir</property>
+        <property name="ShortLabel" translatable="yes">_Abrir</property>
+        <property name="StockId">gtk-open</property>
+      </action>
+      <action id="NuevoAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Nuevo</property>
+        <property name="ShortLabel" translatable="yes">_Nuevo</property>
+        <property name="StockId">gtk-new</property>
+      </action>
+      <action id="GuardarAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Guardar</property>
+        <property name="ShortLabel" translatable="yes">_Guardar</property>
+        <property name="StockId">gtk-save</property>
+      </action>
+      <action id="GuardarComoAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Guardar _como</property>
+        <property name="ShortLabel" translatable="yes">Guardar _como</property>
+        <property name="StockId">gtk-save-as</property>
+      </action>
+      <action id="SalirAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Salir</property>
+        <property name="ShortLabel" translatable="yes">_Salir</property>
+        <property name="StockId">gtk-quit</property>
+      </action>
+      <action id="EditAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Edit</property>
+        <property name="ShortLabel" translatable="yes">_Edit</property>
+      </action>
+      <action id="ToolsAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Tools</property>
+        <property name="ShortLabel" translatable="yes">_Tools</property>
+      </action>
+      <action id="HelpAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Help</property>
+        <property name="ShortLabel" translatable="yes">_Help</property>
+      </action>
+      <action id="DeshacerAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Deshacer</property>
+        <property name="ShortLabel" translatable="yes">_Deshacer</property>
+        <property name="StockId">gtk-undo</property>
+      </action>
+      <action id="RehacerAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Rehacer</property>
+        <property name="ShortLabel" translatable="yes">_Rehacer</property>
+        <property name="StockId">gtk-redo</property>
+      </action>
+      <action id="CortarAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Cor_tar</property>
+        <property name="ShortLabel" translatable="yes">Cor_tar</property>
+        <property name="StockId">gtk-cut</property>
+      </action>
+      <action id="CopiarAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Copiar</property>
+        <property name="ShortLabel" translatable="yes">_Copiar</property>
+        <property name="StockId">gtk-copy</property>
+      </action>
+      <action id="PegarAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Pegar</property>
+        <property name="ShortLabel" translatable="yes">_Pegar</property>
+        <property name="StockId">gtk-paste</property>
+      </action>
+      <action id="BorrarAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Borrar</property>
+        <property name="ShortLabel" translatable="yes">_Borrar</property>
+        <property name="StockId">gtk-delete</property>
+      </action>
+      <action id="AcercaDeAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Acerca _de</property>
+        <property name="ShortLabel" translatable="yes">Acerca _de</property>
+        <property name="StockId">gtk-about</property>
+      </action>
+      <action id="SelectionToolAction">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">_Selection Tool</property>
+        <property name="ShortLabel" translatable="yes">_Selection Tool</property>
+        <property name="StockId">selection-tool</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
+      <action id="RectangleToolAction">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">_Rectangle Tool</property>
+        <property name="ShortLabel" translatable="yes">_Rectangle Tool</property>
+        <property name="StockId">rectangle-tool</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
+      <action id="SquareToolAction">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">S_quare Tool</property>
+        <property name="ShortLabel" translatable="yes">S_quare Tool</property>
+        <property name="StockId">square-tool</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
+      <action id="EllipseToolAction">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">_Ellipse Tool</property>
+        <property name="ShortLabel" translatable="yes">_Ellipse Tool</property>
+        <property name="StockId">ellipse-tool</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
+      <action id="CircleToolAction">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">_Circle Tool</property>
+        <property name="ShortLabel" translatable="yes">_Circle Tool</property>
+        <property name="StockId">circle-tool</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
+      <action id="PathToolAction">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">_Path Tool</property>
+        <property name="ShortLabel" translatable="yes">_Path Tool</property>
+        <property name="StockId">path-tool</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
+      <action id="TextToolAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Text Tool</property>
+        <property name="ShortLabel" translatable="yes">_Text Tool</property>
+      </action>
+      <action id="ImageToolAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Image Tool</property>
+        <property name="ShortLabel" translatable="yes">Image Tool</property>
+      </action>
+      <action id="AnimationAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Animation</property>
+        <property name="ShortLabel" translatable="yes">_Animation</property>
+      </action>
+      <action id="GrabarAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Grabar</property>
+        <property name="ShortLabel" translatable="yes">_Grabar</property>
+        <property name="StockId">gtk-media-record</property>
+      </action>
+      <action id="ReproducirAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Reproducir</property>
+        <property name="ShortLabel" translatable="yes">_Reproducir</property>
+        <property name="StockId">gtk-media-play</property>
+      </action>
+      <action id="DetenerAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Detener</property>
+        <property name="ShortLabel" translatable="yes">_Detener</property>
+        <property name="StockId">gtk-media-stop</property>
+      </action>
+      <action id="LineToolAction">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">_Line Tool</property>
+        <property name="ShortLabel" translatable="yes">_Line Tool</property>
+        <property name="StockId">line-tool</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
+    </action-group>
+    <property name="MemberName" />
+    <property name="Title" translatable="yes">Lunar Eclipse</property>
+    <property name="WindowPosition">CenterOnParent</property>
+    <child>
+      <widget class="Gtk.VBox" id="vbox1">
+        <property name="MemberName" />
+        <property name="Spacing">6</property>
+        <child>
+          <widget class="Gtk.MenuBar" id="menubar1">
+            <property name="MemberName" />
+            <node name="menubar1" type="Menubar">
+              <node type="Menu" action="FileAction">
+                <node type="Menuitem" action="NuevoAction" />
+                <node type="Menuitem" action="AbrirAction" />
+                <node type="Menuitem" action="GuardarAction" />
+                <node type="Menuitem" action="GuardarComoAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="SalirAction" />
+              </node>
+              <node type="Menu" action="EditAction">
+                <node type="Menuitem" action="DeshacerAction" />
+                <node type="Menuitem" action="RehacerAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="CortarAction" />
+                <node type="Menuitem" action="CopiarAction" />
+                <node type="Menuitem" action="PegarAction" />
+                <node type="Menuitem" action="BorrarAction" />
+              </node>
+              <node type="Menu" action="ToolsAction">
+                <node type="Menuitem" action="SelectionToolAction" />
+                <node type="Menuitem" action="RectangleToolAction" />
+                <node type="Menuitem" action="SquareToolAction" />
+                <node type="Menuitem" action="EllipseToolAction" />
+                <node type="Menuitem" action="CircleToolAction" />
+                <node type="Menuitem" action="LineToolAction" />
+                <node type="Menuitem" action="PathToolAction" />
+                <node type="Menuitem" action="TextToolAction" />
+                <node type="Menuitem" action="ImageToolAction" />
+              </node>
+              <node type="Menu" action="AnimationAction">
+                <node type="Menuitem" action="GrabarAction" />
+                <node type="Menuitem" action="ReproducirAction" />
+                <node type="Menuitem" action="DetenerAction" />
+              </node>
+              <node type="Menu" action="HelpAction">
+                <node type="Menuitem" action="AcercaDeAction" />
+              </node>
+            </node>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Toolbar" id="toolbar1">
+            <property name="MemberName" />
+            <property name="ShowArrow">False</property>
+            <property name="ButtonStyle">Icons</property>
+            <node name="toolbar1" type="Menubar">
+              <node type="Toolitem" action="NuevoAction" />
+              <node type="Toolitem" action="AbrirAction" />
+              <node type="Toolitem" action="GuardarAction" />
+              <node type="Separator" />
+              <node type="Toolitem" action="DeshacerAction" />
+              <node type="Toolitem" action="RehacerAction" />
+              <node type="Separator" />
+              <node type="Toolitem" action="PegarAction" />
+              <node type="Toolitem" action="CopiarAction" />
+              <node type="Toolitem" action="CortarAction" />
+              <node type="Toolitem" action="BorrarAction" />
+              <node type="Separator" />
+              <node type="Toolitem" action="ReproducirAction" />
+              <node type="Toolitem" action="DetenerAction" />
+              <node type="Toolitem" action="GrabarAction" />
+            </node>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Notebook" id="notebook1">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="CurrentPage">0</property>
+            <property name="TabPos">Bottom</property>
+            <child>
+              <widget class="Gtk.HBox" id="hbox2">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <child>
+                  <widget class="Gtk.Toolbar" id="toolbar2">
+                    <property name="MemberName" />
+                    <property name="Orientation">Vertical</property>
+                    <property name="ShowArrow">False</property>
+                    <property name="ButtonStyle">Icons</property>
+                    <node name="toolbar1" type="Menubar">
+                      <node type="Toolitem" action="SelectionToolAction" />
+                      <node type="Toolitem" action="RectangleToolAction" />
+                      <node type="Toolitem" action="SquareToolAction" />
+                      <node type="Toolitem" action="CircleToolAction" />
+                      <node type="Toolitem" action="EllipseToolAction" />
+                      <node type="Toolitem" action="PathToolAction" />
+                      <node type="Toolitem" action="LineToolAction" />
+                    </node>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="VscrollbarPolicy">Always</property>
+                    <property name="HscrollbarPolicy">Always</property>
+                    <child>
+                      <widget class="Gtk.Viewport" id="GtkViewport">
+                        <property name="MemberName" />
+                        <property name="ShadowType">None</property>
+                        <child>
+                          <placeholder />
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                  </packing>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label2">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">Design</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.ScrolledWindow" id="scrolledwindow2">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <child>
+                  <widget class="Gtk.Viewport" id="GtkViewport1">
+                    <property name="MemberName" />
+                    <property name="ShadowType">None</property>
+                    <child>
+                      <widget class="Gtk.TextView" id="textview1">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="ShowScrollbars">True</property>
+                        <property name="Text" translatable="yes" />
+                      </widget>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label1">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">Xaml Code</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">True</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Statusbar" id="statusbar1">
+            <property name="MemberName" />
+            <property name="Spacing">6</property>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">3</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
 </stetic-interface>
