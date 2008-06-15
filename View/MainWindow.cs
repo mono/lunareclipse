@@ -43,7 +43,7 @@ using Gtk.Moonlight;
 
 namespace LunarEclipse.View
 {
-    public partial class MainWindow: Gtk.Window
+    public class MainWindow: Gtk.Window
     {
         Box mainContainer;
         MoonlightController controller;
@@ -57,8 +57,6 @@ namespace LunarEclipse.View
 		
 		public MainWindow (): base (Gtk.WindowType.Toplevel)
     	{
-    		Build ();
-    		
             Canvas c = new Canvas();
             c.Width = 800;
             c.Height = 600;

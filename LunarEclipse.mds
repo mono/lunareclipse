@@ -10,7 +10,6 @@
   <StartMode startupentry="LunarEclipse" single="True">
     <Execute type="None" entry="LunarEclipse" />
   </StartMode>
-  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInEachDirectory" />
   <Entries>
     <Entry filename="LunarEclipse.mdp" />
   </Entries>

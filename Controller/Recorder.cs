@@ -50,7 +50,7 @@ namespace LunarEclipse.Controller
 			storyboard = new Storyboard();
 			storyboard.BeginTime = TimeSpan.Zero;
 			storyboard.Duration = TimeSpan.Zero;
-			storyboard.SetValue<object>(Storyboard.ChildrenProperty, new TimelineCollection());
+			storyboard.SetValue(Storyboard.ChildrenProperty, new TimelineCollection());
 		}
 		
 	}
