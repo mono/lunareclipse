@@ -100,6 +100,21 @@ namespace LunarEclipse.View
 		{
 			xaml_textview.Buffer.Text = controller.SerializeCanvas();
 		}
+
+		protected virtual void OnPolylineToolActionActivated (object sender, System.EventArgs e)
+		{
+			controller.CurrentTool = new PolyLineCreationTool(controller);
+		}
+
+		protected virtual void OnTextToolActionActivated (object sender, System.EventArgs e)
+		{
+			controller.CurrentTool = new TextBlockCreationTool(controller);
+		}
+
+		protected virtual void OnImageToolActionActivated (object sender, System.EventArgs e)
+		{
+			controller.CurrentTool = new ImageCreationTool(controller);
+		}
 		
 		private MoonlightController controller;
 	}

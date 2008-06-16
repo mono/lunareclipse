@@ -70,7 +70,7 @@ namespace LunarEclipse.Model {
 		}
 
 		
-		protected abstract Shape CreateShape();
+		protected abstract UIElement CreateShape();
 		
 		protected virtual void UpdateShape() 
 		{
@@ -80,8 +80,8 @@ namespace LunarEclipse.Model {
 			
 			CreatedShape.SetValue(Canvas.LeftProperty, x);
 			CreatedShape.SetValue(Canvas.TopProperty, y);
-			CreatedShape.SetValue(Shape.WidthProperty, width);
-			CreatedShape.SetValue(Shape.HeightProperty, height);
+			CreatedShape.SetValue(Canvas.WidthProperty, width);
+			CreatedShape.SetValue(Canvas.HeightProperty, height);
 		}
 		
 		protected virtual void NormalizeShape(out double x, out double y, out double width, out double height)
@@ -102,7 +102,7 @@ namespace LunarEclipse.Model {
 			CreatedShape.SetValue(UIElement.RenderTransformOriginProperty, new Point(0.5, 0.5));
 		}
 		
-		protected Shape CreatedShape {
+		protected UIElement CreatedShape {
 			get { return created_shape; }
 			set { created_shape = value; }
 		}
@@ -125,7 +125,7 @@ namespace LunarEclipse.Model {
 			}
 		}
 		
-		private Shape created_shape;
+		private UIElement created_shape;
 		private Point shape_start;
 		private Point shape_end;
 	}

@@ -1,11 +1,9 @@
-// PenCreationTool.cs
+// TextBlockCreationTool.cs
 //
 // Author:
-//   Alan McGovern <alan.mcgovern@gmail.com>
-//   Manuel Cerón <ceronman@unicauca.edu.co>
+//    Manuel Cerón <ceronman@unicauca.edu.co>
 //
-// Copyright (c) 2007 Alan McGovern.
-// Copyright (c) 2008 Manuel Cerón.
+// Copyright (c) 2008 [copyright holders]
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,45 +26,25 @@
 //
 
 using System.Windows;
-using System.Windows.Shapes;
-using System.Windows.Media;
+using System.Windows.Controls;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 	
-	public class PenCreationTool: ShapeCreationTool {
+	public class TextBlockCreationTool: ShapeCreationTool {
 		
-		public PenCreationTool(MoonlightController controller):
-			base (controller)
+		public TextBlockCreationTool(MoonlightController controller):
+			base(controller)
 		{
 		}
 		
 		protected override UIElement CreateShape ()
 		{
-			Path path = new Path();
-			PathGeometry geometry =  new PathGeometry();
-			path.Data = geometry;
-			geometry.Figures = new PathFigureCollection();
-			figure = new PathFigure();
-			geometry.Figures.Add(figure);
-			figure.Segments = new PathSegmentCollection();
+			TextBlock block = new TextBlock();
+			block.Text = "Hello World";
 			
-			return path;
-		}
-		
-		protected override void UpdateShape ()
-		{
-			if (ShapeStart == ShapeEnd)
-				return;
-			figure.StartPoint = ShapeStart;
-			
-			LineSegment segment = new LineSegment();
-			segment.Point = ShapeEnd;
-			
-			figure.Segments.Add(segment);
+			return block;
 		}
 
-		
-		private PathFigure figure;
 	}
 }

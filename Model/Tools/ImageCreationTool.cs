@@ -1,11 +1,9 @@
-// PenCreationTool.cs
+// ImageCreationTool.cs
 //
 // Author:
-//   Alan McGovern <alan.mcgovern@gmail.com>
-//   Manuel Cerón <ceronman@unicauca.edu.co>
+//    Manuel Cerón <ceronman@unicauca.edu.co>
 //
-// Copyright (c) 2007 Alan McGovern.
-// Copyright (c) 2008 Manuel Cerón.
+// Copyright (c) 2008 [copyright holders]
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,46 +25,26 @@
 //
 //
 
+using System;
 using System.Windows;
-using System.Windows.Shapes;
+using System.Windows.Controls;
 using System.Windows.Media;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 	
-	public class PenCreationTool: ShapeCreationTool {
+	public class ImageCreationTool: ShapeCreationTool {
 		
-		public PenCreationTool(MoonlightController controller):
-			base (controller)
+		public ImageCreationTool(MoonlightController controller):
+			base(controller)
 		{
 		}
 		
 		protected override UIElement CreateShape ()
 		{
-			Path path = new Path();
-			PathGeometry geometry =  new PathGeometry();
-			path.Data = geometry;
-			geometry.Figures = new PathFigureCollection();
-			figure = new PathFigure();
-			geometry.Figures.Add(figure);
-			figure.Segments = new PathSegmentCollection();
-			
-			return path;
+			Image image = new Image();
+			image.Source = new System.Uri("file:///home/ceronman/sample-image.jpg");
+			return image;
 		}
-		
-		protected override void UpdateShape ()
-		{
-			if (ShapeStart == ShapeEnd)
-				return;
-			figure.StartPoint = ShapeStart;
-			
-			LineSegment segment = new LineSegment();
-			segment.Point = ShapeEnd;
-			
-			figure.Segments.Add(segment);
-		}
-
-		
-		private PathFigure figure;
 	}
 }

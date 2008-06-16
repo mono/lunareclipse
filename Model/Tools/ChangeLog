@@ -1,3 +1,12 @@
+2008-06-16  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* PolyLineCreationTool.cs, PathCreationTool.cs,
+	  TextBlockCreationTool.cs, ImageCreationTool.cs: Added
+	* EllipseCreationTool.cs, SquareCreationTool.cs, ShapeCreationTool.cs,
+	  CircleCreationTool.cs, RectangleCreationTool.cs,
+	  PenCreationTool.cs, LineCreationTool.cs: Changed CreatedShape to
+	  return UIElement
+
 2008-06-13  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* SelectionTool.cs: Added support for selection rect

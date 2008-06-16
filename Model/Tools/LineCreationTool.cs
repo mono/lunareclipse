@@ -25,6 +25,7 @@
 //
 //
 
+using System.Windows;
 using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
@@ -37,7 +38,7 @@ namespace LunarEclipse.Model {
 		{
 		}
 		
-		protected override Shape CreateShape ()
+		protected override UIElement CreateShape ()
 		{
 			return new Line();
 		}

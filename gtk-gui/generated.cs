@@ -33,6 +33,12 @@ namespace Stetic {
                 w1.Add("selection-tool", w7);
                 Gtk.IconSet w8 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./Icons/square-tool.png")));
                 w1.Add("square-tool", w8);
+                Gtk.IconSet w9 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./Icons/image-tool.png")));
+                w1.Add("image-tool", w9);
+                Gtk.IconSet w10 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./Icons/polyline-tool.png")));
+                w1.Add("polyline-tool", w10);
+                Gtk.IconSet w11 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./Icons/text-tool.png")));
+                w1.Add("text-tool", w11);
                 w1.AddDefault();
             }
         }

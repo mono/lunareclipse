@@ -1,3 +1,7 @@
+2008-06-16  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MainWindow.cs: Added new handlers for new tools
+
 2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MainWindow.cs: Added AnimationTimeLine Widget Support

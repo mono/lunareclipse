@@ -1,3 +1,9 @@
+2008-06-16  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* Resources/sample-image.jpg, Icons/image-tool.png,
+	  Icons/text-tool.png, Icons/polyline-tool.png: Added
+	* Icons/icons.svg: added image-tool, polyline-tool, and text-tool icons
+
 2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	

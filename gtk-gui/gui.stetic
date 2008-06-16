@@ -44,8 +44,23 @@
         <property name="Image">file:./Icons/square-tool.png</property>
       </source>
     </icon-set>
+    <icon-set id="image-tool">
+      <source>
+        <property name="Image">file:./Icons/image-tool.png</property>
+      </source>
+    </icon-set>
+    <icon-set id="polyline-tool">
+      <source>
+        <property name="Image">file:./Icons/polyline-tool.png</property>
+      </source>
+    </icon-set>
+    <icon-set id="text-tool">
+      <source>
+        <property name="Image">file:./Icons/text-tool.png</property>
+      </source>
+    </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow" design-size="630 528">
+  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow" design-size="650 610">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -209,19 +224,23 @@
         <property name="Type">Radio</property>
         <property name="Label" translatable="yes">_Text Tool</property>
         <property name="ShortLabel" translatable="yes">_Text Tool</property>
+        <property name="StockId">text-tool</property>
         <property name="DrawAsRadio">False</property>
         <property name="Active">False</property>
         <property name="Value">0</property>
         <property name="Group">group1</property>
+        <signal name="Activated" handler="OnTextToolActionActivated" />
       </action>
       <action id="ImageToolAction">
         <property name="Type">Radio</property>
         <property name="Label" translatable="yes">Image Tool</property>
         <property name="ShortLabel" translatable="yes">Image Tool</property>
+        <property name="StockId">image-tool</property>
         <property name="DrawAsRadio">False</property>
         <property name="Active">False</property>
         <property name="Value">0</property>
         <property name="Group">group1</property>
+        <signal name="Activated" handler="OnImageToolActionActivated" />
       </action>
       <action id="AnimationAction">
         <property name="Type">Action</property>
@@ -269,6 +288,17 @@
         <property name="StockId">gtk-clear</property>
         <signal name="Activated" handler="OnLimpiarActionActivated" />
       </action>
+      <action id="PolylineToolAction">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">Polyline Tool</property>
+        <property name="ShortLabel" translatable="yes">Polyline Tool</property>
+        <property name="StockId">polyline-tool</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+        <signal name="Activated" handler="OnPolylineToolActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">Lunar Eclipse</property>
@@ -309,6 +339,7 @@
                 <node type="Menuitem" action="EllipseToolAction" />
                 <node type="Menuitem" action="CircleToolAction" />
                 <node type="Menuitem" action="LineToolAction" />
+                <node type="Menuitem" action="PolylineToolAction" />
                 <node type="Menuitem" action="PathToolAction" />
                 <node type="Menuitem" action="TextToolAction" />
                 <node type="Menuitem" action="ImageToolAction" />
@@ -385,6 +416,9 @@
                       <node type="Toolitem" action="CircleToolAction" />
                       <node type="Toolitem" action="PathToolAction" />
                       <node type="Toolitem" action="LineToolAction" />
+                      <node type="Toolitem" action="PolylineToolAction" />
+                      <node type="Toolitem" action="TextToolAction" />
+                      <node type="Toolitem" action="ImageToolAction" />
                       <node type="Separator" />
                       <node type="Toolitem" action="LimpiarAction" />
                     </node>
@@ -430,6 +464,7 @@
                       <widget class="LunarEclipse.Controls.AnimationTimelineWidget" id="animationtimelinewidget1">
                         <property name="MemberName" />
                         <property name="WidthRequest">70</property>
+                        <property name="HeightRequest">70</property>
                         <property name="Events">ButtonPressMask</property>
                       </widget>
                       <packing>
