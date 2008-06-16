@@ -11,7 +11,7 @@
 namespace LunarEclipse.View {
     
     
-    public partial class MainWindow2 {
+    public partial class MainWindow {
         
         private Gtk.Action FileAction;
         
@@ -103,7 +103,7 @@ namespace LunarEclipse.View {
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
-            // Widget LunarEclipse.View.MainWindow2
+            // Widget LunarEclipse.View.MainWindow
             Gtk.UIManager w1 = new Gtk.UIManager();
             Gtk.ActionGroup w2 = new Gtk.ActionGroup("Default");
             this.FileAction = new Gtk.Action("FileAction", Mono.Unix.Catalog.GetString("_File"), null, null);
@@ -171,19 +171,19 @@ namespace LunarEclipse.View {
             this.EllipseToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Ellipse Tool");
             w2.Add(this.EllipseToolAction, null);
             this.CircleToolAction = new Gtk.RadioAction("CircleToolAction", Mono.Unix.Catalog.GetString("_Circle Tool"), null, "circle-tool", 0);
-            this.CircleToolAction.Group = this.EllipseToolAction.Group;
+            this.CircleToolAction.Group = this.SelectionToolAction.Group;
             this.CircleToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Circle Tool");
             w2.Add(this.CircleToolAction, null);
             this.PathToolAction = new Gtk.RadioAction("PathToolAction", Mono.Unix.Catalog.GetString("_Path Tool"), null, "path-tool", 0);
-            this.PathToolAction.Group = this.EllipseToolAction.Group;
+            this.PathToolAction.Group = this.SelectionToolAction.Group;
             this.PathToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Path Tool");
             w2.Add(this.PathToolAction, null);
             this.TextToolAction = new Gtk.RadioAction("TextToolAction", Mono.Unix.Catalog.GetString("_Text Tool"), null, null, 0);
-            this.TextToolAction.Group = this.EllipseToolAction.Group;
+            this.TextToolAction.Group = this.SelectionToolAction.Group;
             this.TextToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Text Tool");
             w2.Add(this.TextToolAction, null);
             this.ImageToolAction = new Gtk.RadioAction("ImageToolAction", Mono.Unix.Catalog.GetString("Image Tool"), null, null, 0);
-            this.ImageToolAction.Group = this.EllipseToolAction.Group;
+            this.ImageToolAction.Group = this.SelectionToolAction.Group;
             this.ImageToolAction.ShortLabel = Mono.Unix.Catalog.GetString("Image Tool");
             w2.Add(this.ImageToolAction, null);
             this.AnimationAction = new Gtk.Action("AnimationAction", Mono.Unix.Catalog.GetString("_Animation"), null, null);
@@ -199,7 +199,7 @@ namespace LunarEclipse.View {
             this.DetenerAction.ShortLabel = Mono.Unix.Catalog.GetString("_Detener");
             w2.Add(this.DetenerAction, null);
             this.LineToolAction = new Gtk.RadioAction("LineToolAction", Mono.Unix.Catalog.GetString("_Line Tool"), null, "line-tool", 0);
-            this.LineToolAction.Group = this.EllipseToolAction.Group;
+            this.LineToolAction.Group = this.SelectionToolAction.Group;
             this.LineToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Line Tool");
             w2.Add(this.LineToolAction, null);
             this.DrawingAction = new Gtk.Action("DrawingAction", Mono.Unix.Catalog.GetString("Drawing"), null, null);
@@ -210,10 +210,10 @@ namespace LunarEclipse.View {
             w2.Add(this.LimpiarAction, null);
             w1.InsertActionGroup(w2, 0);
             this.AddAccelGroup(w1.AccelGroup);
-            this.Name = "LunarEclipse.View.MainWindow2";
+            this.Name = "LunarEclipse.View.MainWindow";
             this.Title = Mono.Unix.Catalog.GetString("Lunar Eclipse");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
-            // Container child LunarEclipse.View.MainWindow2.Gtk.Container+ContainerChild
+            // Container child LunarEclipse.View.MainWindow.Gtk.Container+ContainerChild
             this.vbox1 = new Gtk.VBox();
             this.vbox1.Name = "vbox1";
             this.vbox1.Spacing = 6;

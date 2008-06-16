@@ -1,5 +1,10 @@
 2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* OldMainWindow.cs: Renamed from MainWindow
+	* MainWindow.cs: Renamed from MainWindow2
+
+2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* MainWindow2.cs: Added action handlers
 	* MoonlightWidget.cs: Added a MonoDevelop Widget for GtkSilver
 

@@ -45,7 +45,7 @@ namespace LunarEclipse
 		{
 		    System.Diagnostics.Debug.Listeners.Add(new ConsoleTraceListener());
 		    Gtk.Application.Init ();
-			MainWindow2 win = new MainWindow2 ();
+			MainWindow win = new MainWindow ();
 			win.Show ();
 			Gtk.Application.Run ();
 		}

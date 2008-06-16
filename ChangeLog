@@ -1,5 +1,9 @@
 2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* gtk-gui/LunarEclipse.View.MainWindow2.cs: Renamed to MainWindow
+
+2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* gtk-gui/LunarEclipse.View.MainWindow2.cs,
 	  gtk-gui/LunarEclipse.View.MoonlightWidget.cs, gtk-gui/objects.xml:
 	  added

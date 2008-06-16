@@ -45,7 +45,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow2" design-size="630 528">
+  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow" design-size="630 528">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -335,7 +335,7 @@
             <property name="MemberName" />
             <property name="ShowArrow">False</property>
             <property name="ButtonStyle">Icons</property>
-            <node name="toolbar1" type="Menubar">
+            <node name="toolbar1" type="Toolbar">
               <node type="Toolitem" action="NuevoAction" />
               <node type="Toolitem" action="AbrirAction" />
               <node type="Toolitem" action="GuardarAction" />
@@ -376,7 +376,7 @@
                     <property name="Orientation">Vertical</property>
                     <property name="ShowArrow">False</property>
                     <property name="ButtonStyle">Icons</property>
-                    <node name="toolbar1" type="Menubar">
+                    <node name="toolbar2" type="Toolbar">
                       <node type="Toolitem" action="SelectionToolAction" />
                       <node type="Toolitem" action="RectangleToolAction" />
                       <node type="Toolitem" action="SquareToolAction" />
