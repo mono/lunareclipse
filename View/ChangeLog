@@ -1,5 +1,9 @@
 2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* MainWindow.cs: Added AnimationTimeLine Widget Support
+
+2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* OldMainWindow.cs: Renamed from MainWindow
 	* MainWindow.cs: Renamed from MainWindow2
 

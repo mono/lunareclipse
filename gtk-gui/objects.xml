@@ -8,4 +8,8 @@
     </itemgroups>
     <signals />
   </object>
+  <object type="LunarEclipse.Controls.AnimationTimelineWidget" palette-category="LunarEclipse" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
 </objects>

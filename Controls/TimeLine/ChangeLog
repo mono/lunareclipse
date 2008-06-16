@@ -1,3 +1,9 @@
+2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* AnimationTimeline.cs: Added Hack to prevent crash. Should be fixed
+	  later.
+	* AnimationTimelineWidget.cs: Added
+
 2008-05-17  Manuel Ceron <ceronman@unicauca.edu.co> 
 
 	* KeyframeMarker.cs, AnimationTimeline.cs, PositionMarker.cs,

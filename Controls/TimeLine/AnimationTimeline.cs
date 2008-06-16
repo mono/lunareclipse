@@ -129,6 +129,10 @@ namespace LunarEclipse.Controls
 				IMarker marker = this.divisionMarkers[currentMarker++];
 				marker.Time = TimeSpan.FromMilliseconds(i);
 				
+				// HACK: to prevent execption when resizing
+				if (currentTextblock >= divisionTextblocks.Count)
+					break;
+				
 				switch(i % 1000)
 				{
 				case 0:

@@ -29,6 +29,9 @@ using System;
 using LunarEclipse.Controller;
 using LunarEclipse.Controls;
 using LunarEclipse.Model;
+using Gtk.Moonlight;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace LunarEclipse.View
 {
@@ -40,7 +43,11 @@ namespace LunarEclipse.View
 		{
 			this.Build();
 			
-			timeline = new AnimationTimeline(800, 70);
+			AnimationTimeline timeline = new AnimationTimeline(800, 70);
+			timeline.SizeAllocated += delegate {
+				timeline.UpdateSize();
+			};
+			//vbox2.PackEnd(timeline, false, false, 0);
 			controller = new MoonlightController(moonlightwidget.Silver, timeline);
 		}
 
@@ -88,10 +95,12 @@ namespace LunarEclipse.View
 		{
 			controller.Clear();
 		}
+
+		protected virtual void OnNotebookSwitchPage (object o, Gtk.SwitchPageArgs args)
+		{
+			xaml_textview.Buffer.Text = controller.SerializeCanvas();
+		}
 		
 		private MoonlightController controller;
-		
-		// TODO: Make timeline a stetic widget;
-		private AnimationTimeline timeline; 
 	}
 }
