@@ -1,0 +1,11 @@
+<objects>
+  <object type="LunarEclipse.View.MoonlightWidget" palette-category="LunarEclipse" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="MoonlightWidget Properties">
+        <property name="Height" />
+        <property name="Width" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+</objects>

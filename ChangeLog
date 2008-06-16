@@ -1,5 +1,12 @@
 2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* gtk-gui/LunarEclipse.View.MainWindow2.cs,
+	  gtk-gui/LunarEclipse.View.MoonlightWidget.cs, gtk-gui/objects.xml:
+	  added
+	* gtk-gui/LunarEclipse.MainWindow2.cs: Renamed to LE.View...
+
+2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* gtk-gui/LunarEclipse.MainWindow2.cs, Icons/circle-tool.png,
 	  Icons/rectangle-tool.png, Icons/selection-tool.png,
 	  Icons/line-tool.png, Icons/icons.svg, Icons/path-tool.png,

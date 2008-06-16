@@ -151,6 +151,7 @@ namespace LunarEclipse.Controller
 			storyboardManager.Add(new Storyboard());
             undo = new UndoEngine();
 			Selection = new StandardSelection(this);
+			CurrentTool = new SelectionTool(this);
         }
         
 		

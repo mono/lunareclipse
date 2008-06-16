@@ -6,6 +6,7 @@
   </configuration>
   <import>
     <widget-library name="gtksilver, Version=0.0.0.0, Culture=neutral, PublicKeyToken=976ad8f3443f9a4d" />
+    <widget-library name="../bin/Debug/LunarEclipse.exe" internal="true" />
   </import>
   <icon-factory>
     <icon-set id="circle-tool">
@@ -44,7 +45,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="LunarEclipse.MainWindow2" design-size="595 461">
+  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow2" design-size="630 528">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -147,6 +148,7 @@
         <property name="Active">False</property>
         <property name="Value">0</property>
         <property name="Group">group1</property>
+        <signal name="Activated" handler="OnSelectionToolActionActivated" />
       </action>
       <action id="RectangleToolAction">
         <property name="Type">Radio</property>
@@ -157,6 +159,7 @@
         <property name="Active">False</property>
         <property name="Value">0</property>
         <property name="Group">group1</property>
+        <signal name="Activated" handler="OnRectangleToolActionActivated" />
       </action>
       <action id="SquareToolAction">
         <property name="Type">Radio</property>
@@ -167,6 +170,7 @@
         <property name="Active">False</property>
         <property name="Value">0</property>
         <property name="Group">group1</property>
+        <signal name="Activated" handler="OnSquareToolActionActivated" />
       </action>
       <action id="EllipseToolAction">
         <property name="Type">Radio</property>
@@ -177,6 +181,7 @@
         <property name="Active">False</property>
         <property name="Value">0</property>
         <property name="Group">group1</property>
+        <signal name="Activated" handler="OnEllipseToolActionActivated" />
       </action>
       <action id="CircleToolAction">
         <property name="Type">Radio</property>
@@ -187,6 +192,7 @@
         <property name="Active">False</property>
         <property name="Value">0</property>
         <property name="Group">group1</property>
+        <signal name="Activated" handler="OnCircleToolActionActivated" />
       </action>
       <action id="PathToolAction">
         <property name="Type">Radio</property>
@@ -197,16 +203,25 @@
         <property name="Active">False</property>
         <property name="Value">0</property>
         <property name="Group">group1</property>
+        <signal name="Activated" handler="OnPathToolActionActivated" />
       </action>
       <action id="TextToolAction">
-        <property name="Type">Action</property>
+        <property name="Type">Radio</property>
         <property name="Label" translatable="yes">_Text Tool</property>
         <property name="ShortLabel" translatable="yes">_Text Tool</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
       </action>
       <action id="ImageToolAction">
-        <property name="Type">Action</property>
+        <property name="Type">Radio</property>
         <property name="Label" translatable="yes">Image Tool</property>
         <property name="ShortLabel" translatable="yes">Image Tool</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
       </action>
       <action id="AnimationAction">
         <property name="Type">Action</property>
@@ -240,11 +255,25 @@
         <property name="Active">False</property>
         <property name="Value">0</property>
         <property name="Group">group1</property>
+        <signal name="Activated" handler="OnLineToolActionActivated" />
+      </action>
+      <action id="DrawingAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Drawing</property>
+        <property name="ShortLabel" translatable="yes">Drawing</property>
+      </action>
+      <action id="LimpiarAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Limpiar</property>
+        <property name="ShortLabel" translatable="yes">_Limpiar</property>
+        <property name="StockId">gtk-clear</property>
+        <signal name="Activated" handler="OnLimpiarActionActivated" />
       </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">Lunar Eclipse</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
       <widget class="Gtk.VBox" id="vbox1">
         <property name="MemberName" />
@@ -269,6 +298,9 @@
                 <node type="Menuitem" action="CopiarAction" />
                 <node type="Menuitem" action="PegarAction" />
                 <node type="Menuitem" action="BorrarAction" />
+              </node>
+              <node type="Menu" action="DrawingAction">
+                <node type="Menuitem" action="LimpiarAction" />
               </node>
               <node type="Menu" action="ToolsAction">
                 <node type="Menuitem" action="SelectionToolAction" />
@@ -348,10 +380,12 @@
                       <node type="Toolitem" action="SelectionToolAction" />
                       <node type="Toolitem" action="RectangleToolAction" />
                       <node type="Toolitem" action="SquareToolAction" />
-                      <node type="Toolitem" action="CircleToolAction" />
                       <node type="Toolitem" action="EllipseToolAction" />
+                      <node type="Toolitem" action="CircleToolAction" />
                       <node type="Toolitem" action="PathToolAction" />
                       <node type="Toolitem" action="LineToolAction" />
+                      <node type="Separator" />
+                      <node type="Toolitem" action="LimpiarAction" />
                     </node>
                   </widget>
                   <packing>
@@ -372,7 +406,12 @@
                         <property name="MemberName" />
                         <property name="ShadowType">None</property>
                         <child>
-                          <placeholder />
+                          <widget class="LunarEclipse.View.MoonlightWidget" id="moonlightwidget">
+                            <property name="MemberName" />
+                            <property name="Events">ButtonPressMask</property>
+                            <property name="Height">600</property>
+                            <property name="Width">600</property>
+                          </widget>
                         </child>
                       </widget>
                     </child>
@@ -450,6 +489,13 @@
           </packing>
         </child>
       </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="LunarEclipse.View.MoonlightWidget" design-size="300 300">
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <placeholder />
     </child>
   </widget>
 </stetic-interface>
