@@ -1,20 +1,8 @@
-2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
 2008-06-16  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* Resources/sample-image.jpg, Icons/image-tool.png,
 	  Icons/text-tool.png, Icons/polyline-tool.png: Added
 	* Icons/icons.svg: added image-tool, polyline-tool, and text-tool icons
-
-2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
 
 2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
 
@@ -35,93 +23,10 @@
 	  Icons/ellipse-tool.png, Icons/square-tool.png: Icon Added
 	* Icons: Icons Added 
 
-2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-08  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-08  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-08  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-08  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-07  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-06  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-06  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-05  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-05  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-06-04  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-05-30  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-05-30  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-05-29  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
 
 2008-05-28  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* LunarEclipse.mdp: Added Regions
-
-2008-05-27  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-05-27  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
-
-2008-05-26  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	
 
 2008-04-24  Manuel Cerón <ceronman@unicauca.edu.co> 
 
@@ -135,10 +40,6 @@
 2007-09-26  Stephane Delcroix <stephane@delcroix.org>
 
 	* View/MainWidows.cs: Adds a "Save As" button for the generated xaml.
-
-2007-08-29   <> 
-
-	
 
 2007-08-24  Alan McGovern <amcgovern@novell.com> 
 
