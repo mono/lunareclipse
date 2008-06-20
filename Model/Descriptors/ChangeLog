@@ -1,3 +1,9 @@
+2008-06-20  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* StandardDescriptor.cs: Added support for PolyLineDescriptor y
+	  PolylineHandleGroup
+	* PolyLineDescriptor.cs: Added
+
 2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* StandardDescriptor.cs, LineDescriptor.cs, IDescriptor.cs: Added

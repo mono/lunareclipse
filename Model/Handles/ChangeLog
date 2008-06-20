@@ -1,3 +1,7 @@
+2008-06-20  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* PolyLineHandleGroup.cs, PolyLineHandle.cs: Added
+
 2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* AbstractHandle.cs: Removed ElementBounds

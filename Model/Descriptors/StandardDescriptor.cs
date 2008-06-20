@@ -49,6 +49,8 @@ namespace LunarEclipse.Model {
 				return new TextBlockDescriptor(element as TextBlock);
 			if (element is Line)
 				return new LineDescriptor(element as Line);
+			if (element is Polyline)
+				return new PolyLineDescriptor(element as Polyline);
 			return new StandardDescriptor(element);
 		}
 		
@@ -59,6 +61,8 @@ namespace LunarEclipse.Model {
 				return new LineHandleGroup(controller, element as Line);
 			if (element is Path)
 				return new PathHandleGroup(controller, element as Path);
+			if (element is Polyline)
+				return new PolyLineHandleGroup(controller, element as Polyline);
 			return new RotateHandleGroup(controller, element);
 		}
 		

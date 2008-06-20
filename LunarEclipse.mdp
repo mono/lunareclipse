@@ -122,6 +122,9 @@
     <File name="Model/Descriptors/StandardDescriptor.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Descriptors/TextBlockDescriptor.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Descriptors/LineDescriptor.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/PolyLineHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/PolyLineHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Descriptors/PolyLineDescriptor.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
