@@ -117,7 +117,8 @@ namespace LunarEclipse.Model {
 				offset.X = current.X - last_click.X;
 				offset.Y = current.Y - last_click.Y;
 				foreach (UIElement element in Controller.Selection.Elements) {
-					MoveElement(element, offset);
+					IDescriptor descriptor = StandardDescriptor.CreateDescriptor(element);
+					descriptor.Move(offset);
 				}
 				last_click = current;
 				return;
@@ -168,18 +169,6 @@ namespace LunarEclipse.Model {
 		private void OnElementClicked(object sender, MouseEventArgs e)
 		{
 			clicked_element = sender as UIElement;
-		}
-		
-		private void MoveElement(UIElement element, Point offset)
-		{
-			double top = (double) element.GetValue(Canvas.TopProperty);
-			double left = (double) element.GetValue(Canvas.LeftProperty);
-			
-			left += offset.X;
-			top += offset.Y;
-			
-			Toolbox.ChangeProperty(element, Canvas.TopProperty, top);
-			Toolbox.ChangeProperty(element, Canvas.LeftProperty, left);
 		}
 		
 		private void UpdateSelectionRect()

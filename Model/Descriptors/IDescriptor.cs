@@ -34,6 +34,8 @@ namespace LunarEclipse.Model {
 		Rect GetBounds();
 		void SetBounds(Rect rect);
 		void SetBounds(double x, double y, double width, double height);
+		void Move(Point offset);
+		void Move(double dx, double dy);
 		bool IsInside(Rect bounds);
 	}
 }

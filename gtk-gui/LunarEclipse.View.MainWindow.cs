@@ -169,7 +169,7 @@ namespace LunarEclipse.View {
             this.RectangleToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Rectangle Tool");
             w2.Add(this.RectangleToolAction, null);
             this.SquareToolAction = new Gtk.RadioAction("SquareToolAction", Mono.Unix.Catalog.GetString("S_quare Tool"), null, "square-tool", 0);
-            this.SquareToolAction.Group = this.SelectionToolAction.Group;
+            this.SquareToolAction.Group = this.RectangleToolAction.Group;
             this.SquareToolAction.ShortLabel = Mono.Unix.Catalog.GetString("S_quare Tool");
             w2.Add(this.SquareToolAction, null);
             this.EllipseToolAction = new Gtk.RadioAction("EllipseToolAction", Mono.Unix.Catalog.GetString("_Ellipse Tool"), null, "ellipse-tool", 0);

@@ -48,7 +48,19 @@ namespace LunarEclipse.Model {
 			Toolbox.NormalizeRect(ref x, ref y, ref width, ref height);
 			return new Rect(x, y, width, height);
 		}
-
+		
+		public override void Move (double dx, double dy)
+		{
+			double x1 = line.X1 + dx;
+			double x2 = line.X2 + dx;
+			double y1 = line.Y1 + dy;
+			double y2 = line.Y2 + dy;
+			
+			Toolbox.ChangeProperty(line, Line.X1Property, x1);
+			Toolbox.ChangeProperty(line, Line.X2Property, x2);
+			Toolbox.ChangeProperty(line, Line.Y1Property, y1);
+			Toolbox.ChangeProperty(line, Line.Y2Property, y2);
+		}
 		
 		Line line;
 	}

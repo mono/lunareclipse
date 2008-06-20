@@ -96,6 +96,23 @@ namespace LunarEclipse.Model {
 			return false;
 		}
 		
+		public virtual void Move(double dx, double dy)
+		{
+			double top = (double) element.GetValue(Canvas.TopProperty);
+			double left = (double) element.GetValue(Canvas.LeftProperty);
+			
+			left += dx;
+			top += dy;
+			
+			Toolbox.ChangeProperty(element, Canvas.TopProperty, top);
+			Toolbox.ChangeProperty(element, Canvas.LeftProperty, left);
+		}
+		
+		public virtual void Move(Point offset)
+		{
+			Move(offset.X, offset.Y);
+		}
+		
 		protected UIElement Element {
 			get { return element; }
 			set { element = value; }

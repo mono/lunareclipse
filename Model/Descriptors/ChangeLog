@@ -1,4 +1,9 @@
 2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* StandardDescriptor.cs, LineDescriptor.cs, IDescriptor.cs: Added
+	  Move()
+
+2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* StandardDescriptor.cs: Cosmetic Changes. Removed some WriteLines
 
