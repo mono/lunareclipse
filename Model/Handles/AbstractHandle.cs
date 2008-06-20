@@ -97,23 +97,14 @@ namespace LunarEclipse.Model {
 			
 		protected Rect CanvasAllocation {
 			get {
-				double left = (double) GetValue(Canvas.LeftProperty);
-				double top = (double) GetValue(Canvas.TopProperty);
-				double width = (double) GetValue(Canvas.WidthProperty);
-				double height = (double) GetValue(Canvas.HeightProperty);
-				
-				return new Rect(left, top, width, height);
+				IDescriptor descriptor = StandardDescriptor.CreateDescriptor(this);
+				return descriptor.GetBounds();
 			}
 			set {
-				SetValue(Canvas.TopProperty, value.Top);
-				SetValue(Canvas.LeftProperty, value.Left);
-				SetValue(Canvas.WidthProperty, value.Width);
-				SetValue(Canvas.HeightProperty, value.Height);
-				
-				inner.SetValue(Canvas.TopProperty, 0);
-				inner.SetValue(Canvas.LeftProperty, 0);
-				inner.SetValue(Canvas.WidthProperty, value.Width);
-				inner.SetValue(Canvas.HeightProperty, value.Height);
+				IDescriptor descriptor = StandardDescriptor.CreateDescriptor(this);
+				descriptor.SetBounds(value);
+				descriptor = StandardDescriptor.CreateDescriptor(inner);
+				descriptor.SetBounds(0, 0, value.Width, value.Height);
 			}
 		}
 			

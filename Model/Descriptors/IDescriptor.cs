@@ -1,4 +1,4 @@
-// AbstractLocator.cs
+// IDescriptor.cs
 //
 // Author:
 //    Manuel Cerón <ceronman@unicauca.edu.co>
@@ -26,26 +26,14 @@
 //
 
 using System.Windows;
-using System.Windows.Controls;
 
 namespace LunarEclipse.Model {
 	
-	public abstract class AbstractLocator: ILocator {
-		
-		public AbstractLocator(UIElement element)
-		{
-			this.element = element;
-		}
-		
-		public virtual Point Locate()
-		{
-			return new Point(0.0, 0.0);
-		}
-		
-		protected UIElement Element {
-			get { return element; }
-		}
-		
-		private UIElement element;
+	public interface IDescriptor
+	{
+		Rect GetBounds();
+		void SetBounds(Rect rect);
+		void SetBounds(double x, double y, double width, double height);
+		bool IsInside(Rect bounds);
 	}
 }

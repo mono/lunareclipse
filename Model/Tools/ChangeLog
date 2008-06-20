@@ -1,3 +1,7 @@
+2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* SelectionTool.cs: Changed to use new Descriptor System
+
 2008-06-16  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* PolyLineCreationTool.cs, PathCreationTool.cs,

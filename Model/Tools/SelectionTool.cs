@@ -215,23 +215,14 @@ namespace LunarEclipse.Model {
 		{
 			Controller.Canvas.Children.Remove(SelectionRect);
 			
-			double x = (double)SelectionRect.GetValue(Canvas.LeftProperty);
-			double y = (double)SelectionRect.GetValue(Canvas.TopProperty);
-			double width = (double)SelectionRect.GetValue(Canvas.WidthProperty);
-			double height = (double)SelectionRect.GetValue(Canvas.HeightProperty);
+			IDescriptor rectDescriptor = StandardDescriptor.CreateDescriptor(SelectionRect);
+			Rect selection = rectDescriptor.GetBounds();
 			
 			List<UIElement> selectedElements = new List<UIElement>();
 			foreach (UIElement element in Controller.Canvas.Children) {
-				double ex = (double)element.GetValue(Canvas.LeftProperty);
-				double ey = (double)element.GetValue(Canvas.TopProperty);
-				double ewidth = (double)element.GetValue(Canvas.WidthProperty);
-				double eheight = (double)element.GetValue(Canvas.HeightProperty);
-				
-				if (ex > x && ex + ewidth < x+width &&
-				    ey > y && ey + eheight < y+height) {
-					if (Selectable(element))
-						selectedElements.Add(element);
-				}
+				IDescriptor descriptor = StandardDescriptor.CreateDescriptor(element);
+				if (descriptor.IsInside(selection) && Selectable(element))
+					selectedElements.Add(element);
 			}
 			
 			Controller.Selection.Clear();

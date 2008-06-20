@@ -118,6 +118,8 @@
     <File name="Model/Tools/ImageCreationTool.cs" subtype="Code" buildaction="Compile" />
     <File name="Resources/sample-image.jpg" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Model/Descriptors" subtype="Directory" buildaction="Compile" />
+    <File name="Model/Descriptors/IDescriptor.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Descriptors/StandardDescriptor.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

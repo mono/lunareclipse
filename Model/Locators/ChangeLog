@@ -1,3 +1,8 @@
+2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* RelativeLocator.cs, AbstractLocator.cs: Changed to use new Descriptor
+	  System
+
 2008-06-12  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* RelativeLocator.cs: Changed Locate()

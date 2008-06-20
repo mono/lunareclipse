@@ -40,10 +40,10 @@ namespace LunarEclipse.Model {
 		
 		public override Point Locate ()
 		{
-			Rect r = ElementBounds;
+			IDescriptor descriptor = StandardDescriptor.CreateDescriptor(Element);
+			Rect r = descriptor.GetBounds();
 			return new Point(r.Width * deltax, r.Height * deltay);
 		}
-
 		
 		private double deltax;
 		private double deltay;
