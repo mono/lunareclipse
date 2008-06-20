@@ -1,5 +1,10 @@
 2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* Descriptors/StandardDescriptor.cs: Added support for LineDescriptor
+	* Descriptors/LineDescriptor.cs: Added
+
+2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* Descriptors/TextBlockDescriptor.cs: Added new Descriptor
 	* Descriptors/StandardDescriptor.cs: Added TextBlockDescriptor support
 

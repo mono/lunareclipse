@@ -47,6 +47,8 @@ namespace LunarEclipse.Model {
 		{
 			if (element is TextBlock)
 				return new TextBlockDescriptor(element as TextBlock);
+			if (element is Line)
+				return new LineDescriptor(element as Line);
 			return new StandardDescriptor(element);
 		}
 		
@@ -85,9 +87,14 @@ namespace LunarEclipse.Model {
 		
 		public virtual bool IsInside(Rect rect)
 		{
+			System.Console.WriteLine("*********");
+			System.Console.WriteLine(Element);
 			Rect element = GetBounds();
+			System.Console.WriteLine(element);
+			System.Console.WriteLine(rect);
 			if (element.X > rect.X && element.X + element.Width < rect.X + rect.Width &&
 			    element.Y > rect.Y && element.Y + element.Height < rect.Y + rect.Height) {
+				System.Console.WriteLine("True");
 				return true;
 			}
 			return false;
