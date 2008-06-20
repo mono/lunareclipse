@@ -1,5 +1,10 @@
 2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* AbstractHandle.cs: Removed ElementBounds
+	* TransformHandle.cs: Cosmetic Changes
+
+2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* AbstractHandle.cs: Changed to use new Descriptor System
 
 2008-06-13  Manuel Cerón <ceronman@unicauca.edu.co> 

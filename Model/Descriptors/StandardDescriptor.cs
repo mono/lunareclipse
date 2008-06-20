@@ -25,6 +25,7 @@
 //
 //
 
+using System;
 using System.Windows;
 using System.Windows.Shapes;
 using System.Windows.Controls;
@@ -36,12 +37,16 @@ namespace LunarEclipse.Model {
 		
 		public StandardDescriptor(UIElement element)
 		{
+			if (element == null)
+				throw new ArgumentNullException("element");
 			Element = element;
 		}
 		
 		// TODO: this should be changed with SL 2.0 custom properties
 		public static IDescriptor CreateDescriptor(UIElement element)
 		{
+			if (element is TextBlock)
+				return new TextBlockDescriptor(element as TextBlock);
 			return new StandardDescriptor(element);
 		}
 		

@@ -60,7 +60,8 @@ namespace LunarEclipse.Model {
 		
 		protected Point ElementTransformCenter {
 			get {
-				Rect bounds = ElementBounds;
+				IDescriptor descriptor = StandardDescriptor.CreateDescriptor(Element);
+				Rect bounds = descriptor.GetBounds();
 				Point origin = ElementTransformOrigin;
 				return new Point(bounds.X + bounds.Width * origin.X,
 								 bounds.Y + bounds.Height * origin.Y);

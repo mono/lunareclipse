@@ -1,5 +1,10 @@
 2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* Descriptors/TextBlockDescriptor.cs: Added new Descriptor
+	* Descriptors/StandardDescriptor.cs: Added TextBlockDescriptor support
+
+2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* Descriptors, Descriptors/StandardDescriptor.cs,
 	  Descriptors/IDescriptor.cs: Added.
 	* StandardSelection.cs: Changed to use new Descriptor System

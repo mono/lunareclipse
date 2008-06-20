@@ -117,17 +117,6 @@ namespace LunarEclipse.Model {
 			get { return Group.Child; }
 		}
 		
-		protected Rect ElementBounds {
-			get {
-				double top = (double) Element.GetValue(Canvas.TopProperty);
-				double left = (double) Element.GetValue(Canvas.LeftProperty);
-				double width = (double) Element.GetValue(Canvas.WidthProperty);
-				double height = (double) Element.GetValue(Canvas.HeightProperty);
-				
-				return new Rect(left, top, width, height);
-			}
-		}
-		
 		protected Point LastClick {
 			get { return last_click; }
 			set { last_click = value; }

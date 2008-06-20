@@ -1,4 +1,4 @@
-// TextBlockCreationTool.cs
+// TextBlockDescriptor.cs
 //
 // Author:
 //    Manuel Cerón <ceronman@unicauca.edu.co>
@@ -27,24 +27,27 @@
 
 using System.Windows;
 using System.Windows.Controls;
-using LunarEclipse.Controller;
 
-namespace LunarEclipse.Model {
+namespace LunarEclipse.Model {	
 	
-	public class TextBlockCreationTool: ShapeCreationTool {
+	public class TextBlockDescriptor: StandardDescriptor {
 		
-		public TextBlockCreationTool(MoonlightController controller):
-			base(controller)
+		public TextBlockDescriptor(TextBlock element):
+			base(element)
 		{
+			text_block = element;
 		}
 		
-		protected override UIElement CreateShape ()
+		public override Rect GetBounds ()
 		{
-			TextBlock block = new TextBlock();
-			block.Text = "New Text";
+			double left = (double) Element.GetValue(Canvas.LeftProperty);
+			double top = (double) Element.GetValue(Canvas.TopProperty);
+			double width = text_block.ActualWidth;
+			double height = text_block.ActualHeight;
 			
-			return block;
+			return new Rect(left, top, width, height);
 		}
-
+		
+		private TextBlock text_block;
 	}
 }
