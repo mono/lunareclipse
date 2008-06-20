@@ -135,10 +135,11 @@
     <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Windows, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
   </References>
-  <GtkDesignInfo gtkVersion="2.12.2">
+  <GtkDesignInfo isWidgetLibrary="True" gtkVersion="2.12.2">
     <ExportedWidgets>
       <Widget>LunarEclipse.View.MoonlightWidget</Widget>
       <Widget>LunarEclipse.Controls.AnimationTimelineWidget</Widget>
     </ExportedWidgets>
   </GtkDesignInfo>
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInEachDirectory" />
 </Project>
