@@ -31,7 +31,7 @@ using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 	
-	public class PolyLineHandle: LineHandle {
+	public class PolyLineHandle: PointHandle {
 		
 		public PolyLineHandle(MoonlightController controller, IHandleGroup group, int i):
 			base(controller, group)

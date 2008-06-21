@@ -57,7 +57,7 @@
     <File name="Model/Handles/EndLineHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/IHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/IHandleGroup.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Handles/LineHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/PointHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/LineHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/LineSegmentHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/PathHandleGroup.cs" subtype="Code" buildaction="Compile" />
@@ -125,6 +125,7 @@
     <File name="Model/Handles/PolyLineHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/PolyLineHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Descriptors/PolyLineDescriptor.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/PathSegmentHandle.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

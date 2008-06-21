@@ -25,6 +25,9 @@
 //
 //
 
+using System;
+using System.Windows;
+using System.Windows.Shapes;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Gtk.Moonlight;
@@ -44,6 +47,41 @@ namespace LunarEclipse.View {
 			canvas.Background = new SolidColorBrush(Colors.White);
 			silver.Attach(canvas);
 			
+//			Image image = new Image();
+//			image.Stretch = Stretch.Fill;
+//			image.Width = 100;
+//			image.Height = 100;
+//			Downloader downloader = new Downloader();
+//			downloader.Completed += delegate {
+//				image.SetSource(downloader, null);
+//			};
+//			downloader.Open("GET", new Uri("file:///home/ceronman/Escritorio/images/bigbrother.png"));
+//			downloader.Send();
+//			
+//			canvas.Children.Add(image);
+			
+			Path path = new Path();
+			PathGeometry geometry =  new PathGeometry();
+			path.Data = geometry;
+			geometry.Figures = new PathFigureCollection();
+			PathFigure figure = new PathFigure();
+			geometry.Figures.Add(figure);
+			figure.Segments = new PathSegmentCollection();
+			
+			figure.StartPoint = new Point(10, 10);
+			
+			BezierSegment segment = new BezierSegment();
+			
+			segment.Point1 = new Point(10, 100);
+			segment.Point2 = new Point(100, 10);
+			segment.Point3 = new Point(100, 100);
+			
+			figure.Segments.Add(segment);
+			
+			path.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
+			
+			canvas.Children.Add(path);
+
 			this.Add(silver);
 		}
 		

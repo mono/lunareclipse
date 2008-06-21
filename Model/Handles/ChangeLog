@@ -1,3 +1,13 @@
+2008-06-21  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* StartPointHandle.cs, EndLineHandle.cs, PolyLineHandle.cs: LineHandle
+	  Renamed to PointHandle
+	* PathHandleGroup.cs: Updated to use PointHandle
+	* LineSegmentHandle.cs: Updated to use PathSegmentHAndle
+	* PathSegmentHandle.cs: Added
+	* LineHandle.cs: Renamed to PointHandle
+	* PointHandle.cs: Renamed from LineHandle
+
 2008-06-20  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* PolyLineHandleGroup.cs, PolyLineHandle.cs: Added

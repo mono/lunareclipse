@@ -32,7 +32,7 @@ using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 	
-	public class StartPointHandle: LineHandle {
+	public class StartPointHandle: PointHandle {
 		
 		public StartPointHandle(MoonlightController controller, IHandleGroup group, PathFigure pathFigure):
 			base(controller, group)

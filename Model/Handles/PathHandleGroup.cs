@@ -43,13 +43,38 @@ namespace LunarEclipse.Model {
 				return;
 			
 			foreach (PathFigure fig in geometry.Figures) {
-				foreach (LineSegment segment in fig.Segments) {
-					AddHandle(new LineSegmentHandle(Controller, this, segment) );
+				foreach (PathSegment segment in fig.Segments) {
+					if (segment is LineSegment)
+						AddLineSegmentHandle(segment);
+					if (segment is BezierSegment)
+						AddBezierSegmentHandles(segment);
 				}
 				AddHandle(new StartPointHandle(Controller, this, fig) );
 			}
 			
 			UpdateHandles();
+		}
+		
+		private void AddLineSegmentHandle(PathSegment segment)
+		{
+			IHandle handle = new LineSegmentHandle(Controller, this, segment);
+			AddHandle(handle);
+		}
+		
+		private void AddBezierSegmentHandles(PathSegment segment)
+		{
+			IHandle handle = new PathSegmentHandle(Controller, this, segment, 
+			                                       BezierSegment.Point1Property);
+			AddHandle(handle);
+			
+			handle = new PathSegmentHandle(Controller, this, segment, 
+			                               BezierSegment.Point2Property);
+			
+			AddHandle(handle);
+			
+			handle = new PathSegmentHandle(Controller, this, segment, 
+			                               BezierSegment.Point3Property);
+			AddHandle(handle);
 		}
 	}
 }

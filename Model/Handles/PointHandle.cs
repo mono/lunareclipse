@@ -32,9 +32,9 @@ using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 	
-	public abstract class LineHandle: AbstractHandle	{
+	public abstract class PointHandle: AbstractHandle	{
 		
-		public LineHandle(MoonlightController controller, IHandleGroup group):
+		public PointHandle(MoonlightController controller, IHandleGroup group):
 			base(controller, group)
 		{
 		}
@@ -56,10 +56,6 @@ namespace LunarEclipse.Model {
 			Location = newpoint;
 			
 			Update();
-		}
-		
-		protected Line LineElement {
-			get { return Element as Line; }
 		}
 		
 		protected override string GetXaml ()

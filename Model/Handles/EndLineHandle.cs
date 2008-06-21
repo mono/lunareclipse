@@ -26,11 +26,12 @@
 //
 
 using System.Windows;
+using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 	
-	public class EndLineHandle: LineHandle {
+	public class EndLineHandle: PointHandle {
 		
 		public EndLineHandle(MoonlightController controller, IHandleGroup group):
 			base(controller, group)
@@ -39,11 +40,13 @@ namespace LunarEclipse.Model {
 		
 		public override Point Location {
 			get {
-				return new Point(LineElement.X2, LineElement.Y2);
+				Line line = Element as Line;
+				return new Point(line.X2, line.Y2);
 			}
 			set { 
-				LineElement.X2 = value.X;
-				LineElement.Y2 = value.Y;
+				Line line = Element as Line;
+				line.X2 = value.X;
+				line.Y2 = value.Y;
 			}
 		}
 	}

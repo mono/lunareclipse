@@ -1,9 +1,9 @@
-// LineSegmentHandle.cs
+// BezierHandle.cs
 //
 // Author:
-//   Manuel Cerón <ceronman@unicauca.edu.co>
+//    Manuel Cerón <ceronman@unicauca.edu.co>
 //
-// Copyright (c) 2008 Manuel Cerón.
+// Copyright (c) 2008 Manuel Cerón
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,22 +26,41 @@
 //
 
 using System;
-using System.Windows;
 using System.Windows.Media;
+using System.Windows;
 using LunarEclipse.Controller;
 
-namespace LunarEclipse.Model {
+namespace LunarEclipse.Model {	
 	
-	public class LineSegmentHandle: PathSegmentHandle {
+	public class PathSegmentHandle: PointHandle {
 		
-		public LineSegmentHandle(MoonlightController controller, IHandleGroup group, PathSegment seg):
-			base(controller, group, seg, LineSegment.PointProperty)
+		public PathSegmentHandle(MoonlightController controller, IHandleGroup group, PathSegment seg, DependencyProperty point):
+			base(controller, group)
 		{
+			if (seg == null)
+				throw new ArgumentNullException("seg");
+			
+			if (point == null)
+				throw new ArgumentNullException("point");
+			segment = seg;
+			point_property = point;
+		}
+		
+		public override Point Location {
+			get {
+				return (Point) segment.GetValue(point_property);
+			}
+			set {
+				segment.SetValue(point_property, value);
+			}
 		}
 		
 		protected override string GetXaml ()
 		{
-			return "<Rectangle Fill=\"#55FF00FF\" Stroke=\"#FF000000\"/>";
+			return "<Ellipse Fill=\"#99FF00FF\" Stroke=\"#FF000000\"/>";
 		}
+		
+		private DependencyProperty point_property;
+		private PathSegment segment;
 	}
 }
