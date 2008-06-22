@@ -126,6 +126,11 @@
     <File name="Model/Handles/PolyLineHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Descriptors/PolyLineDescriptor.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/PathSegmentHandle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Frames" subtype="Directory" buildaction="Compile" />
+    <File name="Model/Frames/IFrame.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Frames/RectangleFrame.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Frames/PathFrame.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Frames/AbstractFrame.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

@@ -1,0 +1,4 @@
+2008-06-21  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* AbstractFrame.cs, RectangleFrame.cs, IFrame.cs, PathFrame.cs: Added
+

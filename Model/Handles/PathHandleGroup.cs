@@ -52,7 +52,7 @@ namespace LunarEclipse.Model {
 				AddHandle(new StartPointHandle(Controller, this, fig) );
 			}
 			
-			UpdateHandles();
+			Update();
 		}
 		
 		private void AddLineSegmentHandle(PathSegment segment)

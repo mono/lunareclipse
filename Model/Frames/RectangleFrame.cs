@@ -1,9 +1,9 @@
-// LineHandleGroup.cs
+// RectangleFrame.cs
 //
 // Author:
-//   Manuel Cerón <ceronman@unicauca.edu.co>
+//    Manuel Cerón <ceronman@unicauca.edu.co>
 //
-// Copyright (c) 2008 Manuel Cerón.
+// Copyright (c) 2008 Manuel Cerón
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,22 +25,44 @@
 //
 //
 
-using System;
 using System.Windows;
 using System.Windows.Shapes;
-using LunarEclipse.Controller;
+using System.Windows.Media;
 
-namespace LunarEclipse.Model { 
+namespace LunarEclipse.Model {
+	
+	public class RectangleFrame: AbstractFrame {
 		
-	public class LineHandleGroup: AbstractHandleGroup {
-		
-		public LineHandleGroup(MoonlightController controller, Line child):
-			base(controller, child)
+		public RectangleFrame(UIElement child):
+			base(child)
 		{
-			AddHandle(new StartLineHandle(Controller, this));
-			AddHandle(new EndLineHandle(Controller, this));
+			rectangle = new Rectangle();
 			
-			Update();
+			rectangle.Stroke = new SolidColorBrush(Colors.LightGray);
+			rectangle.StrokeDashArray = new double[] {5, 5};
+            rectangle.StrokeThickness = 1;
 		}
+		
+		public override void Update ()
+		{
+			IDescriptor descriptor = StandardDescriptor.CreateDescriptor(Child);
+			Rect bounds = descriptor.GetBounds();
+			
+			rectangle.SetValue(LeftProperty, bounds.X);
+			rectangle.SetValue(TopProperty, bounds.Y);
+			rectangle.SetValue(WidthProperty, bounds.Width);
+			rectangle.SetValue(HeightProperty, bounds.Height);
+			
+			rectangle.SetValue(UIElement.RenderTransformProperty, Child.RenderTransform);
+			rectangle.SetValue(UIElement.RenderTransformOriginProperty, Child.RenderTransformOrigin);
+		}
+		
+		// FIXME: Workarround for bug #386468
+		public override void AddToCanvas()
+		{
+			Children.Add(rectangle);
+		}
+
+		private Rectangle rectangle;
 	}
 }

@@ -40,7 +40,7 @@ namespace LunarEclipse.Model {
 			for (int i=0; i<points.Length; i++)
 				AddHandle(new PolyLineHandle(Controller, this, i));
 			
-			UpdateHandles();
+			Update();
 		}
 	}
 }

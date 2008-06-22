@@ -163,6 +163,7 @@ namespace LunarEclipse.Model {
 		{
 			return ( (element != null) &&
 			        !(element is IHandle) &&
+			        !(element is IFrame) &&
 			        element != SelectionRect);
 		}
 		

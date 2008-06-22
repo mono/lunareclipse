@@ -49,6 +49,7 @@ namespace LunarEclipse.Model {
 			Child = child;
 			Controller = controller;
 			handles = new List<IHandle>();
+			frames = new List<IFrame>();
 		}
 		
 		public UIElement Child {
@@ -69,6 +70,12 @@ namespace LunarEclipse.Model {
 				Controller.Canvas.Children.Add(handle as UIElement);
 				handle.MouseLeftButtonDown += OnHandleMouseDown;
 			}
+			
+			foreach (IFrame frame in frames) {
+				Controller.Canvas.Children.Add(frame as UIElement);
+				// FIXME: Workarround for bug #386468
+				frame.AddToCanvas();
+			}
 			Toolbox.PropertyChanged += OnPropertyChanged;
 		}
 		
@@ -78,23 +85,34 @@ namespace LunarEclipse.Model {
 				Controller.Canvas.Children.Remove(handle as UIElement);
 				handle.MouseLeftButtonDown -= OnHandleMouseDown;
 			}
+			
+			foreach (IFrame frame in frames)
+				Controller.Canvas.Children.Remove(frame as UIElement);
 			Toolbox.PropertyChanged -= OnPropertyChanged;
 		}
 		
 		protected virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			UpdateHandles();
+			Update();
 		}
 		
-		protected void UpdateHandles()
+		protected void Update()
 		{
 			foreach(IHandle handle in Handles)
 				handle.Update();
+			
+			foreach(IFrame frame in Frames)
+				frame.Update();
 		}
 		
 		protected void AddHandle(IHandle handle)
 		{
 			Handles.Add(handle);
+		}
+		
+		protected void AddFrame(IFrame frame)
+		{
+			Frames.Add(frame);
 		}
 		
 		protected void OnHandleMouseDown(object sender, MouseEventArgs args)
@@ -113,9 +131,15 @@ namespace LunarEclipse.Model {
 			get { return controller; }
 			set { controller = value; }
 		}
+
+		protected List<IFrame> Frames {
+			get { return frames; }
+			set { frames = value; }
+		}
 		
 		private UIElement child;
 		private MoonlightController controller;
 		List<IHandle> handles;
+		List<IFrame> frames;
 	}
 }

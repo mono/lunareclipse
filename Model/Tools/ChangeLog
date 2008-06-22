@@ -1,3 +1,7 @@
+2008-06-21  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* SelectionTool.cs: Updated to use Frames.
+
 2008-06-19  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* SelectionTool.cs: Using IDescriptor.Move instead of MoveElement

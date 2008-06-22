@@ -41,7 +41,9 @@ namespace LunarEclipse.Model {
 			AddHandle(new RotateHandle(controller, this, new RelativeLocator(child, 0.0, 1.0)));
 			AddHandle(new RotateHandle(controller, this, new RelativeLocator(child, 1.0, 1.0)));
 			
-			UpdateHandles();
+			AddFrame(new RectangleFrame(Child) );
+			
+			Update();
 		}
 	}
 }

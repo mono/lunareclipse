@@ -1,9 +1,9 @@
-// LineHandleGroup.cs
+// AbstractFrame.cs
 //
 // Author:
-//   Manuel Cerón <ceronman@unicauca.edu.co>
+//    Manuel Cerón <ceronman@unicauca.edu.co>
 //
-// Copyright (c) 2008 Manuel Cerón.
+// Copyright (c) 2008 Manuel Cerón
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,22 +25,30 @@
 //
 //
 
-using System;
 using System.Windows;
-using System.Windows.Shapes;
-using LunarEclipse.Controller;
+using System.Windows.Controls;
 
-namespace LunarEclipse.Model { 
+namespace LunarEclipse.Model {	
+	
+	public abstract class AbstractFrame: Canvas, IFrame {
 		
-	public class LineHandleGroup: AbstractHandleGroup {
-		
-		public LineHandleGroup(MoonlightController controller, Line child):
-			base(controller, child)
+		public AbstractFrame(UIElement child):
+			base()
 		{
-			AddHandle(new StartLineHandle(Controller, this));
-			AddHandle(new EndLineHandle(Controller, this));
-			
-			Update();
+			Child = child;
 		}
+		
+		public abstract void Update();
+		
+		// FIXME: Workarround for bug #386468
+		public abstract void AddToCanvas();
+		
+		protected UIElement Child {
+			get { return child; }
+			set { child = value; }
+		}
+		
+		
+		private UIElement child;
 	}
 }
