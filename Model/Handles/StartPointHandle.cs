@@ -52,7 +52,7 @@ namespace LunarEclipse.Model {
 		
 		protected override string GetXaml ()
 		{
-			return "<Rectangle Fill=\"#99FF0000\" Stroke=\"#FF000000\"/>";
+			return "<Rectangle Fill=\"#995555FF\" Stroke=\"#FF000000\"/>";
 		}
 		
 		private PathFigure path_figure;

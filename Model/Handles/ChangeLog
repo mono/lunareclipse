@@ -1,5 +1,10 @@
 2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* AbstractHandle.cs: Handles are now highlight when mouse Enter
+	* StartPointHandle.cs: Changed Handle Color
+
+2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* PathSegmentHandle.cs, StartPointHandle.cs: using
 	  Toolbox.ChangeProperty instead of SetValue
 

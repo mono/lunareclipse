@@ -29,6 +29,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Input;
+using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
@@ -36,7 +37,7 @@ namespace LunarEclipse.Model {
 	public abstract class AbstractHandle: Control, IHandle {
 		
 		public const double DefaultRadius = 5.0;
-		
+	
 		public AbstractHandle(MoonlightController controller, IHandleGroup group):
 			base()
 		{
@@ -47,6 +48,17 @@ namespace LunarEclipse.Model {
 			MouseLeftButtonDown += MouseStart;
 			MouseLeftButtonUp += MouseEnd;
 			MouseMove += MouseStep;
+			
+			highlight_fill = new SolidColorBrush(Colors.Red);
+			normal_fill = (Brush) inner.GetValue(Shape.FillProperty);
+			
+			MouseEnter += delegate {
+				inner.SetValue(Shape.FillProperty, highlight_fill);
+			};
+			
+			MouseLeave += delegate {
+				inner.SetValue(Shape.FillProperty, normal_fill);
+			};
 		}
 		
 		public IHandleGroup Group {
@@ -148,5 +160,7 @@ namespace LunarEclipse.Model {
 		private FrameworkElement inner;
 		private Point last_click;
 		private bool dragging = false;
+		private Brush normal_fill;
+		private Brush highlight_fill;
 	}
 }
