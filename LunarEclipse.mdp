@@ -53,17 +53,11 @@
     <File name="Model/Draw/Selector.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Draw/SquareDraw.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/AbstractHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Handles/AbstractHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/EndLineHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/IHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Handles/IHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/PointHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Handles/LineHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/LineSegmentHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Handles/PathHandleGroup.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Handles/ResizeHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/RotateHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Handles/RotateHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/StartLineHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/StartPointHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/TransformHandle.cs" subtype="Code" buildaction="Compile" />
@@ -123,7 +117,6 @@
     <File name="Model/Descriptors/TextBlockDescriptor.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Descriptors/LineDescriptor.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/PolyLineHandle.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Handles/PolyLineHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Descriptors/PolyLineDescriptor.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/PathSegmentHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Frames" subtype="Directory" buildaction="Compile" />
@@ -131,6 +124,14 @@
     <File name="Model/Frames/RectangleFrame.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Frames/PathFrame.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Frames/AbstractFrame.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/HandleGroups" subtype="Directory" buildaction="Compile" />
+    <File name="Model/HandleGroups/AbstractHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/HandleGroups/LineHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/HandleGroups/IHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/HandleGroups/PathHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/HandleGroups/PolyLineHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/HandleGroups/ResizeHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/HandleGroups/RotateHandleGroup.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
