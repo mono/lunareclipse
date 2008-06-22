@@ -157,9 +157,7 @@ namespace LunarEclipse.Controller
 		
         public void Clear()
 		{
-			if(Current != null)
-				Current.Cleanup();
-			
+			Selection.Clear();			
 			moonlight.Canvas.Children.Clear();
 			moonlight.Canvas.Resources.Clear();
 			moonlight.Canvas.Triggers.Clear();

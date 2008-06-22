@@ -108,6 +108,8 @@ namespace LunarEclipse.Serialization
         
         private void Serialize(DependencyObject item, XmlWriter writer)
         {
+			if (item is IHandle || item is IFrame)
+				return;
             Type baseType = item.GetType();
 			
 			if(string.IsNullOrEmpty(item.Name))

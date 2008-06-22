@@ -1,3 +1,7 @@
+2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* Serializer.cs: Serializer ignores Handles and Frames
+
 2008-06-01  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* ReflectionHelper.cs: Fixed bug with null pased to Dictionary.Add

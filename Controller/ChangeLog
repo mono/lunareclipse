@@ -1,3 +1,7 @@
+2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MoonlightController.cs: Clear() clears selection.
+
 2008-06-15  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MoonlightController.cs: Added default Tool.
