@@ -1,5 +1,9 @@
 2008-06-21  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* BezierSegmentPoint3Handle.cs: Added
+
+2008-06-21  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* LineHandleGroup.cs, PolyLineHandleGroup.cs, PathHandleGroup.cs,
 	  RotateHandleGroup.cs: UpdateHandles renamed to Update()
 	* AbstractHandleGroup.cs: Updated to use Frames. UpdateHandles renamed

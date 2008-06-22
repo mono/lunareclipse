@@ -1,0 +1,4 @@
+2008-06-21  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* PathHandleGroup.cs: Updated to use BezierSegmentPoint2Handle
+

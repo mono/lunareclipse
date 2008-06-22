@@ -72,8 +72,7 @@ namespace LunarEclipse.Model {
 			
 			AddHandle(handle);
 			
-			handle = new PathSegmentHandle(Controller, this, segment, 
-			                               BezierSegment.Point3Property);
+			handle = new BezierSegmentPoint3Handle(Controller, this, segment as BezierSegment);
 			AddHandle(handle);
 		}
 	}
