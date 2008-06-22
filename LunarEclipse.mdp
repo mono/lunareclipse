@@ -122,7 +122,7 @@
     <File name="Model/Frames" subtype="Directory" buildaction="Compile" />
     <File name="Model/Frames/IFrame.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Frames/RectangleFrame.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Frames/PathFrame.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Frames/BezierSegmentFrame.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Frames/AbstractFrame.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/HandleGroups" subtype="Directory" buildaction="Compile" />
     <File name="Model/HandleGroups/AbstractHandleGroup.cs" subtype="Code" buildaction="Compile" />

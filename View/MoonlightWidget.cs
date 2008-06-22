@@ -78,6 +78,15 @@ namespace LunarEclipse.View {
 			
 			figure.Segments.Add(segment);
 			
+			segment = new BezierSegment();
+			
+			segment.Point1 = new Point(200, 200);
+			segment.Point2 = new Point(200, 200);
+			segment.Point3 = new Point(200, 200);
+			
+			figure.Segments.Add(segment);
+
+			
 			path.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
 			
 			canvas.Children.Add(path);

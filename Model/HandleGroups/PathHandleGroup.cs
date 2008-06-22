@@ -46,8 +46,10 @@ namespace LunarEclipse.Model {
 				foreach (PathSegment segment in fig.Segments) {
 					if (segment is LineSegment)
 						AddLineSegmentHandle(segment);
-					if (segment is BezierSegment)
+					if (segment is BezierSegment) {
 						AddBezierSegmentHandles(segment);
+						AddFrame(new BezierSegmentFrame(Child, fig, segment as BezierSegment));
+					}
 				}
 				AddHandle(new StartPointHandle(Controller, this, fig) );
 			}
@@ -63,16 +65,17 @@ namespace LunarEclipse.Model {
 		
 		private void AddBezierSegmentHandles(PathSegment segment)
 		{
-			IHandle handle = new PathSegmentHandle(Controller, this, segment, 
+			IHandle handle;
+			
+			handle = new BezierSegmentPoint3Handle(Controller, this, segment as BezierSegment);
+			AddHandle(handle);
+			
+			handle = new PathSegmentHandle(Controller, this, segment, 
 			                                       BezierSegment.Point1Property);
 			AddHandle(handle);
 			
 			handle = new PathSegmentHandle(Controller, this, segment, 
 			                               BezierSegment.Point2Property);
-			
-			AddHandle(handle);
-			
-			handle = new BezierSegmentPoint3Handle(Controller, this, segment as BezierSegment);
 			AddHandle(handle);
 		}
 	}

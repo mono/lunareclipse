@@ -48,7 +48,6 @@ namespace LunarEclipse.Model {
 			set { child = value; }
 		}
 		
-		
 		private UIElement child;
 	}
 }
