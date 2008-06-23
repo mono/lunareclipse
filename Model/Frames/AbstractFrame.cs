@@ -25,6 +25,7 @@
 //
 //
 
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -35,6 +36,9 @@ namespace LunarEclipse.Model {
 		public AbstractFrame(UIElement child):
 			base()
 		{
+			if (child == null)
+				throw new ArgumentNullException("child");
+			
 			Child = child;
 		}
 		

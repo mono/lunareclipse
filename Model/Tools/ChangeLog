@@ -1,5 +1,9 @@
 2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* PathCreationTool.cs: Completelly rewritten
+
+2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* ElementCreationTool.cs: Added
 	* PolyLineCreationTool.cs: Removed CheckDoubleClick()
 	* PathCreationTool.cs: Rewriteen

@@ -59,37 +59,6 @@ namespace LunarEclipse.View {
 //			downloader.Send();
 //			
 //			canvas.Children.Add(image);
-			
-			Path path = new Path();
-			PathGeometry geometry =  new PathGeometry();
-			path.Data = geometry;
-			geometry.Figures = new PathFigureCollection();
-			PathFigure figure = new PathFigure();
-			geometry.Figures.Add(figure);
-			figure.Segments = new PathSegmentCollection();
-			
-			figure.StartPoint = new Point(10, 10);
-			
-			BezierSegment segment = new BezierSegment();
-			
-			segment.Point1 = new Point(10, 100);
-			segment.Point2 = new Point(100, 10);
-			segment.Point3 = new Point(100, 100);
-			
-			figure.Segments.Add(segment);
-			
-			segment = new BezierSegment();
-			
-			segment.Point1 = new Point(200, 200);
-			segment.Point2 = new Point(200, 200);
-			segment.Point3 = new Point(200, 200);
-			
-			figure.Segments.Add(segment);
-
-			
-			path.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
-			
-			canvas.Children.Add(path);
 
 			this.Add(silver);
 		}

@@ -1,5 +1,9 @@
 2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* PathHandleGroup.cs, RotateHandleGroup.cs: Modified order of handles
+
+2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* PathHandleGroup.cs: Improved PathFrame Support. MainPoint of Bezier
 	  if put in the back.
 
