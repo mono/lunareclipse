@@ -44,13 +44,10 @@ namespace LunarEclipse.Model {
 		
 		public override void MouseDown (MouseEventArgs ev)
 		{
-			// Trick to detect double click
-			// http://hackingsilverlight.blogspot.com/2008/02/silverlight-20-double-click-support.html
-			if ((DateTime.Now.Ticks - last_ticks) < 2310000) {
+			if (CheckDoubleClick()) {
 				create_new = true;
 				return;
 			}
-			last_ticks = DateTime.Now.Ticks;
 			
 			if (create_new) {
 				base.MouseDown (ev);

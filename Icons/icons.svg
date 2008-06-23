@@ -62,7 +62,7 @@
        id="perspective10" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient3157"
+       xlink:href="#linearGradient3195"
        id="linearGradient3163"
        x1="89.857147"
        y1="150.48718"
@@ -100,25 +100,6 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3195"
-       id="linearGradient3191"
-       gradientUnits="userSpaceOnUse"
-       x1="89.857147"
-       y1="150.48718"
-       x2="121.57146"
-       y2="181.55862"
-       gradientTransform="matrix(1.0134488,0,0,0.4570578,63.044189,94.613319)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3169"
-       id="linearGradient3193"
-       gradientUnits="userSpaceOnUse"
-       x1="129.14285"
-       y1="159.86218"
-       x2="154.42857"
-       y2="185.71933" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3195"
        id="linearGradient3214"
        x1="293.71906"
        y1="171.1601"
@@ -137,14 +118,32 @@
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        inkscape:collect="always"
+       xlink:href="#linearGradient3195"
+       id="linearGradient3221"
+       x1="164.15488"
+       y1="165.19569"
+       x2="186.11554"
+       y2="178.07515"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3169"
+       id="linearGradient3231"
+       x1="194.96452"
+       y1="153.07388"
+       x2="221.98102"
+       y2="183.37845"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
        xlink:href="#linearGradient3157"
-       id="linearGradient3209"
+       id="linearGradient3248"
        gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(255.46337,6.7840018e-2)"
        x1="89.857147"
        y1="150.48718"
        x2="121.57146"
-       y2="181.55862"
-       gradientTransform="translate(255.46337,6.7840018e-2)" />
+       y2="181.55862" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -154,7 +153,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="308.22348"
+     inkscape:cx="292.4954"
      inkscape:cy="876.59804"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -187,7 +186,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:url(#linearGradient3163);fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:url(#linearGradient3163);fill-opacity:1.0;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect2383"
        width="23.750025"
        height="23.749998"
@@ -196,7 +195,8 @@
        rx="0"
        ry="0"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="/home/ceronman/svn/lunareclipse/Icons/square-tool.png" />
     <path
        sodipodi:type="arc"
        style="fill:url(#linearGradient3177);fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -208,66 +208,27 @@
        d="M 155,173.61218 A 11.607142,11.607142 0 1 1 131.78571,173.61218 A 11.607142,11.607142 0 1 1 155,173.61218 z"
        transform="translate(1.25,-1.0714286)"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
-    <rect
-       style="fill:url(#linearGradient3191);fill-opacity:1;stroke:#000000;stroke-width:0.6805914;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect3187"
-       width="24.069433"
-       height="10.855121"
-       x="164.75102"
-       y="168.00604"
-       rx="0"
-       ry="0"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
-    <path
-       sodipodi:type="arc"
-       style="fill:url(#linearGradient3193);fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="path3189"
-       sodipodi:cx="143.39285"
-       sodipodi:cy="173.61218"
-       sodipodi:rx="11.607142"
-       sodipodi:ry="11.607142"
-       d="M 155,173.61218 A 11.607142,11.607142 0 1 1 131.78571,173.61218 A 11.607142,11.607142 0 1 1 155,173.61218 z"
-       transform="matrix(1.010972,0,0,0.5494335,62.623125,77.420251)"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 226.25,160.57647 C 226.88542,160.57647 231.27783,162.15011 233.03571,162.54075 C 234.43986,162.85278 231.1958,166.44062 231.07143,166.6479 C 230.89286,166.94551 230.71429,167.24313 230.53571,167.54075 C 229.70692,168.92207 229.49021,170.13484 230.35714,171.29075 C 232.51023,174.16153 237.06341,174.67037 240.35714,175.21932 C 242.74779,175.61776 241.70687,177.51987 240.89286,179.1479 C 239.07739,182.77883 243.17998,182.70217 246.07143,184.1479 C 246.29094,184.25765 246.54762,184.26694 246.78571,184.32647 C 247.74642,184.56664 248.84819,185.20325 249.82143,185.3979"
-       id="path3207"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
-    <path
-       style="fill:#807b7e;fill-opacity:1;stroke:#000000;stroke-width:0.8907389;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
-       d="M 241.07402,169.58692 L 250.92062,158.58572 L 252.97986,160.12952 L 243.13328,171.13072 L 239.21629,173.58476 L 241.07402,169.58692 z"
-       id="rect3219"
-       sodipodi:nodetypes="cccccc"
-       inkscape:export-filename="/home/ceronman/path3207.png"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="/home/ceronman/svn/lunareclipse/Icons/circle-tool.png" />
     <g
-       id="g3263">
+       id="g3305"
+       inkscape:export-filename="/home/ceronman/svn/lunareclipse/Icons/pen-tool.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
       <path
          inkscape:export-ydpi="90"
          inkscape:export-xdpi="90"
-         id="path2405"
-         d="M 262.18162,163.34872 L 282.2906,184.46784"
-         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.84154695px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <rect
-         y="161.49251"
-         x="260.57797"
-         height="3.8708851"
-         width="3.7446928"
-         id="rect2407"
-         style="fill:#fbff17;fill-opacity:0.68181817;stroke:#000000;stroke-width:0.91717356;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <rect
-         y="182.32689"
-         x="280.33902"
-         height="3.8708851"
-         width="3.7446928"
-         id="rect3179"
-         style="fill:#fbff17;fill-opacity:0.68181817;stroke:#000000;stroke-width:0.91717356;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+         id="path3207"
+         d="M 226.25,160.57647 C 226.88542,160.57647 231.27783,162.15011 233.03571,162.54075 C 234.43986,162.85278 231.1958,166.44062 231.07143,166.6479 C 230.89286,166.94551 230.71429,167.24313 230.53571,167.54075 C 229.70692,168.92207 229.49021,170.13484 230.35714,171.29075 C 232.51023,174.16153 237.06341,174.67037 240.35714,175.21932 C 242.74779,175.61776 241.70687,177.51987 240.89286,179.1479 C 239.07739,182.77883 243.17998,182.70217 246.07143,184.1479 C 246.29094,184.25765 246.54762,184.26694 246.78571,184.32647 C 247.74642,184.56664 248.84819,185.20325 249.82143,185.3979"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/ceronman/path3207.png"
+         sodipodi:nodetypes="cccccc"
+         id="rect3219"
+         d="M 241.07402,169.58692 L 250.92062,158.58572 L 252.97986,160.12952 L 243.13328,171.13072 L 239.21629,173.58476 L 241.07402,169.58692 z"
+         style="fill:#807b7e;fill-opacity:1;stroke:#000000;stroke-width:0.8907389;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
     </g>
     <path
        style="fill:url(#linearGradient3214);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.69899344px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -275,11 +236,13 @@
        id="path3206"
        sodipodi:nodetypes="cccccccc"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="/home/ceronman/svn/lunareclipse/Icons/selection-tool.png" />
     <g
        id="g3268"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90">
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="/home/ceronman/svn/lunareclipse/Icons/text-tool.png">
       <text
          id="text2406"
          y="182.89789"
@@ -308,8 +271,58 @@
            id="path3200" />
       </g>
     </g>
+    <rect
+       style="fill:url(#linearGradient3221);fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect3213"
+       width="20.708128"
+       height="10.101525"
+       x="166.42264"
+       y="167.46855"
+       inkscape:export-filename="/home/ceronman/svn/lunareclipse/Icons/rectangle-tool.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:url(#linearGradient3231);fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path3223"
+       sodipodi:cx="207.71262"
+       sodipodi:cy="169.86766"
+       sodipodi:rx="12.248099"
+       sodipodi:ry="5.4295697"
+       d="M 219.96072,169.86766 A 12.248099,5.4295697 0 1 1 195.46452,169.86766 A 12.248099,5.4295697 0 1 1 219.96072,169.86766 z"
+       transform="translate(0.2525381,3.5355339)"
+       inkscape:export-filename="/home/ceronman/svn/lunareclipse/Icons/ellipse-tool.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <g
-       id="g3232"
+       id="g3309"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="/home/ceronman/svn/lunareclipse/Icons/line-tool.png">
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         id="path2405"
+         d="M 262.18162,163.34872 L 282.2906,184.46784"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.84154695px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <rect
+         y="182.24203"
+         x="280.19104"
+         height="3.661803"
+         width="3.9143412"
+         id="rect3236"
+         style="fill:#ffff00;fill-opacity:0.62121211;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="161.47078"
+         x="260.30368"
+         height="3.661803"
+         width="3.9143412"
+         id="rect3238"
+         style="fill:#ffff00;fill-opacity:0.62121211;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    </g>
+    <g
+       id="g3264"
+       inkscape:export-filename="/home/ceronman/svn/lunareclipse/Icons/image-tool.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
       <rect
@@ -322,7 +335,7 @@
          height="20.535713"
          width="23.571453"
          id="rect3207"
-         style="fill:url(#linearGradient3209);fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:2, 1;stroke-dashoffset:0;stroke-opacity:1" />
+         style="fill:url(#linearGradient3248);fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:2, 1;stroke-dashoffset:0;stroke-opacity:1" />
       <rect
          y="166.09192"
          x="360.11563"
@@ -340,41 +353,42 @@
          id="path3215"
          style="fill:#ff0b17;fill-opacity:0.85606061;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          sodipodi:type="arc" />
-      <rect
-         y="181.3196"
-         x="354.02051"
-         height="3.8708851"
-         width="3.7446928"
-         id="rect3220"
-         style="fill:#fbff17;fill-opacity:0.68181817;stroke:#000000;stroke-width:0.91717356;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <rect
-         y="160.78387"
-         x="354.02051"
-         height="3.8708851"
-         width="3.7446928"
-         id="rect3222"
-         style="fill:#fbff17;fill-opacity:0.68181817;stroke:#000000;stroke-width:0.91717356;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <rect
-         y="160.78387"
-         x="377.59195"
-         height="3.8708851"
-         width="3.7446928"
-         id="rect3224"
-         style="fill:#fbff17;fill-opacity:0.68181817;stroke:#000000;stroke-width:0.91717356;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <rect
-         y="180.96245"
-         x="377.59195"
-         height="3.8708851"
-         width="3.7446928"
-         id="rect3226"
-         style="fill:#fbff17;fill-opacity:0.68181817;stroke:#000000;stroke-width:0.91717356;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
       <path
          id="path3230"
          d="M 364.94624,172.84739 L 358.52721,177.35734 L 365.23691,180.30336 L 364.94624,172.84739 z"
          style="fill:#35ff00;fill-opacity:0.85606061;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <rect
+         y="160.58688"
+         x="354.24783"
+         height="3.661803"
+         width="3.9143412"
+         id="rect3251"
+         style="fill:#ffff00;fill-opacity:0.62121211;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="160.58688"
+         x="377.48138"
+         height="3.661803"
+         width="3.9143412"
+         id="rect3253"
+         style="fill:#ffff00;fill-opacity:0.62121211;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="181.29503"
+         x="354.24783"
+         height="3.661803"
+         width="3.9143412"
+         id="rect3255"
+         style="fill:#ffff00;fill-opacity:0.62121211;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="181.29503"
+         x="377.48138"
+         height="3.661803"
+         width="3.9143412"
+         id="rect3257"
+         style="fill:#ffff00;fill-opacity:0.62121211;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     </g>
     <g
-       id="g3256"
+       id="g3314"
+       inkscape:export-filename="/home/ceronman/svn/lunareclipse/Icons/polyline-tool.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
       <path
@@ -383,33 +397,87 @@
          d="M 388.90873,169.23632 L 400.02041,161.1551 L 396.23234,183.12592 L 411.38463,177.82262"
          style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
       <rect
-         y="167.04832"
-         x="387.28891"
-         height="3.8708851"
-         width="3.7446928"
-         id="rect3246"
-         style="fill:#fbff17;fill-opacity:0.68181817;stroke:#000000;stroke-width:0.91717356;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+         y="167.15288"
+         x="387.33038"
+         height="3.661803"
+         width="3.9143412"
+         id="rect3274"
+         style="fill:#ffff00;fill-opacity:0.62121211;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
       <rect
-         y="158.71458"
-         x="398.4006"
-         height="3.8708851"
-         width="3.7446928"
-         id="rect3248"
-         style="fill:#fbff17;fill-opacity:0.68181817;stroke:#000000;stroke-width:0.91717356;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+         y="158.69286"
+         x="398.31577"
+         height="3.661803"
+         width="3.9143412"
+         id="rect3276"
+         style="fill:#ffff00;fill-opacity:0.62121211;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
       <rect
-         y="176.13971"
-         x="409.5123"
-         height="3.8708851"
-         width="3.7446928"
-         id="rect3250"
-         style="fill:#fbff17;fill-opacity:0.68181817;stroke:#000000;stroke-width:0.91717356;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+         y="181.54756"
+         x="394.1489"
+         height="3.661803"
+         width="3.9143412"
+         id="rect3278"
+         style="fill:#ffff00;fill-opacity:0.62121211;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
       <rect
-         y="181.44301"
-         x="394.35999"
-         height="3.8708851"
-         width="3.7446928"
-         id="rect3254"
-         style="fill:#fbff17;fill-opacity:0.68181817;stroke:#000000;stroke-width:0.91717356;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+         y="175.86545"
+         x="409.55374"
+         height="3.661803"
+         width="3.9143412"
+         id="rect3280"
+         style="fill:#ffff00;fill-opacity:0.62121211;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    </g>
+    <g
+       id="g3296"
+       inkscape:export-filename="/home/ceronman/svn/lunareclipse/Icons/path-tool.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         id="path3288"
+         d="M 442.32055,163.68048 L 439.92143,184.26234"
+         style="fill:none;fill-rule:evenodd;stroke:#c8c8c8;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:2,1;stroke-dashoffset:0" />
+      <path
+         sodipodi:nodetypes="cc"
+         id="path3292"
+         d="M 428.24156,160.0818 L 423.31706,182.5577"
+         style="fill:none;fill-rule:evenodd;stroke:#c8c8c8;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2, 1;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="cs"
+         id="path2439"
+         d="M 423.25392,182.49457 C 427.29453,162.29151 439.72954,184.14927 442.44682,163.68048"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <rect
+         y="180.28485"
+         x="421.17047"
+         height="3.661803"
+         width="3.9143412"
+         id="rect3282"
+         style="fill:#ffff00;fill-opacity:0.62121211;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="161.97585"
+         x="440.48962"
+         height="3.661803"
+         width="3.9143412"
+         id="rect3284"
+         style="fill:#ffff00;fill-opacity:0.62121211;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         transform="translate(-0.7576144,-0.5050763)"
+         d="M 442.44681,184.70428 A 1.767767,1.7046324 0 1 1 438.91128,184.70428 A 1.767767,1.7046324 0 1 1 442.44681,184.70428 z"
+         sodipodi:ry="1.7046324"
+         sodipodi:rx="1.767767"
+         sodipodi:cy="184.70428"
+         sodipodi:cx="440.67905"
+         id="path3286"
+         style="fill:#ff00ff;fill-opacity:0.62121212;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         transform="translate(-12.753174,-24.685607)"
+         d="M 442.44681,184.70428 A 1.767767,1.7046324 0 1 1 438.91128,184.70428 A 1.767767,1.7046324 0 1 1 442.44681,184.70428 z"
+         sodipodi:ry="1.7046324"
+         sodipodi:rx="1.767767"
+         sodipodi:cy="184.70428"
+         sodipodi:cx="440.67905"
+         id="path3294"
+         style="fill:#ff00ff;fill-opacity:0.62121211;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         sodipodi:type="arc" />
     </g>
   </g>
 </svg>

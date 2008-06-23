@@ -25,6 +25,7 @@
 //
 //
 
+using System;
 using System.Windows.Input;
 using LunarEclipse.Controller;
 
@@ -85,9 +86,25 @@ namespace LunarEclipse.Model {
 			get { return dragging; }
 			set { dragging = value; }
 		}
+		
+		
+		protected bool CheckDoubleClick()
+		{
+			bool result = false;
+			// Trick to detect double click
+			// http://hackingsilverlight.blogspot.com/2008/02/silverlight-20-double-click-support.html
+			if ((DateTime.Now.Ticks - last_ticks) < 2310000) {
+				result = true;
+			}
+			last_ticks = DateTime.Now.Ticks;
+			return result;
+		}
 	
 		private bool activated;
 		private MoonlightController controller;
 		private bool dragging = false;
+		
+		// trick to support double click;
+		private long last_ticks = 0;
 	}
 }

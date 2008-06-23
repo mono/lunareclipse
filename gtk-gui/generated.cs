@@ -19,26 +19,28 @@ namespace Stetic {
             if ((Stetic.Gui.initialized == false)) {
                 Stetic.Gui.initialized = true;
                 Gtk.IconFactory w1 = new Gtk.IconFactory();
-                Gtk.IconSet w2 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./Icons/circle-tool.png")));
-                w1.Add("circle-tool", w2);
-                Gtk.IconSet w3 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./Icons/ellipse-tool.png")));
-                w1.Add("ellipse-tool", w3);
-                Gtk.IconSet w4 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./Icons/line-tool.png")));
-                w1.Add("line-tool", w4);
-                Gtk.IconSet w5 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./Icons/path-tool.png")));
+                Gtk.IconSet w2 = new Gtk.IconSet(Gdk.Pixbuf.LoadFromResource("selection-tool.png"));
+                w1.Add("selection-tool", w2);
+                Gtk.IconSet w3 = new Gtk.IconSet(Gdk.Pixbuf.LoadFromResource("circle-tool.png"));
+                w1.Add("circle-tool", w3);
+                Gtk.IconSet w4 = new Gtk.IconSet(Gdk.Pixbuf.LoadFromResource("ellipse-tool.png"));
+                w1.Add("ellipse-tool", w4);
+                Gtk.IconSet w5 = new Gtk.IconSet(Gdk.Pixbuf.LoadFromResource("path-tool.png"));
                 w1.Add("path-tool", w5);
-                Gtk.IconSet w6 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./Icons/rectangle-tool.png")));
+                Gtk.IconSet w6 = new Gtk.IconSet(Gdk.Pixbuf.LoadFromResource("rectangle-tool.png"));
                 w1.Add("rectangle-tool", w6);
-                Gtk.IconSet w7 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./Icons/selection-tool.png")));
-                w1.Add("selection-tool", w7);
-                Gtk.IconSet w8 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./Icons/square-tool.png")));
-                w1.Add("square-tool", w8);
-                Gtk.IconSet w9 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./Icons/image-tool.png")));
+                Gtk.IconSet w7 = new Gtk.IconSet(Gdk.Pixbuf.LoadFromResource("square-tool.png"));
+                w1.Add("square-tool", w7);
+                Gtk.IconSet w8 = new Gtk.IconSet(Gdk.Pixbuf.LoadFromResource("line-tool.png"));
+                w1.Add("line-tool", w8);
+                Gtk.IconSet w9 = new Gtk.IconSet(Gdk.Pixbuf.LoadFromResource("image-tool.png"));
                 w1.Add("image-tool", w9);
-                Gtk.IconSet w10 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./Icons/polyline-tool.png")));
+                Gtk.IconSet w10 = new Gtk.IconSet(Gdk.Pixbuf.LoadFromResource("polyline-tool.png"));
                 w1.Add("polyline-tool", w10);
-                Gtk.IconSet w11 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./Icons/text-tool.png")));
+                Gtk.IconSet w11 = new Gtk.IconSet(Gdk.Pixbuf.LoadFromResource("text-tool.png"));
                 w1.Add("text-tool", w11);
+                Gtk.IconSet w12 = new Gtk.IconSet(Gdk.Pixbuf.LoadFromResource("pen-tool.png"));
+                w1.Add("pen-tool", w12);
                 w1.AddDefault();
             }
         }

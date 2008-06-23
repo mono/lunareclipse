@@ -83,7 +83,7 @@ namespace LunarEclipse.View
 
 		protected virtual void OnPathToolActionActivated (object sender, System.EventArgs e)
 		{
-			controller.CurrentTool = new PenCreationTool(controller);
+			controller.CurrentTool = new PathCreationTool(controller);
 		}
 
 		protected virtual void OnLineToolActionActivated (object sender, System.EventArgs e)
@@ -114,6 +114,11 @@ namespace LunarEclipse.View
 		protected virtual void OnImageToolActionActivated (object sender, System.EventArgs e)
 		{
 			controller.CurrentTool = new ImageCreationTool(controller);
+		}
+
+		protected virtual void OnPenToolActionActivated (object sender, System.EventArgs e)
+		{
+			controller.CurrentTool = new PenCreationTool(controller);
 		}
 		
 		private MoonlightController controller;

@@ -9,58 +9,63 @@
     <widget-library name="../bin/Debug/LunarEclipse.exe" internal="true" />
   </import>
   <icon-factory>
+    <icon-set id="selection-tool">
+      <source>
+        <property name="Image">resource:selection-tool.png</property>
+      </source>
+    </icon-set>
     <icon-set id="circle-tool">
       <source>
-        <property name="Image">file:./Icons/circle-tool.png</property>
+        <property name="Image">resource:circle-tool.png</property>
       </source>
     </icon-set>
     <icon-set id="ellipse-tool">
       <source>
-        <property name="Image">file:./Icons/ellipse-tool.png</property>
-      </source>
-    </icon-set>
-    <icon-set id="line-tool">
-      <source>
-        <property name="Image">file:./Icons/line-tool.png</property>
+        <property name="Image">resource:ellipse-tool.png</property>
       </source>
     </icon-set>
     <icon-set id="path-tool">
       <source>
-        <property name="Image">file:./Icons/path-tool.png</property>
+        <property name="Image">resource:path-tool.png</property>
       </source>
     </icon-set>
     <icon-set id="rectangle-tool">
       <source>
-        <property name="Image">file:./Icons/rectangle-tool.png</property>
-      </source>
-    </icon-set>
-    <icon-set id="selection-tool">
-      <source>
-        <property name="Image">file:./Icons/selection-tool.png</property>
+        <property name="Image">resource:rectangle-tool.png</property>
       </source>
     </icon-set>
     <icon-set id="square-tool">
       <source>
-        <property name="Image">file:./Icons/square-tool.png</property>
+        <property name="Image">resource:square-tool.png</property>
+      </source>
+    </icon-set>
+    <icon-set id="line-tool">
+      <source>
+        <property name="Image">resource:line-tool.png</property>
       </source>
     </icon-set>
     <icon-set id="image-tool">
       <source>
-        <property name="Image">file:./Icons/image-tool.png</property>
+        <property name="Image">resource:image-tool.png</property>
       </source>
     </icon-set>
     <icon-set id="polyline-tool">
       <source>
-        <property name="Image">file:./Icons/polyline-tool.png</property>
+        <property name="Image">resource:polyline-tool.png</property>
       </source>
     </icon-set>
     <icon-set id="text-tool">
       <source>
-        <property name="Image">file:./Icons/text-tool.png</property>
+        <property name="Image">resource:text-tool.png</property>
+      </source>
+    </icon-set>
+    <icon-set id="pen-tool">
+      <source>
+        <property name="Image">resource:pen-tool.png</property>
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow" design-size="650 610">
+  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow" design-size="650 646">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -299,6 +304,17 @@
         <property name="Group">group1</property>
         <signal name="Activated" handler="OnPolylineToolActionActivated" />
       </action>
+      <action id="PenToolAction">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">P_en Tool</property>
+        <property name="ShortLabel" translatable="yes">P_en Tool</property>
+        <property name="StockId">pen-tool</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+        <signal name="Activated" handler="OnPenToolActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">Lunar Eclipse</property>
@@ -340,6 +356,7 @@
                 <node type="Menuitem" action="CircleToolAction" />
                 <node type="Menuitem" action="LineToolAction" />
                 <node type="Menuitem" action="PolylineToolAction" />
+                <node type="Menuitem" action="PenToolAction" />
                 <node type="Menuitem" action="PathToolAction" />
                 <node type="Menuitem" action="TextToolAction" />
                 <node type="Menuitem" action="ImageToolAction" />
@@ -415,6 +432,7 @@
                       <node type="Toolitem" action="EllipseToolAction" />
                       <node type="Toolitem" action="CircleToolAction" />
                       <node type="Toolitem" action="PathToolAction" />
+                      <node type="Toolitem" action="PenToolAction" />
                       <node type="Toolitem" action="LineToolAction" />
                       <node type="Toolitem" action="PolylineToolAction" />
                       <node type="Toolitem" action="TextToolAction" />

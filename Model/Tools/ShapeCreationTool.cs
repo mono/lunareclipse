@@ -34,7 +34,7 @@ using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {	
 	
-	public abstract class ShapeCreationTool: AbstractTool {
+	public abstract class ShapeCreationTool: ElementCreationTool {
 		
 		public ShapeCreationTool(MoonlightController controller):
 			base (controller)
@@ -45,9 +45,7 @@ namespace LunarEclipse.Model {
 		{
 			base.MouseDown (ev);
 			
-			CreatedShape = CreateShape();
-			SetupShapeProperties();
-			Controller.Canvas.Children.Add(CreatedShape);
+			SetupElement();
 			
 			Point position = ev.GetPosition(Controller.Canvas);
 			
@@ -68,9 +66,6 @@ namespace LunarEclipse.Model {
 			ShapeEnd = position;
 			UpdateShape();
 		}
-
-		
-		protected abstract UIElement CreateShape();
 		
 		protected virtual void UpdateShape() 
 		{
@@ -94,19 +89,6 @@ namespace LunarEclipse.Model {
 			Toolbox.NormalizeRect(ref x, ref y, ref width, ref height);
 		}
 		
-		protected virtual void SetupShapeProperties()
-		{
-			CreatedShape.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
-			CreatedShape.SetValue(Visual.NameProperty, 
-			                      NameGenerator.GetName(Controller.Canvas, CreatedShape));
-			CreatedShape.SetValue(UIElement.RenderTransformOriginProperty, new Point(0.5, 0.5));
-		}
-		
-		protected UIElement CreatedShape {
-			get { return created_shape; }
-			set { created_shape = value; }
-		}
-
 		protected Point ShapeStart {
 			get {
 				return shape_start;
@@ -125,7 +107,6 @@ namespace LunarEclipse.Model {
 			}
 		}
 		
-		private UIElement created_shape;
 		private Point shape_start;
 		private Point shape_end;
 	}
