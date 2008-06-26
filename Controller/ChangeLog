@@ -1,3 +1,7 @@
+2008-06-26  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	
+
 2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MoonlightController.cs: Clear() clears selection.

@@ -93,9 +93,13 @@ namespace LunarEclipse.View {
         
         private Gtk.VBox vbox2;
         
+        private Gtk.HPaned hpaned1;
+        
         private Gtk.ScrolledWindow scrolledwindow1;
         
         private LunarEclipse.View.MoonlightWidget moonlightwidget;
+        
+        private LunarEclipse.View.PropertyPanel propertypanel;
         
         private LunarEclipse.Controls.AnimationTimelineWidget animationtimelinewidget1;
         
@@ -183,15 +187,15 @@ namespace LunarEclipse.View {
             this.CircleToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Circle Tool");
             w2.Add(this.CircleToolAction, null);
             this.PathToolAction = new Gtk.RadioAction("PathToolAction", Mono.Unix.Catalog.GetString("_Path Tool"), null, "path-tool", 0);
-            this.PathToolAction.Group = this.EllipseToolAction.Group;
+            this.PathToolAction.Group = this.CircleToolAction.Group;
             this.PathToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Path Tool");
             w2.Add(this.PathToolAction, null);
             this.TextToolAction = new Gtk.RadioAction("TextToolAction", Mono.Unix.Catalog.GetString("_Text Tool"), null, "text-tool", 0);
-            this.TextToolAction.Group = this.EllipseToolAction.Group;
+            this.TextToolAction.Group = this.CircleToolAction.Group;
             this.TextToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Text Tool");
             w2.Add(this.TextToolAction, null);
             this.ImageToolAction = new Gtk.RadioAction("ImageToolAction", Mono.Unix.Catalog.GetString("Image Tool"), null, "image-tool", 0);
-            this.ImageToolAction.Group = this.EllipseToolAction.Group;
+            this.ImageToolAction.Group = this.CircleToolAction.Group;
             this.ImageToolAction.ShortLabel = Mono.Unix.Catalog.GetString("Image Tool");
             w2.Add(this.ImageToolAction, null);
             this.AnimationAction = new Gtk.Action("AnimationAction", Mono.Unix.Catalog.GetString("_Animation"), null, null);
@@ -207,7 +211,7 @@ namespace LunarEclipse.View {
             this.DetenerAction.ShortLabel = Mono.Unix.Catalog.GetString("_Detener");
             w2.Add(this.DetenerAction, null);
             this.LineToolAction = new Gtk.RadioAction("LineToolAction", Mono.Unix.Catalog.GetString("_Line Tool"), null, "line-tool", 0);
-            this.LineToolAction.Group = this.EllipseToolAction.Group;
+            this.LineToolAction.Group = this.CircleToolAction.Group;
             this.LineToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Line Tool");
             w2.Add(this.LineToolAction, null);
             this.DrawingAction = new Gtk.Action("DrawingAction", Mono.Unix.Catalog.GetString("Drawing"), null, null);
@@ -217,11 +221,11 @@ namespace LunarEclipse.View {
             this.LimpiarAction.ShortLabel = Mono.Unix.Catalog.GetString("_Limpiar");
             w2.Add(this.LimpiarAction, null);
             this.PolylineToolAction = new Gtk.RadioAction("PolylineToolAction", Mono.Unix.Catalog.GetString("Polyline Tool"), null, "polyline-tool", 0);
-            this.PolylineToolAction.Group = this.EllipseToolAction.Group;
+            this.PolylineToolAction.Group = this.CircleToolAction.Group;
             this.PolylineToolAction.ShortLabel = Mono.Unix.Catalog.GetString("Polyline Tool");
             w2.Add(this.PolylineToolAction, null);
             this.PenToolAction = new Gtk.RadioAction("PenToolAction", Mono.Unix.Catalog.GetString("P_en Tool"), null, "pen-tool", 0);
-            this.PenToolAction.Group = this.EllipseToolAction.Group;
+            this.PenToolAction.Group = this.CircleToolAction.Group;
             this.PenToolAction.ShortLabel = Mono.Unix.Catalog.GetString("P_en Tool");
             w2.Add(this.PenToolAction, null);
             w1.InsertActionGroup(w2, 0);
@@ -280,6 +284,11 @@ namespace LunarEclipse.View {
             this.vbox2.Name = "vbox2";
             this.vbox2.Spacing = 6;
             // Container child vbox2.Gtk.Box+BoxChild
+            this.hpaned1 = new Gtk.HPaned();
+            this.hpaned1.CanFocus = true;
+            this.hpaned1.Name = "hpaned1";
+            this.hpaned1.Position = 468;
+            // Container child hpaned1.Gtk.Paned+PanedChild
             this.scrolledwindow1 = new Gtk.ScrolledWindow();
             this.scrolledwindow1.CanFocus = true;
             this.scrolledwindow1.Name = "scrolledwindow1";
@@ -296,9 +305,17 @@ namespace LunarEclipse.View {
             this.moonlightwidget.Width = 600;
             w6.Add(this.moonlightwidget);
             this.scrolledwindow1.Add(w6);
-            this.vbox2.Add(this.scrolledwindow1);
-            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.vbox2[this.scrolledwindow1]));
-            w9.Position = 0;
+            this.hpaned1.Add(this.scrolledwindow1);
+            Gtk.Paned.PanedChild w9 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.scrolledwindow1]));
+            w9.Resize = false;
+            // Container child hpaned1.Gtk.Paned+PanedChild
+            this.propertypanel = new LunarEclipse.View.PropertyPanel();
+            this.propertypanel.Events = ((Gdk.EventMask)(256));
+            this.propertypanel.Name = "propertypanel";
+            this.hpaned1.Add(this.propertypanel);
+            this.vbox2.Add(this.hpaned1);
+            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.vbox2[this.hpaned1]));
+            w11.Position = 0;
             // Container child vbox2.Gtk.Box+BoxChild
             this.animationtimelinewidget1 = new LunarEclipse.Controls.AnimationTimelineWidget();
             this.animationtimelinewidget1.WidthRequest = 70;
@@ -306,14 +323,14 @@ namespace LunarEclipse.View {
             this.animationtimelinewidget1.Events = ((Gdk.EventMask)(256));
             this.animationtimelinewidget1.Name = "animationtimelinewidget1";
             this.vbox2.Add(this.animationtimelinewidget1);
-            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.vbox2[this.animationtimelinewidget1]));
-            w10.PackType = ((Gtk.PackType)(1));
-            w10.Position = 1;
-            w10.Expand = false;
-            w10.Fill = false;
+            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.vbox2[this.animationtimelinewidget1]));
+            w12.PackType = ((Gtk.PackType)(1));
+            w12.Position = 1;
+            w12.Expand = false;
+            w12.Fill = false;
             this.hbox2.Add(this.vbox2);
-            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox2[this.vbox2]));
-            w11.Position = 1;
+            Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.hbox2[this.vbox2]));
+            w13.Position = 1;
             this.notebook.Add(this.hbox2);
             // Notebook tab
             this.label2 = new Gtk.Label();
@@ -326,17 +343,17 @@ namespace LunarEclipse.View {
             this.scrolledwindow2.CanFocus = true;
             this.scrolledwindow2.Name = "scrolledwindow2";
             // Container child scrolledwindow2.Gtk.Container+ContainerChild
-            Gtk.Viewport w13 = new Gtk.Viewport();
-            w13.ShadowType = ((Gtk.ShadowType)(0));
-            // Container child GtkViewport1.Gtk.Container+ContainerChild
+            Gtk.Viewport w15 = new Gtk.Viewport();
+            w15.ShadowType = ((Gtk.ShadowType)(0));
+            // Container child GtkViewport2.Gtk.Container+ContainerChild
             this.xaml_textview = new Gtk.TextView();
             this.xaml_textview.CanFocus = true;
             this.xaml_textview.Name = "xaml_textview";
-            w13.Add(this.xaml_textview);
-            this.scrolledwindow2.Add(w13);
+            w15.Add(this.xaml_textview);
+            this.scrolledwindow2.Add(w15);
             this.notebook.Add(this.scrolledwindow2);
-            Gtk.Notebook.NotebookChild w16 = ((Gtk.Notebook.NotebookChild)(this.notebook[this.scrolledwindow2]));
-            w16.Position = 1;
+            Gtk.Notebook.NotebookChild w18 = ((Gtk.Notebook.NotebookChild)(this.notebook[this.scrolledwindow2]));
+            w18.Position = 1;
             // Notebook tab
             this.label1 = new Gtk.Label();
             this.label1.Name = "label1";
@@ -344,17 +361,17 @@ namespace LunarEclipse.View {
             this.notebook.SetTabLabel(this.scrolledwindow2, this.label1);
             this.label1.ShowAll();
             this.vbox1.Add(this.notebook);
-            Gtk.Box.BoxChild w17 = ((Gtk.Box.BoxChild)(this.vbox1[this.notebook]));
-            w17.Position = 2;
+            Gtk.Box.BoxChild w19 = ((Gtk.Box.BoxChild)(this.vbox1[this.notebook]));
+            w19.Position = 2;
             // Container child vbox1.Gtk.Box+BoxChild
             this.statusbar1 = new Gtk.Statusbar();
             this.statusbar1.Name = "statusbar1";
             this.statusbar1.Spacing = 6;
             this.vbox1.Add(this.statusbar1);
-            Gtk.Box.BoxChild w18 = ((Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
-            w18.Position = 3;
-            w18.Expand = false;
-            w18.Fill = false;
+            Gtk.Box.BoxChild w20 = ((Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
+            w20.Position = 3;
+            w20.Expand = false;
+            w20.Fill = false;
             this.Add(this.vbox1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();

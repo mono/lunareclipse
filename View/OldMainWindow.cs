@@ -187,10 +187,6 @@ namespace LunarEclipse.View
 						this.undo.Sensitive = ((UndoEngine)sender).UndoCount != 0;
 					};
 				
-				controller.PropertyManager.SelectionChanged += delegate {
-					GeneratePropertyWidgets();
-				};
-				
 				Toolbox.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e) {
 					UpdatePropertyWidget(e);
 				};
@@ -204,7 +200,7 @@ namespace LunarEclipse.View
 		
 		private void UpdatePropertyWidget(PropertyChangedEventArgs e)
 		{
-			if(controller.PropertyManager.SelectedObject == null || e.Target != controller.PropertyManager.SelectedObject.Child)
+			if(e.Target != controller.PropertyManager.SelectedObject)
 				return;
 			
 			PropertyData data = LunarEclipse.Serialization.ReflectionHelper.GetData(e.Property);
@@ -237,8 +233,8 @@ namespace LunarEclipse.View
 				widget.Destroy();
 			
 			foreach(PropertyInfo info in this.controller.PropertyManager.Properties)
-				propertyPane.PackEnd(CreatePropertyWidget(controller.PropertyManager.SelectedObject.Child, info));
-			
+				propertyPane.PackEnd(CreatePropertyWidget(controller.PropertyManager.SelectedObject, info));
+		
 			if(propertyPane.Children.Length == 0)
 			{
 //				HBox h = new HBox(true, 0);

@@ -1,3 +1,9 @@
+2008-06-26  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* OldMainWindow.cs: Removed some old dependencies.
+	* MainWindow.cs: Added a property panel widget
+	* PropertyPanel.cs: Added a Widget for the properties panel
+
 2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MoonlightWidget.cs: Removed testcase

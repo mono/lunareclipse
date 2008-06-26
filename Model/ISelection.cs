@@ -25,6 +25,7 @@
 //
 //
 
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
@@ -34,12 +35,14 @@ namespace LunarEclipse.Model {
 	public interface ISelection {
 		
 		event MouseEventHandler HandleMouseDown;
+		event EventHandler SelectionChanged;
 		
 		void Add(UIElement element);
 		void Remove(UIElement element);
 		void Hide();
 		void Show();
 		void Clear();
+		UIElement MainElement { get; }
 		bool Contains(UIElement element);
 		IEnumerable<UIElement> Elements {get;}
 	}

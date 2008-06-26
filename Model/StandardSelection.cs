@@ -25,6 +25,7 @@
 //
 //
 
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
@@ -35,6 +36,7 @@ namespace LunarEclipse.Model {
 	
 	public class StandardSelection: ISelection {
 		
+		public event EventHandler SelectionChanged;		
 		public event MouseEventHandler HandleMouseDown;
 		
 		public StandardSelection(MoonlightController controller)
@@ -52,6 +54,9 @@ namespace LunarEclipse.Model {
 					return;
 				group.AddToCanvas();
 				group.HandleMouseDown += OnHandleMouseDown;
+				
+				MainElement = element;
+				ChangeSelection();
 			}
 		}
 		
@@ -63,6 +68,8 @@ namespace LunarEclipse.Model {
 				return;
 			group.RemoveFromCanvas();
 			group.HandleMouseDown -= OnHandleMouseDown;
+			ChangeMainElement();
+			ChangeSelection();
 		}
 		
 		public void Hide()
@@ -81,12 +88,22 @@ namespace LunarEclipse.Model {
 		{
 			Hide();
 			HandleGroups.Clear();
+			MainElement = null;
+			ChangeSelection();
 		}
 		
 		public IEnumerable<UIElement> Elements {
 			get {
 				foreach (UIElement element in HandleGroups.Keys)
 					yield return element;
+			}
+		}
+		
+		public UIElement MainElement
+		{
+			get { return main_element; }
+			protected set {
+				main_element = value;
 			}
 		}
 		
@@ -115,7 +132,25 @@ namespace LunarEclipse.Model {
 			return StandardDescriptor.CreateHandleGroup(Controller, element);
 		}
 		
+		private void ChangeSelection()
+		{
+			if (SelectionChanged != null)
+				SelectionChanged(this, new EventArgs());
+		}
+		
+		private void ChangeMainElement()
+		{
+			foreach (UIElement element in handle_groups.Keys) {
+				if (element != MainElement) {
+					MainElement = element;
+					return;
+				}
+			}
+			MainElement = null;
+		}
+		
 		private MoonlightController controller;
-		private Dictionary<UIElement, IHandleGroup> handle_groups;		
+		private Dictionary<UIElement, IHandleGroup> handle_groups;
+		private UIElement main_element;
 	}
 }

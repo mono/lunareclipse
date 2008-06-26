@@ -1,0 +1,5 @@
+2008-06-26  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* PropertyManager.cs: Removed dependecies to old objects such as
+	  Selector and SelectionBorder
+

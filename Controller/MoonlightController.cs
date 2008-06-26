@@ -145,13 +145,13 @@ namespace LunarEclipse.Controller
             moonlight.Canvas.MouseLeftButtonDown += new MouseEventHandler(MouseLeftDown);
             moonlight.Canvas.MouseMove += new MouseEventHandler(MouseMove);
             moonlight.Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseLeftUp);
-			propertyManager = new PropertyManager(this);
-            serializer = new Serializer();
+			serializer = new Serializer();
 			storyboardManager = new StoryboardManager(this);
 			storyboardManager.Add(new Storyboard());
             undo = new UndoEngine();
 			Selection = new StandardSelection(this);
 			CurrentTool = new SelectionTool(this);
+			propertyManager = new PropertyManager(this);
         }
         
 		

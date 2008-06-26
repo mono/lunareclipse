@@ -49,6 +49,8 @@ namespace LunarEclipse.View
 			};
 			//vbox2.PackEnd(timeline, false, false, 0);
 			controller = new MoonlightController(moonlightwidget.Silver, timeline);
+			
+			propertypanel.Controller = controller;
 		}
 
 		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)

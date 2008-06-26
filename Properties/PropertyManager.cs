@@ -41,12 +41,8 @@ namespace LunarEclipse.Model
 {
 	public class PropertyManager
 	{
-		public event EventHandler<EventArgs> SelectionChanged;
-		
-		private string name;
 		private List<PropertyInfo> properties;
-		private SelectedBorder selectedObject;
-		private Selector selector;
+		private UIElement selected_object;
 		private static Dictionary<DependencyProperty, PropertyInfo> info;
 		
 		
@@ -60,47 +56,16 @@ namespace LunarEclipse.Model
 			get { return properties; }
 		}
 		
-		public virtual SelectedBorder SelectedObject
+		public virtual UIElement SelectedObject
 		{
-			get { return selectedObject; }
-			set
-			{
-				selectedObject = value;
-				UpdateProperties();
-				Toolbox.RaiseEvent<EventArgs>(SelectionChanged, this, EventArgs.Empty);
-			}
+			get { return selected_object; }
 		}
 
 		public PropertyManager(MoonlightController controller)
 		{
 			properties = new List<PropertyInfo>();
 			
-			controller.BeforeDrawChanged += delegate {
-				selector = controller.Current as Selector;
-				if(selector == null)
-					return;
-				
-				selector.ItemSelected -= ItemSelectionChanged;
-				selector.ItemDeselected -= ItemSelectionChanged;
-			};
-			
-			controller.DrawChanged += delegate {
-				selector = controller.Current as Selector;
-				if(selector == null)
-					return;
-				
-				selector.ItemSelected += ItemSelectionChanged;
-				selector.ItemDeselected +=ItemSelectionChanged;
-			};
-			
-		}
-		private void ItemSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(selector.SelectedObjects.Count != 1)
-				SelectedObject = null; 
-			else
-				SelectedObject = e.SelectedBorder;
-			Toolbox.RaiseEvent<EventArgs>(SelectionChanged, this, EventArgs.Empty);
+			controller.Selection.SelectionChanged += OnSelectionChanged;
 		}
 		
 		static PropertyManager()
@@ -136,22 +101,27 @@ namespace LunarEclipse.Model
 			info.Add(Canvas.BackgroundProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.BackgroundProperty), PropertyType.Brush));
 		}
 		
+		private void OnSelectionChanged(object sender, EventArgs args)
+		{
+			ISelection selection = sender as ISelection;
+			selected_object = selection.MainElement;
+			UpdateProperties();
+		}
+		
 		private void UpdateProperties()
 		{
 			PropertyInfo item;
 			properties.Clear();
 			
-			if(this.selectedObject == null)
+			if(SelectedObject == null)
 				return;
 			
-			List<PropertyData> props = ReflectionHelper.GetProperties(this.selectedObject.Child);
+			List<PropertyData> props = ReflectionHelper.GetProperties(SelectedObject);
 			foreach(PropertyData data in props)
 				if(info.TryGetValue(data.Property, out item))
 					properties.Add(item);
 			else
 				Console.WriteLine("Item not usuable: {0}", data.ShortName);
-			
-			Console.WriteLine("WAHEY: {0}", properties.Count);
 		}
 	}
 }

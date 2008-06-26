@@ -12,4 +12,8 @@
     <itemgroups />
     <signals />
   </object>
+  <object type="LunarEclipse.View.PropertyPanel" palette-category="LunarEclipse" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
 </objects>
