@@ -1,3 +1,7 @@
+2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* ElementCreationTool.cs: Trasnparent Color for Default Shape Creation
+
 2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* PathCreationTool.cs: Completelly rewritten

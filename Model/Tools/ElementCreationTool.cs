@@ -47,6 +47,7 @@ namespace LunarEclipse.Model {
 		protected virtual void SetupShapeProperties()
 		{
 			CreatedShape.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Black));
+			CreatedShape.SetValue(Shape.FillProperty, new SolidColorBrush(Colors.Transparent));
 			CreatedShape.SetValue(Visual.NameProperty, 
 			                      NameGenerator.GetName(Controller.Canvas, CreatedShape));
 			CreatedShape.SetValue(UIElement.RenderTransformOriginProperty, new Point(0.5, 0.5));
