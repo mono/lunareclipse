@@ -38,7 +38,7 @@ namespace LunarEclipse.Model
 		private DependencyProperty property;
 		private object oldValue;
 		private object newValue;
-		
+		private UIElement element;
 		
 		public object NewValue
 		{
@@ -59,13 +59,18 @@ namespace LunarEclipse.Model
 		{
 			get { return target; }
 		}
+
+		public UIElement Element {
+			get { return element; }
+		}
 		
-		public PropertyChangedEventArgs(DependencyObject target, DependencyProperty property, object oldValue, object newValue)
+		public PropertyChangedEventArgs(UIElement element, DependencyObject target, DependencyProperty property, object oldValue, object newValue)
 		{
 			this.newValue = newValue;
 			this.oldValue = oldValue;
 			this.property = property;
 			this.target = target;
+			this.element = element;
 		}
 	}
 }

@@ -38,11 +38,11 @@ namespace LunarEclipse
 	{
 		public static event EventHandler<PropertyChangedEventArgs> PropertyChanged;
 
-		public static void ChangeProperty(DependencyObject target, DependencyProperty property, object value)
+		public static void ChangeProperty(UIElement element, DependencyObject target, DependencyProperty property, object value)
 		{
-			PropertyChangedEventArgs e = new PropertyChangedEventArgs(target, property, target.GetValue(property), value);
+			PropertyChangedEventArgs e = new PropertyChangedEventArgs(element, target, property, target.GetValue(property), value);
 			target.SetValue(property, value);
-			RaiseEvent<PropertyChangedEventArgs>(PropertyChanged, null, e);
+			RaiseEvent<PropertyChangedEventArgs>(PropertyChanged, target, e);
 		}
 		
 		public static double DegreesToRadians(double angle)

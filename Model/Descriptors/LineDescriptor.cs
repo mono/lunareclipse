@@ -56,10 +56,10 @@ namespace LunarEclipse.Model {
 			double y1 = line.Y1 + dy;
 			double y2 = line.Y2 + dy;
 			
-			Toolbox.ChangeProperty(line, Line.X1Property, x1);
-			Toolbox.ChangeProperty(line, Line.X2Property, x2);
-			Toolbox.ChangeProperty(line, Line.Y1Property, y1);
-			Toolbox.ChangeProperty(line, Line.Y2Property, y2);
+			Toolbox.ChangeProperty(line, line, Line.X1Property, x1);
+			Toolbox.ChangeProperty(line, line, Line.X2Property, x2);
+			Toolbox.ChangeProperty(line, line, Line.Y1Property, y1);
+			Toolbox.ChangeProperty(line, line, Line.Y2Property, y2);
 		}
 		
 		Line line;

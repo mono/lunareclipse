@@ -56,7 +56,7 @@ namespace LunarEclipse.Model {
 			}
 			
 			set {
-				Toolbox.ChangeProperty(Element, Polyline.PointsProperty, value);
+				Toolbox.ChangeProperty(Element, Element, Polyline.PointsProperty, value);
 			}
 		}
 		

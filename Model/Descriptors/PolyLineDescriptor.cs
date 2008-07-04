@@ -72,7 +72,7 @@ namespace LunarEclipse.Model {
 				points[i] = p;
 			}
 			
-			Toolbox.ChangeProperty(polyline, Polyline.PointsProperty, points);
+			Toolbox.ChangeProperty(polyline, polyline, Polyline.PointsProperty, points);
 		}
 
 		

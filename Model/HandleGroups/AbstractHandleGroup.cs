@@ -93,7 +93,8 @@ namespace LunarEclipse.Model {
 		
 		protected virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			Update();
+			if (e.Element == Child)
+				Update();
 		}
 		
 		protected void Update()

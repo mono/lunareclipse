@@ -38,7 +38,7 @@ namespace LunarEclipse.Controls
 {
 	public class PositionMarker : Control, IMarker
 	{
-		private Ellipse ellipse;
+		private Rectangle ellipse;
 		private TimeSpan time;
 
 		public int ZIndex
@@ -62,7 +62,7 @@ namespace LunarEclipse.Controls
 		public PositionMarker(GtkSilver parent, TimeSpan time, double width, double height)
 			: base()
 		{
-			ellipse = (Ellipse)parent.InitializeFromXaml("<Ellipse Name=\"Ellipse\" />", this);
+			ellipse = (Rectangle)parent.InitializeFromXaml("<Rectangle Name=\"PositionRect\" />", this);
 			this.time = time;
 			Height = height;
 			Width = width;

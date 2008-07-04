@@ -1,3 +1,13 @@
+2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* PropertyChangedEventArgs.cs, StoryboardManager.cs: Adapted to change
+	  in Toolbox.ChangeProperty
+	* DrawChangeEventArgs.cs, Draw, Draw/EllipseDraw.cs,
+	  Draw/SquareDraw.cs, Draw/CircleDraw.cs, Draw/Selector.cs,
+	  Draw/PenDraw.cs, Draw/RectangleDraw.cs, Draw/ChangeLog,
+	  Draw/SelectionDraw.cs, Draw/LineDraw.cs, Draw/DrawBase.cs: Removed
+	  Old Code
+
 2008-06-26  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* ISelection.cs: Added MainElement.

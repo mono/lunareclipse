@@ -46,19 +46,10 @@ namespace LunarEclipse.Controller
 {
     public class MoonlightController
     {
-#region Events
-		
-		public event EventHandler<DrawChangeEventArgs> BeforeDrawChanged;
-		public event EventHandler<DrawChangeEventArgs> DrawChanged;
-		
-#endregion Events
-		
-		
 #region Member Variables
 		
 		//IPropertyGroup properties;
 		bool active;
-		private DrawBase current;
         private GtkSilver moonlight;
 		private PropertyManager propertyManager;
         private Serializer serializer;
@@ -91,17 +82,6 @@ namespace LunarEclipse.Controller
 			}
 		}
 		
-    	public DrawBase Current
-        {
-            get { return this.current; }
-            set 
-            { 
-				Toolbox.RaiseEvent<DrawChangeEventArgs>(BeforeDrawChanged, this, new DrawChangeEventArgs(current));
-				current = value;
-				Toolbox.RaiseEvent<DrawChangeEventArgs>(DrawChanged, this, new DrawChangeEventArgs(current));
-            }
-        }
-		
 		public PropertyManager PropertyManager
 		{
 			get { return propertyManager; }
@@ -133,14 +113,6 @@ namespace LunarEclipse.Controller
 			this.timeline = timeline;
             this.moonlight = moonlight;
 			//this.properties = properties;
-			
-			BeforeDrawChanged += delegate {
-				if(Current != null) Current.Cleanup();
-			};
-			
-			DrawChanged += delegate {
-				if(Current != null) Current.Prepare();
-			};
 			
             moonlight.Canvas.MouseLeftButtonDown += new MouseEventHandler(MouseLeftDown);
             moonlight.Canvas.MouseMove += new MouseEventHandler(MouseMove);
@@ -187,25 +159,11 @@ namespace LunarEclipse.Controller
 		
 		public string SerializeCanvas()
         {
-			try
-			{
-				if(Current != null)
-					Current.Cleanup();
-				
-				return serializer.Serialize(this.moonlight.Canvas);
-			}
-			finally
-			{
-				if(Current != null)
-					Current.Prepare();
-			}
+			return serializer.Serialize(this.moonlight.Canvas);
 		}
 		
 		public void Undo()
         {
-            if(Current != null)
-				Current.Cleanup();
-            
             undo.Undo();
         }
 	}

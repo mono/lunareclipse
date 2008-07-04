@@ -1,3 +1,9 @@
+2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* StandardDescriptor.cs: Using Toolbox.ChangeProperty for SetBounds()
+	* LineDescriptor.cs, PolyLineDescriptor.cs: Adapted to change in
+	  Toolbox.ChangeProperty
+
 2008-06-20  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* StandardDescriptor.cs: Added support for PolyLineDescriptor y

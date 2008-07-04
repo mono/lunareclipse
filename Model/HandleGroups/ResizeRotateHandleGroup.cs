@@ -1,4 +1,4 @@
-// ResizeHandleGroup.cs
+// RotateHandleGroup.cs
 //
 // Author:
 //   Manuel Cerón <ceronman@unicauca.edu.co>
@@ -26,15 +26,29 @@
 //
 
 using System.Windows;
+using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
-namespace LunarEclipse.Model {
-
-	public class ResizeHandleGroup: AbstractHandleGroup {
+namespace LunarEclipse.Model {	
+	
+	public class ResizeRotateHandleGroup: AbstractHandleGroup {
 		
-		public ResizeHandleGroup(MoonlightController controller, UIElement child):
+		public ResizeRotateHandleGroup(MoonlightController controller, UIElement child):
 			base(controller, child)
 		{
+			AddFrame(new RectangleFrame(Child) );
+			
+			AddHandle(new RotateHandle(controller, this, new RelativeLocator(child, 0.0, 0.0)));
+			AddHandle(new RotateHandle(controller, this, new RelativeLocator(child, 1.0, 0.0)));
+			AddHandle(new RotateHandle(controller, this, new RelativeLocator(child, 0.0, 1.0)));
+			AddHandle(new RotateHandle(controller, this, new RelativeLocator(child, 1.0, 1.0)));
+			
+			AddHandle(new ResizeHandle(controller, this, new RelativeLocator(child, 0.5, 0.0)));
+			AddHandle(new ResizeHandle(controller, this, new RelativeLocator(child, 0.5, 1.0)));
+			AddHandle(new ResizeHandle(controller, this, new RelativeLocator(child, 0.0, 0.5)));
+			AddHandle(new ResizeHandle(controller, this, new RelativeLocator(child, 1.0, 0.5)));
+
+			Update();
 		}
 	}
 }

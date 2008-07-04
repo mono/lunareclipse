@@ -19,7 +19,6 @@
     <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="View/GtkMoonlight.cs" subtype="Code" buildaction="Compile" />
     <File name="View/Main.cs" subtype="Code" buildaction="Compile" />
-    <File name="View/OldMainWindow.cs" subtype="Code" buildaction="Compile" />
     <File name="View/PropertyGroupAppearance.cs" subtype="Code" buildaction="Compile" />
     <File name="View/PropertyGroupBrushes.cs" subtype="Code" buildaction="Compile" />
     <File name="View/PropertyGroupLayout.cs" subtype="Code" buildaction="Compile" />
@@ -32,7 +31,6 @@
     <File name="Controls/TimeLine/KeyframeMarker.cs" subtype="Code" buildaction="Compile" />
     <File name="Controls/TimeLine/PositionMarker.cs" subtype="Code" buildaction="Compile" />
     <File name="Controls/TimeLine/TimelineMarker.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/DrawChangeEventArgs.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/ISelection.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/NameGenerator.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/PropertyChangedEventArgs.cs" subtype="Code" buildaction="Compile" />
@@ -43,15 +41,6 @@
     <File name="Model/StoryboardManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/TransformType.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/ZIndexComparer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/CircleDraw.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/DrawBase.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/EllipseDraw.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/LineDraw.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/PenDraw.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/RectangleDraw.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/SelectionDraw.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/Selector.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/Draw/SquareDraw.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/AbstractHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/EndLineHandle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/IHandle.cs" subtype="Code" buildaction="Compile" />
@@ -130,13 +119,13 @@
     <File name="Model/HandleGroups/IHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/HandleGroups/PathHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/HandleGroups/PolyLineHandleGroup.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/HandleGroups/ResizeHandleGroup.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/HandleGroups/RotateHandleGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/HandleGroups/ResizeRotateHandleGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/BezierSegmentPoint3Handle.cs" subtype="Code" buildaction="Compile" />
     <File name="Icons/pen-tool.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Model/Tools/ElementCreationTool.cs" subtype="Code" buildaction="Compile" />
     <File name="View/PropertyPanel.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LunarEclipse.View.PropertyPanel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Model/Handles/ResizeHandle.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

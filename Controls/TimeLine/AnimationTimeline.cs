@@ -106,7 +106,9 @@ namespace LunarEclipse.Controls
 		
 		public void UpdateSize()
 		{
-			this.PlaceDivisions();
+			PlaceDivisions();
+			Canvas.Width = Allocation.Width;
+			Canvas.Height = Allocation.Height;
 		}
 		
 		private void PlaceDivisions()

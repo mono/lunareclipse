@@ -1,3 +1,12 @@
+2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* PathSegmentHandle.cs, BezierSegmentPoint3Handle.cs,
+	  StartPointHandle.cs, PolyLineHandle.cs: Adapted to change in
+	  Toolbox.ChangeProperty
+	* ResizeHandle.cs: Added
+	* TransformHandle.cs: Included features of RotateHandle
+	* RotateHandle.cs: Moved some methods to TransformHandle
+
 2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* AbstractHandle.cs: Handles are now highlight when mouse Enter

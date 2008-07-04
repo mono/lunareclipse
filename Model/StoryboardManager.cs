@@ -92,8 +92,6 @@ namespace LunarEclipse.Model
 			this.controller = controller;
 			storyboards = new List<Storyboard>();
 			
-			controller.BeforeDrawChanged += new EventHandler<DrawChangeEventArgs>(BeforeDrawChange);
-			controller.DrawChanged += new EventHandler<DrawChangeEventArgs>(AfterDrawChange);
 			controller.Timeline.CurrentPositionChanged += new EventHandler(TimeChanged);
 			controller.Timeline.KeyframeMoved += new EventHandler<LunarEclipse.Controls.KeyframeEventArgs>(KeyframeMoved);
 			initialValues = new UndoGroup();
@@ -132,61 +130,6 @@ namespace LunarEclipse.Model
 			}
 			
 			Toolbox.RaiseEvent<EventArgs>(Loaded, this, EventArgs.Empty);
-		}
-		
-		private void BeforeDrawChange(object sender, DrawChangeEventArgs e)
-		{
-			Selector s = e.Draw as Selector;
-			if(s != null)
-				HookSelector(s, false);
-		}
-		
-		private void AfterDrawChange(object sender, DrawChangeEventArgs e)
-		{
-			Selector s = e.Draw as Selector;
-			if(s != null)
-				HookSelector(s, true);
-		}
-		
-		private void HookSelector(Selector s, bool hook)
-		{
-			if(hook)
-			{
-				Toolbox.PropertyChanged += new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
-				
-				s.MouseDown += delegate {
-					Stop();
-				};
-				s.MouseUp += delegate {
-					//Console.WriteLine("Undoing: {0}", undos.Count);
-					//undos.Undo();
-//					foreach(UndoActionBase a in undos)
-//						if(a is UndoPropertyChange)
-//						{
-//							SelectedBorder b = null;
-//							UndoPropertyChange c = (UndoPropertyChange)a;
-//							if(!(c.Target is Visual))
-//								continue;
-//							
-//							if(c.Silent && s.SelectedObjects.TryGetValue((Visual)c.Target, out b))
-//							   b.ResizeBorder();
-//						}
-					//undos.Clear();
-					Seek(controller.Timeline.CurrentPosition);
-				};
-			}
-			else
-			{
-				Toolbox.PropertyChanged -= new EventHandler<PropertyChangedEventArgs>(PropertyChanged);
-				s.MouseDown -= delegate {
-					Stop();
-				};
-				s.MouseUp -= delegate {
-					//undos.Undo();
-					//undos.Clear();
-					Seek(controller.Timeline.CurrentPosition);
-				};
-			}
 		}
 		
 		private void PropertyChanged(object sender, PropertyChangedEventArgs e)

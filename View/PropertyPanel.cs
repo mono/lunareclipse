@@ -92,14 +92,14 @@ namespace LunarEclipse.View
 				{
 					spin.Value = (int)o.GetValue(info.PropertyData.Property);
 					spin.ValueChanged += delegate (object sender, EventArgs e) {
-						Toolbox.ChangeProperty(o, info.PropertyData.Property, spin.ValueAsInt);
+						Toolbox.ChangeProperty((UIElement) o, o, info.PropertyData.Property, spin.ValueAsInt);
 					};
 				}
 				else
 				{
 					spin.Value = (double)o.GetValue(info.PropertyData.Property);
 					spin.ValueChanged += delegate (object sender, EventArgs e) {
-						Toolbox.ChangeProperty(o, info.PropertyData.Property, spin.Value);
+						Toolbox.ChangeProperty((UIElement) o, o, info.PropertyData.Property, spin.Value);
 					};
 				}
 				b.PackEnd(spin);
@@ -112,7 +112,7 @@ namespace LunarEclipse.View
 				spin.SetRange (0.0, 1.0);
 				spin.Value = (double)o.GetValue(info.PropertyData.Property);
 				spin.ValueChanged += delegate (object sender, EventArgs e) {
-					Toolbox.ChangeProperty(o, info.PropertyData.Property, spin.Value);
+					Toolbox.ChangeProperty((UIElement) o, o, info.PropertyData.Property, spin.Value);
 				};
 				b.PackEnd(spin);
 				break;
@@ -136,7 +136,7 @@ namespace LunarEclipse.View
 			case PropertyType.String:
 				Entry entry = new Entry(o.GetValue(info.PropertyData.Property).ToString());
 				entry.Changed += delegate (object sender, EventArgs e) {
-					Toolbox.ChangeProperty(o, info.PropertyData.Property, ((Entry)sender).Text);
+					Toolbox.ChangeProperty((UIElement)o, o, info.PropertyData.Property, ((Entry)sender).Text);
 				};
 				b.PackEnd(entry);
 				break;
@@ -225,7 +225,7 @@ namespace LunarEclipse.View
 					b.Active = i;
 			
 			b.Changed += delegate (object sender, EventArgs e) {
-				Toolbox.ChangeProperty(o, info.PropertyData.Property, Enum.Parse(type, b.ActiveText));
+				Toolbox.ChangeProperty((UIElement)o, o, info.PropertyData.Property, Enum.Parse(type, b.ActiveText));
 			};
 			
 			return b;

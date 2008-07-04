@@ -63,7 +63,7 @@ namespace LunarEclipse.Model {
 				return new PathHandleGroup(controller, element as Path);
 			if (element is Polyline)
 				return new PolyLineHandleGroup(controller, element as Polyline);
-			return new RotateHandleGroup(controller, element);
+			return new ResizeRotateHandleGroup(controller, element);
 		}
 		
 		public virtual Rect GetBounds ()
@@ -78,10 +78,10 @@ namespace LunarEclipse.Model {
 		
 		public virtual void SetBounds(double left, double top, double width, double height)
 		{
-			Element.SetValue(Canvas.TopProperty, top);
-			Element.SetValue(Canvas.LeftProperty, left);
-			Element.SetValue(Canvas.WidthProperty, width);
-			Element.SetValue(Canvas.HeightProperty, height);
+			Toolbox.ChangeProperty(Element, Element, Canvas.LeftProperty, left);
+			Toolbox.ChangeProperty(Element, Element, Canvas.TopProperty, top);
+			Toolbox.ChangeProperty(Element, Element, Canvas.WidthProperty, width);
+			Toolbox.ChangeProperty(Element, Element, Canvas.HeightProperty, height);
 		}
 		
 		public virtual void SetBounds(Rect bounds)
@@ -108,8 +108,8 @@ namespace LunarEclipse.Model {
 			left += dx;
 			top += dy;
 			
-			Toolbox.ChangeProperty(element, Canvas.TopProperty, top);
-			Toolbox.ChangeProperty(element, Canvas.LeftProperty, left);
+			Toolbox.ChangeProperty(element, element, Canvas.TopProperty, top);
+			Toolbox.ChangeProperty(element, element, Canvas.LeftProperty, left);
 		}
 		
 		public virtual void Move(Point offset)

@@ -39,10 +39,6 @@ namespace LunarEclipse.Model
 		public RotateHandle(MoonlightController controller, IHandleGroup group, ILocator locator):
 			base(controller, group, locator)
 		{
-			TransformGroup transforms = new TransformGroup();
-			Inner.SetValue(RenderTransformProperty, transforms);
-			rotation = new RotateTransform();
-			transforms.Children.Add(rotation);
 		}
 		
 		public override void MouseStep (object sender, MouseEventArgs args)
@@ -61,30 +57,15 @@ namespace LunarEclipse.Model
 			
 			double angle = ElementRotation.Angle + Toolbox.RadiansToDegrees(alpha - beta);
 			
-			Toolbox.ChangeProperty(ElementRotation, RotateTransform.AngleProperty, angle);
+			Toolbox.ChangeProperty(Element, ElementRotation, RotateTransform.AngleProperty, angle);
 			Update();
 			
 			LastClick = position;			
 		}
 		
-		public override void Update ()
-		{
-			base.Update ();
-			
-			Point center = ElementTransformCenter;
-			Rect allocation = CanvasAllocation;
-			rotation.CenterX = center.X - allocation.X;
-			rotation.CenterY = center.Y - allocation.Y;
-			
-			rotation.Angle = ElementRotation.Angle;
-		}
-
-		
 		protected override string GetXaml ()
 		{
 			return "<Ellipse Fill=\"#99FFFF00\" Stroke=\"#FF000000\"/>";
 		}
-
-		private RotateTransform rotation;
 	}
 }

@@ -62,8 +62,8 @@ namespace LunarEclipse.Controls
 			Height = height;
 			Width = TimelineMarker.MarkerWidth;
 			
-			rectangle.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.White));
-			rectangle.SetValue(Shape.FillProperty, new SolidColorBrush(Colors.White));
+			rectangle.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Yellow));
+			rectangle.SetValue(Shape.FillProperty, new SolidColorBrush(Colors.Transparent));
 		}
 		
 		public override void SetValue (DependencyProperty property, object obj)

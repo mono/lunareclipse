@@ -1,3 +1,12 @@
+2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* AbstractHandleGroup.cs: Fixed OnPropertyChanged
+	* RotateHandleGroup.cs: Renamed to ResizeRotateHandleGroup
+	* ResizeRotateHandleGroup.cs: Renamed from RotateHandleGroup. Adapted
+	  to change in Toolbox.ChangeProperty
+	* ResizeHandleGroup.cs: Not needed anymore, replaced by
+	  ResizeRotateHandleGroup
+
 2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* PathHandleGroup.cs, RotateHandleGroup.cs: Modified order of handles

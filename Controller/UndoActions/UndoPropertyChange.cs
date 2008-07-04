@@ -81,7 +81,7 @@ namespace LunarEclipse.Controller
 			if(silent)
 				Target.SetValue(property, newvalue);
 			else
-				Toolbox.ChangeProperty(Target, property, newvalue);
+				Toolbox.ChangeProperty(null, Target, property, newvalue);
         }
 
         
@@ -90,7 +90,7 @@ namespace LunarEclipse.Controller
 			if(silent)
 				Target.SetValue(property, oldvalue);
 			else
-				Toolbox.ChangeProperty(Target, property, oldvalue);
+				Toolbox.ChangeProperty(null, Target, property, oldvalue);
         }
     }
 }

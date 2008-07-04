@@ -1,3 +1,7 @@
+2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* PropertyPanel.cs: Adapted to change in Toolbox.ChangeProperty
+
 2008-06-26  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* OldMainWindow.cs: Removed some old dependencies.
