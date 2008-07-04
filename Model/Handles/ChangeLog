@@ -1,5 +1,11 @@
 2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* RightResizeWidthHandle.cs, LeftResizeWidthHandle.cs,
+	  TopResizeHeightHandle.cs, BottomResizeHeightHandle.cs: Added
+	* ResizeHandle.cs: Addapted to use Subclases
+
+2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* PathSegmentHandle.cs, BezierSegmentPoint3Handle.cs,
 	  StartPointHandle.cs, PolyLineHandle.cs: Adapted to change in
 	  Toolbox.ChangeProperty

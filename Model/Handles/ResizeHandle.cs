@@ -34,7 +34,7 @@ using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {	
 	
-	public class ResizeHandle: TransformHandle {
+	public abstract class ResizeHandle: TransformHandle {
 		
 		public ResizeHandle(MoonlightController controller, IHandleGroup group, ILocator locator):
 			base(controller, group, locator)
@@ -51,13 +51,22 @@ namespace LunarEclipse.Model {
 			IDescriptor descriptor = StandardDescriptor.CreateDescriptor(Element);
 			
 			Rect oldBounds = descriptor.GetBounds();
-			Rect newBounds = oldBounds;
 			Point offset = CalculateOffset(args.GetPosition(null));
 			double angle = Toolbox.DegreesToRadians(Rotation.Angle);
 			
 			double cosAngle = Math.Cos(angle);
 			double sinAngle = Math.Sin(angle);
 			
+			offset = TransformOffset(offset, angle);
+			
+			Rect newBounds = CalculateNewBounds(oldBounds, offset, cosAngle, sinAngle);
+			descriptor.SetBounds(newBounds);
+		}
+		
+		protected abstract Rect CalculateNewBounds(Rect oldBounds, Point offset, double cosAngle, double sinAngle);
+		
+		protected Point TransformOffset(Point offset, double angle)
+		{
 			// When a shape is rotated, we need to convert the mouse X, Y coordinates from
 			// canvas coordinates into 'shape' coordinates. In 'shape' coordinates, the
 			// X coord corresponds to moving perpendicularly to the width of the rotated
@@ -68,11 +77,7 @@ namespace LunarEclipse.Model {
 			offset = new Point(mouseDistanceTravelled * Math.Cos(mouseAngle - angle),
 							   mouseDistanceTravelled * Math.Sin(mouseAngle - angle));
 			
-			newBounds.Width = oldBounds.Width + offset.X;
-			//newLeft = oldLeft  - offset.X * (1 - cosAngle) / 2;
-			//newTop =  oldTop + offset.X * sinAngle / 2.0;
-			
-			descriptor.SetBounds(newBounds);
+			return offset;
 		}
 		
 		protected override string GetXaml ()

@@ -1,9 +1,9 @@
-// RotateHandleGroup.cs
+// LeftResizeWidthHandle.cs
 //
 // Author:
-//   Manuel Cerón <ceronman@unicauca.edu.co>
+//    Manuel Cerón <ceronman@unicauca.edu.co>
 //
-// Copyright (c) 2008 Manuel Cerón.
+// Copyright (c) 2008 Manuel Cerón
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,30 +25,30 @@
 //
 //
 
+using System;
 using System.Windows;
-using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {	
 	
-	public class ResizeRotateHandleGroup: AbstractHandleGroup {
-		
-		public ResizeRotateHandleGroup(MoonlightController controller, UIElement child):
-			base(controller, child)
+	public class LeftResizeWidthHandle: ResizeHandle {
+		public LeftResizeWidthHandle(MoonlightController controller, IHandleGroup group, ILocator locator):
+			base(controller, group, locator)
 		{
-			AddFrame(new RectangleFrame(Child) );
-			
-			AddHandle(new RotateHandle(controller, this, new RelativeLocator(child, 0.0, 0.0)));
-			AddHandle(new RotateHandle(controller, this, new RelativeLocator(child, 1.0, 0.0)));
-			AddHandle(new RotateHandle(controller, this, new RelativeLocator(child, 0.0, 1.0)));
-			AddHandle(new RotateHandle(controller, this, new RelativeLocator(child, 1.0, 1.0)));
-			
-			AddHandle(new LeftResizeWidthHandle(controller, this, new RelativeLocator(child, 0.0, 0.5)));
-			AddHandle(new RightResizeWidthHandle(controller, this, new RelativeLocator(child, 1.0, 0.5)));
-			AddHandle(new TopResizeHeightHandle(controller, this, new RelativeLocator(child, 0.5, 0.0)));
-			AddHandle(new BottomResizeHeightHandle(controller, this, new RelativeLocator(child, 0.5, 1.0)));
-
-			Update();
 		}
+		
+		protected override Rect CalculateNewBounds (Rect oldBounds, Point offset, double cosAngle, double sinAngle)
+		{
+			Rect newBounds = oldBounds;
+			
+			if ((oldBounds.Width - offset.X) >= 0) {
+				newBounds.Width =  oldBounds.Width - offset.X;
+				newBounds.X = oldBounds.Left + offset.X * cosAngle + offset.X * (1 - cosAngle) / 2;
+				newBounds.Y =  oldBounds.Top + offset.X / 2.0 * sinAngle;
+			}
+			
+			return newBounds;
+		}
+
 	}
 }

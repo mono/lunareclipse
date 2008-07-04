@@ -1,5 +1,9 @@
 2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* ResizeRotateHandleGroup.cs: Using Proper Handles now
+
+2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* AbstractHandleGroup.cs: Fixed OnPropertyChanged
 	* RotateHandleGroup.cs: Renamed to ResizeRotateHandleGroup
 	* ResizeRotateHandleGroup.cs: Renamed from RotateHandleGroup. Adapted
