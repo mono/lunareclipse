@@ -177,7 +177,7 @@ namespace LunarEclipse.Model
 				kf.KeyTime = previous;
 				kf.Value = Convert.ToDouble(target == e.Target ? e.OldValue : target.GetValue(property));
 				timeline.KeyFrames.Add(kf);
-				initialValues.Add(new UndoPropertyChange(target, property, kf.Value, kf.Value, true));
+				initialValues.Add(new UndoPropertyChange(target, target, property, kf.Value, kf.Value, true));
 			}
 			
 			// For each of the keyframes, if any of them have exactly the same time

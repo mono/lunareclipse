@@ -40,7 +40,6 @@ namespace LunarEclipse.Model {
 		public ResizeHandle(MoonlightController controller, IHandleGroup group, ILocator locator):
 			base(controller, group, locator)
 		{
-			undo_group = new UndoGroup();
 		}
 		
 		public override void MouseStep (object sender, MouseEventArgs args)
@@ -74,25 +73,19 @@ namespace LunarEclipse.Model {
 			return "<Rectangle Fill=\"#99FFFF00\" Stroke=\"#FF000000\"/>";
 		}
 		
-		protected override void PushUndo ()
-		{
-			Controller.UndoEngine.PushUndo(undo_group);
-		}
-
-		
 		private void AddUndo (Rect oldBounds, Rect newBounds)
 		{
-			undo_group.Add(new UndoPropertyChange(Element, Canvas.LeftProperty, 
-			                                      oldBounds.Left, newBounds.Left));
+			UndoGroup.Add(new UndoPropertyChange(Element, Canvas.LeftProperty, 
+			                                     oldBounds.Left, newBounds.Left));
 			
-			undo_group.Add(new UndoPropertyChange(Element, Canvas.TopProperty, 
-			                                      oldBounds.Top, newBounds.Top));
+			UndoGroup.Add(new UndoPropertyChange(Element, Canvas.TopProperty, 
+			                                     oldBounds.Top, newBounds.Top));
 			
-			undo_group.Add(new UndoPropertyChange(Element, Canvas.WidthProperty, 
-			                                      oldBounds.Width, newBounds.Width));
+			UndoGroup.Add(new UndoPropertyChange(Element, Canvas.WidthProperty, 
+			                                     oldBounds.Width, newBounds.Width));
 			
-			undo_group.Add(new UndoPropertyChange(Element, Canvas.HeightProperty, 
-			                                      oldBounds.Height, newBounds.Height));
+			UndoGroup.Add(new UndoPropertyChange(Element, Canvas.HeightProperty, 
+			                                     oldBounds.Height, newBounds.Height));
 		}
 			                                      
 		private Point TransformOffset(Point offset, double angle)
@@ -109,7 +102,5 @@ namespace LunarEclipse.Model {
 			
 			return offset;
 		}
-			
-		private UndoGroup undo_group;
 	}
 }

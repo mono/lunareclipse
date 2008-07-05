@@ -1,5 +1,11 @@
 2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* ResizeHandle.cs: Moved UndoGroup Functionality to TransformHandle
+	* TransformHandle.cs: Moved UndoGroup Functionality from ResizeHandle
+	* RotateHandle.cs: Added Undo Support
+
+2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* ResizeHandle.cs: Added UndoSupport
 	* AbstractHandle.cs: Added Undo Support
 
