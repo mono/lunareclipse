@@ -55,15 +55,12 @@ namespace LunarEclipse.Model
 			double alpha = Math.Atan2(position.Y - center.Y, position.X - center.X);
 			double beta = Math.Atan2(LastClick.Y - center.Y, LastClick.X - center.X);
 			
-			double oldAngle = ElementRotation.Angle;
-			double angle = oldAngle + Toolbox.RadiansToDegrees(alpha - beta);
+			double angle = ElementRotation.Angle + Toolbox.RadiansToDegrees(alpha - beta);
 			
-			Toolbox.ChangeProperty(Element, ElementRotation, RotateTransform.AngleProperty, angle);
+			ChangeProperty(ElementRotation, RotateTransform.AngleProperty, angle);
 			Update();
 			
 			LastClick = position;
-			
-			UndoGroup.Add(new UndoPropertyChange(Element, ElementRotation, RotateTransform.AngleProperty, oldAngle, angle));
 		}
 		
 		protected override string GetXaml ()

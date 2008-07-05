@@ -51,7 +51,7 @@ namespace LunarEclipse.Model {
 				return (Point) segment.GetValue(point_property);
 			}
 			set {
-				Toolbox.ChangeProperty(Element, segment, point_property, value);
+				ChangeProperty(segment, point_property, value);
 			}
 		}
 		

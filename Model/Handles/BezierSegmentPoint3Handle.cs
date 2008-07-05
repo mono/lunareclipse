@@ -57,7 +57,7 @@ namespace LunarEclipse.Model {
 			Point point = (Point) segment.GetValue(pointProperty);
 			point.X += dx;
 			point.Y += dy;
-			Toolbox.ChangeProperty(Element, segment, pointProperty, point);
+			ChangeProperty(segment, pointProperty, point);		
 		}
 		
 		protected override string GetXaml ()

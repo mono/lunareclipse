@@ -49,8 +49,6 @@ namespace LunarEclipse.Model {
 			Inner.SetValue(RenderTransformProperty, transforms);
 			rotation = new RotateTransform();
 			transforms.Children.Add(rotation);
-			
-			undo_group = new UndoGroup();
 		}
 		
 		public override Point Location {
@@ -68,11 +66,6 @@ namespace LunarEclipse.Model {
 			rotation.CenterY = center.Y - allocation.Y;
 			
 			rotation.Angle = ElementRotation.Angle;
-		}
-		
-		protected override void PushUndo ()
-		{
-			Controller.UndoEngine.PushUndo(undo_group);
 		}
 		
 		protected Point ElementTransformOrigin {
@@ -117,13 +110,8 @@ namespace LunarEclipse.Model {
 		protected RotateTransform Rotation {
 			get { return rotation; }
 		}
-
-		protected UndoGroup UndoGroup {
-			get { return undo_group; }
-		}
-		
+	
 		private RotateTransform rotation;
 		private ILocator locator;
-		private UndoGroup undo_group;
 	}
 }

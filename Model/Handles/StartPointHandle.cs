@@ -46,7 +46,7 @@ namespace LunarEclipse.Model {
 		public override Point Location {
 			get { return path_figure.StartPoint; }
 			set {
-				Toolbox.ChangeProperty(Element, path_figure, PathFigure.StartPointProperty, value);
+				ChangeProperty(path_figure, PathFigure.StartPointProperty, value);
 			}
 		}
 		

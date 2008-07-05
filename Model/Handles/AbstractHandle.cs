@@ -25,6 +25,7 @@
 //
 //
 
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -59,6 +60,10 @@ namespace LunarEclipse.Model {
 			MouseLeave += delegate {
 				inner.SetValue(Shape.FillProperty, normal_fill);
 			};
+			
+			SetValue(ZIndexProperty, int.MaxValue);
+			
+			undo_group = new UndoGroup();
 		}
 		
 		public IHandleGroup Group {
@@ -89,6 +94,7 @@ namespace LunarEclipse.Model {
 		public virtual void MouseEnd(object sender, MouseEventArgs args)
 		{
 			ReleaseMouseCapture();
+			inner.SetValue(Shape.FillProperty, normal_fill);
 			Dragging = false;
 			PushUndo();
 		}
@@ -149,6 +155,10 @@ namespace LunarEclipse.Model {
 			set { inner = value; }
 		}
 		
+		protected UndoGroup UndoGroup {
+			get { return undo_group; }
+		}
+		
 		protected Point CalculateOffset(Point current)
 		{
 			Point offset = new Point(0.0, 0.0);
@@ -163,6 +173,25 @@ namespace LunarEclipse.Model {
 		
 		protected virtual void PushUndo()
 		{
+			Controller.UndoEngine.PushUndo(undo_group);
+		}
+		
+		protected void AddUndo(DependencyObject root, DependencyObject item, DependencyProperty prop, object oldValue, object newValue)
+		{
+			IUndoAction undo = new UndoPropertyChange(root, item, prop, oldValue, newValue);
+			UndoGroup.Add(undo);
+		}
+		
+		protected void AddUndo(DependencyObject item, DependencyProperty prop, object oldValue, object newValue)
+		{
+			AddUndo(item, item, prop, oldValue, newValue);
+		}
+	
+		protected void ChangeProperty(DependencyObject item, DependencyProperty prop, object value)
+		{
+			object oldValue = item.GetValue(prop);
+			Toolbox.ChangeProperty(Element, item, prop, value);
+			AddUndo(Element, item, prop, oldValue, value);
 		}
 		
 		private IHandleGroup group;
@@ -171,5 +200,6 @@ namespace LunarEclipse.Model {
 		private bool dragging = false;
 		private Brush normal_fill;
 		private Brush highlight_fill;
+		private UndoGroup undo_group;
 	}
 }

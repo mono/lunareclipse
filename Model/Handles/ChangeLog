@@ -1,5 +1,15 @@
 2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* BezierSegmentPoint3Handle.cs, StartLineHandle.cs,
+	  StartPointHandle.cs, EndLineHandle.cs, PathSegmentHandle.cs,
+	  PolyLineHandle.cs: Added Undo Support
+	* ResizeHandle.cs, TransformHandle.cs, RotateHandle.cs: Using
+	  ChangeProperty and AddUndo
+	* AbstractHandle.cs: Added ZIndex Setting. Added AddUndo() and
+	  ChangeProperty()
+
+2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* ResizeHandle.cs: Moved UndoGroup Functionality to TransformHandle
 	* TransformHandle.cs: Moved UndoGroup Functionality from ResizeHandle
 	* RotateHandle.cs: Added Undo Support

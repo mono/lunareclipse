@@ -63,7 +63,10 @@ namespace LunarEclipse.Model {
 			Rect newBounds = CalculateNewBounds(oldBounds, offset, cosAngle, sinAngle);
 			descriptor.SetBounds(newBounds);
 			
-			AddUndo(oldBounds, newBounds);
+			AddUndo(Element, Canvas.LeftProperty, oldBounds.Left, newBounds.Left);
+			AddUndo(Element, Canvas.TopProperty,  oldBounds.Top, newBounds.Top);
+			AddUndo(Element, Canvas.WidthProperty, oldBounds.Width, newBounds.Width);
+			AddUndo(Element, Canvas.HeightProperty, oldBounds.Height, newBounds.Height);
 		}
 		
 		protected abstract Rect CalculateNewBounds(Rect oldBounds, Point offset, double cosAngle, double sinAngle);
@@ -73,21 +76,6 @@ namespace LunarEclipse.Model {
 			return "<Rectangle Fill=\"#99FFFF00\" Stroke=\"#FF000000\"/>";
 		}
 		
-		private void AddUndo (Rect oldBounds, Rect newBounds)
-		{
-			UndoGroup.Add(new UndoPropertyChange(Element, Canvas.LeftProperty, 
-			                                     oldBounds.Left, newBounds.Left));
-			
-			UndoGroup.Add(new UndoPropertyChange(Element, Canvas.TopProperty, 
-			                                     oldBounds.Top, newBounds.Top));
-			
-			UndoGroup.Add(new UndoPropertyChange(Element, Canvas.WidthProperty, 
-			                                     oldBounds.Width, newBounds.Width));
-			
-			UndoGroup.Add(new UndoPropertyChange(Element, Canvas.HeightProperty, 
-			                                     oldBounds.Height, newBounds.Height));
-		}
-			                                      
 		private Point TransformOffset(Point offset, double angle)
 		{
 			// When a shape is rotated, we need to convert the mouse X, Y coordinates from

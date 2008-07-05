@@ -40,6 +40,8 @@ namespace LunarEclipse.Model {
 				throw new ArgumentNullException("child");
 			
 			Child = child;
+			
+			SetValue(ZIndexProperty, int.MaxValue-1);
 		}
 		
 		public abstract void Update();

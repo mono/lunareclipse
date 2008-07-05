@@ -44,9 +44,8 @@ namespace LunarEclipse.Model {
 				return new Point(line.X2, line.Y2);
 			}
 			set { 
-				Line line = Element as Line;
-				line.X2 = value.X;
-				line.Y2 = value.Y;
+				ChangeProperty(Element, Line.X2Property, value.X);
+				ChangeProperty(Element, Line.Y2Property, value.Y);
 			}
 		}
 	}

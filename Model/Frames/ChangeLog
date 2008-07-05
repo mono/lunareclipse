@@ -1,3 +1,7 @@
+2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* AbstractFrame.cs: Added ZIndex Setting
+
 2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* AbstractFrame.cs: Throws an exeption on null argument
