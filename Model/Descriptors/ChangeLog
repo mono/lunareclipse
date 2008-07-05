@@ -1,5 +1,10 @@
 2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* PathDescriptor.cs: Added.
+	* StandardDescriptor.cs: Added Support for PathDescriptor
+
+2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* TextBlockDescriptor.cs, StandardDescriptor.cs, LineDescriptor.cs,
 	  PolyLineDescriptor.cs: Added UndoGroup Support
 

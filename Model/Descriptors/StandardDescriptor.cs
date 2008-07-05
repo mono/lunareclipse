@@ -57,6 +57,8 @@ namespace LunarEclipse.Model {
 				return new LineDescriptor(element as Line, group);
 			if (element is Polyline)
 				return new PolyLineDescriptor(element as Polyline, group);
+			if (element is Path)
+				return new PathDescriptor(element as Path, group);
 			return new StandardDescriptor(element, group);
 		}
 		public static IDescriptor CreateDescriptor(UIElement element)
