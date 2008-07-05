@@ -90,6 +90,7 @@ namespace LunarEclipse.Model {
 		{
 			ReleaseMouseCapture();
 			Dragging = false;
+			PushUndo();
 		}
 		
 		public virtual void MouseStep(object sender, MouseEventArgs args)
@@ -129,6 +130,10 @@ namespace LunarEclipse.Model {
 			get { return Group.Child; }
 		}
 		
+		protected MoonlightController Controller {
+			get { return Group.Controller; }
+		}
+		
 		protected Point LastClick {
 			get { return last_click; }
 			set { last_click = value; }
@@ -154,6 +159,10 @@ namespace LunarEclipse.Model {
 			LastClick = current;
 			
 			return offset;
+		}
+		
+		protected virtual void PushUndo()
+		{
 		}
 		
 		private IHandleGroup group;

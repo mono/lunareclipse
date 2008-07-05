@@ -30,13 +30,15 @@
 using System;
 using System.Collections;
 using System.Windows;
+using System.Windows.Media;
+
 namespace LunarEclipse.Controller
 {
     public class UndoAddObject : AbstractUndoAction
     {
-        private DependencyObject collection;
+        private VisualCollection collection;
         
-        public UndoAddObject(DependencyObject collection, DependencyObject item)
+        public UndoAddObject(VisualCollection collection, DependencyObject item)
 			:base(item)
         {
             this.collection = collection;
@@ -44,14 +46,12 @@ namespace LunarEclipse.Controller
         
         public override void Redo ()
         {
-            Type t = collection.GetType();
-            t.GetMethod("Add").Invoke(collection, new object[] { Target });
+            collection.Add(Target as Visual);
         }
         
         public override void Undo ()
         {
-            Type t = collection.GetType();
-            t.GetMethod("Remove").Invoke(collection, new object[] { Target });
+            collection.Remove(Target as Visual);
         }
     }
 }

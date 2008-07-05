@@ -28,6 +28,7 @@
 
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Input;
 using LunarEclipse.Controller;
@@ -39,6 +40,7 @@ namespace LunarEclipse.Model {
 		public ResizeHandle(MoonlightController controller, IHandleGroup group, ILocator locator):
 			base(controller, group, locator)
 		{
+			undo_group = new UndoGroup();
 		}
 		
 		public override void MouseStep (object sender, MouseEventArgs args)
@@ -61,11 +63,39 @@ namespace LunarEclipse.Model {
 			
 			Rect newBounds = CalculateNewBounds(oldBounds, offset, cosAngle, sinAngle);
 			descriptor.SetBounds(newBounds);
+			
+			AddUndo(oldBounds, newBounds);
 		}
 		
 		protected abstract Rect CalculateNewBounds(Rect oldBounds, Point offset, double cosAngle, double sinAngle);
 		
-		protected Point TransformOffset(Point offset, double angle)
+		protected override string GetXaml ()
+		{
+			return "<Rectangle Fill=\"#99FFFF00\" Stroke=\"#FF000000\"/>";
+		}
+		
+		protected override void PushUndo ()
+		{
+			Controller.UndoEngine.PushUndo(undo_group);
+		}
+
+		
+		private void AddUndo (Rect oldBounds, Rect newBounds)
+		{
+			undo_group.Add(new UndoPropertyChange(Element, Canvas.LeftProperty, 
+			                                      oldBounds.Left, newBounds.Left));
+			
+			undo_group.Add(new UndoPropertyChange(Element, Canvas.TopProperty, 
+			                                      oldBounds.Top, newBounds.Top));
+			
+			undo_group.Add(new UndoPropertyChange(Element, Canvas.WidthProperty, 
+			                                      oldBounds.Width, newBounds.Width));
+			
+			undo_group.Add(new UndoPropertyChange(Element, Canvas.HeightProperty, 
+			                                      oldBounds.Height, newBounds.Height));
+		}
+			                                      
+		private Point TransformOffset(Point offset, double angle)
 		{
 			// When a shape is rotated, we need to convert the mouse X, Y coordinates from
 			// canvas coordinates into 'shape' coordinates. In 'shape' coordinates, the
@@ -79,10 +109,7 @@ namespace LunarEclipse.Model {
 			
 			return offset;
 		}
-		
-		protected override string GetXaml ()
-		{
-			return "<Rectangle Fill=\"#99FFFF00\" Stroke=\"#FF000000\"/>";
-		}
+			
+		private UndoGroup undo_group;
 	}
 }

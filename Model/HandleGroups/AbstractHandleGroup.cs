@@ -91,6 +91,11 @@ namespace LunarEclipse.Model {
 			Toolbox.PropertyChanged -= OnPropertyChanged;
 		}
 		
+		public MoonlightController Controller {
+			get { return controller; }
+			set { controller = value; }
+		}
+		
 		protected virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.Element == Child)
@@ -126,11 +131,6 @@ namespace LunarEclipse.Model {
 		{
 			get { return handles; }
 			set { handles = value; }
-		}
-
-		protected MoonlightController Controller {
-			get { return controller; }
-			set { controller = value; }
 		}
 
 		protected List<IFrame> Frames {

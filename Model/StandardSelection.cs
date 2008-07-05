@@ -111,6 +111,17 @@ namespace LunarEclipse.Model {
 			return HandleGroups.ContainsKey(element);
 		}
 		
+		public void Update()
+		{
+			List<UIElement> toRemove = new List<UIElement>();
+			foreach (UIElement element in HandleGroups.Keys) {
+				if (!Controller.Canvas.Children.Contains(element))
+				    toRemove.Add(element);
+			}
+			foreach (UIElement element in toRemove)
+				Remove(element);
+		}
+		
 		protected Dictionary<UIElement, IHandleGroup> HandleGroups {
 			get { return handle_groups; }
 			set { handle_groups = value; }

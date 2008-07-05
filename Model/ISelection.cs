@@ -42,6 +42,7 @@ namespace LunarEclipse.Model {
 		void Hide();
 		void Show();
 		void Clear();
+		void Update();
 		UIElement MainElement { get; }
 		bool Contains(UIElement element);
 		IEnumerable<UIElement> Elements {get;}

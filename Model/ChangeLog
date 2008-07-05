@@ -1,3 +1,7 @@
+2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* ISelection.cs, StandardSelection.cs: Added Update()
+
 2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* PropertyChangedEventArgs.cs, StoryboardManager.cs: Adapted to change

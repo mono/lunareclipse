@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 	
@@ -38,6 +39,7 @@ namespace LunarEclipse.Model {
 		event MouseEventHandler HandleMouseDown;
 		
 		UIElement Child { get; }
+		MoonlightController Controller { get; }
 		IEnumerable<IHandle> HandlesEnumerator { get; }
 		void AddToCanvas();
 		void RemoveFromCanvas();

@@ -1,3 +1,7 @@
+2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* UndoAddObject.cs: Using VisualCollection to have a more clean code.
+
 2008-07-04  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* IUndoAction.cs: Added Interface for undo
