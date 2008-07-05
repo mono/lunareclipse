@@ -51,6 +51,7 @@ namespace LunarEclipse.View
 			controller = new MoonlightController(moonlightwidget.Silver, timeline);
 			
 			propertypanel.Controller = controller;
+			SetupUndoButtons(controller.UndoEngine);
 		}
 
 		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)
@@ -121,6 +122,35 @@ namespace LunarEclipse.View
 		protected virtual void OnPenToolActionActivated (object sender, System.EventArgs e)
 		{
 			controller.CurrentTool = new PenCreationTool(controller);
+		}
+
+		protected virtual void OnDeshacerActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Undo();
+		}
+		
+		private void SetupUndoButtons(UndoEngine e)
+		{
+			e.UndoAdded += delegate {
+				UndoAction.Sensitive = true;
+			};
+				
+			e.RedoAdded += delegate {
+				RedoAction.Sensitive = true;
+			};
+				
+			e.RedoRemoved += delegate (object sender, EventArgs args) {
+				RedoAction.Sensitive = ((UndoEngine)sender).RedoCount != 0; 
+			};
+				
+			e.UndoRemoved += delegate (object sender, EventArgs args) {
+				UndoAction.Sensitive = ((UndoEngine)sender).UndoCount != 0;
+			};
+		}
+
+		protected virtual void OnRedoActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Redo();
 		}
 		
 		private MoonlightController controller;

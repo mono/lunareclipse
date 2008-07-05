@@ -65,7 +65,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow" design-size="650 646">
+  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow" design-size="657 657">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -117,17 +117,23 @@
         <property name="Label" translatable="yes">_Help</property>
         <property name="ShortLabel" translatable="yes">_Help</property>
       </action>
-      <action id="DeshacerAction">
+      <action id="UndoAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Control&gt;z</property>
         <property name="Label" translatable="yes">_Deshacer</property>
+        <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">_Deshacer</property>
         <property name="StockId">gtk-undo</property>
+        <signal name="Activated" handler="OnDeshacerActionActivated" />
       </action>
-      <action id="RehacerAction">
+      <action id="RedoAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Control&gt;y</property>
         <property name="Label" translatable="yes">_Rehacer</property>
+        <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">_Rehacer</property>
         <property name="StockId">gtk-redo</property>
+        <signal name="Activated" handler="OnRedoActionActivated" />
       </action>
       <action id="CortarAction">
         <property name="Type">Action</property>
@@ -337,8 +343,8 @@
                 <node type="Menuitem" action="SalirAction" />
               </node>
               <node type="Menu" action="EditAction">
-                <node type="Menuitem" action="DeshacerAction" />
-                <node type="Menuitem" action="RehacerAction" />
+                <node type="Menuitem" action="UndoAction" />
+                <node type="Menuitem" action="RedoAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="CortarAction" />
                 <node type="Menuitem" action="CopiarAction" />
@@ -388,8 +394,8 @@
               <node type="Toolitem" action="AbrirAction" />
               <node type="Toolitem" action="GuardarAction" />
               <node type="Separator" />
-              <node type="Toolitem" action="DeshacerAction" />
-              <node type="Toolitem" action="RehacerAction" />
+              <node type="Toolitem" action="UndoAction" />
+              <node type="Toolitem" action="RedoAction" />
               <node type="Separator" />
               <node type="Toolitem" action="PegarAction" />
               <node type="Toolitem" action="CopiarAction" />

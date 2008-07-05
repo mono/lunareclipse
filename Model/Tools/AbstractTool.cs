@@ -87,6 +87,9 @@ namespace LunarEclipse.Model {
 			set { dragging = value; }
 		}
 		
+		protected virtual void PushUndo()
+		{
+		}
 		
 		protected bool CheckDoubleClick()
 		{

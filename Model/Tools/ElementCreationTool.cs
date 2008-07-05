@@ -60,7 +60,15 @@ namespace LunarEclipse.Model {
 			CreatedShape = CreateShape();
 			SetupShapeProperties();
 			Controller.Canvas.Children.Add(CreatedShape);
+			PushUndo();
 		}
+		
+		protected override void PushUndo ()
+		{
+			IUndoAction undo = new UndoAddObject(Controller.Canvas.Children, CreatedShape);
+			Controller.UndoEngine.PushUndo(undo);
+		}
+
 		
 		private UIElement created_shape;
 	}

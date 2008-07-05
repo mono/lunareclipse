@@ -166,5 +166,10 @@ namespace LunarEclipse.Controller
         {
             undo.Undo();
         }
+		
+		public void Redo()
+		{
+			undo.Redo();
+		}
 	}
 }
