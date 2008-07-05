@@ -33,9 +33,9 @@ using System.Collections;
 
 namespace LunarEclipse.Controller
 {
-	public class UndoGroup : UndoActionBase, IEnumerable<UndoActionBase>
+	public class UndoGroup : AbstractUndoAction, IEnumerable<IUndoAction>
 	{
-		private List<UndoActionBase> undos;
+		private List<IUndoAction> undos;
 		
 		public int Count
 		{
@@ -45,10 +45,10 @@ namespace LunarEclipse.Controller
 		public UndoGroup()
 			: base(null)
 		{
-			undos = new List<UndoActionBase>();
+			undos = new List<IUndoAction>();
 		}
 		
-		public void Add(UndoActionBase undo)
+		public void Add(IUndoAction undo)
 		{
 			// We need to do a check to see if this property has already been changed
 			// in this group. If it has, then we update the existing undo, otherwise
@@ -103,7 +103,7 @@ namespace LunarEclipse.Controller
 		{
 			return ((IEnumerable)undos).GetEnumerator();
 		}
-		public System.Collections.Generic.IEnumerator<UndoActionBase> GetEnumerator ()
+		public System.Collections.Generic.IEnumerator<IUndoAction> GetEnumerator ()
 		{
 			return undos.GetEnumerator();
 		}

@@ -1,3 +1,12 @@
+2008-07-04  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* IUndoAction.cs: Added Interface for undo
+	* UndoActionBase.cs: Renamed to AbstractUndoAction. Implements
+	  IUndoAction now
+	* UndoPropertyChange.cs, UndoGroup.cs, UndoAddObject.cs: Renamed
+	  references to UndoActionBase
+	* AbstractUndoAction.cs: Renamed from UndoActionBase
+
 2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* UndoPropertyChange.cs: Adapted to change in Toolbox.ChangeProperty

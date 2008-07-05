@@ -40,8 +40,8 @@ namespace LunarEclipse
         public event EventHandler UndoRemoved;
         public event EventHandler RedoRemoved;
         
-        private Stack<UndoActionBase> undo;
-        private Stack<UndoActionBase> redo;
+        private Stack<IUndoAction> undo;
+        private Stack<IUndoAction> redo;
         
         
         public int RedoCount
@@ -56,17 +56,17 @@ namespace LunarEclipse
         
         internal UndoEngine()
         {
-            redo = new Stack<UndoActionBase>();
-            undo = new Stack<UndoActionBase>();
+            redo = new Stack<IUndoAction>();
+            undo = new Stack<IUndoAction>();
         }
         
         
-        internal void PushUndo(UndoActionBase action)
+        internal void PushUndo(IUndoAction action)
         {
             PushUndo(action, true);
         }
         
-        internal void PushUndo(UndoActionBase action, bool clearRedo)
+        internal void PushUndo(IUndoAction action, bool clearRedo)
 		{
 			Console.WriteLine("Added: " + action.ToString());
 			if(action is UndoGroup)
@@ -84,37 +84,37 @@ namespace LunarEclipse
 			Console.WriteLine("Undos: {0}", undo.Count);
         }
         
-        private void PushRedo(UndoActionBase action)
+        private void PushRedo(IUndoAction action)
         {
             this.redo.Push(action);
             RaiseRedoAdded();
 			Console.WriteLine("Redos: {0}", redo.Count);
         }
         
-        private UndoActionBase PopRedo()
+        private IUndoAction PopRedo()
         {
-            UndoActionBase b = this.redo.Pop();
+            IUndoAction b = this.redo.Pop();
             RaiseRedoRemoved();
             return b;
         }
         
-        internal UndoActionBase PopUndo()
+        internal IUndoAction PopUndo()
         {
-            UndoActionBase b = this.undo.Pop();
+            IUndoAction b = this.undo.Pop();
             this.RaiseUndoRemoved();
             return b;
         }
         
         internal void Redo()
         {
-            UndoActionBase b = PopRedo();
+            IUndoAction b = PopRedo();
             b.Redo();
             PushUndo(b, false);
         }
         
         internal void Undo()
         {
-            UndoActionBase b = PopUndo();
+            IUndoAction b = PopUndo();
             b.Undo();
             PushRedo(b);
         }

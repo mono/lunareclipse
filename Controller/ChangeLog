@@ -1,3 +1,7 @@
+2008-07-04  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* UndoEngine.cs: Renamed references to UndoActionBase
+
 2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MoonlightController.cs: Adapted to change in Toolbox.ChangeProperty

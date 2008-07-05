@@ -32,7 +32,7 @@ using System.Windows;
 
 namespace LunarEclipse.Controller
 {
-    public abstract class UndoActionBase
+    public abstract class AbstractUndoAction: IUndoAction
     {
 		private DependencyObject target;
 		
@@ -42,7 +42,7 @@ namespace LunarEclipse.Controller
 			set { target = value; }
 		}
         
-		protected UndoActionBase(DependencyObject target)
+		protected AbstractUndoAction(DependencyObject target)
 		{
 			this.target = target;
 		}

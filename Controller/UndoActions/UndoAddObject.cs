@@ -32,7 +32,7 @@ using System.Collections;
 using System.Windows;
 namespace LunarEclipse.Controller
 {
-    public class UndoAddObject : UndoActionBase
+    public class UndoAddObject : AbstractUndoAction
     {
         private DependencyObject collection;
         

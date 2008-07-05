@@ -33,7 +33,7 @@ using System.Windows.Controls;
 
 namespace LunarEclipse.Controller
 {
-    public class UndoPropertyChange : UndoActionBase
+    public class UndoPropertyChange : AbstractUndoAction
     {
         private DependencyProperty property;
         private object oldvalue;
