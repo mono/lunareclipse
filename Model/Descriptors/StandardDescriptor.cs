@@ -35,23 +35,33 @@ namespace LunarEclipse.Model {
 	
 	public class StandardDescriptor: IDescriptor {
 		
-		public StandardDescriptor(UIElement element)
+		public StandardDescriptor(UIElement element):
+			this(element, null)
+		{
+		}
+			
+		public StandardDescriptor(UIElement element, UndoGroup undoGroup)
 		{
 			if (element == null)
 				throw new ArgumentNullException("element");
 			Element = element;
+			UndoGroup = undoGroup;
 		}
 		
 		// TODO: this should be changed with SL 2.0 custom properties
-		public static IDescriptor CreateDescriptor(UIElement element)
+		public static IDescriptor CreateDescriptor(UIElement element, UndoGroup group)
 		{
 			if (element is TextBlock)
-				return new TextBlockDescriptor(element as TextBlock);
+				return new TextBlockDescriptor(element as TextBlock, group);
 			if (element is Line)
-				return new LineDescriptor(element as Line);
+				return new LineDescriptor(element as Line, group);
 			if (element is Polyline)
-				return new PolyLineDescriptor(element as Polyline);
-			return new StandardDescriptor(element);
+				return new PolyLineDescriptor(element as Polyline, group);
+			return new StandardDescriptor(element, group);
+		}
+		public static IDescriptor CreateDescriptor(UIElement element)
+		{
+			 return CreateDescriptor(element, null);
 		}
 		
 		// TODO: this should be changed with SL 2.0 custom properties
@@ -78,10 +88,10 @@ namespace LunarEclipse.Model {
 		
 		public virtual void SetBounds(double left, double top, double width, double height)
 		{
-			Toolbox.ChangeProperty(Element, Element, Canvas.LeftProperty, left);
-			Toolbox.ChangeProperty(Element, Element, Canvas.TopProperty, top);
-			Toolbox.ChangeProperty(Element, Element, Canvas.WidthProperty, width);
-			Toolbox.ChangeProperty(Element, Element, Canvas.HeightProperty, height);
+			ChangeProperty(Element, Canvas.LeftProperty, left);
+			ChangeProperty(Element, Canvas.TopProperty, top);
+			ChangeProperty(Element, Canvas.WidthProperty, width);
+			ChangeProperty(Element, Canvas.HeightProperty, height);
 		}
 		
 		public virtual void SetBounds(Rect bounds)
@@ -108,8 +118,8 @@ namespace LunarEclipse.Model {
 			left += dx;
 			top += dy;
 			
-			Toolbox.ChangeProperty(element, element, Canvas.TopProperty, top);
-			Toolbox.ChangeProperty(element, element, Canvas.LeftProperty, left);
+			ChangeProperty(element, Canvas.TopProperty, top);
+			ChangeProperty(element, Canvas.LeftProperty, left);
 		}
 		
 		public virtual void Move(Point offset)
@@ -121,7 +131,21 @@ namespace LunarEclipse.Model {
 			get { return element; }
 			set { element = value; }
 		}
+
+		protected UndoGroup UndoGroup {
+			get { return undo_group; }
+			set { undo_group = value; }
+		}
+		
+		protected void ChangeProperty(DependencyObject item, DependencyProperty prop, object value)
+		{
+			object oldValue = item.GetValue(prop);
+			Toolbox.ChangeProperty(Element, item, prop, value);
+			if (UndoGroup != null)
+				UndoGroup.AddPropertyChange(Element, item, prop, oldValue, value);
+		}
 		
 		private UIElement element;
+		private UndoGroup undo_group;
 	}
 }

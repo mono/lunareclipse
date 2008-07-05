@@ -30,12 +30,13 @@
 using System;
 using System.Windows;
 using LunarEclipse.Model;
-
+using LunarEclipse.Controller;
 
 namespace LunarEclipse
 {
 	public static class Toolbox
 	{
+		// TODO: move this to controller
 		public static event EventHandler<PropertyChangedEventArgs> PropertyChanged;
 
 		public static void ChangeProperty(UIElement element, DependencyObject target, DependencyProperty property, object value)

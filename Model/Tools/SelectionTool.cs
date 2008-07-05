@@ -49,6 +49,8 @@ namespace LunarEclipse.Model {
             SelectionRect.Stroke = new SolidColorBrush(Colors.Black);
             SelectionRect.StrokeThickness = 1.0;
             SelectionRect.SetValue(UIElement.ZIndexProperty, int.MaxValue);
+			
+			undo = new UndoGroup();
 		}
 		
 		public override void Activate()
@@ -117,8 +119,7 @@ namespace LunarEclipse.Model {
 				offset.X = current.X - last_click.X;
 				offset.Y = current.Y - last_click.Y;
 				foreach (UIElement element in Controller.Selection.Elements) {
-					IDescriptor descriptor = StandardDescriptor.CreateDescriptor(element);
-					descriptor.Move(offset);
+					MoveElement(element, offset);
 				}
 				last_click = current;
 				return;
@@ -132,12 +133,22 @@ namespace LunarEclipse.Model {
 		{
 			base.MouseUp (ev);
 			
+			if (undo.Count > 0)
+				PushUndo();
+			
 			if (clicked_element == null && clicked_handle == null)
 				EndSelection();
 			
 			clicked_element = null;
 			clicked_handle = null;
 		}
+		
+		protected override void PushUndo ()
+		{
+			Controller.UndoEngine.PushUndo(undo);
+			undo = new UndoGroup();
+		}
+
 		
 		protected Rectangle SelectionRect {
 			get { return selection_rect; }
@@ -221,11 +232,18 @@ namespace LunarEclipse.Model {
 				Controller.Selection.Add(element);
 		}
 		
+		private void MoveElement(UIElement element, Point offset)
+		{
+			IDescriptor descriptor = StandardDescriptor.CreateDescriptor(element, undo);
+			descriptor.Move(offset);
+		}
+
 		private UIElement clicked_element;
 		private IHandle clicked_handle;
 		private Point last_click;
 		private Rectangle selection_rect;
 		private Point selection_start;
 		private Point selection_end;
+		private UndoGroup undo;
 	}
 }

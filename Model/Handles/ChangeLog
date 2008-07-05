@@ -1,5 +1,10 @@
 2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* ResizeHandle.cs: Using UndoGroup.AddProperty
+	* AbstractHandle.cs: Using UndoGroup.AddProperty. Removed AddUndo.
+
+2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* BezierSegmentPoint3Handle.cs, StartLineHandle.cs,
 	  StartPointHandle.cs, EndLineHandle.cs, PathSegmentHandle.cs,
 	  PolyLineHandle.cs: Added Undo Support

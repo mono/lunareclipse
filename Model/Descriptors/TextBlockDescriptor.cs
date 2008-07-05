@@ -27,13 +27,19 @@
 
 using System.Windows;
 using System.Windows.Controls;
+using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {	
 	
 	public class TextBlockDescriptor: StandardDescriptor {
 		
 		public TextBlockDescriptor(TextBlock element):
-			base(element)
+			this(element, null)
+		{
+		}
+		
+		public TextBlockDescriptor(TextBlock element, UndoGroup group):
+			base(element, group)
 		{
 			text_block = element;
 		}

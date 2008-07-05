@@ -1,5 +1,9 @@
 2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* UndoGroup.cs: Added AddPropertyChange()
+
+2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* UndoPropertyChange.cs: Added root parameter to constructor
 
 2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 

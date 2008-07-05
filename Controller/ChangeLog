@@ -1,5 +1,9 @@
 2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* Toolbox.cs: Cosmetic Changes
+
+2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* MoonlightController.cs: Using Update when undo, redo
 
 2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 

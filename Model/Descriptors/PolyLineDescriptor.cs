@@ -28,13 +28,19 @@
 using System;
 using System.Windows;
 using System.Windows.Shapes;
+using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {	
 	
 	public class PolyLineDescriptor: StandardDescriptor {
 		
 		public PolyLineDescriptor(Polyline element):
-			base(element)
+			this(element, null)
+		{
+		}
+		
+		public PolyLineDescriptor(Polyline element, UndoGroup group):
+			base(element, group)
 		{
 			polyline = element;
 		}
@@ -72,10 +78,9 @@ namespace LunarEclipse.Model {
 				points[i] = p;
 			}
 			
-			Toolbox.ChangeProperty(polyline, polyline, Polyline.PointsProperty, points);
+			ChangeProperty(polyline, Polyline.PointsProperty, points);
 		}
 
-		
 		private Polyline polyline;
 	}
 }

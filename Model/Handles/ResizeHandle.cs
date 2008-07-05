@@ -63,10 +63,10 @@ namespace LunarEclipse.Model {
 			Rect newBounds = CalculateNewBounds(oldBounds, offset, cosAngle, sinAngle);
 			descriptor.SetBounds(newBounds);
 			
-			AddUndo(Element, Canvas.LeftProperty, oldBounds.Left, newBounds.Left);
-			AddUndo(Element, Canvas.TopProperty,  oldBounds.Top, newBounds.Top);
-			AddUndo(Element, Canvas.WidthProperty, oldBounds.Width, newBounds.Width);
-			AddUndo(Element, Canvas.HeightProperty, oldBounds.Height, newBounds.Height);
+			UndoGroup.AddPropertyChange(Element, Canvas.LeftProperty, oldBounds.Left, newBounds.Left);
+			UndoGroup.AddPropertyChange(Element, Canvas.TopProperty,  oldBounds.Top, newBounds.Top);
+			UndoGroup.AddPropertyChange(Element, Canvas.WidthProperty, oldBounds.Width, newBounds.Width);
+			UndoGroup.AddPropertyChange(Element, Canvas.HeightProperty, oldBounds.Height, newBounds.Height);
 		}
 		
 		protected abstract Rect CalculateNewBounds(Rect oldBounds, Point offset, double cosAngle, double sinAngle);

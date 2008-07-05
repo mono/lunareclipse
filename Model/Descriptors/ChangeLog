@@ -1,3 +1,8 @@
+2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* TextBlockDescriptor.cs, StandardDescriptor.cs, LineDescriptor.cs,
+	  PolyLineDescriptor.cs: Added UndoGroup Support
+
 2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* StandardDescriptor.cs: Using Toolbox.ChangeProperty for SetBounds()

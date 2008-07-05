@@ -176,22 +176,11 @@ namespace LunarEclipse.Model {
 			Controller.UndoEngine.PushUndo(undo_group);
 		}
 		
-		protected void AddUndo(DependencyObject root, DependencyObject item, DependencyProperty prop, object oldValue, object newValue)
-		{
-			IUndoAction undo = new UndoPropertyChange(root, item, prop, oldValue, newValue);
-			UndoGroup.Add(undo);
-		}
-		
-		protected void AddUndo(DependencyObject item, DependencyProperty prop, object oldValue, object newValue)
-		{
-			AddUndo(item, item, prop, oldValue, newValue);
-		}
-	
 		protected void ChangeProperty(DependencyObject item, DependencyProperty prop, object value)
 		{
 			object oldValue = item.GetValue(prop);
 			Toolbox.ChangeProperty(Element, item, prop, value);
-			AddUndo(Element, item, prop, oldValue, value);
+			UndoGroup.AddPropertyChange(Element, item, prop, oldValue, value);
 		}
 		
 		private IHandleGroup group;

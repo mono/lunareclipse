@@ -1,5 +1,9 @@
 2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* SelectionTool.cs: Added Undo Support
+
+2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* ElementCreationTool.cs: Using PushUndo
 	* AbstractTool.cs: Added PushUndo abstract method
 

@@ -30,6 +30,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Windows;
 
 namespace LunarEclipse.Controller
 {
@@ -46,6 +47,17 @@ namespace LunarEclipse.Controller
 			: base(null)
 		{
 			undos = new List<IUndoAction>();
+		}
+		
+		public void AddPropertyChange(DependencyObject root, DependencyObject item, DependencyProperty prop, object oldValue, object newValue)
+		{
+			IUndoAction undo = new UndoPropertyChange(root, item, prop, oldValue, newValue);
+			Add(undo);
+		}
+		
+		public void AddPropertyChange(DependencyObject item, DependencyProperty prop, object oldValue, object newValue)
+		{
+			AddPropertyChange(item, item, prop, oldValue, newValue);
 		}
 		
 		public void Add(IUndoAction undo)
