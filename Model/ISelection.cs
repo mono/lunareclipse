@@ -43,8 +43,24 @@ namespace LunarEclipse.Model {
 		void Show();
 		void Clear();
 		void Update();
+		
+		void BringToFront();
+		void BringForwards();
+		void SendToBack();
+		void SendBackwards();
+		
+		void AlignLeft();
+		void AlignHorizontalCenter();
+		void AlignRight();
+		void AlignTop();
+		void AlignVerticalCenter();
+		void AlignBottom();
+		
+		Rect GetBounds();
+		
 		UIElement MainElement { get; }
 		bool Contains(UIElement element);
 		IEnumerable<UIElement> Elements {get;}
+		int Count { get; }
 	}
 }

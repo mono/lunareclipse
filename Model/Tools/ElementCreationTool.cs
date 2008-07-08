@@ -28,6 +28,7 @@
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Controls;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
@@ -51,6 +52,7 @@ namespace LunarEclipse.Model {
 			CreatedShape.SetValue(Visual.NameProperty, 
 			                      NameGenerator.GetName(Controller.Canvas, CreatedShape));
 			CreatedShape.SetValue(UIElement.RenderTransformOriginProperty, new Point(0.5, 0.5));
+			CreatedShape.SetValue(Canvas.ZIndexProperty, Toolbox.MaxZ(Controller.Canvas.Children) + 1);
 		}
 		
 		protected abstract UIElement CreateShape();

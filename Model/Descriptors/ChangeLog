@@ -1,3 +1,16 @@
+2008-07-08  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* PathDescriptor.cs: Refactored Bounds() method
+	
+	  Now Inherits from AbstractLineDescriptor
+	* LineDescriptor.cs: Added SetBounds()
+	
+	  Now Inherits from AbstractLineDescriptor
+	* PolyLineDescriptor.cs: Refactored Bounds() Method.
+	
+	  Now Inherits from AbstractLineDescriptor
+	* AbstractLineDescriptor.cs: Added
+
 2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* PathDescriptor.cs: Added.

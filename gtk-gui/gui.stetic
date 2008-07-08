@@ -65,7 +65,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow" design-size="657 657">
+  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow" design-size="716 718">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -321,6 +321,96 @@
         <property name="Group">group1</property>
         <signal name="Activated" handler="OnPenToolActionActivated" />
       </action>
+      <action id="dialogWarningAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-dialog-warning</property>
+        <property name="Tooltip" translatable="yes">Debug</property>
+        <signal name="Activated" handler="OnDialogWarningActionActivated" />
+      </action>
+      <action id="FiguresAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Fi_gures</property>
+        <property name="ShortLabel" translatable="yes">Fi_gure</property>
+      </action>
+      <action id="OrderAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Order</property>
+        <property name="ShortLabel" translatable="yes">Order</property>
+      </action>
+      <action id="AlignAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Align</property>
+        <property name="ShortLabel" translatable="yes">_Align</property>
+      </action>
+      <action id="BringToFrontAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Bring to _Front</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">Bring to _Front</property>
+        <property name="StockId">gtk-goto-top</property>
+        <signal name="Activated" handler="OnBringToFrontActionActivated" />
+      </action>
+      <action id="SendToBackAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Send to _Back</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">Send to _Back</property>
+        <property name="StockId">gtk-goto-bottom</property>
+        <signal name="Activated" handler="OnSendToBackActionActivated" />
+      </action>
+      <action id="BringForwardsAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Bring Forwards</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">Send Forwards</property>
+        <property name="StockId">gtk-go-up</property>
+        <signal name="Activated" handler="OnBringForwardsActionActivated" />
+      </action>
+      <action id="SendBackwarsAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Send Backwars</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">Bring Backwars</property>
+        <property name="StockId">gtk-go-down</property>
+        <signal name="Activated" handler="OnSendBackwarsActionActivated" />
+      </action>
+      <action id="LeftAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Left</property>
+        <property name="ShortLabel" translatable="yes">Left</property>
+        <signal name="Activated" handler="OnLeftActionActivated" />
+      </action>
+      <action id="HorizontalCenterAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Horizontal Center</property>
+        <property name="ShortLabel" translatable="yes">Center</property>
+        <signal name="Activated" handler="OnHorizontalCenterActionActivated" />
+      </action>
+      <action id="RightAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Right</property>
+        <property name="ShortLabel" translatable="yes">Right</property>
+        <signal name="Activated" handler="OnRightActionActivated" />
+      </action>
+      <action id="TopAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Top</property>
+        <property name="ShortLabel" translatable="yes">Top</property>
+        <signal name="Activated" handler="OnTopActionActivated" />
+      </action>
+      <action id="VerticalCenterAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Vertical Center</property>
+        <property name="ShortLabel" translatable="yes">Middle</property>
+        <signal name="Activated" handler="OnVerticalCenterActionActivated" />
+      </action>
+      <action id="BottomAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Bottom</property>
+        <property name="ShortLabel" translatable="yes">Bottom</property>
+        <signal name="Activated" handler="OnBottomActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">Lunar Eclipse</property>
@@ -353,6 +443,23 @@
               </node>
               <node type="Menu" action="DrawingAction">
                 <node type="Menuitem" action="LimpiarAction" />
+              </node>
+              <node type="Menu" action="FiguresAction">
+                <node type="Menu" action="OrderAction">
+                  <node type="Menuitem" action="BringToFrontAction" />
+                  <node type="Menuitem" action="BringForwardsAction" />
+                  <node type="Menuitem" action="SendToBackAction" />
+                  <node type="Menuitem" action="SendBackwarsAction" />
+                </node>
+                <node type="Menu" action="AlignAction">
+                  <node type="Menuitem" action="LeftAction" />
+                  <node type="Menuitem" action="HorizontalCenterAction" />
+                  <node type="Menuitem" action="RightAction" />
+                  <node type="Separator" />
+                  <node type="Menuitem" action="TopAction" />
+                  <node type="Menuitem" action="VerticalCenterAction" />
+                  <node type="Menuitem" action="BottomAction" />
+                </node>
               </node>
               <node type="Menu" action="ToolsAction">
                 <node type="Menuitem" action="SelectionToolAction" />
@@ -445,6 +552,7 @@
                       <node type="Toolitem" action="ImageToolAction" />
                       <node type="Separator" />
                       <node type="Toolitem" action="LimpiarAction" />
+                      <node type="Toolitem" action="dialogWarningAction" />
                     </node>
                   </widget>
                   <packing>

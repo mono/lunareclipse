@@ -29,6 +29,8 @@
 
 using System;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using LunarEclipse.Model;
 using LunarEclipse.Controller;
 
@@ -44,6 +46,11 @@ namespace LunarEclipse
 			PropertyChangedEventArgs e = new PropertyChangedEventArgs(element, target, property, target.GetValue(property), value);
 			target.SetValue(property, value);
 			RaiseEvent<PropertyChangedEventArgs>(PropertyChanged, target, e);
+		}
+		
+		public static void ChangeProperty(DependencyObject target, DependencyProperty property, object value)
+		{
+			ChangeProperty(target as UIElement, target, property, value);
 		}
 		
 		public static double DegreesToRadians(double angle)
@@ -73,6 +80,36 @@ namespace LunarEclipse
 		{
 			if(e != null)
 				e(sender, args);
+		}
+		
+		public static int MaxZ(VisualCollection elements)
+		{
+			if (elements.Count == 0)
+				return 0;
+			
+			int max = int.MinValue;
+			
+			foreach (UIElement element in elements) {
+				int z = (int) element.GetValue(UIElement.ZIndexProperty);
+				max = Math.Max(max, z);
+			}
+			
+			return max;
+		}
+		
+		public static int MinZ(VisualCollection elements)
+		{
+			if (elements.Count == 0)
+				return 0;
+		
+			int min = int.MaxValue;
+			
+			foreach (UIElement element in elements) {
+				int z = (int) element.GetValue(Canvas.ZIndexProperty);
+				min = Math.Max(min, z);
+			}
+			
+			return min;
 		}
 	}
 }

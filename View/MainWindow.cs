@@ -26,6 +26,7 @@
 //
 
 using System;
+using System.Windows;
 using LunarEclipse.Controller;
 using LunarEclipse.Controls;
 using LunarEclipse.Model;
@@ -52,6 +53,7 @@ namespace LunarEclipse.View
 			
 			propertypanel.Controller = controller;
 			SetupUndoButtons(controller.UndoEngine);
+			SetupFiguresButtons(controller.Selection);
 		}
 
 		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)
@@ -147,10 +149,77 @@ namespace LunarEclipse.View
 				UndoAction.Sensitive = ((UndoEngine)sender).UndoCount != 0;
 			};
 		}
+		
+		private void SetupFiguresButtons(ISelection selection)
+		{
+			selection.SelectionChanged += delegate {
+				bool selecting = selection.Count > 0;
+				BringForwardsAction.Sensitive = selecting;
+				BringToFrontAction.Sensitive = selecting;
+				SendBackwarsAction.Sensitive = selecting;
+				SendToBackAction.Sensitive = selecting;
+			};
+		}
 
 		protected virtual void OnRedoActionActivated (object sender, System.EventArgs e)
 		{
 			controller.Redo();
+		}
+
+		protected virtual void OnDialogWarningActionActivated (object sender, System.EventArgs e)
+		{
+			foreach (UIElement element in controller.Selection.Elements)
+				System.Console.WriteLine("Position = {0}", element.GetValue(Canvas.ZIndexProperty));
+		}
+
+		protected virtual void OnBringToFrontActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.BringToFront();
+		}
+
+		protected virtual void OnBringForwardsActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.BringForwards();
+		}
+
+		protected virtual void OnSendToBackActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.SendToBack();
+		}
+
+		protected virtual void OnSendBackwarsActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.SendBackwards();
+		}
+
+		protected virtual void OnLeftActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.AlignLeft();
+		}
+
+		protected virtual void OnRightActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.AlignRight();
+		}
+
+		protected virtual void OnTopActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.AlignTop();
+		}
+
+		protected virtual void OnBottomActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.AlignBottom();
+		}
+
+		protected virtual void OnHorizontalCenterActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.AlignHorizontalCenter();
+		}
+
+		protected virtual void OnVerticalCenterActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.AlignVerticalCenter();
 		}
 		
 		private MoonlightController controller;

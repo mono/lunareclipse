@@ -28,8 +28,10 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
+using System.Windows.Media;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {	
@@ -107,6 +109,10 @@ namespace LunarEclipse.Model {
 			}
 		}
 		
+		public int Count {
+			get { return HandleGroups.Count; }
+		}
+		
 		public bool Contains(UIElement element) {
 			return HandleGroups.ContainsKey(element);
 		}
@@ -120,6 +126,144 @@ namespace LunarEclipse.Model {
 			}
 			foreach (UIElement element in toRemove)
 				Remove(element);
+		}
+		
+		public Rect GetBounds()
+		{
+			double top = double.MaxValue;
+			double bottom = double.MinValue;
+			double left = double.MaxValue;
+			double right = double.MinValue;
+			
+			foreach (UIElement element in Elements) {
+				IDescriptor descriptor = StandardDescriptor.CreateDescriptor(element);
+				Rect bounds = descriptor.GetBounds();
+				
+				top = Math.Min(top, bounds.Top);
+				left = Math.Min(left, bounds.Left);
+				right = Math.Max(right, bounds.Right);
+				bottom = Math.Max(bottom, bounds.Bottom);
+			}
+			
+			return new Rect(new Point(left, top), new Point(right, bottom));
+		}
+		
+		public void SendToBack()
+		{
+			int selectionMaxZ = Toolbox.MaxZ(Visuals);
+			int minz = Toolbox.MinZ(Controller.Canvas.Children);
+			foreach (UIElement element in Elements) {
+				int z = (int) element.GetValue(Canvas.ZIndexProperty);
+				z -= selectionMaxZ - minz - 1;
+				Toolbox.ChangeProperty(element, Canvas.ZIndexProperty, z);
+			}
+		}
+		
+		public void SendBackwards()
+		{
+			foreach (UIElement element in Elements) {
+				int z = (int) element.GetValue(Canvas.ZIndexProperty);
+				z--;
+				Toolbox.ChangeProperty(element, Canvas.ZIndexProperty, z);
+			}
+		}
+		
+		public void BringToFront()
+		{
+			int selectionMinZ = Toolbox.MinZ(Visuals);
+			int maxz = Toolbox.MaxZ(Controller.Canvas.Children);
+			foreach (UIElement element in Elements) {
+				int z = (int) element.GetValue(Canvas.ZIndexProperty);
+				z += maxz - selectionMinZ + 1;
+				Toolbox.ChangeProperty(element, Canvas.ZIndexProperty, z);
+			}
+		}
+		
+		public void BringForwards()
+		{
+			foreach (UIElement element in Elements) {
+				int z = (int) element.GetValue(Canvas.ZIndexProperty);
+				z++;
+				Toolbox.ChangeProperty(element, Canvas.ZIndexProperty, z);
+			}
+		}
+		
+		public void AlignLeft()
+		{
+			IDescriptor descriptor = StandardDescriptor.CreateDescriptor(MainElement);
+			Rect mainBounds = descriptor.GetBounds();
+			
+			foreach (UIElement element in Elements) {
+				descriptor = StandardDescriptor.CreateDescriptor(element);
+				Rect bounds = descriptor.GetBounds();
+				bounds.X = mainBounds.Left;
+				descriptor.SetBounds(bounds);
+			}
+		}
+		
+		public void AlignHorizontalCenter()
+		{
+			IDescriptor descriptor = StandardDescriptor.CreateDescriptor(MainElement);
+			Rect mainBounds = descriptor.GetBounds();
+			
+			foreach (UIElement element in Elements) {
+				descriptor = StandardDescriptor.CreateDescriptor(element);
+				Rect bounds = descriptor.GetBounds();
+				bounds.X = mainBounds.Left + mainBounds.Width/2 - bounds.Width/2;
+				descriptor.SetBounds(bounds);
+			}
+		}
+		
+		public void AlignRight()
+		{
+			IDescriptor descriptor = StandardDescriptor.CreateDescriptor(MainElement);
+			Rect mainBounds = descriptor.GetBounds();
+			
+			foreach (UIElement element in Elements) {
+				descriptor = StandardDescriptor.CreateDescriptor(element);
+				Rect bounds = descriptor.GetBounds();
+				bounds.X = mainBounds.Right - bounds.Width;
+				descriptor.SetBounds(bounds);
+			}
+		}
+		
+		public void AlignTop()
+		{
+			IDescriptor descriptor = StandardDescriptor.CreateDescriptor(MainElement);
+			Rect mainBounds = descriptor.GetBounds();
+			
+			foreach (UIElement element in Elements) {
+				descriptor = StandardDescriptor.CreateDescriptor(element);
+				Rect bounds = descriptor.GetBounds();
+				bounds.Y = mainBounds.Top;
+				descriptor.SetBounds(bounds);
+			}
+		}
+		
+		public void AlignVerticalCenter()
+		{
+			IDescriptor descriptor = StandardDescriptor.CreateDescriptor(MainElement);
+			Rect mainBounds = descriptor.GetBounds();
+			
+			foreach (UIElement element in Elements) {
+				descriptor = StandardDescriptor.CreateDescriptor(element);
+				Rect bounds = descriptor.GetBounds();
+				bounds.Y = mainBounds.Top + mainBounds.Height/2 - bounds.Height/2;
+				descriptor.SetBounds(bounds);
+			}
+		}
+		
+		public void AlignBottom()
+		{
+			IDescriptor descriptor = StandardDescriptor.CreateDescriptor(MainElement);
+			Rect mainBounds = descriptor.GetBounds();
+			
+			foreach (UIElement element in Elements) {
+				descriptor = StandardDescriptor.CreateDescriptor(element);
+				Rect bounds = descriptor.GetBounds();
+				bounds.Y = mainBounds.Bottom - bounds.Height;
+				descriptor.SetBounds(bounds);
+			}
 		}
 		
 		protected Dictionary<UIElement, IHandleGroup> HandleGroups {
@@ -158,6 +302,17 @@ namespace LunarEclipse.Model {
 				}
 			}
 			MainElement = null;
+		}
+		
+		private VisualCollection Visuals {
+			get {
+				VisualCollection collection = new VisualCollection();
+				
+				foreach (UIElement element in handle_groups.Keys)
+					collection.Add(element);
+				
+				return collection;
+			}
 		}
 		
 		private MoonlightController controller;

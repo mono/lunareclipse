@@ -32,7 +32,7 @@ using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {	
 	
-	public class PolyLineDescriptor: StandardDescriptor {
+	public class PolyLineDescriptor: AbstractLineDescriptor {
 		
 		public PolyLineDescriptor(Polyline element):
 			this(element, null)
@@ -54,14 +54,10 @@ namespace LunarEclipse.Model {
 			double maxy = Double.MinValue;
 			
 			foreach (Point p in points) {
-				if (p.X < minx)
-					minx = p.X;
-				if (p.X > maxx)
-					maxx = p.X;
-				if (p.Y < miny)
-					miny = p.Y;
-				if (p.Y > maxy)
-					maxy = p.Y;
+				minx = Math.Min(minx, p.X);
+				maxx = Math.Max(maxx, p.X);
+				miny = Math.Min(miny, p.Y);
+				maxy = Math.Max(maxy, p.Y);
 			}
 			
 			return new Rect(new Point(minx, miny), new Point(maxx, maxy));

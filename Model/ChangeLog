@@ -1,3 +1,23 @@
+2008-07-08  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* ISelection.cs: Added Ordering Methods
+	
+	  Added Implemented Align{Left, Right, HorizontalCenter, Top, Bottom,
+	  VerticalCenter}()
+	
+	  Added Bounds()
+	
+	  Added Count
+	* StandardSelection.cs: Implemented Bounds() method.
+	
+	  Implemented BringToFront(), BringForward(), SendToBack(),
+	  SendBackwards()
+	
+	  Implemented Align{Left, Right, HorizontalCenter, Top, Bottom,
+	  VerticalCenter}()
+	
+	  Implemented Count
+
 2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* StoryboardManager.cs: Adapted to change in UndoPropertyChange

@@ -1,3 +1,9 @@
+2008-07-08  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MainWindow.cs: Added a special Debug button for debug purposes.
+	
+	  Added Actions for ordering and alignment.
+
 2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MainWindow.cs: Added support for Undo Redo. Added SetupUndoButtons()
