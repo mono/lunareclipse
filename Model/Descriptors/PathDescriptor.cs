@@ -100,7 +100,7 @@ namespace LunarEclipse.Model {
 				PathGeometry geometry = path.Data as PathGeometry;
 			
 				if (geometry == null)
-					return false;
+					yield break;
 				
 				foreach (PathFigure fig in geometry.Figures) {
 					yield return fig;

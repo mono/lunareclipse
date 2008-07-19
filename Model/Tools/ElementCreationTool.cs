@@ -29,6 +29,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Controls;
+using System.Windows.Input;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
@@ -38,6 +39,18 @@ namespace LunarEclipse.Model {
 		public ElementCreationTool(MoonlightController controller):
 			base (controller)
 		{
+		}
+		
+		public override void Activate ()
+		{
+			base.Activate();
+			Controller.Canvas.Cursor = Cursors.Stylus;
+		}
+		
+		public override void Deactivate ()
+		{
+			base.Deactivate();
+			Controller.Canvas.Cursor = Cursors.Default;
 		}
 		
 		protected UIElement CreatedShape {

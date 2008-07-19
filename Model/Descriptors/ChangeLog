@@ -1,3 +1,7 @@
+2008-07-18  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* PathDescriptor.cs: Fixed bug in enumerator
+
 2008-07-08  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* PathDescriptor.cs: Refactored Bounds() method
