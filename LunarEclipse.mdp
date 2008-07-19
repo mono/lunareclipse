@@ -133,6 +133,7 @@
     <File name="Controller/UndoActions/IUndoAction.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Descriptors/PathDescriptor.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Descriptors/AbstractLineDescriptor.cs" subtype="Code" buildaction="Compile" />
+    <File name="View/AboutLunarEclipse.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -146,12 +147,6 @@
     <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Windows, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
   </References>
-  <GtkDesignInfo isWidgetLibrary="True" gtkVersion="2.12.2">
-    <ExportedWidgets>
-      <Widget>LunarEclipse.View.MoonlightWidget</Widget>
-      <Widget>LunarEclipse.Controls.AnimationTimelineWidget</Widget>
-      <Widget>LunarEclipse.View.PropertyPanel</Widget>
-    </ExportedWidgets>
-  </GtkDesignInfo>
+  <GtkDesignInfo gtkVersion="2.12.2" />
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInEachDirectory" />
 </Project>

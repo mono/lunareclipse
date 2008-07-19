@@ -3,7 +3,7 @@
 // Author:
 //    Manuel Cerón <ceronman@unicauca.edu.co>
 //
-// Copyright (c) 2008 [copyright holders]
+// Copyright (c) 2008 Manuel Cerón.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,19 +30,19 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("LunarEclipse")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Lunar Eclipse")]
+[assembly: AssemblyDescription("A Free Visual Designer for Silverlight and Moonlight")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCopyright("Copyright (C) 2007 Alan McGovern, 2008 Manuel Cerón")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
 // If the build and revision are set to '*' they will be updated automatically.
 
-[assembly: AssemblyVersion("1.0.*.*")]
+[assembly: AssemblyVersion("0.1.*.*")]
 
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.

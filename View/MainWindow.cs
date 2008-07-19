@@ -226,6 +226,13 @@ namespace LunarEclipse.View
 		{
 			controller.Selection.DeleteFromCanvas();
 		}
+
+		protected virtual void OnAcercaDeActionActivated (object sender, System.EventArgs e)
+		{
+			AboutLunarEclipse dialog = new AboutLunarEclipse();
+			dialog.Run();
+			dialog.Destroy();
+		}
 		
 		private MoonlightController controller;
 	}

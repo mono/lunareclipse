@@ -167,6 +167,7 @@
         <property name="Label" translatable="yes">Acerca _de</property>
         <property name="ShortLabel" translatable="yes">Acerca _de</property>
         <property name="StockId">gtk-about</property>
+        <signal name="Activated" handler="OnAcercaDeActionActivated" />
       </action>
       <action id="SelectionToolAction">
         <property name="Type">Radio</property>
