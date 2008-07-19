@@ -56,6 +56,8 @@ namespace LunarEclipse.Model {
 		void AlignVerticalCenter();
 		void AlignBottom();
 		
+		void DeleteFromCanvas();
+		
 		Rect GetBounds();
 		
 		UIElement MainElement { get; }

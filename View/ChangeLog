@@ -1,3 +1,7 @@
+2008-07-18  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MainWindow.cs: Added Delete Action Handlers
+
 2008-07-08  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MainWindow.cs: Added a special Debug button for debug purposes.

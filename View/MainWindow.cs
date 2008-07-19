@@ -221,6 +221,11 @@ namespace LunarEclipse.View
 		{
 			controller.Selection.AlignVerticalCenter();
 		}
+
+		protected virtual void OnBorrarActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.DeleteFromCanvas();
+		}
 		
 		private MoonlightController controller;
 	}

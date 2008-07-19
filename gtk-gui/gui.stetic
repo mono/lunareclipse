@@ -5,6 +5,7 @@
     <target-gtk-version>2.12.2</target-gtk-version>
   </configuration>
   <import>
+    <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="gtksilver, Version=0.0.0.0, Culture=neutral, PublicKeyToken=976ad8f3443f9a4d" />
     <widget-library name="../bin/Debug/LunarEclipse.exe" internal="true" />
   </import>
@@ -155,9 +156,11 @@
       </action>
       <action id="BorrarAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Mod2&gt;Delete</property>
         <property name="Label" translatable="yes">_Borrar</property>
         <property name="ShortLabel" translatable="yes">_Borrar</property>
         <property name="StockId">gtk-delete</property>
+        <signal name="Activated" handler="OnBorrarActionActivated" />
       </action>
       <action id="AcercaDeAction">
         <property name="Type">Action</property>

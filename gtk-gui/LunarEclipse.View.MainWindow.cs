@@ -192,7 +192,7 @@ namespace LunarEclipse.View {
             w2.Add(this.PegarAction, null);
             this.BorrarAction = new Gtk.Action("BorrarAction", Mono.Unix.Catalog.GetString("_Borrar"), null, "gtk-delete");
             this.BorrarAction.ShortLabel = Mono.Unix.Catalog.GetString("_Borrar");
-            w2.Add(this.BorrarAction, null);
+            w2.Add(this.BorrarAction, "<Mod2>Delete");
             this.AcercaDeAction = new Gtk.Action("AcercaDeAction", Mono.Unix.Catalog.GetString("Acerca _de"), null, "gtk-about");
             this.AcercaDeAction.ShortLabel = Mono.Unix.Catalog.GetString("Acerca _de");
             w2.Add(this.AcercaDeAction, null);
@@ -217,15 +217,15 @@ namespace LunarEclipse.View {
             this.CircleToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Circle Tool");
             w2.Add(this.CircleToolAction, null);
             this.PathToolAction = new Gtk.RadioAction("PathToolAction", Mono.Unix.Catalog.GetString("_Path Tool"), null, "path-tool", 0);
-            this.PathToolAction.Group = this.CircleToolAction.Group;
+            this.PathToolAction.Group = this.SquareToolAction.Group;
             this.PathToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Path Tool");
             w2.Add(this.PathToolAction, null);
             this.TextToolAction = new Gtk.RadioAction("TextToolAction", Mono.Unix.Catalog.GetString("_Text Tool"), null, "text-tool", 0);
-            this.TextToolAction.Group = this.CircleToolAction.Group;
+            this.TextToolAction.Group = this.SquareToolAction.Group;
             this.TextToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Text Tool");
             w2.Add(this.TextToolAction, null);
             this.ImageToolAction = new Gtk.RadioAction("ImageToolAction", Mono.Unix.Catalog.GetString("Image Tool"), null, "image-tool", 0);
-            this.ImageToolAction.Group = this.CircleToolAction.Group;
+            this.ImageToolAction.Group = this.SquareToolAction.Group;
             this.ImageToolAction.ShortLabel = Mono.Unix.Catalog.GetString("Image Tool");
             w2.Add(this.ImageToolAction, null);
             this.AnimationAction = new Gtk.Action("AnimationAction", Mono.Unix.Catalog.GetString("_Animation"), null, null);
@@ -241,7 +241,7 @@ namespace LunarEclipse.View {
             this.DetenerAction.ShortLabel = Mono.Unix.Catalog.GetString("_Detener");
             w2.Add(this.DetenerAction, null);
             this.LineToolAction = new Gtk.RadioAction("LineToolAction", Mono.Unix.Catalog.GetString("_Line Tool"), null, "line-tool", 0);
-            this.LineToolAction.Group = this.CircleToolAction.Group;
+            this.LineToolAction.Group = this.SquareToolAction.Group;
             this.LineToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Line Tool");
             w2.Add(this.LineToolAction, null);
             this.DrawingAction = new Gtk.Action("DrawingAction", Mono.Unix.Catalog.GetString("Drawing"), null, null);
@@ -251,11 +251,11 @@ namespace LunarEclipse.View {
             this.LimpiarAction.ShortLabel = Mono.Unix.Catalog.GetString("_Limpiar");
             w2.Add(this.LimpiarAction, null);
             this.PolylineToolAction = new Gtk.RadioAction("PolylineToolAction", Mono.Unix.Catalog.GetString("Polyline Tool"), null, "polyline-tool", 0);
-            this.PolylineToolAction.Group = this.CircleToolAction.Group;
+            this.PolylineToolAction.Group = this.SquareToolAction.Group;
             this.PolylineToolAction.ShortLabel = Mono.Unix.Catalog.GetString("Polyline Tool");
             w2.Add(this.PolylineToolAction, null);
             this.PenToolAction = new Gtk.RadioAction("PenToolAction", Mono.Unix.Catalog.GetString("P_en Tool"), null, "pen-tool", 0);
-            this.PenToolAction.Group = this.CircleToolAction.Group;
+            this.PenToolAction.Group = this.SquareToolAction.Group;
             this.PenToolAction.ShortLabel = Mono.Unix.Catalog.GetString("P_en Tool");
             w2.Add(this.PenToolAction, null);
             this.dialogWarningAction = new Gtk.Action("dialogWarningAction", null, Mono.Unix.Catalog.GetString("Debug"), "gtk-dialog-warning");
@@ -457,6 +457,7 @@ namespace LunarEclipse.View {
             this.DeleteEvent += new Gtk.DeleteEventHandler(this.OnDeleteEvent);
             this.UndoAction.Activated += new System.EventHandler(this.OnDeshacerActionActivated);
             this.RedoAction.Activated += new System.EventHandler(this.OnRedoActionActivated);
+            this.BorrarAction.Activated += new System.EventHandler(this.OnBorrarActionActivated);
             this.SelectionToolAction.Activated += new System.EventHandler(this.OnSelectionToolActionActivated);
             this.RectangleToolAction.Activated += new System.EventHandler(this.OnRectangleToolActionActivated);
             this.SquareToolAction.Activated += new System.EventHandler(this.OnSquareToolActionActivated);

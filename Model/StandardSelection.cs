@@ -266,6 +266,15 @@ namespace LunarEclipse.Model {
 			}
 		}
 		
+		public void DeleteFromCanvas()
+		{
+			foreach (UIElement element in Elements) {
+				Controller.Canvas.Children.Remove(element);
+			}
+			
+			Clear();
+		}
+		
 		protected Dictionary<UIElement, IHandleGroup> HandleGroups {
 			get { return handle_groups; }
 			set { handle_groups = value; }
