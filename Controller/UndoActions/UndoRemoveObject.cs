@@ -1,9 +1,9 @@
-// IDescriptor.cs
+// UndoRemoveObject.cs
 //
 // Author:
 //    Manuel Cerón <ceronman@unicauca.edu.co>
 //
-// Copyright (c) 2008 [copyright holders]
+// Copyright (c) 2008 Manuel Cerón
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,18 +25,30 @@
 //
 //
 
+using System;
 using System.Windows;
+using System.Windows.Media;
 
-namespace LunarEclipse.Model {
+namespace LunarEclipse.Controller {
 	
-	public interface IDescriptor
-	{
-		Rect GetBounds();
-		void SetBounds(Rect rect);
-		void SetBounds(double x, double y, double width, double height);
-		void Move(Point offset);
-		void Move(double dx, double dy);
-		bool IsInside(Rect bounds);
-		void ChangeProperty(DependencyObject item, DependencyProperty prop, object value);
+	public class UndoRemoveObject: AbstractUndoAction {
+		
+		public UndoRemoveObject(VisualCollection collection, DependencyObject item)
+			:base(item)
+		{
+			this.collection = collection;
+		}
+		
+		public override void Redo ()
+        {
+            collection.Remove(Target as Visual);
+        }
+        
+        public override void Undo ()
+        {
+            collection.Add(Target as Visual);
+        }
+		
+		private VisualCollection collection;
 	}
 }

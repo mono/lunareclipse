@@ -129,6 +129,14 @@ namespace LunarEclipse.Model {
 			Move(offset.X, offset.Y);
 		}
 		
+		public void ChangeProperty(DependencyObject item, DependencyProperty prop, object value)
+		{
+			object oldValue = item.GetValue(prop);
+			Toolbox.ChangeProperty(Element, item, prop, value);
+			if (UndoGroup != null)
+				UndoGroup.AddPropertyChange(Element, item, prop, oldValue, value);
+		}
+		
 		protected UIElement Element {
 			get { return element; }
 			set { element = value; }
@@ -137,14 +145,6 @@ namespace LunarEclipse.Model {
 		protected UndoGroup UndoGroup {
 			get { return undo_group; }
 			set { undo_group = value; }
-		}
-		
-		protected void ChangeProperty(DependencyObject item, DependencyProperty prop, object value)
-		{
-			object oldValue = item.GetValue(prop);
-			Toolbox.ChangeProperty(Element, item, prop, value);
-			if (UndoGroup != null)
-				UndoGroup.AddPropertyChange(Element, item, prop, oldValue, value);
 		}
 		
 		private UIElement element;

@@ -45,6 +45,7 @@ namespace LunarEclipse.Model {
 		{
 			Controller = controller;
 			HandleGroups = new Dictionary<UIElement, IHandleGroup>();
+			undo = new UndoGroup();
 		}
 		
 		public void Add(UIElement element)
@@ -155,8 +156,10 @@ namespace LunarEclipse.Model {
 			foreach (UIElement element in Elements) {
 				int z = (int) element.GetValue(Canvas.ZIndexProperty);
 				z -= selectionMaxZ - minz - 1;
-				Toolbox.ChangeProperty(element, Canvas.ZIndexProperty, z);
+				ChangeZ(element, z);
 			}
+			
+		 	PushUndo();
 		}
 		
 		public void SendBackwards()
@@ -164,8 +167,10 @@ namespace LunarEclipse.Model {
 			foreach (UIElement element in Elements) {
 				int z = (int) element.GetValue(Canvas.ZIndexProperty);
 				z--;
-				Toolbox.ChangeProperty(element, Canvas.ZIndexProperty, z);
+				ChangeZ(element, z);
 			}
+			
+			PushUndo();
 		}
 		
 		public void BringToFront()
@@ -175,8 +180,10 @@ namespace LunarEclipse.Model {
 			foreach (UIElement element in Elements) {
 				int z = (int) element.GetValue(Canvas.ZIndexProperty);
 				z += maxz - selectionMinZ + 1;
-				Toolbox.ChangeProperty(element, Canvas.ZIndexProperty, z);
+				ChangeZ(element, z);
 			}
+			
+			PushUndo();
 		}
 		
 		public void BringForwards()
@@ -184,8 +191,10 @@ namespace LunarEclipse.Model {
 			foreach (UIElement element in Elements) {
 				int z = (int) element.GetValue(Canvas.ZIndexProperty);
 				z++;
-				Toolbox.ChangeProperty(element, Canvas.ZIndexProperty, z);
+				ChangeZ(element, z);
 			}
+			
+			PushUndo();
 		}
 		
 		public void AlignLeft()
@@ -194,11 +203,13 @@ namespace LunarEclipse.Model {
 			Rect mainBounds = descriptor.GetBounds();
 			
 			foreach (UIElement element in Elements) {
-				descriptor = StandardDescriptor.CreateDescriptor(element);
+				descriptor = StandardDescriptor.CreateDescriptor(element, undo);
 				Rect bounds = descriptor.GetBounds();
 				bounds.X = mainBounds.Left;
 				descriptor.SetBounds(bounds);
 			}
+			
+			PushUndo();
 		}
 		
 		public void AlignHorizontalCenter()
@@ -207,11 +218,13 @@ namespace LunarEclipse.Model {
 			Rect mainBounds = descriptor.GetBounds();
 			
 			foreach (UIElement element in Elements) {
-				descriptor = StandardDescriptor.CreateDescriptor(element);
+				descriptor = StandardDescriptor.CreateDescriptor(element, undo);
 				Rect bounds = descriptor.GetBounds();
 				bounds.X = mainBounds.Left + mainBounds.Width/2 - bounds.Width/2;
 				descriptor.SetBounds(bounds);
 			}
+			
+			PushUndo();
 		}
 		
 		public void AlignRight()
@@ -220,11 +233,13 @@ namespace LunarEclipse.Model {
 			Rect mainBounds = descriptor.GetBounds();
 			
 			foreach (UIElement element in Elements) {
-				descriptor = StandardDescriptor.CreateDescriptor(element);
+				descriptor = StandardDescriptor.CreateDescriptor(element, undo);
 				Rect bounds = descriptor.GetBounds();
 				bounds.X = mainBounds.Right - bounds.Width;
 				descriptor.SetBounds(bounds);
 			}
+			
+			PushUndo();
 		}
 		
 		public void AlignTop()
@@ -233,11 +248,13 @@ namespace LunarEclipse.Model {
 			Rect mainBounds = descriptor.GetBounds();
 			
 			foreach (UIElement element in Elements) {
-				descriptor = StandardDescriptor.CreateDescriptor(element);
+				descriptor = StandardDescriptor.CreateDescriptor(element, undo);
 				Rect bounds = descriptor.GetBounds();
 				bounds.Y = mainBounds.Top;
 				descriptor.SetBounds(bounds);
 			}
+			
+			PushUndo();
 		}
 		
 		public void AlignVerticalCenter()
@@ -246,11 +263,13 @@ namespace LunarEclipse.Model {
 			Rect mainBounds = descriptor.GetBounds();
 			
 			foreach (UIElement element in Elements) {
-				descriptor = StandardDescriptor.CreateDescriptor(element);
+				descriptor = StandardDescriptor.CreateDescriptor(element, undo);
 				Rect bounds = descriptor.GetBounds();
 				bounds.Y = mainBounds.Top + mainBounds.Height/2 - bounds.Height/2;
 				descriptor.SetBounds(bounds);
 			}
+			
+			PushUndo();
 		}
 		
 		public void AlignBottom()
@@ -259,20 +278,24 @@ namespace LunarEclipse.Model {
 			Rect mainBounds = descriptor.GetBounds();
 			
 			foreach (UIElement element in Elements) {
-				descriptor = StandardDescriptor.CreateDescriptor(element);
+				descriptor = StandardDescriptor.CreateDescriptor(element, undo);
 				Rect bounds = descriptor.GetBounds();
 				bounds.Y = mainBounds.Bottom - bounds.Height;
 				descriptor.SetBounds(bounds);
 			}
+			
+			PushUndo();
 		}
 		
 		public void DeleteFromCanvas()
 		{
 			foreach (UIElement element in Elements) {
 				Controller.Canvas.Children.Remove(element);
+				undo.Add(new UndoRemoveObject(Controller.Canvas.Children, element));
 			}
 			
 			Clear();
+			PushUndo();
 		}
 		
 		protected Dictionary<UIElement, IHandleGroup> HandleGroups {
@@ -324,8 +347,21 @@ namespace LunarEclipse.Model {
 			}
 		}
 		
+		private void PushUndo ()
+		{
+			Controller.UndoEngine.PushUndo(undo);
+			undo = new UndoGroup();
+		}
+		
+		private void ChangeZ (UIElement element, int z)
+		{
+			IDescriptor descriptor = StandardDescriptor.CreateDescriptor(element, undo);
+			descriptor.ChangeProperty(element, Canvas.ZIndexProperty, z);
+		}
+		
 		private MoonlightController controller;
 		private Dictionary<UIElement, IHandleGroup> handle_groups;
 		private UIElement main_element;
+		private UndoGroup undo;
 	}
 }
