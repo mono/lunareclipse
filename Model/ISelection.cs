@@ -57,6 +57,7 @@ namespace LunarEclipse.Model {
 		void AlignBottom();
 		
 		void DeleteFromCanvas();
+		void CloneMainElement();
 		
 		Rect GetBounds();
 		

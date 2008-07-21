@@ -79,7 +79,7 @@ namespace LunarEclipse.View {
         
         private Gtk.RadioAction PenToolAction;
         
-        private Gtk.Action dialogWarningAction;
+        private Gtk.Action debug1;
         
         private Gtk.Action FiguresAction;
         
@@ -106,6 +106,8 @@ namespace LunarEclipse.View {
         private Gtk.Action VerticalCenterAction;
         
         private Gtk.Action BottomAction;
+        
+        private Gtk.Action debug2;
         
         private Gtk.VBox vbox1;
         
@@ -209,23 +211,23 @@ namespace LunarEclipse.View {
             this.SquareToolAction.ShortLabel = Mono.Unix.Catalog.GetString("S_quare Tool");
             w2.Add(this.SquareToolAction, null);
             this.EllipseToolAction = new Gtk.RadioAction("EllipseToolAction", Mono.Unix.Catalog.GetString("_Ellipse Tool"), null, "ellipse-tool", 0);
-            this.EllipseToolAction.Group = this.SquareToolAction.Group;
+            this.EllipseToolAction.Group = this.RectangleToolAction.Group;
             this.EllipseToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Ellipse Tool");
             w2.Add(this.EllipseToolAction, null);
             this.CircleToolAction = new Gtk.RadioAction("CircleToolAction", Mono.Unix.Catalog.GetString("_Circle Tool"), null, "circle-tool", 0);
-            this.CircleToolAction.Group = this.SquareToolAction.Group;
+            this.CircleToolAction.Group = this.RectangleToolAction.Group;
             this.CircleToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Circle Tool");
             w2.Add(this.CircleToolAction, null);
             this.PathToolAction = new Gtk.RadioAction("PathToolAction", Mono.Unix.Catalog.GetString("_Path Tool"), null, "path-tool", 0);
-            this.PathToolAction.Group = this.CircleToolAction.Group;
+            this.PathToolAction.Group = this.RectangleToolAction.Group;
             this.PathToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Path Tool");
             w2.Add(this.PathToolAction, null);
             this.TextToolAction = new Gtk.RadioAction("TextToolAction", Mono.Unix.Catalog.GetString("_Text Tool"), null, "text-tool", 0);
-            this.TextToolAction.Group = this.CircleToolAction.Group;
+            this.TextToolAction.Group = this.RectangleToolAction.Group;
             this.TextToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Text Tool");
             w2.Add(this.TextToolAction, null);
             this.ImageToolAction = new Gtk.RadioAction("ImageToolAction", Mono.Unix.Catalog.GetString("Image Tool"), null, "image-tool", 0);
-            this.ImageToolAction.Group = this.CircleToolAction.Group;
+            this.ImageToolAction.Group = this.RectangleToolAction.Group;
             this.ImageToolAction.ShortLabel = Mono.Unix.Catalog.GetString("Image Tool");
             w2.Add(this.ImageToolAction, null);
             this.AnimationAction = new Gtk.Action("AnimationAction", Mono.Unix.Catalog.GetString("_Animation"), null, null);
@@ -241,7 +243,7 @@ namespace LunarEclipse.View {
             this.DetenerAction.ShortLabel = Mono.Unix.Catalog.GetString("_Detener");
             w2.Add(this.DetenerAction, null);
             this.LineToolAction = new Gtk.RadioAction("LineToolAction", Mono.Unix.Catalog.GetString("_Line Tool"), null, "line-tool", 0);
-            this.LineToolAction.Group = this.CircleToolAction.Group;
+            this.LineToolAction.Group = this.RectangleToolAction.Group;
             this.LineToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Line Tool");
             w2.Add(this.LineToolAction, null);
             this.DrawingAction = new Gtk.Action("DrawingAction", Mono.Unix.Catalog.GetString("Drawing"), null, null);
@@ -251,15 +253,15 @@ namespace LunarEclipse.View {
             this.LimpiarAction.ShortLabel = Mono.Unix.Catalog.GetString("_Limpiar");
             w2.Add(this.LimpiarAction, null);
             this.PolylineToolAction = new Gtk.RadioAction("PolylineToolAction", Mono.Unix.Catalog.GetString("Polyline Tool"), null, "polyline-tool", 0);
-            this.PolylineToolAction.Group = this.CircleToolAction.Group;
+            this.PolylineToolAction.Group = this.RectangleToolAction.Group;
             this.PolylineToolAction.ShortLabel = Mono.Unix.Catalog.GetString("Polyline Tool");
             w2.Add(this.PolylineToolAction, null);
             this.PenToolAction = new Gtk.RadioAction("PenToolAction", Mono.Unix.Catalog.GetString("P_en Tool"), null, "pen-tool", 0);
-            this.PenToolAction.Group = this.CircleToolAction.Group;
+            this.PenToolAction.Group = this.RectangleToolAction.Group;
             this.PenToolAction.ShortLabel = Mono.Unix.Catalog.GetString("P_en Tool");
             w2.Add(this.PenToolAction, null);
-            this.dialogWarningAction = new Gtk.Action("dialogWarningAction", null, Mono.Unix.Catalog.GetString("Debug"), "gtk-dialog-warning");
-            w2.Add(this.dialogWarningAction, null);
+            this.debug1 = new Gtk.Action("debug1", null, Mono.Unix.Catalog.GetString("Debug"), "gtk-dialog-warning");
+            w2.Add(this.debug1, null);
             this.FiguresAction = new Gtk.Action("FiguresAction", Mono.Unix.Catalog.GetString("Fi_gures"), null, null);
             this.FiguresAction.ShortLabel = Mono.Unix.Catalog.GetString("Fi_gure");
             w2.Add(this.FiguresAction, null);
@@ -303,6 +305,8 @@ namespace LunarEclipse.View {
             this.BottomAction = new Gtk.Action("BottomAction", Mono.Unix.Catalog.GetString("Bottom"), null, null);
             this.BottomAction.ShortLabel = Mono.Unix.Catalog.GetString("Bottom");
             w2.Add(this.BottomAction, null);
+            this.debug2 = new Gtk.Action("debug2", null, Mono.Unix.Catalog.GetString("Debug2"), "gtk-dialog-error");
+            w2.Add(this.debug2, null);
             w1.InsertActionGroup(w2, 0);
             this.AddAccelGroup(w1.AccelGroup);
             this.Name = "LunarEclipse.View.MainWindow";
@@ -343,7 +347,7 @@ namespace LunarEclipse.View {
             this.hbox2.Name = "hbox2";
             this.hbox2.Spacing = 6;
             // Container child hbox2.Gtk.Box+BoxChild
-            w1.AddUiFromString("<ui><toolbar name='toolbar2'><toolitem action='SelectionToolAction'/><toolitem action='RectangleToolAction'/><toolitem action='SquareToolAction'/><toolitem action='EllipseToolAction'/><toolitem action='CircleToolAction'/><toolitem action='PathToolAction'/><toolitem action='PenToolAction'/><toolitem action='LineToolAction'/><toolitem action='PolylineToolAction'/><toolitem action='TextToolAction'/><toolitem action='ImageToolAction'/><separator/><toolitem action='LimpiarAction'/><toolitem action='dialogWarningAction'/></toolbar></ui>");
+            w1.AddUiFromString("<ui><toolbar name='toolbar2'><toolitem action='SelectionToolAction'/><toolitem action='RectangleToolAction'/><toolitem action='SquareToolAction'/><toolitem action='EllipseToolAction'/><toolitem action='CircleToolAction'/><toolitem action='PathToolAction'/><toolitem action='PenToolAction'/><toolitem action='LineToolAction'/><toolitem action='PolylineToolAction'/><toolitem action='TextToolAction'/><toolitem action='ImageToolAction'/><separator/><toolitem action='LimpiarAction'/><toolitem action='debug1'/><toolitem action='debug2'/></toolbar></ui>");
             this.toolbar2 = ((Gtk.Toolbar)(w1.GetWidget("/toolbar2")));
             this.toolbar2.Name = "toolbar2";
             this.toolbar2.Orientation = ((Gtk.Orientation)(1));
@@ -471,7 +475,7 @@ namespace LunarEclipse.View {
             this.LimpiarAction.Activated += new System.EventHandler(this.OnLimpiarActionActivated);
             this.PolylineToolAction.Activated += new System.EventHandler(this.OnPolylineToolActionActivated);
             this.PenToolAction.Activated += new System.EventHandler(this.OnPenToolActionActivated);
-            this.dialogWarningAction.Activated += new System.EventHandler(this.OnDialogWarningActionActivated);
+            this.debug1.Activated += new System.EventHandler(this.OnDebug1Activated);
             this.BringToFrontAction.Activated += new System.EventHandler(this.OnBringToFrontActionActivated);
             this.SendToBackAction.Activated += new System.EventHandler(this.OnSendToBackActionActivated);
             this.BringForwardsAction.Activated += new System.EventHandler(this.OnBringForwardsActionActivated);

@@ -298,6 +298,12 @@ namespace LunarEclipse.Model {
 			PushUndo();
 		}
 		
+		public void CloneMainElement()
+		{
+			UIElement clone = MainElement.Clone();
+			Controller.Canvas.Children.Add(clone);
+		}
+		
 		protected Dictionary<UIElement, IHandleGroup> HandleGroups {
 			get { return handle_groups; }
 			set { handle_groups = value; }

@@ -166,12 +166,6 @@ namespace LunarEclipse.View
 			controller.Redo();
 		}
 
-		protected virtual void OnDialogWarningActionActivated (object sender, System.EventArgs e)
-		{
-			foreach (UIElement element in controller.Selection.Elements)
-				System.Console.WriteLine("Position = {0}", element.GetValue(Canvas.ZIndexProperty));
-		}
-
 		protected virtual void OnBringToFrontActionActivated (object sender, System.EventArgs e)
 		{
 			controller.Selection.BringToFront();
@@ -233,7 +227,12 @@ namespace LunarEclipse.View
 			dialog.Run();
 			dialog.Destroy();
 		}
-		
+
+		protected virtual void OnDebug1Activated (object sender, System.EventArgs e)
+		{
+			controller.Selection.CloneMainElement();
+		}
+
 		private MoonlightController controller;
 	}
 }

@@ -28,6 +28,8 @@
 
 
 using System;
+using System.Threading;
+using System.Globalization;
 using System.Reflection;
 using System.Windows.Controls;
 using System.Windows;
@@ -91,6 +93,11 @@ namespace LunarEclipse.Serialization
         
         public string Serialize(Canvas canvas)
         {
+			// This is used to prevent bad serializations on other cultures
+			// For example in spanish, doubles would be serialized like
+			// "1,0" instead of "1.0"
+			CultureInfo culture = Thread.CurrentThread.CurrentCulture;
+			Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 			this.canvas = canvas;
 			
             StringBuilder sb = new StringBuilder();
@@ -104,6 +111,7 @@ namespace LunarEclipse.Serialization
             
             Regex r = new Regex("<Canvas");
             return r.Replace(sb.ToString(), "<Canvas xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"", 1);
+			Thread.CurrentThread.CurrentCulture = culture;
         }
         
         private void Serialize(DependencyObject item, XmlWriter writer)
@@ -112,10 +120,13 @@ namespace LunarEclipse.Serialization
 				return;
             Type baseType = item.GetType();
 			
-			if(string.IsNullOrEmpty(item.Name))
-				item.SetValue(DependencyObject.NameProperty, NameGenerator.GetName(this.canvas, item));
+//			if(string.IsNullOrEmpty(item.Name)) {
+//				item.SetValue(DependencyObject.NameProperty, NameGenerator.GetName(this.canvas, item));
+//				System.Console.WriteLine("#### "+ baseType.Name);
+//				System.Console.WriteLine(item.Name);
+//			}
             
-            // Gets all the dependency properties for this item type
+			// Gets all the dependency properties for this item type
             // and any relevant attached properties.
             List<PropertyData> fields = ReflectionHelper.GetProperties(item);
             
@@ -123,11 +134,12 @@ namespace LunarEclipse.Serialization
             // a dependency object as attributes. Every DependencyProperty whose value
             // is a dependency object must be written as an element.
             writer.WriteStartElement(baseType.Name);
+			
             foreach(PropertyData prop in fields)
             {
                 DependencyProperty dependencyProperty = prop.Property;
-                object value = item.GetValue((DependencyProperty)dependencyProperty);
-
+                object value = item.GetValue(dependencyProperty);
+				
                 if(!(value is DependencyObject) && (value != null) && !IsDefaultValue(item, dependencyProperty, value))
                 {
                     string name = prop.ShortName;

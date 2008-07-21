@@ -90,17 +90,17 @@ namespace LunarEclipse.Serialization
 			
 			List<PropertyData> properties = allProperties[item.GetType()];
 			
-			if(withAttached)
-			{
-				result = new List<PropertyData>(properties.Count + attachedProperties.Count);
-				result.AddRange(attachedProperties);
-			}
-			else
-			{
-				result = new List<PropertyData>(properties.Count);
-			}
+			result = new List<PropertyData>();
 			
-			result.AddRange(properties);
+			if(withAttached)
+				result.AddRange(attachedProperties);
+
+			
+			foreach (PropertyData prop in properties) {
+				if (!prop.Attached)
+					result.Add(prop);
+			}			
+			
 			return result;
 		}
 		

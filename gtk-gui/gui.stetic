@@ -325,12 +325,12 @@
         <property name="Group">group1</property>
         <signal name="Activated" handler="OnPenToolActionActivated" />
       </action>
-      <action id="dialogWarningAction">
+      <action id="debug1">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-dialog-warning</property>
         <property name="Tooltip" translatable="yes">Debug</property>
-        <signal name="Activated" handler="OnDialogWarningActionActivated" />
+        <signal name="Activated" handler="OnDebug1Activated" />
       </action>
       <action id="FiguresAction">
         <property name="Type">Action</property>
@@ -414,6 +414,12 @@
         <property name="Label" translatable="yes">Bottom</property>
         <property name="ShortLabel" translatable="yes">Bottom</property>
         <signal name="Activated" handler="OnBottomActionActivated" />
+      </action>
+      <action id="debug2">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-dialog-error</property>
+        <property name="Tooltip" translatable="yes">Debug2</property>
       </action>
     </action-group>
     <property name="MemberName" />
@@ -556,7 +562,8 @@
                       <node type="Toolitem" action="ImageToolAction" />
                       <node type="Separator" />
                       <node type="Toolitem" action="LimpiarAction" />
-                      <node type="Toolitem" action="dialogWarningAction" />
+                      <node type="Toolitem" action="debug1" />
+                      <node type="Toolitem" action="debug2" />
                     </node>
                   </widget>
                   <packing>

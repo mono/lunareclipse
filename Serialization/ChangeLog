@@ -1,3 +1,8 @@
+2008-07-21  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* Serializer.cs: Fixed bug caused by different cultures and ToString()
+	* ReflectionHelper.cs: Removed duplicates from attached properties
+
 2008-06-22  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* Serializer.cs: Serializer ignores Handles and Frames

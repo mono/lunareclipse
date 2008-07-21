@@ -29,6 +29,7 @@
 
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 namespace LunarEclipse
 {
@@ -42,8 +43,8 @@ namespace LunarEclipse
         public int Compare(Visual left, Visual right)
         {
             //Console.WriteLine("Compare Start");
-            int leftValue = (int)left.GetValue(UIElement.ZIndexProperty);
-            int rightValue = (int)right.GetValue(UIElement.ZIndexProperty);
+            int leftValue = (int)left.GetValue(Canvas.ZIndexProperty);
+            int rightValue = (int)right.GetValue(Canvas.ZIndexProperty);
             return leftValue.CompareTo(rightValue);
         }
     }
