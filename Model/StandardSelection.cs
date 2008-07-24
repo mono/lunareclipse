@@ -33,6 +33,7 @@ using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using LunarEclipse.Controller;
+using LunarEclipse.Serialization;
 
 namespace LunarEclipse.Model {	
 	
@@ -300,8 +301,11 @@ namespace LunarEclipse.Model {
 		
 		public void CloneMainElement()
 		{
-			UIElement clone = MainElement.Clone();
+			Controller.CurrentTool.Deactivate();
+			UIElement clone = (UIElement) Serializer.Clone(Controller.Canvas, MainElement);
+			clone.SetValue(Canvas.LeftProperty, 0);
 			Controller.Canvas.Children.Add(clone);
+			Controller.CurrentTool.Activate();
 		}
 		
 		protected Dictionary<UIElement, IHandleGroup> HandleGroups {

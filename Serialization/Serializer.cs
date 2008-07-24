@@ -47,7 +47,7 @@ namespace LunarEclipse.Serialization
     internal class Serializer
     {
 		private Canvas canvas;
-        private Dictionary<Type, DependencyObject> defaultValues;
+        private static Dictionary<Type, DependencyObject> defaultValues;
 		
         internal Serializer()
         {
@@ -118,6 +118,7 @@ namespace LunarEclipse.Serialization
         {
 			if (item is IHandle || item is IFrame)
 				return;
+			
             Type baseType = item.GetType();
 			
 //			if(string.IsNullOrEmpty(item.Name)) {
@@ -175,9 +176,68 @@ namespace LunarEclipse.Serialization
             
             writer.WriteEndElement();
         }
+		
+		public static DependencyObject Clone(Canvas root, DependencyObject item)
+        {
+            System.Diagnostics.Debug.WriteLine("Starting Cloning:");
+			System.Diagnostics.Debug.Indent();
+			Type type = item.GetType();
+            DependencyObject newObject = (DependencyObject) Activator.CreateInstance(type);
+			
+            List<PropertyData> fields = ReflectionHelper.GetProperties(item);
+			
+			foreach(PropertyData prop in fields) {
+				System.Diagnostics.Debug.WriteLine("* Property: " + prop.ShortName);
+				System.Diagnostics.Debug.Indent();
+				
+                DependencyProperty dependencyProperty = prop.Property;
+				
+                object value = item.GetValue(dependencyProperty);
+				
+				if(!IsDefaultValue(item, dependencyProperty, value))
+                {
+                    object newValue;
+					
+					if(value is IEnumerable && !(value is string)) {
+						Type collectionType = value.GetType();
+						System.Diagnostics.Debug.WriteLine("* IEnumerable: " + collectionType.ToString());
+						System.Diagnostics.Debug.Indent();
+						newValue = Activator.CreateInstance(collectionType);
+						foreach (DependencyObject o in value as IEnumerable) {
+							DependencyObject member = Clone(root, o);
+							newValue.GetType().GetMethod("Add").Invoke(newValue, new object[] { member });
+						}
+						
+						System.Diagnostics.Debug.Unindent();
+					}
+					
+					else if (value is DependencyObject) {
+						newValue = Clone(root, value as DependencyObject);
+					}
+					
+					else {
+						newValue = value;
+					}
+					
+					try {
+						newObject.SetValue(dependencyProperty, newValue);
+					}
+					catch (Exception e){
+						System.Diagnostics.Debug.WriteLine(string.Format("*** couldn't clone {0}: {1}", prop.ShortName, e.Message));
+					}
+                }
+				
+				System.Diagnostics.Debug.Unindent();
+            }
+			System.Diagnostics.Debug.Unindent();
+			
+			if (!string.IsNullOrEmpty(item.Name))
+				newObject.Name = NameGenerator.GetName(root, newObject);
 
-        
-        private bool IsDefaultValue(DependencyObject item, DependencyProperty property, object value)
+			return newObject;
+		}
+
+        public static bool IsDefaultValue(DependencyObject item, DependencyProperty property, object value)
         {
             Type itemType = item.GetType();
             DependencyObject defaultItem;

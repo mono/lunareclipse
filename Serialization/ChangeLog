@@ -1,3 +1,7 @@
+2008-07-24  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* Serializer.cs: Added a new Clone method from scratch
+
 2008-07-21  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* Serializer.cs: Fixed bug caused by different cultures and ToString()

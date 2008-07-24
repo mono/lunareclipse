@@ -1,3 +1,8 @@
+2008-07-24  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* StandardSelection.cs: CloneMainElement Addapted to the new
+	  Serializer.Clone
+
 2008-07-21  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* ZIndexComparer.cs: Using Canvas.ZIndex instead of UIElement.ZIndex
