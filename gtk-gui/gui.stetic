@@ -447,6 +447,7 @@
     <property name="MemberName" />
     <property name="Title" translatable="yes">Lunar Eclipse</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <property name="DefaultWidth">800</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
       <widget class="Gtk.VBox" id="vbox1">
@@ -602,7 +603,7 @@
                       <widget class="Gtk.HPaned" id="hpaned1">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
-                        <property name="Position">299</property>
+                        <property name="Position">404</property>
                         <child>
                           <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
                             <property name="MemberName" />
@@ -626,6 +627,7 @@
                           </widget>
                           <packing>
                             <property name="Resize">False</property>
+                            <property name="Shrink">False</property>
                           </packing>
                         </child>
                         <child>
@@ -633,6 +635,9 @@
                             <property name="MemberName" />
                             <property name="Events">ButtonPressMask</property>
                           </widget>
+                          <packing>
+                            <property name="Resize">False</property>
+                          </packing>
                         </child>
                       </widget>
                       <packing>

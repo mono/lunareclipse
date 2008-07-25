@@ -213,11 +213,11 @@ namespace LunarEclipse.View {
             this.RectangleToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Rectangle Tool");
             w2.Add(this.RectangleToolAction, null);
             this.SquareToolAction = new Gtk.RadioAction("SquareToolAction", Mono.Unix.Catalog.GetString("S_quare Tool"), null, "square-tool", 0);
-            this.SquareToolAction.Group = this.SelectionToolAction.Group;
+            this.SquareToolAction.Group = this.RectangleToolAction.Group;
             this.SquareToolAction.ShortLabel = Mono.Unix.Catalog.GetString("S_quare Tool");
             w2.Add(this.SquareToolAction, null);
             this.EllipseToolAction = new Gtk.RadioAction("EllipseToolAction", Mono.Unix.Catalog.GetString("_Ellipse Tool"), null, "ellipse-tool", 0);
-            this.EllipseToolAction.Group = this.SelectionToolAction.Group;
+            this.EllipseToolAction.Group = this.RectangleToolAction.Group;
             this.EllipseToolAction.ShortLabel = Mono.Unix.Catalog.GetString("_Ellipse Tool");
             w2.Add(this.EllipseToolAction, null);
             this.CircleToolAction = new Gtk.RadioAction("CircleToolAction", Mono.Unix.Catalog.GetString("_Circle Tool"), null, "circle-tool", 0);
@@ -327,6 +327,7 @@ namespace LunarEclipse.View {
             this.Name = "LunarEclipse.View.MainWindow";
             this.Title = Mono.Unix.Catalog.GetString("Lunar Eclipse");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
+            this.DefaultWidth = 800;
             // Container child LunarEclipse.View.MainWindow.Gtk.Container+ContainerChild
             this.vbox1 = new Gtk.VBox();
             this.vbox1.Name = "vbox1";
@@ -381,7 +382,7 @@ namespace LunarEclipse.View {
             this.hpaned1 = new Gtk.HPaned();
             this.hpaned1.CanFocus = true;
             this.hpaned1.Name = "hpaned1";
-            this.hpaned1.Position = 299;
+            this.hpaned1.Position = 404;
             // Container child hpaned1.Gtk.Paned+PanedChild
             this.scrolledwindow1 = new Gtk.ScrolledWindow();
             this.scrolledwindow1.CanFocus = true;
@@ -402,11 +403,14 @@ namespace LunarEclipse.View {
             this.hpaned1.Add(this.scrolledwindow1);
             Gtk.Paned.PanedChild w9 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.scrolledwindow1]));
             w9.Resize = false;
+            w9.Shrink = false;
             // Container child hpaned1.Gtk.Paned+PanedChild
             this.propertypanel = new LunarEclipse.View.PropertyPanel();
             this.propertypanel.Events = ((Gdk.EventMask)(256));
             this.propertypanel.Name = "propertypanel";
             this.hpaned1.Add(this.propertypanel);
+            Gtk.Paned.PanedChild w10 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.propertypanel]));
+            w10.Resize = false;
             this.vbox2.Add(this.hpaned1);
             Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.vbox2[this.hpaned1]));
             w11.Position = 0;
@@ -470,7 +474,6 @@ namespace LunarEclipse.View {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 720;
             this.DefaultHeight = 729;
             this.Show();
             this.DeleteEvent += new Gtk.DeleteEventHandler(this.OnDeleteEvent);

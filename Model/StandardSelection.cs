@@ -140,6 +140,12 @@ namespace LunarEclipse.Model {
 			}
 			foreach (UIElement element in toRemove)
 				Remove(element);
+			
+			// This must be done in order to prevent weird behavior
+			// A better way to do this could be to use an event
+			// and catch it from ITool
+			Controller.CurrentTool.Deactivate();
+			Controller.CurrentTool.Activate();
 		}
 		
 		public Rect GetBounds()
@@ -303,8 +309,7 @@ namespace LunarEclipse.Model {
 		public void DeleteFromCanvas()
 		{
 			foreach (UIElement element in Elements) {
-				Controller.Canvas.Children.Remove(element);
-				undo.Add(new UndoRemoveObject(Controller.Canvas.Children, element));
+				RemoveElementFromCanvas(element);
 			}
 			
 			Clear();
@@ -328,10 +333,11 @@ namespace LunarEclipse.Model {
 			clipboard.Clear();
 			foreach (UIElement element in HandleGroups.Keys) {
 				clipboard.Add(element);
-				Controller.Canvas.Children.Remove(element);
+				RemoveElementFromCanvas(element);
 			}
 			Clear();
 			Controller.CurrentTool.Activate();
+		 	PushUndo();
 		}
 			
 		public void Paste()
@@ -347,13 +353,14 @@ namespace LunarEclipse.Model {
 			Clear();
 			clipboard.Clear();
 			foreach (UIElement element in copy) {
-				Controller.Canvas.Children.Add(element);
+				AddElementToCanvas(element);
 				Add(element);
 				DependencyObject clone = Serializer.Clone(Controller.Canvas, element);
 				clipboard.Add(clone as UIElement);
 			}
 			
 			Controller.CurrentTool.Activate();
+			PushUndo();
 		}
 		
 		public void Clone()
@@ -421,6 +428,18 @@ namespace LunarEclipse.Model {
 		{
 			IDescriptor descriptor = StandardDescriptor.CreateDescriptor(element, undo);
 			descriptor.ChangeProperty(element, Canvas.ZIndexProperty, z);
+		}
+		
+		private void RemoveElementFromCanvas(UIElement element)
+		{
+			Controller.Canvas.Children.Remove(element);
+			undo.Add(new UndoRemoveObject(Controller.Canvas.Children, element));
+		}
+		
+		private void AddElementToCanvas(UIElement element)
+		{
+			Controller.Canvas.Children.Add(element);
+			undo.Add(new UndoAddObject(Controller.Canvas.Children, element));
 		}
 		
 		private MoonlightController controller;
