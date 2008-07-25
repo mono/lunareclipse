@@ -1,5 +1,10 @@
 2008-07-24  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* MainWindow.cs: Added Handlers for Cut, Copy, Paste, Clone, Clear
+	  Selection, Select All
+
+2008-07-24  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* Main.cs: Added System.Diagnostics.Debug Info
 
 2008-07-21  Manuel Cerón <ceronman@unicauca.edu.co> 

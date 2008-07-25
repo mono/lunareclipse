@@ -66,38 +66,38 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow" design-size="716 718">
+  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow" design-size="720 729">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_File</property>
         <property name="ShortLabel" translatable="yes">_File</property>
       </action>
-      <action id="AbrirAction">
+      <action id="OpenAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Abrir</property>
         <property name="ShortLabel" translatable="yes">_Abrir</property>
         <property name="StockId">gtk-open</property>
       </action>
-      <action id="NuevoAction">
+      <action id="NewAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Nuevo</property>
         <property name="ShortLabel" translatable="yes">_Nuevo</property>
         <property name="StockId">gtk-new</property>
       </action>
-      <action id="GuardarAction">
+      <action id="SaveAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Guardar</property>
         <property name="ShortLabel" translatable="yes">_Guardar</property>
         <property name="StockId">gtk-save</property>
       </action>
-      <action id="GuardarComoAction">
+      <action id="SaveAsAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Guardar _como</property>
         <property name="ShortLabel" translatable="yes">Guardar _como</property>
         <property name="StockId">gtk-save-as</property>
       </action>
-      <action id="SalirAction">
+      <action id="QuitAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Salir</property>
         <property name="ShortLabel" translatable="yes">_Salir</property>
@@ -125,7 +125,7 @@
         <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">_Deshacer</property>
         <property name="StockId">gtk-undo</property>
-        <signal name="Activated" handler="OnDeshacerActionActivated" />
+        <signal name="Activated" handler="OnUndoActionActivated" />
       </action>
       <action id="RedoAction">
         <property name="Type">Action</property>
@@ -136,38 +136,41 @@
         <property name="StockId">gtk-redo</property>
         <signal name="Activated" handler="OnRedoActionActivated" />
       </action>
-      <action id="CortarAction">
+      <action id="CutAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Cor_tar</property>
         <property name="ShortLabel" translatable="yes">Cor_tar</property>
         <property name="StockId">gtk-cut</property>
+        <signal name="Activated" handler="OnCutActionActivated" />
       </action>
       <action id="CopiarAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Copiar</property>
         <property name="ShortLabel" translatable="yes">_Copiar</property>
         <property name="StockId">gtk-copy</property>
+        <signal name="Activated" handler="OnCopyActionActivated" />
       </action>
-      <action id="PegarAction">
+      <action id="PasteAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Pegar</property>
         <property name="ShortLabel" translatable="yes">_Pegar</property>
         <property name="StockId">gtk-paste</property>
+        <signal name="Activated" handler="OnPasteActionActivated" />
       </action>
-      <action id="BorrarAction">
+      <action id="DeleteAction">
         <property name="Type">Action</property>
         <property name="Accelerator">&lt;Mod2&gt;Delete</property>
         <property name="Label" translatable="yes">_Borrar</property>
         <property name="ShortLabel" translatable="yes">_Borrar</property>
         <property name="StockId">gtk-delete</property>
-        <signal name="Activated" handler="OnBorrarActionActivated" />
+        <signal name="Activated" handler="OnDeleteActionActivated" />
       </action>
-      <action id="AcercaDeAction">
+      <action id="AboutAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Acerca _de</property>
         <property name="ShortLabel" translatable="yes">Acerca _de</property>
         <property name="StockId">gtk-about</property>
-        <signal name="Activated" handler="OnAcercaDeActionActivated" />
+        <signal name="Activated" handler="OnAboutActionActivated" />
       </action>
       <action id="SelectionToolAction">
         <property name="Type">Radio</property>
@@ -262,7 +265,7 @@
         <property name="Label" translatable="yes">_Animation</property>
         <property name="ShortLabel" translatable="yes">_Animation</property>
       </action>
-      <action id="GrabarAction">
+      <action id="RecordAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Grabar</property>
         <property name="ShortLabel" translatable="yes">_Grabar</property>
@@ -274,7 +277,7 @@
         <property name="ShortLabel" translatable="yes">_Reproducir</property>
         <property name="StockId">gtk-media-play</property>
       </action>
-      <action id="DetenerAction">
+      <action id="StopAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Detener</property>
         <property name="ShortLabel" translatable="yes">_Detener</property>
@@ -296,7 +299,7 @@
         <property name="Label" translatable="yes">Drawing</property>
         <property name="ShortLabel" translatable="yes">Drawing</property>
       </action>
-      <action id="LimpiarAction">
+      <action id="CleanAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Limpiar</property>
         <property name="ShortLabel" translatable="yes">_Limpiar</property>
@@ -421,6 +424,25 @@
         <property name="StockId">gtk-dialog-error</property>
         <property name="Tooltip" translatable="yes">Debug2</property>
       </action>
+      <action id="CloneAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Cl_one</property>
+        <property name="ShortLabel" translatable="yes">Clone</property>
+        <signal name="Activated" handler="OnCloneActionActivated" />
+      </action>
+      <action id="SelectAllAction">
+        <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Control&gt;&lt;Mod2&gt;a</property>
+        <property name="Label" translatable="yes">_Select All</property>
+        <property name="ShortLabel" translatable="yes">Select All</property>
+        <signal name="Activated" handler="OnSelectAllActionActivated" />
+      </action>
+      <action id="ClearSelectionAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Clear S_election</property>
+        <property name="ShortLabel" translatable="yes">Clear S_election</property>
+        <signal name="Activated" handler="OnClearSelectionActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">Lunar Eclipse</property>
@@ -435,24 +457,29 @@
             <property name="MemberName" />
             <node name="menubar1" type="Menubar">
               <node type="Menu" action="FileAction">
-                <node type="Menuitem" action="NuevoAction" />
-                <node type="Menuitem" action="AbrirAction" />
-                <node type="Menuitem" action="GuardarAction" />
-                <node type="Menuitem" action="GuardarComoAction" />
+                <node type="Menuitem" action="NewAction" />
+                <node type="Menuitem" action="OpenAction" />
                 <node type="Separator" />
-                <node type="Menuitem" action="SalirAction" />
+                <node type="Menuitem" action="SaveAction" />
+                <node type="Menuitem" action="SaveAsAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="QuitAction" />
               </node>
               <node type="Menu" action="EditAction">
                 <node type="Menuitem" action="UndoAction" />
                 <node type="Menuitem" action="RedoAction" />
                 <node type="Separator" />
-                <node type="Menuitem" action="CortarAction" />
+                <node type="Menuitem" action="CutAction" />
                 <node type="Menuitem" action="CopiarAction" />
-                <node type="Menuitem" action="PegarAction" />
-                <node type="Menuitem" action="BorrarAction" />
+                <node type="Menuitem" action="PasteAction" />
+                <node type="Menuitem" action="CloneAction" />
+                <node type="Menuitem" action="DeleteAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="SelectAllAction" />
+                <node type="Menuitem" action="ClearSelectionAction" />
               </node>
               <node type="Menu" action="DrawingAction">
-                <node type="Menuitem" action="LimpiarAction" />
+                <node type="Menuitem" action="CleanAction" />
               </node>
               <node type="Menu" action="FiguresAction">
                 <node type="Menu" action="OrderAction">
@@ -485,12 +512,12 @@
                 <node type="Menuitem" action="ImageToolAction" />
               </node>
               <node type="Menu" action="AnimationAction">
-                <node type="Menuitem" action="GrabarAction" />
+                <node type="Menuitem" action="StopAction" />
                 <node type="Menuitem" action="ReproducirAction" />
-                <node type="Menuitem" action="DetenerAction" />
+                <node type="Menuitem" action="RecordAction" />
               </node>
               <node type="Menu" action="HelpAction">
-                <node type="Menuitem" action="AcercaDeAction" />
+                <node type="Menuitem" action="AboutAction" />
               </node>
             </node>
           </widget>
@@ -507,21 +534,16 @@
             <property name="ShowArrow">False</property>
             <property name="ButtonStyle">Icons</property>
             <node name="toolbar1" type="Toolbar">
-              <node type="Toolitem" action="NuevoAction" />
-              <node type="Toolitem" action="AbrirAction" />
-              <node type="Toolitem" action="GuardarAction" />
+              <node type="Toolitem" action="NewAction" />
+              <node type="Toolitem" action="OpenAction" />
+              <node type="Toolitem" action="SaveAction" />
               <node type="Separator" />
               <node type="Toolitem" action="UndoAction" />
               <node type="Toolitem" action="RedoAction" />
               <node type="Separator" />
-              <node type="Toolitem" action="PegarAction" />
+              <node type="Toolitem" action="CutAction" />
               <node type="Toolitem" action="CopiarAction" />
-              <node type="Toolitem" action="CortarAction" />
-              <node type="Toolitem" action="BorrarAction" />
-              <node type="Separator" />
-              <node type="Toolitem" action="ReproducirAction" />
-              <node type="Toolitem" action="DetenerAction" />
-              <node type="Toolitem" action="GrabarAction" />
+              <node type="Toolitem" action="PasteAction" />
             </node>
           </widget>
           <packing>
@@ -550,18 +572,17 @@
                     <property name="ButtonStyle">Icons</property>
                     <node name="toolbar2" type="Toolbar">
                       <node type="Toolitem" action="SelectionToolAction" />
-                      <node type="Toolitem" action="RectangleToolAction" />
                       <node type="Toolitem" action="SquareToolAction" />
-                      <node type="Toolitem" action="EllipseToolAction" />
+                      <node type="Toolitem" action="RectangleToolAction" />
                       <node type="Toolitem" action="CircleToolAction" />
-                      <node type="Toolitem" action="PathToolAction" />
-                      <node type="Toolitem" action="PenToolAction" />
+                      <node type="Toolitem" action="EllipseToolAction" />
                       <node type="Toolitem" action="LineToolAction" />
                       <node type="Toolitem" action="PolylineToolAction" />
+                      <node type="Toolitem" action="PathToolAction" />
+                      <node type="Toolitem" action="PenToolAction" />
                       <node type="Toolitem" action="TextToolAction" />
-                      <node type="Toolitem" action="ImageToolAction" />
                       <node type="Separator" />
-                      <node type="Toolitem" action="LimpiarAction" />
+                      <node type="Toolitem" action="CleanAction" />
                       <node type="Toolitem" action="debug1" />
                       <node type="Toolitem" action="debug2" />
                     </node>
@@ -581,7 +602,7 @@
                       <widget class="Gtk.HPaned" id="hpaned1">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
-                        <property name="Position">468</property>
+                        <property name="Position">299</property>
                         <child>
                           <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
                             <property name="MemberName" />

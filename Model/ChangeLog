@@ -1,5 +1,9 @@
 2008-07-24  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* ISelection.cs, StandardSelection.cs: Added Cut, Copy, Paste, Clone
+
+2008-07-24  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* StandardSelection.cs: CloneMainElement Addapted to the new
 	  Serializer.Clone
 

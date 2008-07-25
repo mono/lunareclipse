@@ -47,6 +47,7 @@ namespace LunarEclipse.Model {
 			Controller = controller;
 			HandleGroups = new Dictionary<UIElement, IHandleGroup>();
 			undo = new UndoGroup();
+			clipboard = new List<UIElement>();
 		}
 		
 		public void Add(UIElement element)
@@ -94,6 +95,17 @@ namespace LunarEclipse.Model {
 			HandleGroups.Clear();
 			MainElement = null;
 			ChangeSelection();
+		}
+		
+		public void SelectAll()
+		{
+			Clear();
+			
+			UIElement[] all = new UIElement[Controller.Canvas.Children.Count];
+			Controller.Canvas.Children.CopyTo((Visual[])all, 0);
+			
+			foreach (UIElement element in all)
+				Add(element);
 		}
 		
 		public IEnumerable<UIElement> Elements {
@@ -299,13 +311,55 @@ namespace LunarEclipse.Model {
 			PushUndo();
 		}
 		
-		public void CloneMainElement()
+		public void Copy()
 		{
 			Controller.CurrentTool.Deactivate();
-			UIElement clone = (UIElement) Serializer.Clone(Controller.Canvas, MainElement);
-			clone.SetValue(Canvas.LeftProperty, 0);
-			Controller.Canvas.Children.Add(clone);
+			clipboard.Clear();
+			foreach (UIElement element in HandleGroups.Keys) {
+				DependencyObject clone = Serializer.Clone(Controller.Canvas, element);
+				clipboard.Add(clone as UIElement);
+			}
 			Controller.CurrentTool.Activate();
+		}
+		
+		public void Cut()
+		{
+			Controller.CurrentTool.Deactivate();
+			clipboard.Clear();
+			foreach (UIElement element in HandleGroups.Keys) {
+				clipboard.Add(element);
+				Controller.Canvas.Children.Remove(element);
+			}
+			Clear();
+			Controller.CurrentTool.Activate();
+		}
+			
+		public void Paste()
+		{
+			if (clipboard.Count == 0)
+				return;
+			
+			Controller.CurrentTool.Deactivate();
+			
+			UIElement[] copy = new UIElement[clipboard.Count];
+			clipboard.CopyTo(copy);
+			
+			Clear();
+			clipboard.Clear();
+			foreach (UIElement element in copy) {
+				Controller.Canvas.Children.Add(element);
+				Add(element);
+				DependencyObject clone = Serializer.Clone(Controller.Canvas, element);
+				clipboard.Add(clone as UIElement);
+			}
+			
+			Controller.CurrentTool.Activate();
+		}
+		
+		public void Clone()
+		{
+			Copy();
+			Paste();
 		}
 		
 		protected Dictionary<UIElement, IHandleGroup> HandleGroups {
@@ -372,6 +426,9 @@ namespace LunarEclipse.Model {
 		private MoonlightController controller;
 		private Dictionary<UIElement, IHandleGroup> handle_groups;
 		private UIElement main_element;
+		private List<UIElement> clipboard;
 		private UndoGroup undo;
+		
+		private const double PastePositionOffset = 10.0;
 	}
 }

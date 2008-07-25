@@ -126,7 +126,7 @@ namespace LunarEclipse.View
 			controller.CurrentTool = new PenCreationTool(controller);
 		}
 
-		protected virtual void OnDeshacerActionActivated (object sender, System.EventArgs e)
+		protected virtual void OnUndoActionActivated (object sender, System.EventArgs e)
 		{
 			controller.Undo();
 		}
@@ -216,12 +216,12 @@ namespace LunarEclipse.View
 			controller.Selection.AlignVerticalCenter();
 		}
 
-		protected virtual void OnBorrarActionActivated (object sender, System.EventArgs e)
+		protected virtual void OnDeleteActionActivated (object sender, System.EventArgs e)
 		{
 			controller.Selection.DeleteFromCanvas();
 		}
 
-		protected virtual void OnAcercaDeActionActivated (object sender, System.EventArgs e)
+		protected virtual void OnAboutActionActivated (object sender, System.EventArgs e)
 		{
 			AboutLunarEclipse dialog = new AboutLunarEclipse();
 			dialog.Run();
@@ -230,7 +230,37 @@ namespace LunarEclipse.View
 
 		protected virtual void OnDebug1Activated (object sender, System.EventArgs e)
 		{
-			controller.Selection.CloneMainElement();
+			controller.Selection.Clone();
+		}
+
+		protected virtual void OnCutActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.Cut();
+		}
+
+		protected virtual void OnCopyActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.Copy();
+		}
+
+		protected virtual void OnPasteActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.Paste();
+		}
+
+		protected virtual void OnCloneActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.Clone();
+		}
+
+		protected virtual void OnSelectAllActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.SelectAll();
+		}
+
+		protected virtual void OnClearSelectionActionActivated (object sender, System.EventArgs e)
+		{
+			controller.Selection.Clear();
 		}
 
 		private MoonlightController controller;

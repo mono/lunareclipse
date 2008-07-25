@@ -42,6 +42,7 @@ namespace LunarEclipse.Model {
 		void Hide();
 		void Show();
 		void Clear();
+		void SelectAll();
 		void Update();
 		
 		void BringToFront();
@@ -57,7 +58,10 @@ namespace LunarEclipse.Model {
 		void AlignBottom();
 		
 		void DeleteFromCanvas();
-		void CloneMainElement();
+		void Copy();
+		void Cut();
+		void Paste();
+		void Clone();
 		
 		Rect GetBounds();
 		
