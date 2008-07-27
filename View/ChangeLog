@@ -1,3 +1,8 @@
+2008-07-26  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MainWindow.cs: Added a new zoom slider
+	* MoonlightWidget.cs: Using gray color as background (temporal)
+
 2008-07-24  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MainWindow.cs: Added Handlers for Cut, Copy, Paste, Clone, Clear

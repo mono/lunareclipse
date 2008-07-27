@@ -45,10 +45,8 @@ namespace LunarEclipse.Model {
 		{
 			Locator = locator;
 			
-			TransformGroup transforms = new TransformGroup();
-			Inner.SetValue(RenderTransformProperty, transforms);
 			rotation = new RotateTransform();
-			transforms.Children.Add(rotation);
+			Transforms.Children.Add(rotation);
 		}
 		
 		public override Point Location {
@@ -62,10 +60,12 @@ namespace LunarEclipse.Model {
 			
 			Point center = ElementTransformCenter;
 			Rect allocation = CanvasAllocation;
-			rotation.CenterX = center.X - allocation.X;
-			rotation.CenterY = center.Y - allocation.Y;
+			rotation.CenterX = center.X - allocation.X - allocation.Width/2;
+			rotation.CenterY = center.Y - allocation.Y - allocation.Height/2;
 			
 			rotation.Angle = ElementRotation.Angle;
+			
+			ZoomCorrection();
 		}
 		
 		protected Point ElementTransformOrigin {

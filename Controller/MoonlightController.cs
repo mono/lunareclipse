@@ -58,6 +58,7 @@ namespace LunarEclipse.Controller
 		private UndoEngine undo;
 		private ITool current_tool;
 		private ISelection selection;
+		private double current_scale = 1.0;
 
 #endregion Member Variables
         
@@ -107,6 +108,10 @@ namespace LunarEclipse.Controller
 			protected set { selection = value; }
         }
 
+        public double CurrentScale {
+        	get { return current_scale; }
+        	set { current_scale = value; }
+        }
     	
         public MoonlightController(GtkSilver moonlight, AnimationTimeline timeline)
         {
@@ -172,6 +177,34 @@ namespace LunarEclipse.Controller
 		{
 			undo.Redo();
 			Selection.Update();
+		}
+		
+		public void Zoom(int zoom, Point center)
+		{
+			double scale = 	zoom / 100.0;
+			TransformGroup transforms = new TransformGroup();
+			ScaleTransform scaleTransform = new ScaleTransform();
+			scaleTransform.ScaleX = scale;
+			scaleTransform.ScaleY = scale;
+			current_scale = scale;
+			transforms.Children.Add(scaleTransform);
+			Canvas.SetValue(UIElement.RenderTransformOriginProperty, center);
+			Canvas.SetValue(UIElement.RenderTransformProperty, transforms);			
+		}
+		
+		public void Zoom(int zoom)
+		{
+			Zoom(zoom, new Point(0.5, 0.5));
+		}
+		
+		public double ZoomCorrection(double value)
+		{
+			return value / current_scale;
+		}
+		
+		public Point ZoomCorrection(Point point)
+		{
+			return new Point(ZoomCorrection(point.X), ZoomCorrection(point.Y));
 		}
 	}
 }

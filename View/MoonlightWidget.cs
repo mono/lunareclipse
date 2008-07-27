@@ -40,11 +40,11 @@ namespace LunarEclipse.View {
 		{
 			this.Build();
 			
-			silver = new GtkSilver();
+			silver = new GtkSilver(100, 100);
 			canvas = new Canvas();
-			canvas.Width = 600;
-			canvas.Height = 400;
-			canvas.Background = new SolidColorBrush(Colors.White);
+			canvas.Width = 100;
+			canvas.Height = 100;
+			canvas.Background = new SolidColorBrush(Colors.LightGray);
 			silver.Attach(canvas);
 			
 //			Image image = new Image();

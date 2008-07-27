@@ -63,6 +63,12 @@ namespace LunarEclipse.Model {
 			
 			SetValue(ZIndexProperty, int.MaxValue);
 			
+			transforms = new TransformGroup();
+			scaleTransform = new ScaleTransform();
+			transforms.Children.Add(scaleTransform);
+			Inner.SetValue(UIElement.RenderTransformOriginProperty, new Point(0.5, 0.5));
+		 	Inner.SetValue(UIElement.RenderTransformProperty, transforms);
+		
 			undo_group = new UndoGroup();
 		}
 		
@@ -112,6 +118,8 @@ namespace LunarEclipse.Model {
 			                            position.Y - DefaultRadius,
 			                            DefaultRadius * 2,
 			                            DefaultRadius * 2);
+			
+		 	ZoomCorrection();
 		}
 			
 		protected Rect CanvasAllocation {
@@ -158,6 +166,11 @@ namespace LunarEclipse.Model {
 		protected UndoGroup UndoGroup {
 			get { return undo_group; }
 		}
+
+		public TransformGroup Transforms {
+			get { return transforms; }
+			set { transforms = value; }
+		}
 		
 		protected Point CalculateOffset(Point current)
 		{
@@ -168,12 +181,19 @@ namespace LunarEclipse.Model {
 			
 			LastClick = current;
 			
-			return offset;
+			return Controller.ZoomCorrection(offset);
 		}
 		
 		protected virtual void PushUndo()
 		{
 			Controller.UndoEngine.PushUndo(undo_group);
+		}
+		
+		protected virtual void ZoomCorrection()
+		{
+			double scale = 	1.0 / Controller.CurrentScale;
+			scaleTransform.ScaleX = scale;
+			scaleTransform.ScaleY = scale;
 		}
 		
 		protected void ChangeProperty(DependencyObject item, DependencyProperty prop, object value)
@@ -189,6 +209,8 @@ namespace LunarEclipse.Model {
 		private bool dragging = false;
 		private Brush normal_fill;
 		private Brush highlight_fill;
+		private TransformGroup transforms;
+		private ScaleTransform scaleTransform;
 		private UndoGroup undo_group;
 	}
 }

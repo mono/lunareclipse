@@ -90,7 +90,7 @@ namespace LunarEclipse.Model {
 		{
 			base.MouseDown (ev);
 			
-			last_click = ev.GetPosition(null);
+			last_click = ev.GetPosition(Controller.Canvas);
 			
 			if (clicked_element != null) {
 				if (!Controller.Selection.Contains(clicked_element) ){
@@ -103,7 +103,7 @@ namespace LunarEclipse.Model {
 			if (clicked_handle != null)
 				return;
 			
-			StartSelection(ev.GetPosition(null));
+			StartSelection(ev.GetPosition(Controller.Canvas));
 		}
 		
 		public override void MouseMove (MouseEventArgs ev)
@@ -115,7 +115,7 @@ namespace LunarEclipse.Model {
 			
 			if (clicked_element != null) {
 				Point offset = new Point(0.0, 0.0);
-				Point current = ev.GetPosition(null);
+				Point current = ev.GetPosition(Controller.Canvas);
 				offset.X = current.X - last_click.X;
 				offset.Y = current.Y - last_click.Y;
 				foreach (UIElement element in Controller.Selection.Elements) {
@@ -125,7 +125,7 @@ namespace LunarEclipse.Model {
 				return;
 			}
 			
-			MoveSelection(ev.GetPosition(null));
+			MoveSelection(ev.GetPosition(Controller.Canvas));
 		}
 
 		

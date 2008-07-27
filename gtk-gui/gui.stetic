@@ -423,6 +423,7 @@
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-dialog-error</property>
         <property name="Tooltip" translatable="yes">Debug2</property>
+        <signal name="Activated" handler="OnDebug2Activated" />
       </action>
       <action id="CloneAction">
         <property name="Type">Action</property>
@@ -603,31 +604,82 @@
                       <widget class="Gtk.HPaned" id="hpaned1">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
-                        <property name="Position">404</property>
+                        <property name="Position">154</property>
                         <child>
-                          <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
+                          <widget class="Gtk.VBox" id="vbox3">
                             <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="VscrollbarPolicy">Always</property>
-                            <property name="HscrollbarPolicy">Always</property>
+                            <property name="Spacing">6</property>
                             <child>
-                              <widget class="Gtk.Viewport" id="GtkViewport">
+                              <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
                                 <property name="MemberName" />
-                                <property name="ShadowType">None</property>
+                                <property name="CanFocus">True</property>
+                                <property name="VscrollbarPolicy">Always</property>
+                                <property name="HscrollbarPolicy">Always</property>
                                 <child>
-                                  <widget class="LunarEclipse.View.MoonlightWidget" id="moonlightwidget">
+                                  <widget class="Gtk.Viewport" id="GtkViewport">
                                     <property name="MemberName" />
-                                    <property name="Events">ButtonPressMask</property>
-                                    <property name="Height">600</property>
-                                    <property name="Width">600</property>
+                                    <property name="ShadowType">None</property>
+                                    <child>
+                                      <widget class="LunarEclipse.View.MoonlightWidget" id="moonlightwidget">
+                                        <property name="MemberName" />
+                                        <property name="Events">ButtonPressMask</property>
+                                        <property name="Height">800</property>
+                                        <property name="Width">800</property>
+                                      </widget>
+                                    </child>
                                   </widget>
                                 </child>
                               </widget>
+                              <packing>
+                                <property name="Position">0</property>
+                                <property name="AutoSize">True</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.HBox" id="hbox3">
+                                <property name="MemberName" />
+                                <property name="Spacing">6</property>
+                                <child>
+                                  <widget class="Gtk.Label" id="label3">
+                                    <property name="MemberName" />
+                                    <property name="LabelProp" translatable="yes">Zoom:</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">0</property>
+                                    <property name="AutoSize">True</property>
+                                    <property name="Expand">False</property>
+                                    <property name="Fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.HScale" id="zoomScale">
+                                    <property name="MemberName" />
+                                    <property name="CanFocus">True</property>
+                                    <property name="Upper">500</property>
+                                    <property name="PageIncrement">10</property>
+                                    <property name="StepIncrement">1</property>
+                                    <property name="Value">100</property>
+                                    <property name="DrawValue">True</property>
+                                    <property name="Digits">0</property>
+                                    <property name="ValuePos">Top</property>
+                                    <signal name="ValueChanged" handler="OnZoomScaleValueChanged" />
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">1</property>
+                                    <property name="AutoSize">True</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="Position">1</property>
+                                <property name="AutoSize">True</property>
+                                <property name="Expand">False</property>
+                                <property name="Fill">False</property>
+                              </packing>
                             </child>
                           </widget>
                           <packing>
                             <property name="Resize">False</property>
-                            <property name="Shrink">False</property>
                           </packing>
                         </child>
                         <child>
@@ -713,24 +765,6 @@
           <packing>
             <property name="Position">2</property>
             <property name="AutoSize">True</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Statusbar" id="statusbar1">
-            <property name="MemberName" />
-            <property name="Spacing">6</property>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">3</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>

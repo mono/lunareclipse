@@ -1,3 +1,8 @@
+2008-07-26  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MoonlightController.cs: Added Zoom, CurrentScale,  and ZoomCorrection
+	  Methods
+
 2008-07-24  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* Toolbox.cs: Removed Clone() Moved to Serializer

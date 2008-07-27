@@ -3,7 +3,7 @@
 // Author:
 //    Manuel Cerón <ceronman@unicauca.edu.co>
 //
-// Copyright (c) 2008 [copyright holders]
+// Copyright (c) 2008 Manuel Cerón.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -230,7 +230,12 @@ namespace LunarEclipse.View
 
 		protected virtual void OnDebug1Activated (object sender, System.EventArgs e)
 		{
-			controller.Selection.Clone();
+			controller.Zoom(200);
+		}
+		
+		protected virtual void OnDebug2Activated (object sender, System.EventArgs e)
+		{
+			controller.Zoom(100);
 		}
 
 		protected virtual void OnCutActionActivated (object sender, System.EventArgs e)
@@ -261,6 +266,11 @@ namespace LunarEclipse.View
 		protected virtual void OnClearSelectionActionActivated (object sender, System.EventArgs e)
 		{
 			controller.Selection.Clear();
+		}
+
+		protected virtual void OnZoomScaleValueChanged (object sender, System.EventArgs e)
+		{
+			controller.Zoom((int)zoomScale.Value);
 		}
 
 		private MoonlightController controller;
