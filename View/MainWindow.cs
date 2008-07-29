@@ -30,9 +30,11 @@ using System.Windows;
 using LunarEclipse.Controller;
 using LunarEclipse.Controls;
 using LunarEclipse.Model;
-using Gtk.Moonlight;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Gtk;
+using Gtk.Moonlight;
+using Gettext = Mono.Unix.Catalog;
 
 namespace LunarEclipse.View
 {
@@ -103,7 +105,10 @@ namespace LunarEclipse.View
 
 		protected virtual void OnNotebookSwitchPage (object o, Gtk.SwitchPageArgs args)
 		{
-			xaml_textview.Buffer.Text = controller.SerializeCanvas();
+			if (args.PageNum == 1)
+				xaml_textview.Buffer.Text = controller.SerializeCanvas();
+			else if (args.PageNum == 0)
+				controller.LoadXaml(xaml_textview.Buffer.Text);
 		}
 
 		protected virtual void OnPolylineToolActionActivated (object sender, System.EventArgs e)
@@ -271,6 +276,50 @@ namespace LunarEclipse.View
 		protected virtual void OnZoomScaleValueChanged (object sender, System.EventArgs e)
 		{
 			controller.Zoom((int)zoomScale.Value);
+		}
+
+		protected virtual void OnSaveActionActivated (object sender, System.EventArgs e)
+		{
+			FileChooserDialog dialog = new FileChooserDialog(Gettext.GetString("Save..."),
+			                                                 this,
+			                                                 FileChooserAction.Save,
+			                                                 Stock.Cancel, ResponseType.Cancel,
+			                                                 Stock.Ok, ResponseType.Accept);
+			
+			dialog.DoOverwriteConfirmation = true;
+			
+			FileFilter filter = new FileFilter();
+			filter.Name = Gettext.GetString("XAML Silverlight 1.0");
+			filter.AddMimeType("application/xaml+xml");
+			filter.AddPattern("*.xaml");
+			
+			dialog.AddFilter(filter);
+			
+			if (dialog.Run() == (int)ResponseType.Accept) {
+				controller.SaveToFile(dialog.Filename);
+			}
+			dialog.Destroy();
+		}
+
+		protected virtual void OnOpenActionActivated (object sender, System.EventArgs e)
+		{
+			FileChooserDialog dialog = new FileChooserDialog(Gettext.GetString("Open File..."),
+			                                                 this,
+			                                                 FileChooserAction.Open,
+			                                                 Stock.Cancel, ResponseType.Cancel,
+			                                                 Stock.Ok, ResponseType.Accept);
+			
+			FileFilter filter = new FileFilter();
+			filter.Name = Gettext.GetString("XAML Silverlight 1.0");
+			filter.AddMimeType("application/xaml+xml");
+			filter.AddPattern("*.xaml");
+			dialog.AddFilter(filter);
+			
+			if (dialog.Run() == (int)ResponseType.Accept) {
+				controller.LoadFromFile(dialog.Filename);
+			}
+			
+			dialog.Destroy();
 		}
 
 		private MoonlightController controller;

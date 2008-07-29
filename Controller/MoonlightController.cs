@@ -36,6 +36,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Input;
 using System.Xml;
 using System.Collections.Generic;
+using System.IO;
 using LunarEclipse.Serialization;
 using LunarEclipse.View;
 using LunarEclipse.Model;
@@ -116,9 +117,6 @@ namespace LunarEclipse.Controller
             this.moonlight = moonlight;
 			//this.properties = properties;
 			
-            moonlight.Canvas.MouseLeftButtonDown += new MouseEventHandler(MouseLeftDown);
-            moonlight.Canvas.MouseMove += new MouseEventHandler(MouseMove);
-            moonlight.Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseLeftUp);
 			serializer = new Serializer();
 			storyboardManager = new StoryboardManager(this);
 			storyboardManager.Add(new Storyboard());
@@ -126,6 +124,8 @@ namespace LunarEclipse.Controller
 			Selection = new StandardSelection(this);
 			CurrentTool = new SelectionTool(this);
 			propertyManager = new PropertyManager(this);
+			
+			SetupCanvas();
         }
         
 		
@@ -137,7 +137,13 @@ namespace LunarEclipse.Controller
 			moonlight.Canvas.Triggers.Clear();
 			undo.Clear();
 		}
-        
+		
+		private void SetupCanvas()
+		{
+			moonlight.Canvas.MouseLeftButtonDown += new MouseEventHandler(MouseLeftDown);
+            moonlight.Canvas.MouseMove += new MouseEventHandler(MouseMove);
+            moonlight.Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseLeftUp);
+		}
         
         private void MouseLeftDown(object sender, MouseEventArgs e)
         {
@@ -161,7 +167,7 @@ namespace LunarEclipse.Controller
 		
 		public string SerializeCanvas()
         {
-			return serializer.Serialize(this.moonlight.Canvas);
+			return serializer.Serialize(Canvas);
 		}
 		
 		public void Undo()
@@ -207,6 +213,34 @@ namespace LunarEclipse.Controller
 		public Point ZoomCorrection(Point point)
 		{
 			return new Point(ZoomCorrection(point.X), ZoomCorrection(point.Y));
+		}
+		
+		public void SaveToFile(string file)
+		{
+			CurrentTool.Deactivate();
+			TextWriter writer = new StreamWriter(file);
+			writer.Write(serializer.Serialize(Canvas));
+			writer.Close();
+			CurrentTool.Activate();
+		}
+		
+		public void LoadFromFile(string file)
+		{
+			CurrentTool.Deactivate();
+			Selection.Clear();
+			moonlight.LoadFile(file);
+			SetupCanvas();
+			CurrentTool.Activate();
+		}
+		
+		public void LoadXaml(string xaml)
+		{
+			CurrentTool.Deactivate();
+			Selection.Clear();
+			Canvas canvas;
+			moonlight.LoadXaml(xaml, out canvas);
+			SetupCanvas();
+			CurrentTool.Activate();
 		}
 	}
 }
