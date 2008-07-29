@@ -604,7 +604,7 @@
                       <widget class="Gtk.HPaned" id="hpaned1">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
-                        <property name="Position">154</property>
+                        <property name="Position">359</property>
                         <child>
                           <widget class="Gtk.VBox" id="vbox3">
                             <property name="MemberName" />

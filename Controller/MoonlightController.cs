@@ -187,11 +187,13 @@ namespace LunarEclipse.Controller
 			transforms.Children.Add(scaleTransform);
 			Canvas.SetValue(UIElement.RenderTransformOriginProperty, center);
 			Canvas.SetValue(UIElement.RenderTransformProperty, transforms);			
+			
+			moonlight.Resize((int)(Canvas.Width * current_scale), (int)(Canvas.Height * current_scale));
 		}
 		
 		public void Zoom(int zoom)
 		{
-			Zoom(zoom, new Point(0.5, 0.5));
+			Zoom(zoom, new Point(0.0, 0.0));
 			
 			if (ZoomChanged != null)
 				ZoomChanged(this, new EventArgs());

@@ -1,5 +1,9 @@
 2008-07-28  Manuel Cerón <ceronman@unicauca.edu.co> 
 
+	* MoonlightController.cs: Resizing gtk silver when zooming.
+
+2008-07-28  Manuel Cerón <ceronman@unicauca.edu.co> 
+
 	* MoonlightController.cs: Added ZoomChanged event.
 
 2008-07-26  Manuel Cerón <ceronman@unicauca.edu.co> 
