@@ -70,6 +70,10 @@ namespace LunarEclipse.Model {
 		 	Inner.SetValue(UIElement.RenderTransformProperty, transforms);
 		
 			undo_group = new UndoGroup();
+			
+			Controller.ZoomChanged += delegate {
+				Update();
+			};
 		}
 		
 		public IHandleGroup Group {

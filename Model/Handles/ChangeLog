@@ -1,3 +1,7 @@
+2008-07-28  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* AbstractHandle.cs: Added a ZoomChanged event handler
+
 2008-07-26  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* AbstractHandle.cs, TransformHandle.cs: Added zoom correction support

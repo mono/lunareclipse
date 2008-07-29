@@ -46,9 +46,8 @@ namespace LunarEclipse.Controller
 {
     public class MoonlightController
     {
-#region Member Variables
+		public event EventHandler ZoomChanged;
 		
-		//IPropertyGroup properties;
 		bool active;
         private GtkSilver moonlight;
 		private PropertyManager propertyManager;
@@ -59,8 +58,6 @@ namespace LunarEclipse.Controller
 		private ITool current_tool;
 		private ISelection selection;
 		private double current_scale = 1.0;
-
-#endregion Member Variables
         
 		internal Canvas Canvas
 		{
@@ -195,6 +192,9 @@ namespace LunarEclipse.Controller
 		public void Zoom(int zoom)
 		{
 			Zoom(zoom, new Point(0.5, 0.5));
+			
+			if (ZoomChanged != null)
+				ZoomChanged(this, new EventArgs());
 		}
 		
 		public double ZoomCorrection(double value)
