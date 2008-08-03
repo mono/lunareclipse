@@ -1,3 +1,9 @@
+2008-08-02  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* KeyframeMarker.cs, AnimationTimeline.cs, PositionMarker.cs,
+	  TimelineMarker.cs, AnimationTimelineWidget.cs: Renamed Visual for
+	  UIElement
+
 2008-07-03  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* AnimationTimeline.cs, PositionMarker.cs, TimelineMarker.cs: Adapted

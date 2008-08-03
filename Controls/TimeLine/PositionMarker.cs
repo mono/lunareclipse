@@ -68,14 +68,5 @@ namespace LunarEclipse.Controls
 			Width = width;
 			ellipse.SetValue(Shape.FillProperty, new SolidColorBrush(Colors.Yellow));
 		}
-		
-		public override void SetValue (DependencyProperty property, object obj)
-		{
-			if(property == Shape.WidthProperty || property == Shape.HeightProperty)
-				ellipse.SetValue(property, obj);
-			
-			base.SetValue(property, obj);
-		}
-
 	}
 }

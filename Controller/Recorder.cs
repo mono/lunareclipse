@@ -29,6 +29,7 @@
 
 using System;
 using LunarEclipse.View;
+using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
 using System.Windows.Media.Animation;
@@ -38,7 +39,7 @@ namespace LunarEclipse.Controller
 	public class Recorder : UndoEngine
 	{
 		private Storyboard storyboard;
-		private Dictionary<Visual, Timeline> timelines;
+		private Dictionary<UIElement, Timeline> timelines;
 		
 		internal TimelineCollection Children
 		{

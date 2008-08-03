@@ -29,6 +29,8 @@ using System;
 
 namespace LunarEclipse.Controls {
 	
+	[System.ComponentModel.Category("LunarEclipse")]
+	[System.ComponentModel.ToolboxItem(true)]
 	public partial class AnimationTimelineWidget : Gtk.Bin {
 		
 		public AnimationTimelineWidget()

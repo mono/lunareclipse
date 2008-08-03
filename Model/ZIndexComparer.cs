@@ -31,16 +31,17 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+
 namespace LunarEclipse
 {
-    public class ZIndexComparer : System.Collections.Generic.IComparer<Visual>
+    public class ZIndexComparer : System.Collections.Generic.IComparer<UIElement>
     {
         public ZIndexComparer()
         {
 
         }
 
-        public int Compare(Visual left, Visual right)
+        public int Compare(UIElement left, UIElement right)
         {
             //Console.WriteLine("Compare Start");
             int leftValue = (int)left.GetValue(Canvas.ZIndexProperty);

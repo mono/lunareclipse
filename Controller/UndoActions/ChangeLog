@@ -1,3 +1,8 @@
+2008-08-02  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* UndoAddObject.cs, UndoRotation.cs, UndoRemoveObject.cs: Renamed
+	  Visual for UIElement
+
 2008-07-18  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* UndoAddObject.cs: Cosmetic Changes

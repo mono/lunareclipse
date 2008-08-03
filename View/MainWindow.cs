@@ -46,12 +46,7 @@ namespace LunarEclipse.View
 		{
 			this.Build();
 			
-			AnimationTimeline timeline = new AnimationTimeline(800, 70);
-			timeline.SizeAllocated += delegate {
-				timeline.UpdateSize();
-			};
-			//vbox2.PackEnd(timeline, false, false, 0);
-			controller = new MoonlightController(moonlightwidget.Silver, timeline);
+			controller = new MoonlightController(moonlightwidget.Silver, null);
 			
 			propertypanel.Controller = controller;
 			SetupUndoButtons(controller.UndoEngine);

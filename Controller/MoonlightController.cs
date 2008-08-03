@@ -53,7 +53,6 @@ namespace LunarEclipse.Controller
         private GtkSilver moonlight;
 		private PropertyManager propertyManager;
         private Serializer serializer;
-		private StoryboardManager storyboardManager;
 		private AnimationTimeline timeline;
 		private UndoEngine undo;
 		private ITool current_tool;
@@ -86,11 +85,6 @@ namespace LunarEclipse.Controller
 			get { return propertyManager; }
 		}
 		
-		public StoryboardManager StoryboardManager
-		{
-			get { return storyboardManager; }
-		}
-		
 		public AnimationTimeline Timeline
 		{
 			get { return timeline; }
@@ -118,8 +112,6 @@ namespace LunarEclipse.Controller
 			//this.properties = properties;
 			
 			serializer = new Serializer();
-			storyboardManager = new StoryboardManager(this);
-			storyboardManager.Add(new Storyboard());
             undo = new UndoEngine();
 			Selection = new StandardSelection(this);
 			CurrentTool = new SelectionTool(this);
@@ -133,21 +125,19 @@ namespace LunarEclipse.Controller
 		{
 			Selection.Clear();			
 			moonlight.Canvas.Children.Clear();
-			moonlight.Canvas.Resources.Clear();
-			moonlight.Canvas.Triggers.Clear();
 			undo.Clear();
 		}
 		
 		private void SetupCanvas()
 		{
-			moonlight.Canvas.MouseLeftButtonDown += new MouseEventHandler(MouseLeftDown);
-            moonlight.Canvas.MouseMove += new MouseEventHandler(MouseMove);
-            moonlight.Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseLeftUp);
+			moonlight.Canvas.MouseLeftButtonDown += MouseLeftDown;
+            moonlight.Canvas.MouseMove += MouseMove;
+            moonlight.Canvas.MouseLeftButtonUp += MouseLeftUp;
 		}
         
         private void MouseLeftDown(object sender, MouseEventArgs e)
         {
-            this.Canvas.CaptureMouse();
+            //this.Canvas.CaptureMouse();
             //current.DrawStart(this.moonlight.Canvas, e);
 			CurrentTool.MouseDown(e);
         }
@@ -161,7 +151,7 @@ namespace LunarEclipse.Controller
         private void MouseLeftUp(object sender, MouseEventArgs e)
         {
 			CurrentTool.MouseUp(e);
-            this.Canvas.ReleaseMouseCapture();
+            //this.Canvas.ReleaseMouseCapture();
         }
 		
 		

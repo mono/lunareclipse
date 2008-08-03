@@ -35,6 +35,8 @@ using LunarEclipse.Model;
 
 namespace LunarEclipse.View
 {	
+	[System.ComponentModel.Category("LunarEclipse")]
+	[System.ComponentModel.ToolboxItem(true)]
 	public partial class PropertyPanel : Gtk.Bin
 	{
 		public PropertyPanel()

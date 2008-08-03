@@ -69,13 +69,5 @@ namespace LunarEclipse.Controls
 			this.time = time;
 			this.timeline = timeline;
 		}
-		
-		public override void SetValue (DependencyProperty property, object obj)
-		{
-			if(property == Shape.WidthProperty || property == Shape.HeightProperty)
-				ellipse.SetValue(property, obj);
-			
-			base.SetValue(property, obj);
-		}
 	}
 }

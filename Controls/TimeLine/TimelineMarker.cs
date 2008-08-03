@@ -65,13 +65,5 @@ namespace LunarEclipse.Controls
 			rectangle.SetValue(Shape.StrokeProperty, new SolidColorBrush(Colors.Yellow));
 			rectangle.SetValue(Shape.FillProperty, new SolidColorBrush(Colors.Transparent));
 		}
-		
-		public override void SetValue (DependencyProperty property, object obj)
-		{
-			if(property == Shape.WidthProperty || property == Shape.HeightProperty)
-				rectangle.SetValue(property, obj);
-			
-			base.SetValue(property, obj);
-		}
 	}
 }

@@ -1,3 +1,12 @@
+2008-08-02  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MainWindow.cs: Removed timeline
+	* PropertyGroupBrushes.cs, PropertyGroupLayout.cs,
+	  PropertyGroupAppearance.cs: Removed old code
+	* MoonlightWidget.cs: Added special attributes
+	* PropertyPanel.cs: Added Special Attributes
+	* GtkMoonlight.cs: removed old code
+
 2008-07-29  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MainWindow.cs: Added FileSave and File Load Functionality

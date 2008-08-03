@@ -34,6 +34,8 @@ using Gtk.Moonlight;
 
 namespace LunarEclipse.View {	
 	
+	[System.ComponentModel.Category("LunarEclipse")]
+	[System.ComponentModel.ToolboxItem(true)]
 	public partial class MoonlightWidget : Gtk.Bin {
 		
 		public MoonlightWidget()

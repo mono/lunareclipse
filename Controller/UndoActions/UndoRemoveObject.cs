@@ -27,13 +27,14 @@
 
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace LunarEclipse.Controller {
 	
 	public class UndoRemoveObject: AbstractUndoAction {
 		
-		public UndoRemoveObject(VisualCollection collection, DependencyObject item)
+		public UndoRemoveObject(UIElementCollection collection, DependencyObject item)
 			:base(item)
 		{
 			this.collection = collection;
@@ -41,14 +42,14 @@ namespace LunarEclipse.Controller {
 		
 		public override void Redo ()
         {
-            collection.Remove(Target as Visual);
+            collection.Remove(Target as UIElement);
         }
         
         public override void Undo ()
         {
-            collection.Add(Target as Visual);
+            collection.Add(Target as UIElement);
         }
 		
-		private VisualCollection collection;
+		private UIElementCollection collection;
 	}
 }

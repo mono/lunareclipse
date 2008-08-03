@@ -102,7 +102,7 @@ namespace LunarEclipse.Model {
 			Clear();
 			
 			UIElement[] all = new UIElement[Controller.Canvas.Children.Count];
-			Controller.Canvas.Children.CopyTo((Visual[])all, 0);
+			Controller.Canvas.Children.CopyTo(all, 0);
 			
 			foreach (UIElement element in all)
 				Add(element);
@@ -407,9 +407,9 @@ namespace LunarEclipse.Model {
 			MainElement = null;
 		}
 		
-		private VisualCollection Visuals {
+		private UIElementCollection Visuals {
 			get {
-				VisualCollection collection = new VisualCollection();
+				UIElementCollection collection = new UIElementCollection();
 				
 				foreach (UIElement element in handle_groups.Keys)
 					collection.Add(element);

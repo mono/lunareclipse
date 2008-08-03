@@ -83,7 +83,7 @@ namespace LunarEclipse
 				e(sender, args);
 		}
 		
-		public static int MaxZ(VisualCollection elements)
+		public static int MaxZ(UIElementCollection elements)
 		{
 			if (elements.Count == 0)
 				return 0;
@@ -98,7 +98,7 @@ namespace LunarEclipse
 			return max;
 		}
 		
-		public static int MinZ(VisualCollection elements)
+		public static int MinZ(UIElementCollection elements)
 		{
 			if (elements.Count == 0)
 				return 0;

@@ -1,3 +1,8 @@
+2008-08-02  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* MoonlightController.cs, Recorder.cs, Toolbox.cs: Renamed Visual for
+	  UIElement
+
 2008-07-29  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MoonlightController.cs: Added SaveToFile, LoadFromFile and

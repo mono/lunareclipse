@@ -33,8 +33,8 @@ namespace LunarEclipse.Model {
 	
 	public interface IHandle {
 		
-		event MouseEventHandler MouseLeftButtonDown;
-		event MouseEventHandler MouseLeftButtonUp;
+		event MouseButtonEventHandler MouseLeftButtonDown;
+		event MouseButtonEventHandler MouseLeftButtonUp;
 		event MouseEventHandler MouseMove;
 		
 		IHandleGroup Group { get; }

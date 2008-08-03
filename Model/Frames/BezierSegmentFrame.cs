@@ -80,7 +80,9 @@ namespace LunarEclipse.Model {
 		{
 			Line line = new Line();
 			line.Stroke = new SolidColorBrush(Colors.LightGray);
-			line.StrokeDashArray = new double[] {5, 5};
+			line.StrokeDashArray = new DoubleCollection();
+			line.StrokeDashArray.Add(5.0);
+			line.StrokeDashArray.Add(5.0);
             line.StrokeThickness = 1.0;
 			
 			return line;

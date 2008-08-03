@@ -1,3 +1,8 @@
+2008-08-02  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* BezierSegmentFrame.cs: using DoubleCollection
+	* RectangleFrame.cs: Using DoubleCollection
+
 2008-07-05  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* AbstractFrame.cs: Added ZIndex Setting

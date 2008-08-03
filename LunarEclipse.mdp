@@ -4,6 +4,7 @@
       <Output directory="bin/Debug" assembly="LunarEclipse" />
       <Build debugmode="True" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <EnvironmentVariables />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="DEBUG" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
@@ -17,11 +18,7 @@
     <File name="gtk-gui/gui.stetic" subtype="Code" buildaction="EmbedAsResource" resource_id="gui.stetic" />
     <File name="gtk-gui/generated.cs" subtype="Code" buildaction="Compile" />
     <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="View/GtkMoonlight.cs" subtype="Code" buildaction="Compile" />
     <File name="View/Main.cs" subtype="Code" buildaction="Compile" />
-    <File name="View/PropertyGroupAppearance.cs" subtype="Code" buildaction="Compile" />
-    <File name="View/PropertyGroupBrushes.cs" subtype="Code" buildaction="Compile" />
-    <File name="View/PropertyGroupLayout.cs" subtype="Code" buildaction="Compile" />
     <File name="Properties/PropertyInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Properties/PropertyManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Properties/PropertyType.cs" subtype="Code" buildaction="Compile" />
@@ -34,11 +31,7 @@
     <File name="Model/ISelection.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/NameGenerator.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/PropertyChangedEventArgs.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/SelectedBorder.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/SelectionChangedEventArgs.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/SelectionRectangle.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/StandardSelection.cs" subtype="Code" buildaction="Compile" />
-    <File name="Model/StoryboardManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/TransformType.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/ZIndexComparer.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/Handles/AbstractHandle.cs" subtype="Code" buildaction="Compile" />
@@ -148,6 +141,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Windows, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Moonlight, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
   </References>
   <GtkDesignInfo gtkVersion="2.12.2" />
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInEachDirectory" />

@@ -60,8 +60,8 @@ namespace LunarEclipse.Model {
 			ShapeStart = position;
 			ShapeEnd = position;
 			
-			points.Add(new Point());
-			current_index++;
+			current_point = new Point();
+			points.Add(current_point);
 		}
 		
 		public override void MouseMove (MouseEventArgs ev)
@@ -78,25 +78,21 @@ namespace LunarEclipse.Model {
 		protected override UIElement CreateShape ()
 		{
 			Polyline polyline = new Polyline();
-			points = new List<Point>();
-			points.Add(new Point());
-			points.Add(new Point());
-			current_index = 0;
+			polyline.Points = new PointCollection();
+			polyline.Points.Add(new Point());
+			current_point = new Point();
+			polyline.Points.Add(current_point);
 			return polyline;
 		}
 		
 		protected override void UpdateShape ()
 		{
-			points[current_index] = ShapeStart;
-			points[current_index+1] = ShapeEnd;
-			
-			Polyline line = CreatedShape as Polyline;
-			line.Points = points.ToArray();				
+			current_point = ShapeEnd;	
 		}
 		
-		private List<Point> points;
+		private PointCollection points;
 		private bool create_new = true;
-		private int current_index;
+		private Point current_point;
 		
 		// trick to support double click;
 		private long last_ticks = 0;

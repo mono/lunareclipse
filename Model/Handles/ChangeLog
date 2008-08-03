@@ -1,3 +1,8 @@
+2008-08-02  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* AbstractHandle.cs: Removed captureMouse calls
+	* IHandle.cs: Changed Mouse events signatures
+
 2008-07-28  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* AbstractHandle.cs: Added a ZoomChanged event handler

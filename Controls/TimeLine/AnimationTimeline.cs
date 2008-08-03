@@ -80,9 +80,9 @@ namespace LunarEclipse.Controls
 			startTime = TimeSpan.Zero;
 			marker.MouseLeftButtonDown += delegate { clickedItem = marker; };
 			
-			Canvas.MouseLeftButtonDown += new MouseEventHandler(MouseDown);
-			Canvas.MouseMove += new MouseEventHandler(MouseMove);
-			Canvas.MouseLeftButtonUp += new MouseEventHandler(MouseUp);
+			Canvas.MouseLeftButtonDown += MouseDown;
+			Canvas.MouseMove += MouseMove;
+			Canvas.MouseLeftButtonUp += MouseUp;
 			
 			Canvas.Children.Add(marker);
 			Canvas.Background = new SolidColorBrush(Colors.Black);
@@ -91,7 +91,7 @@ namespace LunarEclipse.Controls
 			for(int i=0; i <= (divisions + 1) * 4; i++)
 			{
 				divisionMarkers.Add(new TimelineMarker(this, 0, TimeSpan.Zero));
-				Canvas.Children.Add((Visual)divisionMarkers[i]);
+				Canvas.Children.Add((UIElement)divisionMarkers[i]);
 			}
 			
 			divisions /= 4;
@@ -194,7 +194,7 @@ namespace LunarEclipse.Controls
 			started = true;
 			location = e.GetPosition(Canvas);
 			startLocation = location;
-			Canvas.CaptureMouse();
+			//Canvas.CaptureMouse();
 		}
 		
 		private void MouseMove(object sender, MouseEventArgs e)
@@ -270,7 +270,7 @@ namespace LunarEclipse.Controls
 			
 			started = false;
 			clickedItem = null;
-			Canvas.ReleaseMouseCapture();
+			//Canvas.ReleaseMouseCapture();
 		}
 		
 		public void AddKeyframe(Timeline timeline, TimeSpan time)
@@ -290,7 +290,7 @@ namespace LunarEclipse.Controls
 			marker.Width = 15;
 			marker.Height = 15;
 			marker.SetValue(System.Windows.Controls.Canvas.TopProperty, (this.Allocation.Height - 15.0) / 2.0);
-			marker.MouseLeftButtonDown += delegate (object sender, MouseEventArgs e) {
+			marker.MouseLeftButtonDown += delegate (object sender, MouseButtonEventArgs e) {
 				this.clickedItem = (IMarker)sender;
 			};
 			
@@ -303,14 +303,14 @@ namespace LunarEclipse.Controls
 		{
 			if(clickedItem is KeyframeMarker)
 			{
-				Canvas.Children.Remove((Visual)clickedItem);
+				Canvas.Children.Remove((UIElement)clickedItem);
 				keyframeMarkers.Remove((KeyframeMarker)clickedItem);
 			}
 		}
 		
 		public void RemoveKeyframe(KeyframeMarker marker)
 		{
-			Canvas.Children.Remove((Visual)marker);
+			Canvas.Children.Remove((UIElement)marker);
 			this.keyframeMarkers.Remove(marker);
 		}
 		

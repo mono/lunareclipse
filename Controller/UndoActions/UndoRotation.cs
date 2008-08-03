@@ -28,22 +28,23 @@
 
 
 using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using LunarEclipse.Model;
-
+	
 namespace LunarEclipse.Controller
 {
     
     
     public class UndoRotation : UndoPropertyChange
     {
-		private Visual Visual
+		private UIElement Visual
 		{
-			get { return (Visual)Target; }
+			get { return (UIElement)Target; }
 		}
 		
-        public UndoRotation(Visual visual, double initialAngle, double finalAngle)
+        public UndoRotation(UIElement visual, double initialAngle, double finalAngle)
 			:base(visual, null, initialAngle, finalAngle)
         {
 

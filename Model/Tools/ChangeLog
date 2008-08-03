@@ -1,3 +1,8 @@
+2008-08-02  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* ElementCreationTool.cs: Renamed Visual for UIElement
+	* PolyLineCreationTool.cs: Using PointCollection instead of Point[]
+
 2008-07-26  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* SelectionTool.cs: Fixed to use event.GetPosition(Canvas) instead of
