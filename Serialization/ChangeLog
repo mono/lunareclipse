@@ -1,3 +1,7 @@
+2008-08-09  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* Serializer.cs: Added try-catch to detect exceptions in GetValue
+
 2008-07-24  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* Serializer.cs: Added a new Clone method from scratch

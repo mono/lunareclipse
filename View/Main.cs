@@ -44,7 +44,7 @@ namespace LunarEclipse
 		public static void Main (string[] args)
 		{
 		    System.Diagnostics.Debug.Listeners.Add(new ConsoleTraceListener());
-			System.Diagnostics.Debug.IndentSize = 2;
+			System.Diagnostics.Debug.IndentSize = 4;
 		    Gtk.Application.Init ();
 			MainWindow win = new MainWindow ();
 //			OldMainWindow win = new MainWindow ();

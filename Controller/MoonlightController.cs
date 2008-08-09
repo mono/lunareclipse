@@ -137,21 +137,19 @@ namespace LunarEclipse.Controller
         
         private void MouseLeftDown(object sender, MouseEventArgs e)
         {
-            //this.Canvas.CaptureMouse();
-            //current.DrawStart(this.moonlight.Canvas, e);
-			CurrentTool.MouseDown(e);
+            this.Canvas.CaptureMouse();
+            CurrentTool.MouseDown(e);
         }
         
         private void MouseMove(object sender, MouseEventArgs e)
         {
-            //current.MouseMove(e);
 			CurrentTool.MouseMove(e);
         }
         
         private void MouseLeftUp(object sender, MouseEventArgs e)
         {
 			CurrentTool.MouseUp(e);
-            //this.Canvas.ReleaseMouseCapture();
+            this.Canvas.ReleaseMouseCapture();
         }
 		
 		

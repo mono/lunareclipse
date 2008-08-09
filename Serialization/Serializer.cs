@@ -10,7 +10,7 @@
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to
+// distribute, sublicense, and/or sell copies of Rthe Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
 // 
@@ -139,7 +139,13 @@ namespace LunarEclipse.Serialization
             foreach(PropertyData prop in fields)
             {
                 DependencyProperty dependencyProperty = prop.Property;
-                object value = item.GetValue(dependencyProperty);
+				object value = null;
+			 	try {
+                		value = item.GetValue(dependencyProperty);
+				}
+				catch {
+					System.Diagnostics.Debug.WriteLine(string.Format("Error getting value: {0}.{1} on {2}", prop.DeclaringType, prop.ShortName, item));
+				}
 				
                 if(!(value is DependencyObject) && (value != null) && !IsDefaultValue(item, dependencyProperty, value))
                 {
@@ -155,7 +161,14 @@ namespace LunarEclipse.Serialization
             foreach(PropertyData prop in fields)
             {
                 object dependencyValue = prop.Property;
-                object value = item.GetValue((DependencyProperty)dependencyValue);
+                object value = null;
+				
+			 	try {
+					value = item.GetValue((DependencyProperty)dependencyValue);
+				}
+				catch {
+					System.Diagnostics.Debug.WriteLine(string.Format("Error getting value: {0}.{1} on {2}", prop.DeclaringType, prop.ShortName, item));
+				}
 
 				// We've already serialised non-dependency objects, so now serialise
 				// only the dependency objects
@@ -258,7 +271,7 @@ namespace LunarEclipse.Serialization
             
             if(value == null || defaultValue == null)
                 return false;
-            
+			
             return value.Equals(defaultValue);
         }
     }

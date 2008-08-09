@@ -96,14 +96,14 @@ namespace LunarEclipse.Model {
 		
 		public virtual void MouseStart(object sender, MouseEventArgs args)
 		{
-			//CaptureMouse();
+			CaptureMouse();
 			LastClick = args.GetPosition(null);
 			Dragging = true;
 		}
 		
 		public virtual void MouseEnd(object sender, MouseEventArgs args)
 		{
-			//ReleaseMouseCapture();
+			ReleaseMouseCapture();
 			inner.SetValue(Shape.FillProperty, normal_fill);
 			Dragging = false;
 			PushUndo();

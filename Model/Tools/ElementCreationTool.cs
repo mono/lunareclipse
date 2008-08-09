@@ -44,13 +44,13 @@ namespace LunarEclipse.Model {
 		public override void Activate ()
 		{
 			base.Activate();
-			Controller.Canvas.Cursor = Cursors.Stylus;
+			//Controller.Canvas.Cursor = Cursors.Stylus;
 		}
 		
 		public override void Deactivate ()
 		{
 			base.Deactivate();
-			Controller.Canvas.Cursor = Cursors.Default;
+			//Controller.Canvas.Cursor = Cursors.Default;
 		}
 		
 		protected UIElement CreatedShape {

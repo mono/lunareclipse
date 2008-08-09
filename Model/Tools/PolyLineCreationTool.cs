@@ -60,7 +60,7 @@ namespace LunarEclipse.Model {
 			ShapeStart = position;
 			ShapeEnd = position;
 			
-			current_point = new Point();
+			current_point = position;
 			points.Add(current_point);
 		}
 		
@@ -78,10 +78,11 @@ namespace LunarEclipse.Model {
 		protected override UIElement CreateShape ()
 		{
 			Polyline polyline = new Polyline();
-			polyline.Points = new PointCollection();
-			polyline.Points.Add(new Point());
+			points = new PointCollection();
+			polyline.Points = points;
+			points.Add(new Point());
 			current_point = new Point();
-			polyline.Points.Add(current_point);
+			points.Add(current_point);
 			return polyline;
 		}
 		

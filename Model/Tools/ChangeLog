@@ -1,3 +1,10 @@
+2008-08-09  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* ElementCreationTool.cs: Cursors are back
+	* PolyLineCreationTool.cs: Using Point Collection, this need to be
+	  rewritten
+	* SelectionTool.cs: Cursors are back!
+
 2008-08-02  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* ElementCreationTool.cs: Renamed Visual for UIElement

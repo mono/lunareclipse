@@ -63,7 +63,7 @@ namespace LunarEclipse.Model {
 				if (!Selectable(element))
 					continue;
 				element.MouseLeftButtonDown += OnElementClicked;
-				element.Cursor = Cursors.Hand;
+				//element.Cursor = Cursors.Hand;
 			}
 			
 			Controller.Selection.HandleMouseDown += OnHandleMouseDown;
@@ -79,7 +79,7 @@ namespace LunarEclipse.Model {
 				if (!Selectable(element))
 					continue;
 				element.MouseLeftButtonDown -= OnElementClicked;
-				element.Cursor = Cursors.Default;
+//				element.Cursor = Cursors.Default;
 			}
 			
 			Controller.Selection.HandleMouseDown -= OnHandleMouseDown;	
