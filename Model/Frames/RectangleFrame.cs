@@ -40,6 +40,8 @@ namespace LunarEclipse.Model {
 			
 			rectangle.Stroke = new SolidColorBrush(Colors.LightGray);
 			rectangle.StrokeDashArray = new System.Windows.Media.DoubleCollection();
+			rectangle.StrokeDashArray.Add(5.0);
+			rectangle.StrokeDashArray.Add(5.0);
             rectangle.StrokeThickness = 1;
 		}
 		

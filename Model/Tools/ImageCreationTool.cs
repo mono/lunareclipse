@@ -43,7 +43,6 @@ namespace LunarEclipse.Model {
 		protected override UIElement CreateShape ()
 		{
 			Image image = new Image();
-			image.Source = new System.Uri("file:///home/ceronman/sample-image.jpg");
 			return image;
 		}
 	}

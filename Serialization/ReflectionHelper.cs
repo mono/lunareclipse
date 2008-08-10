@@ -244,7 +244,7 @@ namespace LunarEclipse.Serialization
 			// we reach the top of the inheritence tree
 			while(current != null)
 			{
-                FieldInfo[] currentFields = current.GetFields();
+                FieldInfo[] currentFields = current.GetFields(BindingFlags.Public | BindingFlags.NonPublic);
 				foreach(FieldInfo field in currentFields)
 				{
 					if(!field.FieldType.Equals(typeof(DependencyProperty)))

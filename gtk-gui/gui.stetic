@@ -66,7 +66,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow" design-size="720 729">
+  <widget class="Gtk.Window" id="LunarEclipse.View.MainWindow" design-size="960 729">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -606,7 +606,7 @@
                       <widget class="Gtk.HPaned" id="hpaned1">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
-                        <property name="Position">175</property>
+                        <property name="Position">580</property>
                         <child>
                           <widget class="Gtk.VBox" id="vbox3">
                             <property name="MemberName" />

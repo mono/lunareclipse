@@ -1,3 +1,7 @@
+2008-08-10  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* RectangleFrame.cs: Using Slashes
+
 2008-08-02  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* BezierSegmentFrame.cs: using DoubleCollection

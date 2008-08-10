@@ -116,6 +116,8 @@ namespace LunarEclipse.Serialization
         
         private void Serialize(DependencyObject item, XmlWriter writer)
         {
+			System.Diagnostics.Debug.WriteLine(item);
+			System.Diagnostics.Debug.Indent();
 			if (item is IHandle || item is IFrame)
 				return;
 			
@@ -135,10 +137,12 @@ namespace LunarEclipse.Serialization
             // a dependency object as attributes. Every DependencyProperty whose value
             // is a dependency object must be written as an element.
             writer.WriteStartElement(baseType.Name);
-			
+			System.Diagnostics.Debug.WriteLine("properties:");
+			System.Diagnostics.Debug.Indent();
             foreach(PropertyData prop in fields)
             {
-                DependencyProperty dependencyProperty = prop.Property;
+                System.Diagnostics.Debug.WriteLine(prop.ShortName);
+				DependencyProperty dependencyProperty = prop.Property;
 				object value = null;
 			 	try {
                 		value = item.GetValue(dependencyProperty);
@@ -155,6 +159,7 @@ namespace LunarEclipse.Serialization
                     writer.WriteAttributeString(name, value.ToString());
                 }
             }
+			System.Diagnostics.Debug.Unindent();
             
             // After we write out all the attributes we can then write out
             // the child elements.
@@ -186,8 +191,9 @@ namespace LunarEclipse.Serialization
                     writer.WriteEndElement();
                 }
             }
-            
+     
             writer.WriteEndElement();
+			System.Diagnostics.Debug.Unindent();
         }
 		
 		public static DependencyObject Clone(Canvas root, DependencyObject item)
