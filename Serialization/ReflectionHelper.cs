@@ -213,7 +213,7 @@ namespace LunarEclipse.Serialization
 				allProperties.Add(type, fields);
 			}
 			
-			foreach(List<PropertyData> list in allProperties.Values)
+			foreach(List<PropertyData> list in allProperties.Values) {
 				foreach(PropertyData propData in list)
 				{
 					string name = propData.DeclaringType.Name + '.' + propData.ShortName;
@@ -231,6 +231,7 @@ namespace LunarEclipse.Serialization
 						propertyDataByProperty.Add(propData.Property, propData);
 				    }
 				}
+			}
 		}
 		
 		private static List<PropertyData> FindFields(DependencyObject item)
@@ -244,7 +245,7 @@ namespace LunarEclipse.Serialization
 			// we reach the top of the inheritence tree
 			while(current != null)
 			{
-                FieldInfo[] currentFields = current.GetFields(BindingFlags.Public | BindingFlags.NonPublic);
+                FieldInfo[] currentFields = current.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 				foreach(FieldInfo field in currentFields)
 				{
 					if(!field.FieldType.Equals(typeof(DependencyProperty)))

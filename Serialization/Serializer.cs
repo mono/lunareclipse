@@ -34,6 +34,7 @@ using System.Reflection;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Shapes;
+using System.Windows.Media;
 using System.Xml;
 using System.Text;
 using System.Collections;
@@ -64,10 +65,20 @@ namespace LunarEclipse.Serialization
         
         private void SerialiseCollection(PropertyData propertyData, object value, XmlWriter writer)
         {
+			if (value is PointCollection)
+				return; 
+			
             IEnumerable collection = (IEnumerable)value;
-            
+			
             //FIXME: Nasty hack as the collections don't have a common interface
-            IEnumerator enumerator = collection.GetEnumerator();
+			IEnumerator enumerator;
+		 	try {
+            	enumerator = collection.GetEnumerator();
+			}
+			catch (NotImplementedException e) {
+				System.Diagnostics.Debug.WriteLine("Something is not implemented in moonlight");
+				return;
+			}
             enumerator.Reset();
 			if(!enumerator.MoveNext())
 				return;
@@ -151,6 +162,17 @@ namespace LunarEclipse.Serialization
 					System.Diagnostics.Debug.WriteLine(string.Format("Error getting value: {0}.{1} on {2}", prop.DeclaringType, prop.ShortName, item));
 				}
 				
+				if (value is PointCollection) {
+					PointCollection collection = value as PointCollection;
+					string[] points = new string[collection.Count];
+					for (int i=0; i<collection.Count; i++) {
+						Point p = collection[i];
+						points[i] = string.Format("{0},{1}", p.X, p.Y);
+					}
+					writer.WriteAttributeString(prop.ShortName, string.Join(" ", points));
+					continue;
+				}
+				
                 if(!(value is DependencyObject) && (value != null) && !IsDefaultValue(item, dependencyProperty, value))
                 {
                     string name = prop.ShortName;
@@ -180,8 +202,7 @@ namespace LunarEclipse.Serialization
 				if(!(value is DependencyObject))
 					continue;
 				
-                if(value is IEnumerable)
-				{
+                if (value is IEnumerable) {
 					SerialiseCollection(prop, value, writer);
 				}
 				else if(!IsDefaultValue(item, prop.Property, value))
@@ -211,7 +232,14 @@ namespace LunarEclipse.Serialization
 				
                 DependencyProperty dependencyProperty = prop.Property;
 				
-                object value = item.GetValue(dependencyProperty);
+                object value = null;
+				
+				try {
+					value = item.GetValue(dependencyProperty);
+				}
+				catch {
+					System.Diagnostics.Debug.WriteLine(string.Format("Error getting value: {0}.{1} on {2}", prop.DeclaringType, prop.ShortName, item));
+				}
 				
 				if(!IsDefaultValue(item, dependencyProperty, value))
                 {
@@ -222,11 +250,15 @@ namespace LunarEclipse.Serialization
 						System.Diagnostics.Debug.WriteLine("* IEnumerable: " + collectionType.ToString());
 						System.Diagnostics.Debug.Indent();
 						newValue = Activator.CreateInstance(collectionType);
-						foreach (DependencyObject o in value as IEnumerable) {
-							DependencyObject member = Clone(root, o);
-							newValue.GetType().GetMethod("Add").Invoke(newValue, new object[] { member });
+						try {
+							foreach (DependencyObject o in value as IEnumerable) {
+								DependencyObject member = Clone(root, o);
+								newValue.GetType().GetMethod("Add").Invoke(newValue, new object[] { member });
+							}
 						}
-						
+						catch (NotImplementedException e) {
+							System.Diagnostics.Debug.WriteLine("Something is not implemented in moonlight");
+						}
 						System.Diagnostics.Debug.Unindent();
 					}
 					
@@ -271,7 +303,13 @@ namespace LunarEclipse.Serialization
             
             // Using the cached instance, we check to see if the value supplied
             // is the same as the default value of a fresh item.
-            object defaultValue = defaultItem.GetValue(property);
+            object defaultValue = null;
+			try {
+				defaultValue = defaultItem.GetValue(property);
+			}
+			catch {
+				System.Diagnostics.Debug.WriteLine("Error getting value: ");
+			}
             if(value == null && defaultValue == null)
                 return true;
             

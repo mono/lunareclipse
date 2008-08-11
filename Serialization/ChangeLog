@@ -1,3 +1,8 @@
+2008-08-11  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* Serializer.cs: Fixed bugs regarding collections
+	* ReflectionHelper.cs: Getting static properties
+
 2008-08-10  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* Serializer.cs: Using Diagnostics to detect errors
