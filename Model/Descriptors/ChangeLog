@@ -1,3 +1,7 @@
+2008-08-12  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* PolyLineDescriptor.cs: using PointCollection instead of Point[]
+
 2008-07-18  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* StandardDescriptor.cs, IDescriptor.cs: ChangeProperty made public

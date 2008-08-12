@@ -243,9 +243,16 @@ namespace LunarEclipse.Serialization
 				
 				if(!IsDefaultValue(item, dependencyProperty, value))
                 {
-                    object newValue;
+                    object newValue = null;
+
+					if (value is PointCollection) {
+						PointCollection newPoints = new PointCollection();
+						foreach (Point p in (value as PointCollection) )
+							newPoints.Add(p);
+						newValue = newPoints;
+					}
 					
-					if(value is IEnumerable && !(value is string)) {
+					else if(value is IEnumerable && !(value is string)) {
 						Type collectionType = value.GetType();
 						System.Diagnostics.Debug.WriteLine("* IEnumerable: " + collectionType.ToString());
 						System.Diagnostics.Debug.Indent();

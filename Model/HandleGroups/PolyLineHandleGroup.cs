@@ -26,6 +26,7 @@
 //
 
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
@@ -36,8 +37,8 @@ namespace LunarEclipse.Model {
 		public PolyLineHandleGroup(MoonlightController controller, Polyline child):
 			base(controller, child)
 		{
-			Point[] points = (Point[]) child.GetValue(Polyline.PointsProperty);
-			for (int i=0; i<points.Length; i++)
+			PointCollection points = child.Points;
+			for (int i=0; i<points.Count; i++)
 				AddHandle(new PolyLineHandle(Controller, this, i));
 			
 			Update();

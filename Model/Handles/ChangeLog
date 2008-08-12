@@ -1,3 +1,7 @@
+2008-08-12  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* PolyLineHandle.cs: using PointCollection instead of Point[]
+
 2008-08-09  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* AbstractHandle.cs: CaptureMouse() is back

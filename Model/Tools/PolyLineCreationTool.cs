@@ -46,6 +46,7 @@ namespace LunarEclipse.Model {
 		{
 			if (CheckDoubleClick()) {
 				create_new = true;
+				points.RemoveAt(current_index + 1);
 				return;
 			}
 			
@@ -60,7 +61,7 @@ namespace LunarEclipse.Model {
 			ShapeStart = position;
 			ShapeEnd = position;
 			
-			points.Add(new Point());
+			points.Add(position);
 			
 			foreach (Point p in points)
 				System.Console.Write(p.ToString() + " | ");

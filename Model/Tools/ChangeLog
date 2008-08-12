@@ -1,3 +1,7 @@
+2008-08-12  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* PolyLineCreationTool.cs: using PointCollection instead of Point[]
+
 2008-08-10  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* PolyLineCreationTool.cs: Fixed 

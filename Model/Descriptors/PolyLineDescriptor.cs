@@ -27,6 +27,7 @@
 
 using System;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
@@ -47,7 +48,7 @@ namespace LunarEclipse.Model {
 		
 		public override Rect GetBounds ()
 		{
-			Point[] points = (Point[]) polyline.GetValue(Polyline.PointsProperty);
+			PointCollection points = polyline.Points;
 			double minx = Double.MaxValue;
 			double miny = Double.MaxValue;
 			double maxx = Double.MinValue;
@@ -65,15 +66,15 @@ namespace LunarEclipse.Model {
 		
 		public override void Move (double dx, double dy)
 		{
-			Point[] points = (Point[]) polyline.GetValue(Polyline.PointsProperty);
+			PointCollection points = polyline.Points;
 			
-			for (int i=0; i< points.Length; i++) {
+			for (int i=0; i< points.Count; i++) {
 				Point p = points[i];
 				p.X += dx;
 				p.Y += dy;
 				points[i] = p;
 			}
-			
+
 			ChangeProperty(polyline, Polyline.PointsProperty, points);
 		}
 

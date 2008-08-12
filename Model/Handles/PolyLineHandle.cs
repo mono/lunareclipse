@@ -26,6 +26,7 @@
 //
 
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
@@ -44,15 +45,15 @@ namespace LunarEclipse.Model {
 				return Points[index];
 			}
 			set {
-				Point[] points = Points;
+				PointCollection points = Points;
 				points[index] = value;
 				Points = points;
 			}
 		}
 		
-		private Point[] Points {
+		private PointCollection Points {
 			get {
-				return (Point[]) Element.GetValue(Polyline.PointsProperty);
+				return (PointCollection) Element.GetValue(Polyline.PointsProperty);
 			}
 			
 			set {
