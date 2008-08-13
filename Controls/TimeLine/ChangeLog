@@ -1,3 +1,8 @@
+2008-08-13  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* PositionMarker.cs: Temporary removed references to
+	  Canvas.ZIndexProperty
+
 2008-08-02  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* KeyframeMarker.cs, AnimationTimeline.cs, PositionMarker.cs,

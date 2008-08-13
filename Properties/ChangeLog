@@ -1,3 +1,8 @@
+2008-08-13  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* PropertyManager.cs: Temporary removed references to
+	  Canvas.ZIndexProperty
+
 2008-06-26  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* PropertyManager.cs: Removed dependecies to old objects such as

@@ -76,7 +76,7 @@ namespace LunarEclipse.Model
 			info.Add(Rectangle.RadiusXProperty, new PropertyInfo(ReflectionHelper.GetData(Rectangle.RadiusXProperty), PropertyType.Double));
 			info.Add(Rectangle.RadiusYProperty, new PropertyInfo(ReflectionHelper.GetData(Rectangle.RadiusYProperty), PropertyType.Double));
 			info.Add(Rectangle.StrokeThicknessProperty, new PropertyInfo(ReflectionHelper.GetData(Rectangle.StrokeThicknessProperty), PropertyType.Double));
-			info.Add(Rectangle.NameProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.NameProperty), PropertyType.String));
+			//info.Add(FrameworkElement.NameProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.NameProperty), PropertyType.String));
 			info.Add(Path.DataProperty, new PropertyInfo(ReflectionHelper.GetData(Path.DataProperty), PropertyType.Data));
 			
 			// extended properties
@@ -93,7 +93,7 @@ namespace LunarEclipse.Model
 			info.Add(Canvas.HeightProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.HeightProperty), PropertyType.Double, false, true));
 			info.Add(Canvas.LeftProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.LeftProperty), PropertyType.Double, true, false));
 			info.Add(Canvas.TopProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.TopProperty), PropertyType.Double, true, false));
-			info.Add(Canvas.ZIndexProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.ZIndexProperty), PropertyType.Integer, false, false));
+			//info.Add(Canvas.ZIndexProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.ZIndexProperty), PropertyType.Integer, false, false));
 			
 			info.Add(UIElement.RenderTransformOriginProperty, new PropertyInfo(ReflectionHelper.GetData(Canvas.RenderTransformOriginProperty), PropertyType.Point));
 			info.Add(Shape.FillProperty, new PropertyInfo(ReflectionHelper.GetData(Shape.FillProperty), PropertyType.Brush));

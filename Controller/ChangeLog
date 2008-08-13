@@ -1,3 +1,7 @@
+2008-08-13  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* Toolbox.cs: Temporary removed references to Canvas.ZIndexProperty
+
 2008-08-09  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* MoonlightController.cs: CaptureMouse() is back

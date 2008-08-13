@@ -43,8 +43,8 @@ namespace LunarEclipse.Controls
 
 		public int ZIndex
 		{
-			get { return (int)GetValue(Shape.ZIndexProperty); }
-			set { SetValue(Shape.ZIndexProperty, value); }
+			get { return 0; } //(int)GetValue(Canvas.ZIndexProperty); }
+			set { /*SetValue(Canvas.ZIndexProperty, value);*/ }
 		}
 		
 		public TimeSpan Time

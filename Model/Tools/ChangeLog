@@ -1,3 +1,8 @@
+2008-08-13  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* ElementCreationTool.cs, PolyLineCreationTool.cs, SelectionTool.cs:
+	  Temporary removed references to Canvas.ZIndexProperty
+
 2008-08-12  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* PolyLineCreationTool.cs: using PointCollection instead of Point[]

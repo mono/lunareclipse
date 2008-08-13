@@ -44,8 +44,8 @@ namespace LunarEclipse
         public int Compare(UIElement left, UIElement right)
         {
             //Console.WriteLine("Compare Start");
-            int leftValue = (int)left.GetValue(Canvas.ZIndexProperty);
-            int rightValue = (int)right.GetValue(Canvas.ZIndexProperty);
+            int leftValue = 0; // (int)left.GetValue(Canvas.ZIndexProperty);
+            int rightValue = 0; //(int)right.GetValue(Canvas.ZIndexProperty);
             return leftValue.CompareTo(rightValue);
         }
     }
