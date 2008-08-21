@@ -5,8 +5,8 @@
     <target-gtk-version>2.12.2</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../../../apps/mono/lib/mono/gtk-sharp-2.0/glade-sharp.dll" />
-    <widget-library name="../../../apps/mono/lib/mono/moon/gtksilver.dll" />
+    <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <widget-library name="gtksilver, Version=0.0.0.0, Culture=neutral, PublicKeyToken=976ad8f3443f9a4d" />
     <widget-library name="../bin/Debug/LunarEclipse.exe" internal="true" />
   </import>
   <icon-factory>
@@ -606,7 +606,7 @@
                       <widget class="Gtk.HPaned" id="hpaned1">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
-                        <property name="Position">884</property>
+                        <property name="Position">842</property>
                         <child>
                           <widget class="Gtk.VBox" id="vbox3">
                             <property name="MemberName" />

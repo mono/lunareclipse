@@ -1,8 +1,3 @@
-2008-08-13  Manuel Cerón <ceronman@unicauca.edu.co> 
-
-	* StandardSelection.cs, ZIndexComparer.cs: Temporary removed references
-	  to Canvas.ZIndexProperty
-
 2008-08-02  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	* SelectionChangedEventArgs.cs, SelectedBorder.cs,

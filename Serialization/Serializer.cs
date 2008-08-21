@@ -289,8 +289,8 @@ namespace LunarEclipse.Serialization
             }
 			System.Diagnostics.Debug.Unindent();
 			
-			//if (!string.IsNullOrEmpty(item.Name))
-			//	newObject.Name = NameGenerator.GetName(root, newObject);
+			if (!string.IsNullOrEmpty((string)item.GetValue(FrameworkElement.NameProperty)))
+				newObject.SetValue(FrameworkElement.NameProperty, NameGenerator.GetName(root, newObject));
 
 			return newObject;
 		}

@@ -41,7 +41,7 @@ namespace LunarEclipse.Model {
 			
 			Child = child;
 			
-			//SetValue(Canvas.ZIndexProperty, int.MaxValue-1);
+			SetValue(ZIndexProperty, int.MaxValue-1);
 		}
 		
 		public abstract void Update();

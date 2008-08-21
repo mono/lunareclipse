@@ -91,7 +91,7 @@ namespace LunarEclipse
 			int max = int.MinValue;
 			
 			foreach (UIElement element in elements) {
-				int z = 0; //(int) element.GetValue(Canvas.ZIndexProperty);
+				int z = (int) element.GetValue(Canvas.ZIndexProperty);
 				max = Math.Max(max, z);
 			}
 			
@@ -106,7 +106,7 @@ namespace LunarEclipse
 			int min = int.MaxValue;
 			
 			foreach (UIElement element in elements) {
-				int z = 0; //(int) element.GetValue(Canvas.ZIndexProperty);
+				int z = (int) element.GetValue(Canvas.ZIndexProperty);
 				min = Math.Max(min, z);
 			}
 			

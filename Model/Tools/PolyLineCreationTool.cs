@@ -46,8 +46,7 @@ namespace LunarEclipse.Model {
 		{
 			if (CheckDoubleClick()) {
 				create_new = true;
-				try  { points.RemoveAt(current_index + 1); }
-				catch {}
+				points.RemoveAt(current_index + 1);
 				return;
 			}
 			

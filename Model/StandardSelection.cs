@@ -173,7 +173,7 @@ namespace LunarEclipse.Model {
 			int selectionMaxZ = Toolbox.MaxZ(Visuals);
 			int minz = Toolbox.MinZ(Controller.Canvas.Children);
 			foreach (UIElement element in Elements) {
-				int z = 0; // (int) element.GetValue(Canvas.ZIndexProperty);
+				int z = (int) element.GetValue(Canvas.ZIndexProperty);
 				z -= selectionMaxZ - minz - 1;
 				ChangeZ(element, z);
 			}
@@ -184,7 +184,7 @@ namespace LunarEclipse.Model {
 		public void SendBackwards()
 		{
 			foreach (UIElement element in Elements) {
-				int z = 0; //(int) element.GetValue(Canvas.ZIndexProperty);
+				int z = (int) element.GetValue(Canvas.ZIndexProperty);
 				z--;
 				ChangeZ(element, z);
 			}
@@ -197,7 +197,7 @@ namespace LunarEclipse.Model {
 			int selectionMinZ = Toolbox.MinZ(Visuals);
 			int maxz = Toolbox.MaxZ(Controller.Canvas.Children);
 			foreach (UIElement element in Elements) {
-				int z = 0; //(int) element.GetValue(Canvas.ZIndexProperty);
+				int z = (int) element.GetValue(Canvas.ZIndexProperty);
 				z += maxz - selectionMinZ + 1;
 				ChangeZ(element, z);
 			}
@@ -208,7 +208,7 @@ namespace LunarEclipse.Model {
 		public void BringForwards()
 		{
 			foreach (UIElement element in Elements) {
-				int z = 0; //(int) element.GetValue(Canvas.ZIndexProperty);
+				int z = (int) element.GetValue(Canvas.ZIndexProperty);
 				z++;
 				ChangeZ(element, z);
 			}
@@ -427,7 +427,7 @@ namespace LunarEclipse.Model {
 		private void ChangeZ (UIElement element, int z)
 		{
 			IDescriptor descriptor = StandardDescriptor.CreateDescriptor(element, undo);
-			//descriptor.ChangeProperty(element, Canvas.ZIndexProperty, z);
+			descriptor.ChangeProperty(element, Canvas.ZIndexProperty, z);
 		}
 		
 		private void RemoveElementFromCanvas(UIElement element)

@@ -48,7 +48,7 @@ namespace LunarEclipse.Model {
             SelectionRect.Fill = new SolidColorBrush(Colors.Blue);
             SelectionRect.Stroke = new SolidColorBrush(Colors.Black);
             SelectionRect.StrokeThickness = 1.0;
-            //SelectionRect.SetValue(Canvas.ZIndexProperty, int.MaxValue);
+            SelectionRect.SetValue(Canvas.ZIndexProperty, int.MaxValue);
 			
 			undo = new UndoGroup();
 		}

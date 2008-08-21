@@ -61,7 +61,7 @@ namespace LunarEclipse.Model {
 				inner.SetValue(Shape.FillProperty, normal_fill);
 			};
 			
-			//SetValue(Canvas.ZIndexProperty, int.MaxValue);
+			SetValue(Canvas.ZIndexProperty, int.MaxValue);
 			
 			transforms = new TransformGroup();
 			scaleTransform = new ScaleTransform();
