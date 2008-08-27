@@ -767,15 +767,6 @@
       <placeholder />
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LunarEclipse.Controls.AnimationTimelineWidget" design-size="800 152">
-    <property name="MemberName" />
-    <property name="WidthRequest">800</property>
-    <property name="HeightRequest">70</property>
-    <property name="Visible">False</property>
-    <child>
-      <placeholder />
-    </child>
-  </widget>
   <widget class="Gtk.Bin" id="LunarEclipse.View.PropertyPanel" design-size="300 300">
     <property name="MemberName" />
     <property name="Visible">False</property>

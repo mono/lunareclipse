@@ -22,12 +22,6 @@
     <File name="Properties/PropertyInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Properties/PropertyManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Properties/PropertyType.cs" subtype="Code" buildaction="Compile" />
-    <File name="Controls/TimeLine/AnimationTimeline.cs" subtype="Code" buildaction="Compile" />
-    <File name="Controls/TimeLine/IMarker.cs" subtype="Code" buildaction="Compile" />
-    <File name="Controls/TimeLine/KeyframeEventArgs.cs" subtype="Code" buildaction="Compile" />
-    <File name="Controls/TimeLine/KeyframeMarker.cs" subtype="Code" buildaction="Compile" />
-    <File name="Controls/TimeLine/PositionMarker.cs" subtype="Code" buildaction="Compile" />
-    <File name="Controls/TimeLine/TimelineMarker.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/ISelection.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/NameGenerator.cs" subtype="Code" buildaction="Compile" />
     <File name="Model/PropertyChangedEventArgs.cs" subtype="Code" buildaction="Compile" />
@@ -82,8 +76,6 @@
     <File name="gtk-gui/objects.xml" subtype="Code" buildaction="EmbedAsResource" resource_id="objects.xml" />
     <File name="gtk-gui/LunarEclipse.View.MoonlightWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LunarEclipse.View.MainWindow.cs" subtype="Code" buildaction="Compile" />
-    <File name="Controls/TimeLine/AnimationTimelineWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LunarEclipse.Controls.AnimationTimelineWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Icons/image-tool.png" subtype="Code" buildaction="EmbedAsResource" DeployService.UseProjectRelativePath="True" />
     <File name="Icons/polyline-tool.png" subtype="Code" buildaction="EmbedAsResource" DeployService.UseProjectRelativePath="True" />
     <File name="Icons/text-tool.png" subtype="Code" buildaction="EmbedAsResource" DeployService.UseProjectRelativePath="True" />
@@ -127,6 +119,7 @@
     <File name="Model/Descriptors/AbstractLineDescriptor.cs" subtype="Code" buildaction="Compile" />
     <File name="View/AboutLunarEclipse.cs" subtype="Code" buildaction="Compile" />
     <File name="Controller/UndoActions/UndoRemoveObject.cs" subtype="Code" buildaction="Compile" />
+    <File name="Resources/ellipse.xml" subtype="Code" buildaction="Nothing" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -142,6 +135,6 @@
     <ProjectReference type="Gac" localcopy="True" refto="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Moonlight, Version=3.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
   </References>
-  <GtkDesignInfo gtkVersion="2.12.2" />
+  <GtkDesignInfo />
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInEachDirectory" />
 </Project>

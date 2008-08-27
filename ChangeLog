@@ -1,3 +1,13 @@
+2008-08-27  Manuel Cerón <ceronman@unicauca.edu.co> 
+
+	* Controls/TimeLine/KeyframeMarker.cs, Controls, Controls/TimeLine,
+	  Controls/TimeLine/AnimationTimeline.cs,
+	  Controls/TimeLine/AnimationTimelineWidget.cs,
+	  Controls/TimeLine/ChangeLog, Controls/TimeLine/IMarker.cs,
+	  Controls/TimeLine/KeyframeEventArgs.cs,
+	  Controls/TimeLine/PositionMarker.cs,
+	  Controls/TimeLine/TimelineMarker.cs: Removed TimeLineControl
+
 2008-08-02  Manuel Cerón <ceronman@unicauca.edu.co> 
 
 	

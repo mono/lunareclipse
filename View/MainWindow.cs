@@ -28,7 +28,6 @@
 using System;
 using System.Windows;
 using LunarEclipse.Controller;
-using LunarEclipse.Controls;
 using LunarEclipse.Model;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -46,7 +45,7 @@ namespace LunarEclipse.View
 		{
 			this.Build();
 			
-			controller = new MoonlightController(moonlightwidget.Silver, null);
+			controller = new MoonlightController(moonlightwidget.Silver);
 			
 			propertypanel.Controller = controller;
 			SetupUndoButtons(controller.UndoEngine);

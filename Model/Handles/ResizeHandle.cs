@@ -31,6 +31,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Input;
+using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {	
@@ -71,9 +72,12 @@ namespace LunarEclipse.Model {
 		
 		protected abstract Rect CalculateNewBounds(Rect oldBounds, Point offset, double cosAngle, double sinAngle);
 		
-		protected override string GetXaml ()
+		protected override UIElement CreateContent ()
 		{
-			return "<Rectangle Fill=\"#99FFFF00\" Stroke=\"#FF000000\"/>";
+			Rectangle rect = new Rectangle();
+			rect.Fill = new SolidColorBrush(Colors.Yellow);
+			rect.Stroke = new SolidColorBrush(Colors.Black);
+			return rect;
 		}
 		
 		private Point TransformOffset(Point offset, double angle)

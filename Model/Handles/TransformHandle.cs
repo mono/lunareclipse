@@ -27,6 +27,7 @@
 
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Controls;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {	
@@ -66,6 +67,7 @@ namespace LunarEclipse.Model {
 			rotation.Angle = ElementRotation.Angle;
 			
 			ZoomCorrection();
+			System.Console.WriteLine("-- {0}, {1}", GetValue(Canvas.LeftProperty), GetValue(Canvas.TopProperty));
 		}
 		
 		protected Point ElementTransformOrigin {

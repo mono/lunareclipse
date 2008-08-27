@@ -35,7 +35,7 @@ using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model {
 	
-	public abstract class AbstractHandle: Control, IHandle {
+	public abstract class AbstractHandle: UserControl, IHandle {
 		
 		public const double DefaultRadius = 5.0;
 	
@@ -44,21 +44,23 @@ namespace LunarEclipse.Model {
 		{
 			Group = group;
 			
-			inner = controller.GtkSilver.InitializeFromXaml(GetXaml(), this);
+			//inner = controller.GtkSilver.InitializeFromXaml(GetXaml(), this);
+			//Application.LoadComponent(this, new Uri("ellipse.xml", UriKind.Relative));
+			Content = CreateContent();
 			
-			MouseLeftButtonDown += MouseStart;
-			MouseLeftButtonUp += MouseEnd;
-			MouseMove += MouseStep;
+			Content.MouseLeftButtonDown += MouseStart;
+			Content.MouseLeftButtonUp += MouseEnd;
+			Content.MouseMove += MouseStep;
 			
 			highlight_fill = new SolidColorBrush(Colors.Red);
-			normal_fill = (Brush) inner.GetValue(Shape.FillProperty);
+			normal_fill = (Brush) Content.GetValue(Shape.FillProperty);
 			
-			MouseEnter += delegate {
-				inner.SetValue(Shape.FillProperty, highlight_fill);
+			Content.MouseEnter += delegate {
+				Content.SetValue(Shape.FillProperty, highlight_fill);
 			};
 			
-			MouseLeave += delegate {
-				inner.SetValue(Shape.FillProperty, normal_fill);
+			Content.MouseLeave += delegate {
+				Content.SetValue(Shape.FillProperty, normal_fill);
 			};
 			
 			SetValue(Canvas.ZIndexProperty, int.MaxValue);
@@ -66,8 +68,8 @@ namespace LunarEclipse.Model {
 			transforms = new TransformGroup();
 			scaleTransform = new ScaleTransform();
 			transforms.Children.Add(scaleTransform);
-			Inner.SetValue(UIElement.RenderTransformOriginProperty, new Point(0.5, 0.5));
-		 	Inner.SetValue(UIElement.RenderTransformProperty, transforms);
+			Content.SetValue(UIElement.RenderTransformOriginProperty, new Point(0.5, 0.5));
+		 	Content.SetValue(UIElement.RenderTransformProperty, transforms);
 		
 			undo_group = new UndoGroup();
 			
@@ -104,7 +106,7 @@ namespace LunarEclipse.Model {
 		public virtual void MouseEnd(object sender, MouseEventArgs args)
 		{
 			ReleaseMouseCapture();
-			inner.SetValue(Shape.FillProperty, normal_fill);
+			Content.SetValue(Shape.FillProperty, normal_fill);
 			Dragging = false;
 			PushUndo();
 		}
@@ -134,14 +136,17 @@ namespace LunarEclipse.Model {
 			set {
 				IDescriptor descriptor = StandardDescriptor.CreateDescriptor(this);
 				descriptor.SetBounds(value);
-				descriptor = StandardDescriptor.CreateDescriptor(inner);
+				descriptor = StandardDescriptor.CreateDescriptor(Content);
 				descriptor.SetBounds(0, 0, value.Width, value.Height);
 			}
 		}
 			
-		protected virtual string GetXaml()
+		protected virtual UIElement CreateContent()
 		{
-			return "<Rectangle Fill=\"#00FFFFFF\" Stroke=\"#FF000000\"/>";
+			Rectangle rect = new Rectangle();
+			rect.Fill = new SolidColorBrush(Colors.Yellow);
+			rect.Stroke = new SolidColorBrush(Colors.Black);
+			return rect;
 		}
 		
 		protected UIElement Element {
@@ -162,11 +167,6 @@ namespace LunarEclipse.Model {
 			set { dragging = value; }
 		}
 
-		protected FrameworkElement Inner {
-			get { return inner; }
-			set { inner = value; }
-		}
-		
 		protected UndoGroup UndoGroup {
 			get { return undo_group; }
 		}
@@ -208,7 +208,6 @@ namespace LunarEclipse.Model {
 		}
 		
 		private IHandleGroup group;
-		private FrameworkElement inner;
 		private Point last_click;
 		private bool dragging = false;
 		private Brush normal_fill;

@@ -40,7 +40,6 @@ using System.IO;
 using LunarEclipse.Serialization;
 using LunarEclipse.View;
 using LunarEclipse.Model;
-using LunarEclipse.Controls;
 using Gtk.Moonlight;
 
 namespace LunarEclipse.Controller
@@ -53,7 +52,6 @@ namespace LunarEclipse.Controller
         private GtkSilver moonlight;
 		private PropertyManager propertyManager;
         private Serializer serializer;
-		private AnimationTimeline timeline;
 		private UndoEngine undo;
 		private ITool current_tool;
 		private ISelection selection;
@@ -85,11 +83,6 @@ namespace LunarEclipse.Controller
 			get { return propertyManager; }
 		}
 		
-		public AnimationTimeline Timeline
-		{
-			get { return timeline; }
-		}
-        
         public UndoEngine UndoEngine
         {
             get { return undo; }
@@ -105,12 +98,9 @@ namespace LunarEclipse.Controller
         	set { current_scale = value; }
         }
     	
-        public MoonlightController(GtkSilver moonlight, AnimationTimeline timeline)
+        public MoonlightController(GtkSilver moonlight)
         {
-			this.timeline = timeline;
-            this.moonlight = moonlight;
-			//this.properties = properties;
-			
+			this.moonlight = moonlight;			
 			serializer = new Serializer();
             undo = new UndoEngine();
 			Selection = new StandardSelection(this);

@@ -27,6 +27,7 @@
 
 using System;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using System.Windows;
 using LunarEclipse.Controller;
 
@@ -55,9 +56,12 @@ namespace LunarEclipse.Model {
 			}
 		}
 		
-		protected override string GetXaml ()
+		protected override UIElement CreateContent ()
 		{
-			return "<Ellipse Fill=\"#99FF00FF\" Stroke=\"#FF000000\"/>";
+			Rectangle rect = new Rectangle();
+			rect.Fill = new SolidColorBrush(Colors.Yellow);
+			rect.Stroke = new SolidColorBrush(Colors.Black);
+			return rect;
 		}
 		
 		private DependencyProperty point_property;

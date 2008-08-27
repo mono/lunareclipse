@@ -30,6 +30,7 @@ using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Input;
+using System.Windows.Shapes;
 using LunarEclipse.Controller;
 
 namespace LunarEclipse.Model
@@ -63,9 +64,12 @@ namespace LunarEclipse.Model
 			LastClick = position;
 		}
 		
-		protected override string GetXaml ()
+		protected override UIElement CreateContent ()
 		{
-			return "<Ellipse Fill=\"#99FFFF00\" Stroke=\"#FF000000\"/>";
+			Rectangle rect = new Rectangle();
+			rect.Fill = new SolidColorBrush(Colors.Yellow);
+			rect.Stroke = new SolidColorBrush(Colors.Black);
+			return rect;
 		}
 	}
 }

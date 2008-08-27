@@ -1,8 +1,4 @@
 <objects attr-sync="on">
-  <object type="LunarEclipse.Controls.AnimationTimelineWidget" palette-category="LunarEclipse" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LunarEclipse.View.MoonlightWidget" palette-category="LunarEclipse" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="MoonlightWidget Properties">
